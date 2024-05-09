@@ -103,7 +103,7 @@ const Login = () => {
           <Button
             minH={"3.5rem"}
             borderRadius={"1rem"}
-            bg={detailsFilled ? "#0CC14C" : "white"}
+            bg={detailsFilled ? "agrify_green" : "white"}
             color={detailsFilled ? "white" : "unset"}
             w={"100%"}
             mb={"2.404rem"}
