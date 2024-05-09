@@ -1,5 +1,10 @@
+import { StaticImageData } from "next/image";
+
 export type ProjectProps = {
-  image: string;
-  name: string;
-  impact: string;
+  project: {
+    id: string;
+    image: string | StaticImageData;
+    name: string;
+    impact: string;
+  };
 };

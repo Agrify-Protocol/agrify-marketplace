@@ -24,7 +24,7 @@ const Navbar = () => {
       display={"flex"}
       alignItems={"center"}
       justifyContent={"space-between"}
-      px={"1.131rem"}
+      px={"2.625rem"}
     >
       <Image src={logo} alt="" />
 
