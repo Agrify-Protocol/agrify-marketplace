@@ -3,13 +3,18 @@ import ProjectIntro from "@/components/ProjectIntro/ProjectIntro";
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import { project_overview } from "./constants";
+import SectionTabs from "@/components/SectionTabs/SectionTabs";
+import { ProjectPageProvider } from "@/context/ProjectsPageContext/ProjectsPageContext";
 
 const ProjectPage = () => {
   return (
-    <Box mt={"4rem"} px={"2.625rem"}>
-      <BackButton />
-      <ProjectIntro projectOverview={project_overview} />
-    </Box>
+    <ProjectPageProvider>
+      <Box mt={"4rem"} px={"2.625rem"}>
+        <BackButton />
+        <ProjectIntro projectOverview={project_overview} />
+        <SectionTabs />
+      </Box>
+    </ProjectPageProvider>
   );
 };
 
