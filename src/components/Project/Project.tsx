@@ -4,9 +4,12 @@ import React, { useState } from "react";
 import { ProjectProps } from "./types";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Project = ({ project }: ProjectProps) => {
   const [hovered, setHovered] = useState(false);
+  const router = useRouter();
+
   return (
     <Box
       maxH={"22.818rem"}
@@ -16,6 +19,7 @@ const Project = ({ project }: ProjectProps) => {
       position={"relative"}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={() => router.push(`/project/${project.id}`)}
     >
       <Image
         src={project.image}

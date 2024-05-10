@@ -21,6 +21,7 @@ const theme = extendTheme({
     agrify_green: "#0CC14C",
     agrify_lavender: "#DAD7FE",
     gray_1: "#A6A6A6",
+    main_black: "#0F0F0F",
   },
 });
 
