@@ -2,6 +2,8 @@ import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { ChevronRight } from "lucide-react";
 import React from "react";
 import AvailableCarbon from "../AvailableCarbon/AvailableCarbon";
+import ProjectHighlights from "../ProjectHighlights/ProjectHighlights";
+import { highlights } from "./constants";
 
 const ProjectOverview = () => {
   return (
@@ -54,6 +56,7 @@ const ProjectOverview = () => {
           Key Insights
         </Text>
         <AvailableCarbon available_carbon={35670} total_carbon={45000} />
+        <ProjectHighlights highlights={highlights} />
       </Box>
     </Flex>
   );
