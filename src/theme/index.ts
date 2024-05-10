@@ -20,6 +20,7 @@ const theme = extendTheme({
   colors: {
     agrify_green: "#0CC14C",
     agrify_lavender: "#DAD7FE",
+    gray_1: "#A6A6A6",
   },
 });
 
