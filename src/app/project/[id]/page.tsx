@@ -5,6 +5,7 @@ import React from "react";
 import { project_overview } from "./constants";
 import SectionTabs from "@/components/SectionTabs/SectionTabs";
 import { ProjectPageProvider } from "@/context/ProjectsPageContext/ProjectsPageContext";
+import SectionParent from "@/components/SectionParent/SectionParent";
 
 const ProjectPage = () => {
   return (
@@ -13,6 +14,7 @@ const ProjectPage = () => {
         <BackButton />
         <ProjectIntro projectOverview={project_overview} />
         <SectionTabs />
+        <SectionParent />
       </Box>
     </ProjectPageProvider>
   );
