@@ -25,7 +25,7 @@ const ProjectHighlights = ({ highlights }: ProjectHighlightProps) => {
       >
         <HighlightBox
           title="Price"
-          content={String(highlights.price)}
+          content={`$${highlights.price.toLocaleString()}/tonne`}
           Icon={CircleDollarSign}
         />
         <HighlightBox
@@ -82,7 +82,7 @@ const HighlightBox = ({
           {title}
         </Text>
       </Flex>
-      <Text mt={"1rem"} color={"main_black_1"}>
+      <Text mt={"1rem"} color={"main_black_1"} fontWeight={450}>
         {content}
       </Text>
     </Flex>
