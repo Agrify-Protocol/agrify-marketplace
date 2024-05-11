@@ -7,6 +7,7 @@ import profile_pic from "../../assets/agrify_pfp.svg";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const Navbar = () => {
   const pathName = usePathname();
@@ -26,7 +27,9 @@ const Navbar = () => {
       justifyContent={"space-between"}
       px={"2.625rem"}
     >
-      <Image src={logo} alt="" />
+      <Link href={"/"}>
+        <Image src={logo} alt="" />
+      </Link>
 
       <Flex gap={"1rem"} justifyContent={"center"} w={"calc(100%/3)"}>
         <Button

@@ -7,4 +7,5 @@ export type ProjectProps = {
     name: string;
     impact: string;
   };
+  isGalleryItem?: boolean;
 };

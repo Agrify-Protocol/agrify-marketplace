@@ -4,6 +4,7 @@ import React from "react";
 import AvailableCarbon from "../AvailableCarbon/AvailableCarbon";
 import ProjectHighlights from "../ProjectHighlights/ProjectHighlights";
 import { highlights } from "./constants";
+import ProjectOverviewGallery from "../ProjectOverviewGallery/ProjectOverviewGallery";
 
 const ProjectOverview = () => {
   return (
@@ -57,6 +58,7 @@ const ProjectOverview = () => {
         </Text>
         <AvailableCarbon available_carbon={35670} total_carbon={45000} />
         <ProjectHighlights highlights={highlights} />
+        <ProjectOverviewGallery />
       </Box>
     </Flex>
   );
