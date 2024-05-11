@@ -8,4 +8,8 @@ export type ProjectProps = {
     impact: string;
   };
   isGalleryItem?: boolean;
+  handleGalleryClick?: (
+    image: string | StaticImageData,
+    metadata: string
+  ) => void;
 };

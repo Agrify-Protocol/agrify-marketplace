@@ -6,6 +6,7 @@ import ProjectOverview from "../ProjectOverview/ProjectOverview";
 import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import { sections } from "@/context/ProjectsPageContext/constants";
 import ProjectDetails from "../ProjectDetails/ProjectDetails";
+import ProjectGallery from "../ProjectGallery/ProjectGallery";
 
 const SectionParent = () => {
   const { currentSection } = useProjectPageContext();
@@ -13,6 +14,7 @@ const SectionParent = () => {
     <Box>
       {currentSection === sections[0] && <ProjectOverview />}
       {currentSection === sections[1] && <ProjectDetails />}
+      {currentSection === sections[3] && <ProjectGallery />}
     </Box>
   );
 };
