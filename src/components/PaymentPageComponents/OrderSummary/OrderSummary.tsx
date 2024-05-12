@@ -63,6 +63,8 @@ const OrderSummary = () => {
             alignItems={"center"}
             justifyContent={"space-between"}
             py={"0.75rem"}
+            borderY={"1px solid"}
+            borderColor={"gray_2"}
           >
             <Text fontWeight={450}>VAT</Text>
             <Text fontWeight={500}>${vat}</Text>
