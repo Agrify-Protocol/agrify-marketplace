@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import { Minus, Plus } from "lucide-react";
 import React, { useState } from "react";
 
@@ -41,8 +41,18 @@ const CounterButton = () => {
         alignItems={"center"}
         justifyContent={"center"}
       >
+        <Input
+          value={counter}
+          onChange={(e) => setCounter(Number(e.target.value))}
+          border={"none"}
+          fontSize={"1.5rem"}
+          px={0}
+          w={"45%"}
+          _focus={{ ring: "none" }}
+          type="number"
+        />
         <Text textAlign={"center"} fontSize={"1.5rem"} color={"black"}>
-          {counter} t/C02e
+          t/C02e
         </Text>
       </Flex>
 
