@@ -1,4 +1,4 @@
-import BackButton from "@/components/ProjectPage/BackButton/BackButton";
+import BackButton from "@/components/Layout/BackButton/BackButton";
 import ProjectIntro from "@/components/ProjectPage/ProjectIntro/ProjectIntro";
 import { Box } from "@chakra-ui/react";
 import React from "react";
