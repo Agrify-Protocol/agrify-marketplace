@@ -1,4 +1,4 @@
-import ProjectsContainer from "@/components/ProjectsContainer/ProjectsContainer";
+import ProjectsContainer from "@/components/ProjectPage/ProjectsContainer/ProjectsContainer";
 import { Box, Heading, Text, Flex } from "@chakra-ui/react";
 
 export default function Home() {

@@ -1,11 +1,11 @@
-import BackButton from "@/components/BackButton/BackButton";
-import ProjectIntro from "@/components/ProjectIntro/ProjectIntro";
+import BackButton from "@/components/ProjectPage/BackButton/BackButton";
+import ProjectIntro from "@/components/ProjectPage/ProjectIntro/ProjectIntro";
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import { project_overview } from "./constants";
-import SectionTabs from "@/components/SectionTabs/SectionTabs";
+import SectionTabs from "@/components/ProjectPage/SectionTabs/SectionTabs";
 import { ProjectPageProvider } from "@/context/ProjectsPageContext/ProjectsPageContext";
-import SectionParent from "@/components/SectionParent/SectionParent";
+import SectionParent from "@/components/ProjectPage/SectionParent/SectionParent";
 
 const ProjectPage = () => {
   return (

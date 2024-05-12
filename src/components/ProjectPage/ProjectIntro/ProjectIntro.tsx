@@ -1,8 +1,7 @@
 import { Box, Button, Flex, Grid, Text } from "@chakra-ui/react";
 import React from "react";
 import { ProjectIntroProps } from "./type";
-import backgroundImage from "../../assets/gradient-background.png";
-import { CircleAlert } from "lucide-react";
+import backgroundImage from "../../../assets/gradient-background.png";
 import ProjectIntroItem from "../ProjectIntroItem/ProjectIntroItem";
 
 const ProjectIntro = ({ projectOverview }: ProjectIntroProps) => {
