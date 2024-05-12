@@ -1,5 +1,5 @@
-import { Box, Button, Text } from "@chakra-ui/react";
-import { ChevronRight } from "lucide-react";
+import ViewSectionButton from "@/components/Layout/ViewSectionButton/ViewSectionButton";
+import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 
 const Storefront = () => {
@@ -21,14 +21,7 @@ const Storefront = () => {
         >
           Organic Produce Market
         </Text>
-        <Button
-          fontWeight={400}
-          bgColor={"gray_3"}
-          color={"secondary_foreground"}
-          rightIcon={<ChevronRight />}
-        >
-          Go to Produce Market
-        </Button>
+        <ViewSectionButton text="Go to Produce Market" bgColor="gray_3" />
       </Box>
     </Box>
   );

@@ -1,4 +1,5 @@
 export type ViewSolutionButtonProps = {
   text: string;
-  section: string;
+  section?: string;
+  bgColor?: string;
 };
