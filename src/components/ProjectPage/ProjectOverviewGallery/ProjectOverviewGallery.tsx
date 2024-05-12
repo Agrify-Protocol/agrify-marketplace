@@ -3,8 +3,11 @@ import React from "react";
 import Project from "../Project/Project";
 import { projects } from "../ProjectsContainer/constants";
 import { ChevronRight } from "lucide-react";
+import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
+import { sections } from "@/context/ProjectsPageContext/constants";
 
 const ProjectOverviewGallery = () => {
+  const { setCurrentSection } = useProjectPageContext();
   return (
     <Box mt={"3rem"}>
       <Text fontSize={"1.125rem"} color={"black"} p={"0.714rem"} pl={0}>
@@ -25,6 +28,7 @@ const ProjectOverviewGallery = () => {
         bgColor={"white"}
         color={"secondary_foreground"}
         rightIcon={<ChevronRight />}
+        onClick={() => setCurrentSection(sections[3])}
       >
         Go to gallery
       </Button>
