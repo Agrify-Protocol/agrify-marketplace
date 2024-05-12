@@ -1,8 +1,14 @@
+"use client";
+
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import CounterButton from "../CounterButton/CounterButton";
+import { useRouter } from "next/navigation";
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 
 const PurchaseBody = () => {
+  const router = useRouter();
+
   return (
     <Box
       bgColor={"white"}
@@ -106,6 +112,7 @@ const PurchaseBody = () => {
         fontWeight={500}
         color={"white"}
         borderRadius={"2.119rem"}
+        onClick={() => router.push("/payment")}
       >
         Continue Purchase
       </Button>
