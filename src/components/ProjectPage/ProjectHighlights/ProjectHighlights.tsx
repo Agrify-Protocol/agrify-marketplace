@@ -1,6 +1,5 @@
-import { Box, Button, Flex, Grid, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import {
-  ChevronRight,
   CircleAlert,
   CircleDollarSign,
   LocateFixed,
@@ -8,6 +7,8 @@ import {
 } from "lucide-react";
 import React from "react";
 import { HighlightBoxProps, ProjectHighlightProps } from "./types";
+import ViewSectionButton from "@/components/Layout/ViewSectionButton/ViewSectionButton";
+import { sections } from "@/context/ProjectsPageContext/constants";
 
 const ProjectHighlights = ({ highlights }: ProjectHighlightProps) => {
   return (
@@ -45,15 +46,7 @@ const ProjectHighlights = ({ highlights }: ProjectHighlightProps) => {
           hideBorder
         />
       </Grid>
-      <Button
-        mt={"2.5rem"}
-        fontWeight={400}
-        bgColor={"white"}
-        color={"secondary_foreground"}
-        rightIcon={<ChevronRight />}
-      >
-        View Insights
-      </Button>
+      <ViewSectionButton text="View Insights" section={sections[2]} />
     </Box>
   );
 };

@@ -1,13 +1,11 @@
-import { Box, Button, Grid, Text } from "@chakra-ui/react";
+import { Box, Grid, Text } from "@chakra-ui/react";
 import React from "react";
 import Project from "../Project/Project";
 import { projects } from "../ProjectsContainer/constants";
-import { ChevronRight } from "lucide-react";
-import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import { sections } from "@/context/ProjectsPageContext/constants";
+import ViewSectionButton from "@/components/Layout/ViewSectionButton/ViewSectionButton";
 
 const ProjectOverviewGallery = () => {
-  const { setCurrentSection } = useProjectPageContext();
   return (
     <Box mt={"3rem"}>
       <Text fontSize={"1.125rem"} color={"black"} p={"0.714rem"} pl={0}>
@@ -22,16 +20,7 @@ const ProjectOverviewGallery = () => {
         <Project project={projects[2]} isGalleryItem />
         <Project project={projects[2]} isGalleryItem />
       </Grid>
-      <Button
-        mt={"2.5rem"}
-        fontWeight={400}
-        bgColor={"white"}
-        color={"secondary_foreground"}
-        rightIcon={<ChevronRight />}
-        onClick={() => setCurrentSection(sections[3])}
-      >
-        Go to gallery
-      </Button>
+      <ViewSectionButton text="Go to gallery" section={sections[3]} />
     </Box>
   );
 };
