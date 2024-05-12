@@ -2,8 +2,8 @@
 
 import { Box, Button, Flex } from "@chakra-ui/react";
 import React from "react";
-import logo from "../../assets/agrify_logo.svg";
-import profile_pic from "../../assets/agrify_pfp.svg";
+import logo from "../../../assets/agrify_logo.svg";
+import profile_pic from "../../../assets/agrify_pfp.svg";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
