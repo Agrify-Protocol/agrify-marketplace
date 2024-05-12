@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import { Suisse } from "../fonts";
 import Navbar from "@/components/Layout/Navbar/Navbar";
+import { GlobalContextProvider } from "@/context/GlobalContext/GlobalContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={Suisse.className}>
-        <Navbar />
-        <Providers>{children}</Providers>
-      </body>
-    </html>
+    <GlobalContextProvider>
+      <html lang="en">
+        <body className={Suisse.className}>
+          <Navbar />
+          <Providers>{children}</Providers>
+        </body>
+      </html>
+    </GlobalContextProvider>
   );
 }
