@@ -1,12 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { ProjectProps } from "./types";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-const Project = ({ project }: ProjectProps) => {
+const Project = ({
+  project,
+  isGalleryItem,
+  handleGalleryClick,
+}: ProjectProps) => {
   const [hovered, setHovered] = useState(false);
+  const router = useRouter();
+
+  const pushToProductPage = () => {
+    router.push(`/project/${project.id}`);
+  };
+
   return (
     <Box
       maxH={"22.818rem"}
@@ -16,6 +27,14 @@ const Project = ({ project }: ProjectProps) => {
       position={"relative"}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={() => {
+        !isGalleryItem
+          ? pushToProductPage()
+          : handleGalleryClick?.(
+              project.image,
+              "Vulputate tempus nulla leo sed gravida diam commodo purus. Neque mattis odio sit volutpat duis. Metus suspendisse in ultricies morbi nullam vitae tortor hendrerit. "
+            );
+      }}
     >
       <Image
         src={project.image}
@@ -48,10 +67,16 @@ const Project = ({ project }: ProjectProps) => {
           py={"0.213rem"}
           px={"0.69rem"}
           borderRadius={"0.425rem"}
+          display={isGalleryItem ? "none" : "unset"}
         >
           {project.impact}
         </Text>
-        <Text maxW={"18.667rem"} fontSize={"1.5rem"} color={"white"}>
+        <Text
+          maxW={"18.667rem"}
+          fontSize={"1.5rem"}
+          color={"white"}
+          display={isGalleryItem ? "none" : "unset"}
+        >
           {project.name}
         </Text>
       </Flex>

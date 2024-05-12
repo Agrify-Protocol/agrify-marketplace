@@ -7,4 +7,9 @@ export type ProjectProps = {
     name: string;
     impact: string;
   };
+  isGalleryItem?: boolean;
+  handleGalleryClick?: (
+    image: string | StaticImageData,
+    metadata: string
+  ) => void;
 };
