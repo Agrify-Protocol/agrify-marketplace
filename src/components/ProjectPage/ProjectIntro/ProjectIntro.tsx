@@ -3,6 +3,7 @@ import React from "react";
 import { ProjectIntroProps } from "./type";
 import backgroundImage from "../../../assets/gradient-background.png";
 import ProjectIntroItem from "../ProjectIntroItem/ProjectIntroItem";
+import Link from "next/link";
 
 const ProjectIntro = ({ projectOverview }: ProjectIntroProps) => {
   return (
@@ -25,17 +26,19 @@ const ProjectIntro = ({ projectOverview }: ProjectIntroProps) => {
         >
           {projectOverview.name}
         </Text>
-        <Button
-          bgColor={"agrify_green"}
-          color={"white"}
-          borderRadius={"2rem"}
-          px={"2.5rem"}
-          py={"0.75rem"}
-          fontWeight={400}
-          lineHeight={"1.2rem"}
-        >
-          Buy Carbon Credits
-        </Button>
+        <Link href={"/purchase"}>
+          <Button
+            bgColor={"agrify_green"}
+            color={"white"}
+            borderRadius={"2rem"}
+            px={"2.5rem"}
+            py={"0.75rem"}
+            fontWeight={400}
+            lineHeight={"1.2rem"}
+          >
+            Buy Carbon Credits
+          </Button>
+        </Link>
       </Flex>
 
       <Grid
