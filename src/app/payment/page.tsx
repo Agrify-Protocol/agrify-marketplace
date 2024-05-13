@@ -1,5 +1,6 @@
 import BackButton from "@/components/Layout/BackButton/BackButton";
 import OrderSummary from "@/components/PaymentPageComponents/OrderSummary/OrderSummary";
+import PaymentOption from "@/components/PaymentPageComponents/PaymentOption/PaymentOption";
 import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
 
@@ -16,7 +17,9 @@ const Payment = () => {
         <BackButton />
         <OrderSummary />
       </Box>
-      <Box flexBasis={"50%"} minH={"100vh"} bgColor={"white"}></Box>
+      <Box flexBasis={"50%"} minH={"100vh"} bgColor={"white"}>
+        <PaymentOption />
+      </Box>
     </Flex>
   );
 };
