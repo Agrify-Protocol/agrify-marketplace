@@ -4,10 +4,19 @@ import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { OptionProps } from "./types";
 
+import { usePaymentContext } from "@/context/PaymentContext/PaymentContext";
+
 const PaymentOption = () => {
+  const { setPaymentStage } = usePaymentContext();
   const [chosenOption, setChosenOption] = useState(0);
   const handleSelect = (optionNumber: number) => {
     setChosenOption(optionNumber);
+  };
+
+  const handleSubmit = () => {
+    if (chosenOption == 2) {
+      setPaymentStage(2);
+    }
   };
 
   return (
@@ -35,6 +44,8 @@ const PaymentOption = () => {
         fontWeight={500}
         color={chosenOption > 0 ? "white" : "unset"}
         transition={"all 0.25s ease-in-out"}
+        onClick={handleSubmit}
+        disabled={!chosenOption}
       >
         Continue
       </Button>
