@@ -1,19 +1,14 @@
 "use client";
 
-import { carbonPrice } from "@/constants";
+import { carbonPrice, vat } from "@/constants";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 
 const OrderSummary = () => {
-  const { orderedAmount } = useGlobalContext();
-  const vat = 1.46;
-  const orderTotal = (orderedAmount * carbonPrice + vat).toLocaleString();
-  const subTotal = (orderedAmount * carbonPrice).toLocaleString("en", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  const { orderedAmount, orderTotal, subTotal } = useGlobalContext();
+
   return (
     <Box>
       <Box mt={"1.438rem"}>
