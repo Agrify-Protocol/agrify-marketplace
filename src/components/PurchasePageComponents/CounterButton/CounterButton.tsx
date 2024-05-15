@@ -1,17 +1,18 @@
 "use client";
 
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import { Minus, Plus } from "lucide-react";
 import React, { useState } from "react";
 
 const CounterButton = () => {
-  let [counter, setCounter] = useState(1000);
+  let { orderedAmount, setOrderedAmount } = useGlobalContext();
   type CounterAction = "inc" | "dec";
 
   const updateCounter = (action: CounterAction) => {
     if (action == "inc") {
-      setCounter(counter++);
-    } else setCounter(counter--);
+      setOrderedAmount(orderedAmount++);
+    } else setOrderedAmount(orderedAmount--);
   };
 
   return (
@@ -42,8 +43,8 @@ const CounterButton = () => {
         justifyContent={"center"}
       >
         <Input
-          value={counter}
-          onChange={(e) => setCounter(Number(e.target.value))}
+          value={orderedAmount}
+          onChange={(e) => setOrderedAmount(Number(e.target.value))}
           border={"none"}
           fontSize={"1.5rem"}
           px={0}

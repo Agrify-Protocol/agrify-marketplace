@@ -10,27 +10,20 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import agrify_icon from "../../assets/agrify_icon.svg";
 import Image from "next/image";
 import { Eye, EyeOff } from "lucide-react";
+import useObjectCheck from "@/hooks/useObjectCheck";
 
 const Login = () => {
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
-  const [detailsFilled, setDetailsFilled] = useState(false);
+  const detailsFilled = useObjectCheck(loginDetails);
 
   const updateDetails = (key: string, value: string) => {
     setLoginDetails({ ...loginDetails, [key]: value });
   };
-
-  useLayoutEffect(() => {
-    const values = Object.values(loginDetails);
-    const fieldsAreFilled = values.every((value) => {
-      return value != "";
-    });
-    setDetailsFilled(fieldsAreFilled);
-  }, [loginDetails]);
 
   return (
     <Flex minH={"100vh"} alignItems={"center"} justifyContent={"center"}>

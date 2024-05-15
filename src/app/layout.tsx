@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <GlobalContextProvider>
       <html lang="en">
-        <body className={Suisse.className}>
+        <body className={`${Suisse.className} ${inter.className}`}>
           <Navbar />
           <Providers>{children}</Providers>
         </body>

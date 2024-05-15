@@ -11,7 +11,10 @@ import Link from "next/link";
 
 const Navbar = () => {
   const pathName = usePathname();
-  const nullRoutes: { [x: string]: boolean } = { "/login": true };
+  const nullRoutes: { [x: string]: boolean } = {
+    "/login": true,
+    "/payment": true,
+  };
 
   if (nullRoutes[pathName]) {
     return null;

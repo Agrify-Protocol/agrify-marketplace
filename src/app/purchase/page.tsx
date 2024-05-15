@@ -1,6 +1,6 @@
 import BackButton from "@/components/Layout/BackButton/BackButton";
-import PurchaseBody from "@/components/PurchasePage/PurchaseBody/PurchaseBody";
-import PurchaseHeading from "@/components/PurchasePage/PurchaseHeading/PurchaseHeading";
+import PurchaseBody from "@/components/PurchasePageComponents/PurchaseBody/PurchaseBody";
+import PurchaseHeading from "@/components/PurchasePageComponents/PurchaseHeading/PurchaseHeading";
 import { Box } from "@chakra-ui/react";
 import React from "react";
 
