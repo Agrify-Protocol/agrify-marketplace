@@ -16,6 +16,8 @@ const Navbar = () => {
     "/payment": true,
   };
 
+  const isProfilePage = pathName == "/profile";
+
   if (nullRoutes[pathName]) {
     return null;
   }
@@ -35,14 +37,28 @@ const Navbar = () => {
       </Link>
 
       <Flex gap={"1rem"} justifyContent={"center"} w={"calc(100%/3)"}>
-        <Button
-          p={"5.71px 11.43px 5.71px 11.43px"}
-          borderRadius={"1.905rem"}
-          bgColor={"#EEEEEE"}
+        <Link
+          href={"/"}
+          style={{
+            backgroundColor: !isProfilePage ? "#EEEEEE" : "transparent",
+            borderRadius: "1.905rem",
+            padding: "5.71px 11.43px 5.71px 11.43px",
+            transition: "all 0.25s ease-in-out",
+          }}
         >
           Projects
-        </Button>
-        <Button>My Profile</Button>
+        </Link>
+        <Link
+          href={"/profile"}
+          style={{
+            backgroundColor: isProfilePage ? "#EEEEEE" : "transparent",
+            borderRadius: "1.905rem",
+            padding: "5.71px 11.43px 5.71px 11.43px",
+            transition: "all 0.25s ease-in-out",
+          }}
+        >
+          My Profile
+        </Link>
       </Flex>
 
       <Flex gap={"0.5rem"} alignItems={"center"}>
