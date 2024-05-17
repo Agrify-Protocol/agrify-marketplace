@@ -5,7 +5,7 @@ import ProjectHighlights from "../ProjectHighlights/ProjectHighlights";
 import { highlights } from "./constants";
 import ProjectOverviewGallery from "../ProjectOverviewGallery/ProjectOverviewGallery";
 import ViewSectionButton from "@/components/Layout/ViewSectionButton/ViewSectionButton";
-import { sections } from "@/context/ProjectsPageContext/constants";
+import { projectSections } from "@/context/ProjectsPageContext/constants";
 
 const ProjectOverview = () => {
   return (
@@ -29,7 +29,10 @@ const ProjectOverview = () => {
           my experience testing them and customizing how Pierre appears when
           added to the dock.
         </Text>
-        <ViewSectionButton text="View Project details" section={sections[1]} />
+        <ViewSectionButton
+          text="View Project details"
+          section={projectSections[1]}
+        />
       </Box>
       <Box
         width={"77%"}

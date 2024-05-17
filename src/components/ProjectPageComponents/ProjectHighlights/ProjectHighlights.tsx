@@ -8,7 +8,7 @@ import {
 import React from "react";
 import { HighlightBoxProps, ProjectHighlightProps } from "./types";
 import ViewSectionButton from "@/components/Layout/ViewSectionButton/ViewSectionButton";
-import { sections } from "@/context/ProjectsPageContext/constants";
+import { projectSections } from "@/context/ProjectsPageContext/constants";
 
 const ProjectHighlights = ({ highlights }: ProjectHighlightProps) => {
   return (
@@ -46,7 +46,7 @@ const ProjectHighlights = ({ highlights }: ProjectHighlightProps) => {
           hideBorder
         />
       </Grid>
-      <ViewSectionButton text="View Insights" section={sections[2]} />
+      <ViewSectionButton text="View Insights" section={projectSections[2]} />
     </Box>
   );
 };
