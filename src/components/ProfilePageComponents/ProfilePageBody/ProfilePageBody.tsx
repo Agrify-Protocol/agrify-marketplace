@@ -5,6 +5,7 @@ import { useProfileContext } from "@/context/ProfileContext/ProfileContext";
 import { profileSections } from "@/context/ProfileContext/constants";
 import { Box } from "@chakra-ui/react";
 import React from "react";
+import ContentParent from "../ContentParent/ContentParent";
 
 const ProfilePageBody = () => {
   const { currentSection, setCurrentSection } = useProfileContext();
@@ -15,6 +16,7 @@ const ProfilePageBody = () => {
         currentSection={currentSection}
         setCurrentSection={setCurrentSection}
       />
+      <ContentParent />
     </Box>
   );
 };
