@@ -28,6 +28,7 @@ const theme = extendTheme({
     main_black_2: "#0F0F0F",
     secondary_foreground: "#565656",
     agrify_yellow: "#F5CB25",
+    agrify_blue: "#008FF8",
   },
 });
 

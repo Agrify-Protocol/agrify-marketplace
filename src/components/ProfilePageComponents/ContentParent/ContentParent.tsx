@@ -6,9 +6,10 @@ import OverviewHolder from "../OverviewHolder/OverviewHolder";
 import { useProfileContext } from "@/context/ProfileContext/ProfileContext";
 import { profileSections } from "@/context/ProfileContext/constants";
 import FundedTable from "../FundedTable/FundedTable";
+import ReportsTable from "../ReportsTable/ReportsTable";
 
 const ContentParent = () => {
-  const { currentSection, setCurrentSection } = useProfileContext();
+  const { currentSection } = useProfileContext();
   return (
     <Box
       p={"2.814rem 2.893rem"}
@@ -18,6 +19,7 @@ const ContentParent = () => {
     >
       {currentSection == profileSections[0] && <OverviewHolder />}
       {currentSection == profileSections[1] && <FundedTable />}
+      {currentSection == profileSections[2] && <ReportsTable />}
     </Box>
   );
 };
