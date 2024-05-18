@@ -2,7 +2,7 @@
 
 import { ReactNode, createContext, useContext, useState } from "react";
 import { ProjectPageContextType } from "./types";
-import { sections } from "./constants";
+import { projectSections } from "./constants";
 
 const ProjectPageContext = createContext({} as ProjectPageContextType);
 
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const ProjectPageProvider = ({ children }: Props) => {
-  const [currentSection, setCurrentSection] = useState(sections[0]);
+  const [currentSection, setCurrentSection] = useState(projectSections[0]);
   return (
     <ProjectPageContext.Provider value={{ currentSection, setCurrentSection }}>
       {children}

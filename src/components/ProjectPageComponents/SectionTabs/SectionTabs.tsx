@@ -1,12 +1,14 @@
 "use client";
 
-import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
-import { sections } from "@/context/ProjectsPageContext/constants";
 import { Box, Button, Flex } from "@chakra-ui/react";
 import React from "react";
+import { SectionTabProps } from "./types";
 
-const SectionTabs = () => {
-  const { currentSection, setCurrentSection } = useProjectPageContext();
+const SectionTabs = ({
+  sections,
+  currentSection,
+  setCurrentSection,
+}: SectionTabProps) => {
   return (
     <Flex
       mt={"4rem"}

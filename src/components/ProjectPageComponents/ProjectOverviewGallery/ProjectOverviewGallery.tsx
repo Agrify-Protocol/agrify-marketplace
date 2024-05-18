@@ -2,7 +2,7 @@ import { Box, Grid, Text } from "@chakra-ui/react";
 import React from "react";
 import Project from "../Project/Project";
 import { projects } from "../ProjectsContainer/constants";
-import { sections } from "@/context/ProjectsPageContext/constants";
+import { projectSections } from "@/context/ProjectsPageContext/constants";
 import ViewSectionButton from "@/components/Layout/ViewSectionButton/ViewSectionButton";
 
 const ProjectOverviewGallery = () => {
@@ -20,7 +20,7 @@ const ProjectOverviewGallery = () => {
         <Project project={projects[2]} isGalleryItem />
         <Project project={projects[2]} isGalleryItem />
       </Grid>
-      <ViewSectionButton text="Go to gallery" section={sections[3]} />
+      <ViewSectionButton text="Go to gallery" section={projectSections[3]} />
     </Box>
   );
 };

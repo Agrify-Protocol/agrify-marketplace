@@ -1,4 +1,4 @@
-export const sections = [
+export const projectSections = [
   "Overview",
   "Project Details",
   "Insights",
