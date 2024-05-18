@@ -1,7 +1,11 @@
+"use client";
+
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
+import ReportModal from "../ReportModal/ReportModal";
 
 const ProfilePageHeading = () => {
+  const [showModal, setShowModal] = useState(false);
   return (
     <Flex w={"100%"} alignItems={"start"} justifyContent={"space-between"}>
       <Box>
@@ -30,9 +34,11 @@ const ProfilePageHeading = () => {
         color={"white"}
         borderRadius={"0.5rem"}
         fontWeight={400}
+        onClick={() => setShowModal(true)}
       >
         Generate Report
       </Button>
+      {showModal && <ReportModal setShowModal={setShowModal} />}
     </Flex>
   );
 };
