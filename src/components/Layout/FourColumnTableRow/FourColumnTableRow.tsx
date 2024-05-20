@@ -1,13 +1,12 @@
 import { Grid, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
 import { FourColumnTableRowProps } from "./types";
-import ReceiptModal from "../ReceiptModal/ReceiptModal";
 
 const FourColumnTableRow = ({
   name,
   payment_status,
   location_or_tonnes,
   date,
+  clickHandler,
 }: FourColumnTableRowProps) => {
   const statusColor: { [x: string]: { [x: string]: string } } = {
     pending: { bg: "rgba(245, 203, 37, 0.05)", color: "rgba(245, 203, 37, 1)" },
@@ -17,7 +16,20 @@ const FourColumnTableRow = ({
   const statusBgColor = statusColor[payment_status].bg;
   const statusTextColor = statusColor[payment_status].color;
 
-  const [showTxDetails, setShowTxDetails] = useState(false);
+  const handleClick = () => {
+    if (payment_status !== "pending") {
+      const data = {
+        type: "receipt",
+        data: {
+          amount: 502.64,
+          date_time: "12:00 March 14, 2024",
+          reference_code: "AGT88349990924",
+          tonnes: 50,
+        },
+      };
+      clickHandler?.(data);
+    }
+  };
 
   return (
     <Grid
@@ -26,7 +38,7 @@ const FourColumnTableRow = ({
       py={"1.25rem"}
       alignItems={"center"}
       cursor={"pointer"}
-      onClick={() => setShowTxDetails(true)}
+      onClick={handleClick}
     >
       <Text fontWeight={450} color={"black"} pl={"1.25rem"}>
         {name}
@@ -44,15 +56,6 @@ const FourColumnTableRow = ({
       </Text>
       <Text color={"black"}>{location_or_tonnes}</Text>
       <Text color={"black"}>{date}</Text>
-      {showTxDetails && (
-        <ReceiptModal
-          tonnes={50}
-          amount={502.64}
-          date_time="12:00 March 14, 2024"
-          reference_code="AGT88349990924"
-          closeModal={() => setShowTxDetails(false)}
-        />
-      )}
     </Grid>
   );
 };
