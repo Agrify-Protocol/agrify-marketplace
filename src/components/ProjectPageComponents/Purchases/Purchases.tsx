@@ -6,6 +6,7 @@ import { purchases } from "./constants";
 import FourColumnTableRow from "@/components/Layout/FourColumnTableRow/FourColumnTableRow";
 import ReceiptModal from "@/components/Layout/ReceiptModal/ReceiptModal";
 import { TransactionModalType } from "./types";
+import { useScreenFreeze } from "@/hooks/useScreenFreeze";
 
 const Purchases = () => {
   const [showTxDetails, setShowTxDetails] =
@@ -14,6 +15,8 @@ const Purchases = () => {
   const updateTxDetails = (data: TransactionModalType) => {
     setShowTxDetails(data);
   };
+
+  useScreenFreeze(showTxDetails != null);
 
   return (
     <Box

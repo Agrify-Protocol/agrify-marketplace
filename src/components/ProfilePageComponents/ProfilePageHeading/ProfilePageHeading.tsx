@@ -3,9 +3,11 @@
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import ReportModal from "../ReportModal/ReportModal";
+import { useScreenFreeze } from "@/hooks/useScreenFreeze";
 
 const ProfilePageHeading = () => {
   const [showModal, setShowModal] = useState(false);
+  useScreenFreeze(showModal);
   return (
     <Flex w={"100%"} alignItems={"start"} justifyContent={"space-between"}>
       <Box>
