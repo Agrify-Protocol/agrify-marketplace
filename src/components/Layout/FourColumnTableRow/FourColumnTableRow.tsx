@@ -1,14 +1,15 @@
 import { Grid, Text } from "@chakra-ui/react";
-import React from "react";
-import { FundTableRowProps } from "./types";
+import React, { useState } from "react";
+import { FourColumnTableRowProps } from "./types";
+import ReceiptModal from "../ReceiptModal/ReceiptModal";
 
-const FundedTableRow = ({
+const FourColumnTableRow = ({
   name,
   payment_status,
-  location,
-  start_date,
-}: FundTableRowProps) => {
-  const statusColor = {
+  location_or_tonnes,
+  date,
+}: FourColumnTableRowProps) => {
+  const statusColor: { [x: string]: { [x: string]: string } } = {
     pending: { bg: "rgba(245, 203, 37, 0.05)", color: "rgba(245, 203, 37, 1)" },
     confirmed: { bg: "rgba(12, 193, 76, 0.05)", color: "rgba(12, 193, 76, 1)" },
   };
@@ -16,12 +17,16 @@ const FundedTableRow = ({
   const statusBgColor = statusColor[payment_status].bg;
   const statusTextColor = statusColor[payment_status].color;
 
+  const [showTxDetails, setShowTxDetails] = useState(false);
+
   return (
     <Grid
       gridTemplateColumns={"2fr 1fr 1fr 1fr"}
       mb={"1.5rem"}
       py={"1.25rem"}
       alignItems={"center"}
+      cursor={"pointer"}
+      onClick={() => setShowTxDetails(true)}
     >
       <Text fontWeight={450} color={"black"} pl={"1.25rem"}>
         {name}
@@ -37,10 +42,19 @@ const FundedTableRow = ({
       >
         {payment_status}
       </Text>
-      <Text color={"black"}>{location}</Text>
-      <Text color={"black"}>{start_date}</Text>
+      <Text color={"black"}>{location_or_tonnes}</Text>
+      <Text color={"black"}>{date}</Text>
+      {showTxDetails && (
+        <ReceiptModal
+          tonnes={50}
+          amount={502.64}
+          date_time="12:00 March 14, 2024"
+          reference_code="AGT88349990924"
+          closeModal={() => setShowTxDetails(false)}
+        />
+      )}
     </Grid>
   );
 };
 
-export default FundedTableRow;
+export default FourColumnTableRow;

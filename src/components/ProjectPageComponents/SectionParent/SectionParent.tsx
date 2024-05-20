@@ -9,6 +9,7 @@ import ProjectDetails from "../ProjectDetails/ProjectDetails";
 import ProjectGallery from "../ProjectGallery/ProjectGallery";
 import Storefront from "../Storefront/Storefront";
 import ProjectInsights from "../ProjectInsights/ProjectInsights";
+import Purchases from "../Purchases/Purchases";
 
 const SectionParent = () => {
   const { currentSection } = useProjectPageContext();
@@ -19,6 +20,7 @@ const SectionParent = () => {
       {currentSection === projectSections[2] && <ProjectInsights />}
       {currentSection === projectSections[3] && <ProjectGallery />}
       {currentSection === projectSections[4] && <Storefront />}
+      {currentSection === projectSections[5] && <Purchases />}
     </Box>
   );
 };

@@ -4,4 +4,5 @@ export const projectSections = [
   "Insights",
   "Gallery",
   "Storefront",
+  "My Purchases",
 ];

@@ -1,7 +1,7 @@
 import { Box, Grid, Text } from "@chakra-ui/react";
 import React from "react";
 import { fundedProjects } from "./constants";
-import FundedTableRow from "../FundedTableRow/FundedTableRow";
+import FourColumnTableRow from "../../Layout/FourColumnTableRow/FourColumnTableRow";
 
 const FundedTable = () => {
   return (
@@ -23,12 +23,12 @@ const FundedTable = () => {
 
       {fundedProjects.map((project) => {
         return (
-          <FundedTableRow
+          <FourColumnTableRow
             key={project.id}
             name={project.name}
-            payment_status={project.payment_status as "pending" | "confirmed"}
-            location={project.location}
-            start_date={project.start_date}
+            payment_status={project.payment_status}
+            location_or_tonnes={project.location}
+            date={project.start_date}
           />
         );
       })}
