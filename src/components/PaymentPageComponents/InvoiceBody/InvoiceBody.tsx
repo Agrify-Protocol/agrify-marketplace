@@ -1,12 +1,10 @@
 "use client";
 
-import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
-import { usePaymentContext } from "@/context/PaymentContext/PaymentContext";
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import React from "react";
+import { InvoiceBodyProps } from "./types";
 
-const InvoiceBody = () => {
-  const { orderTotal } = useGlobalContext();
+const InvoiceBody = ({ order_total }: InvoiceBodyProps) => {
   return (
     <Box px={"1.25rem"}>
       <Box mb={"12.813rem"}>
@@ -63,7 +61,11 @@ const InvoiceBody = () => {
               )
             </Text>
             <Text fontWeight={700} color={"main_black_1"}>
-              ${orderTotal}
+              $
+              {order_total.toLocaleString("en", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </Text>
           </Flex>
         </Flex>

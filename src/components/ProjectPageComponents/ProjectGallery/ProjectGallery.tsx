@@ -5,6 +5,7 @@ import { projects } from "../ProjectsContainer/constants";
 import FullGalleryImage from "../FullGalleryImage/FullGalleryImage";
 import { ViewedProject } from "./types";
 import { StaticImageData } from "next/image";
+import { useScreenFreeze } from "@/hooks/useScreenFreeze";
 
 const ProjectGallery = () => {
   const [viewedProject, setViewedProject] = useState<ViewedProject | null>(
@@ -19,6 +20,8 @@ const ProjectGallery = () => {
   };
 
   const closeImage = () => setViewedProject(null);
+
+  useScreenFreeze(viewedProject != null);
 
   return (
     <Box>
