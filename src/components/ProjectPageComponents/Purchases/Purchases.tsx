@@ -5,8 +5,10 @@ import React, { useState } from "react";
 import { purchases } from "./constants";
 import FourColumnTableRow from "@/components/Layout/FourColumnTableRow/FourColumnTableRow";
 import ReceiptModal from "@/components/Layout/ReceiptModal/ReceiptModal";
-import { TransactionModalType } from "./types";
+import { InvoiceDataType, ReceiptType, TransactionModalType } from "./types";
 import { useScreenFreeze } from "@/hooks/useScreenFreeze";
+import InvoiceModal from "@/components/Layout/InvoiceModal/InvoiceModal";
+import { InvoiceData } from "@/context/PaymentContext/classes";
 
 const Purchases = () => {
   const [showTxDetails, setShowTxDetails] =
@@ -56,10 +58,25 @@ const Purchases = () => {
 
       {showTxDetails && showTxDetails.type == "receipt" && (
         <ReceiptModal
-          tonnes={showTxDetails.data.tonnes}
-          amount={showTxDetails.data.amount}
-          date_time={showTxDetails.data.date_time}
-          reference_code={showTxDetails.data.reference_code}
+          tonnes={(showTxDetails.data as ReceiptType).tonnes}
+          amount={(showTxDetails.data as ReceiptType).amount}
+          date_time={(showTxDetails.data as ReceiptType).date_time}
+          reference_code={(showTxDetails.data as ReceiptType).reference_code}
+          closeModal={() => setShowTxDetails(null)}
+        />
+      )}
+
+      {showTxDetails && showTxDetails.type == "invoice" && (
+        <InvoiceModal
+          invoice_data={
+            new InvoiceData(
+              (showTxDetails.data as InvoiceDataType).client_name,
+              (showTxDetails.data as InvoiceDataType).number,
+              (showTxDetails.data as InvoiceDataType).due_date
+            )
+          }
+          order_total={(showTxDetails.data as InvoiceDataType).amount}
+          tonnes={(showTxDetails.data as InvoiceDataType).tonnes}
           closeModal={() => setShowTxDetails(null)}
         />
       )}

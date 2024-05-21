@@ -1,11 +1,10 @@
 "use client";
 
-import { usePaymentContext } from "@/context/PaymentContext/PaymentContext";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
+import { InvoiceHeaderProps } from "./types";
 
-const InvoiceHeader = () => {
-  const { invoiceData } = usePaymentContext();
+const InvoiceHeader = ({ invoice_data }: InvoiceHeaderProps) => {
   return (
     <Flex
       bg={"#F5F5F5"}
@@ -33,7 +32,7 @@ const InvoiceHeader = () => {
             color={"main_black_1"}
             my={"0.438rem"}
           >
-            {invoiceData.client_name}
+            {invoice_data.client_name}
           </Text>
           <Text fontSize={"0.625rem"} color={"main_black_1"}>
             Address / Contact Info

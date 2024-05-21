@@ -28,6 +28,18 @@ const FourColumnTableRow = ({
         },
       };
       clickHandler?.(data);
+    } else {
+      const data = {
+        type: "invoice",
+        data: {
+          amount: 100001.46,
+          client_name: "Client Name",
+          number: "12345678",
+          due_date: "December 22, 2024",
+          tonnes: 1000,
+        },
+      };
+      clickHandler?.(data);
     }
   };
 
