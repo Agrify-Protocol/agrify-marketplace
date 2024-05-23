@@ -1,24 +1,18 @@
 "use client";
 
-import {
-  Button,
-  Flex,
-  FormControl,
-  Heading,
-  Input,
-  Link,
-  Text,
-} from "@chakra-ui/react";
+import { Flex, FormControl } from "@chakra-ui/react";
 import React, { useState } from "react";
-import agrify_icon from "../../assets/agrify_icon.svg";
-import Image from "next/image";
 import useObjectCheck from "@/hooks/useObjectCheck";
-import PasswordInput from "@/components/Layout/PasswordInput/PasswordInput";
-import AuthPageHeading from "@/components/Layout/AuthPageHeading/AuthPageHeading";
+import AuthPageHeading from "@/components/AuthPageComponents/AuthPageHeading/AuthPageHeading";
+import AuthPageBottom from "@/components/AuthPageComponents/AuthPageBottom/AuthPageBottom";
+import PasswordInput from "@/components/Common/PasswordInput/PasswordInput";
+import CustomInput from "@/components/Common/CustomInput/CustomInput";
+import AuthPageSubmitButton from "@/components/AuthPageComponents/AuthPageSubmitButton/AuthPageSubmitButton";
 
 const Login = () => {
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   const detailsFilled = useObjectCheck(loginDetails);
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateDetails = (key: string, value: string) => {
     setLoginDetails({ ...loginDetails, [key]: value });
@@ -32,7 +26,6 @@ const Login = () => {
         w={"34.875rem"}
         minH={"25.384rem"}
       >
-        <Image src={agrify_icon} alt="" />
         <AuthPageHeading
           main_heading="Sign Into your account"
           sub_heading="Enter you credentials to access your account"
@@ -46,39 +39,39 @@ const Login = () => {
             flexDir={"column"}
             gap={"1rem"}
           >
-            <Input
-              id="user_email"
+            <CustomInput
               type="email"
               placeholder="Enter email address"
-              h={"3.5rem"}
-              borderRadius={"1rem"}
-              bg={"white"}
               value={loginDetails.email}
-              onChange={(e) => updateDetails("email", e.target.value)}
+              changeFunc={(e: React.ChangeEvent<HTMLInputElement>) =>
+                updateDetails("email", e.target.value)
+              }
             />
             <PasswordInput
               value={loginDetails.password}
-              changeFunc={updateDetails}
+              changeFunc={(e: React.ChangeEvent<HTMLInputElement>) =>
+                updateDetails("password", e.target.value)
+              }
             />
           </Flex>
-          <Button
-            minH={"3.5rem"}
-            borderRadius={"1rem"}
-            bg={detailsFilled ? "agrify_green" : "white"}
-            color={detailsFilled ? "white" : "unset"}
-            w={"100%"}
-            mb={"2.404rem"}
-          >
-            Sign In
-          </Button>
+          <AuthPageSubmitButton
+            detailsFilled={detailsFilled}
+            isLoading={isLoading}
+          />
         </FormControl>
 
-        <Text>
-          New to Agrify? <Link color={"#0CC14C"}>Sign Up</Link>
-        </Text>
-        <Text mt={"1rem"}>
-          Forgot Password? <Link color={"#0CC14C"}>Reset Password</Link>
-        </Text>
+        <AuthPageBottom
+          line_1={{
+            question: "New to Agrify?",
+            link_text: "Sign Up",
+            route: "/signup",
+          }}
+          line_2={{
+            question: "Forgot Password?",
+            link_text: "Reset Password",
+            route: "/reset-password",
+          }}
+        />
       </Flex>
     </Flex>
   );

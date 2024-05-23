@@ -4,6 +4,7 @@ import { Box, Input } from "@chakra-ui/react";
 import { Eye, EyeOff } from "lucide-react";
 import React, { useState } from "react";
 import { PasswordInputProps } from "./types";
+import CustomInput from "../CustomInput/CustomInput";
 
 const PasswordInput = ({ value, changeFunc }: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,15 +24,11 @@ const PasswordInput = ({ value, changeFunc }: PasswordInputProps) => {
       >
         {!showPassword ? <Eye color="#A6A6A6" /> : <EyeOff color="#A6A6A6" />}
       </Box>
-      <Input
-        id="user_password"
+      <CustomInput
         type={!showPassword ? "password" : "text"}
         placeholder="Password"
-        h={"3.5rem"}
-        borderRadius={"1rem"}
-        bg={"white"}
         value={value}
-        onChange={(e) => changeFunc("password", e.target.value)}
+        changeFunc={changeFunc}
       />
     </Box>
   );

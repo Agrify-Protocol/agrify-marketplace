@@ -8,7 +8,7 @@ import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import ProfileModal from "../ProfileModal/ProfileModal";
+import ProfileModal from "../../Layout/ProfileModal/ProfileModal";
 
 const Navbar = () => {
   const pathName = usePathname();
