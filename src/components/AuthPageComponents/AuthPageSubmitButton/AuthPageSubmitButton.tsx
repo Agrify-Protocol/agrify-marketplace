@@ -7,6 +7,8 @@ import { AuthPageSubmitBtnProps } from "./types";
 const AuthPageSubmitButton = ({
   detailsFilled,
   isLoading,
+  text,
+  onClickFunc,
 }: AuthPageSubmitBtnProps) => {
   return (
     <Button
@@ -17,8 +19,10 @@ const AuthPageSubmitButton = ({
       w={"100%"}
       mb={"2.404rem"}
       fontFamily={Inter_Display.style.fontFamily}
+      fontWeight={500}
       justifyContent={"space-between"}
       textAlign={"center"}
+      onClick={onClickFunc}
       rightIcon={
         isLoading ? (
           <LoaderCircle
@@ -28,7 +32,9 @@ const AuthPageSubmitButton = ({
         ) : undefined
       }
     >
-      <Box w={"calc(100% - 24px)"}>Sign In</Box>
+      <Box w={"calc(100% - 24px)"} fontFamily={Inter_Display.style.fontFamily}>
+        {text}
+      </Box>
     </Button>
   );
 };

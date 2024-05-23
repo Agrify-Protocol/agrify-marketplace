@@ -55,6 +55,7 @@ const Login = () => {
             />
           </Flex>
           <AuthPageSubmitButton
+            text="Sign In"
             detailsFilled={detailsFilled}
             isLoading={isLoading}
           />

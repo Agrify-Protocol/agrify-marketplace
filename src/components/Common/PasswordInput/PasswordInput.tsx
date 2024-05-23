@@ -6,7 +6,13 @@ import React, { useState } from "react";
 import { PasswordInputProps } from "./types";
 import CustomInput from "../CustomInput/CustomInput";
 
-const PasswordInput = ({ value, changeFunc }: PasswordInputProps) => {
+const PasswordInput = ({
+  value,
+  changeFunc,
+  placeholder = "Password",
+  label = "",
+  subtext = "",
+}: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <Box position={"relative"}>
@@ -26,9 +32,11 @@ const PasswordInput = ({ value, changeFunc }: PasswordInputProps) => {
       </Box>
       <CustomInput
         type={!showPassword ? "password" : "text"}
-        placeholder="Password"
+        placeholder={placeholder}
         value={value}
         changeFunc={changeFunc}
+        label={label}
+        subtext={subtext}
       />
     </Box>
   );

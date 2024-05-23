@@ -15,6 +15,8 @@ const Navbar = () => {
   const nullRoutes: { [x: string]: boolean } = {
     "/login": true,
     "/payment": true,
+    "/reset-password": true,
+    "/signup": true,
   };
   const isProfilePage = pathName == "/profile";
 

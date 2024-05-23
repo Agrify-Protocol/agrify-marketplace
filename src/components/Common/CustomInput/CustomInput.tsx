@@ -1,6 +1,8 @@
-import { Box, FormLabel, Input, Text } from "@chakra-ui/react";
+import { Box, Flex, FormLabel, Input, Text } from "@chakra-ui/react";
 import React from "react";
 import { CustomInputProps } from "./types";
+import { Inter_Display } from "@/fonts";
+import { Dot } from "lucide-react";
 
 const CustomInput = ({
   type,
@@ -11,8 +13,10 @@ const CustomInput = ({
   placeholder,
 }: CustomInputProps) => {
   return (
-    <Box>
-      <FormLabel>{label}</FormLabel>
+    <Box fontFamily={Inter_Display.style.fontFamily}>
+      <FormLabel fontFamily={Inter_Display.style.fontFamily} fontWeight={400}>
+        {label}
+      </FormLabel>
       <Input
         type={type}
         placeholder={placeholder}
@@ -23,8 +27,14 @@ const CustomInput = ({
         onChange={changeFunc}
         color={"gray_1"}
         _placeholder={{ color: "gray_1" }}
+        fontFamily={Inter_Display.style.fontFamily}
       />
-      <Text>{subtext}</Text>
+      {subtext && (
+        <Flex alignItems={"center"}>
+          <Dot color="#A6A6A6" />
+          <Text fontSize={"0.875rem"}>{subtext}</Text>
+        </Flex>
+      )}
     </Box>
   );
 };
