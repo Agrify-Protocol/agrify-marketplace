@@ -12,6 +12,7 @@ import {
 import React, { useRef } from "react";
 import { ReportModalProps } from "./types";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { Inter_Display } from "@/fonts";
 
 const ReportModal = ({ setShowModal }: ReportModalProps) => {
   const modalRef = useRef(null);
@@ -49,12 +50,14 @@ const ReportModal = ({ setShowModal }: ReportModalProps) => {
         </Text>
 
         <FormControl>
-          <FormLabel fontFamily={"__Inter_aaf875"}>Report Name</FormLabel>
+          <FormLabel fontFamily={Inter_Display.style.fontFamily}>
+            Report Name
+          </FormLabel>
           <Input
             placeholder="Enter name"
             w={"100%"}
             h={"3.5rem"}
-            fontFamily={"__Inter_aaf875"}
+            fontFamily={Inter_Display.style.fontFamily}
             borderRadius={"1rem"}
             mb={"3rem"}
           />

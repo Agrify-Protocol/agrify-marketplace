@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { BackButtonProps } from "./types";
+import { Inter_Display } from "@/fonts";
 
 const BackButton = ({ customFunction }: BackButtonProps) => {
   const router = useRouter();
@@ -16,7 +17,7 @@ const BackButton = ({ customFunction }: BackButtonProps) => {
     <Button
       color={"gray_1"}
       fontWeight={500}
-      fontFamily={"__Inter_aaf875"}
+      fontFamily={Inter_Display.style.fontFamily}
       leftIcon={<ArrowLeft size={"16px"} />}
       onClick={handleClick}
       bgColor={"transparent"}

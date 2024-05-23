@@ -20,6 +20,13 @@ export default function RootLayout({
   return (
     <GlobalContextProvider>
       <html lang="en">
+        <head>
+          <link
+            rel="icon"
+            href="../assets/agrify_icon.svg"
+            type="image/svg+xml"
+          />
+        </head>
         <body className={`${Suisse.className} ${inter.className}`}>
           <Navbar />
           <Providers>{children}</Providers>

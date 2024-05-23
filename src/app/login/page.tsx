@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Box,
   Button,
   Flex,
   FormControl,
@@ -13,13 +12,12 @@ import {
 import React, { useState } from "react";
 import agrify_icon from "../../assets/agrify_icon.svg";
 import Image from "next/image";
-import { Eye, EyeOff } from "lucide-react";
 import useObjectCheck from "@/hooks/useObjectCheck";
 import PasswordInput from "@/components/Layout/PasswordInput/PasswordInput";
+import AuthPageHeading from "@/components/Layout/AuthPageHeading/AuthPageHeading";
 
 const Login = () => {
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
-  const [showPassword, setShowPassword] = useState(false);
   const detailsFilled = useObjectCheck(loginDetails);
 
   const updateDetails = (key: string, value: string) => {
@@ -35,15 +33,10 @@ const Login = () => {
         minH={"25.384rem"}
       >
         <Image src={agrify_icon} alt="" />
-        <Heading
-          fontWeight={500}
-          fontSize={"2rem"}
-          lineHeight={"38.4px"}
-          mt={"3rem"}
-        >
-          Sign Into your account
-        </Heading>
-        <Text mt={"1rem"}>Enter you credentials to access your account</Text>
+        <AuthPageHeading
+          main_heading="Sign Into your account"
+          sub_heading="Enter you credentials to access your account"
+        />
 
         <FormControl>
           <Flex
