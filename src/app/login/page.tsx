@@ -15,6 +15,7 @@ import agrify_icon from "../../assets/agrify_icon.svg";
 import Image from "next/image";
 import { Eye, EyeOff } from "lucide-react";
 import useObjectCheck from "@/hooks/useObjectCheck";
+import PasswordInput from "@/components/Layout/PasswordInput/PasswordInput";
 
 const Login = () => {
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
@@ -62,36 +63,10 @@ const Login = () => {
               value={loginDetails.email}
               onChange={(e) => updateDetails("email", e.target.value)}
             />
-            <Box position={"relative"}>
-              <Box
-                position={"absolute"}
-                top={"calc(3.5rem / 2)"}
-                bottom={"calc(3.5rem / 2)"}
-                right={"1rem"}
-                zIndex={1}
-                display={"flex"}
-                alignItems={"center"}
-                justifyContent={"center"}
-                cursor={"pointer"}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {!showPassword ? (
-                  <Eye color="#A6A6A6" />
-                ) : (
-                  <EyeOff color="#A6A6A6" />
-                )}
-              </Box>
-              <Input
-                id="user_password"
-                type={!showPassword ? "password" : "text"}
-                placeholder="Password"
-                h={"3.5rem"}
-                borderRadius={"1rem"}
-                bg={"white"}
-                value={loginDetails.password}
-                onChange={(e) => updateDetails("password", e.target.value)}
-              />
-            </Box>
+            <PasswordInput
+              value={loginDetails.password}
+              changeFunc={updateDetails}
+            />
           </Flex>
           <Button
             minH={"3.5rem"}
