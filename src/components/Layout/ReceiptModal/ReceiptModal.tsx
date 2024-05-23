@@ -4,6 +4,7 @@ import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import BackButton from "../BackButton/BackButton";
 import { ReceiptModalProps } from "./types";
+import { Inter_Display } from "@/fonts";
 
 const ReceiptModal = ({
   amount,
@@ -29,7 +30,7 @@ const ReceiptModal = ({
         my={"6.438rem"}
         ml={"auto"}
         mr={"2.145rem"}
-        fontFamily={"__Inter_aaf875"}
+        fontFamily={Inter_Display.style.fontFamily}
       >
         <BackButton customFunction={closeModal} />
         <Text fontWeight={500} color={"main_black_1"} fontSize={"1.5rem"}>

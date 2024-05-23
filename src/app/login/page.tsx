@@ -1,25 +1,17 @@
 "use client";
 
-import {
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  Heading,
-  Input,
-  Link,
-  Text,
-} from "@chakra-ui/react";
+import { Flex, FormControl } from "@chakra-ui/react";
 import React, { useState } from "react";
-import agrify_icon from "../../assets/agrify_icon.svg";
-import Image from "next/image";
-import { Eye, EyeOff } from "lucide-react";
 import useObjectCheck from "@/hooks/useObjectCheck";
+import AuthPageHeading from "@/components/AuthPageComponents/AuthPageHeading/AuthPageHeading";
+import AuthPageBottom from "@/components/AuthPageComponents/AuthPageBottom/AuthPageBottom";
+import CustomInput from "@/components/Common/CustomInput/CustomInput";
+import AuthPageSubmitButton from "@/components/AuthPageComponents/AuthPageSubmitButton/AuthPageSubmitButton";
 
 const Login = () => {
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
-  const [showPassword, setShowPassword] = useState(false);
   const detailsFilled = useObjectCheck(loginDetails);
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateDetails = (key: string, value: string) => {
     setLoginDetails({ ...loginDetails, [key]: value });
@@ -33,16 +25,10 @@ const Login = () => {
         w={"34.875rem"}
         minH={"25.384rem"}
       >
-        <Image src={agrify_icon} alt="" />
-        <Heading
-          fontWeight={500}
-          fontSize={"2rem"}
-          lineHeight={"38.4px"}
-          mt={"3rem"}
-        >
-          Sign Into your account
-        </Heading>
-        <Text mt={"1rem"}>Enter you credentials to access your account</Text>
+        <AuthPageHeading
+          main_heading="Sign Into your account"
+          sub_heading="Enter you credentials to access your account"
+        />
 
         <FormControl>
           <Flex
@@ -52,65 +38,39 @@ const Login = () => {
             flexDir={"column"}
             gap={"1rem"}
           >
-            <Input
-              id="user_email"
+            <CustomInput
               type="email"
               placeholder="Enter email address"
-              h={"3.5rem"}
-              borderRadius={"1rem"}
-              bg={"white"}
               value={loginDetails.email}
-              onChange={(e) => updateDetails("email", e.target.value)}
+              changeFunc={(e) => updateDetails("email", e.target.value)}
             />
-            <Box position={"relative"}>
-              <Box
-                position={"absolute"}
-                top={"calc(3.5rem / 2)"}
-                bottom={"calc(3.5rem / 2)"}
-                right={"1rem"}
-                zIndex={1}
-                display={"flex"}
-                alignItems={"center"}
-                justifyContent={"center"}
-                cursor={"pointer"}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {!showPassword ? (
-                  <Eye color="#A6A6A6" />
-                ) : (
-                  <EyeOff color="#A6A6A6" />
-                )}
-              </Box>
-              <Input
-                id="user_password"
-                type={!showPassword ? "password" : "text"}
-                placeholder="Password"
-                h={"3.5rem"}
-                borderRadius={"1rem"}
-                bg={"white"}
-                value={loginDetails.password}
-                onChange={(e) => updateDetails("password", e.target.value)}
-              />
-            </Box>
+            <CustomInput
+              type="password"
+              placeholder="Password"
+              value={loginDetails.password}
+              changeFunc={(e) => updateDetails("password", e.target.value)}
+            />
           </Flex>
-          <Button
-            minH={"3.5rem"}
-            borderRadius={"1rem"}
-            bg={detailsFilled ? "agrify_green" : "white"}
-            color={detailsFilled ? "white" : "unset"}
-            w={"100%"}
-            mb={"2.404rem"}
-          >
-            Sign In
-          </Button>
+          <AuthPageSubmitButton
+            text="Sign In"
+            detailsFilled={detailsFilled}
+            isLoading={isLoading}
+            onClickFunc={() => {}}
+          />
         </FormControl>
 
-        <Text>
-          New to Agrify? <Link color={"#0CC14C"}>Sign Up</Link>
-        </Text>
-        <Text mt={"1rem"}>
-          Forgot Password? <Link color={"#0CC14C"}>Reset Password</Link>
-        </Text>
+        <AuthPageBottom
+          line_1={{
+            question: "New to Agrify?",
+            link_text: "Sign Up",
+            route: "/signup",
+          }}
+          line_2={{
+            question: "Forgot Password?",
+            link_text: "Reset Password",
+            route: "/reset-password",
+          }}
+        />
       </Flex>
     </Flex>
   );

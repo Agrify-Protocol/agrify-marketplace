@@ -3,6 +3,7 @@ import React from "react";
 import BackButton from "../BackButton/BackButton";
 import { InvoiceModalProps } from "./types";
 import Invoice from "@/components/PaymentPageComponents/Invoice/Invoice";
+import { Inter_Display } from "@/fonts";
 
 const InvoiceModal = ({
   closeModal,
@@ -26,7 +27,7 @@ const InvoiceModal = ({
         my={"6.438rem"}
         ml={"auto"}
         mr={"2.145rem"}
-        fontFamily={"__Inter_aaf875"}
+        fontFamily={Inter_Display.style.fontFamily}
         maxH={"37.5rem"}
         overflowY={"auto"}
       >

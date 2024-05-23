@@ -5,6 +5,7 @@ import InvoiceBody from "../InvoiceBody/InvoiceBody";
 import InvoiceFooter from "../InvoiceFooter/InvoiceFooter";
 import Link from "next/link";
 import { InvoiceProps } from "./types";
+import { Inter_Display } from "@/fonts";
 
 const Invoice = ({ invoice_data, order_total, isCompleted }: InvoiceProps) => {
   return (
@@ -14,7 +15,7 @@ const Invoice = ({ invoice_data, order_total, isCompleted }: InvoiceProps) => {
         p={"0.625rem"}
         py={"2.75rem"}
         mx={"auto"}
-        fontFamily={"__Inter_aaf875"}
+        fontFamily={Inter_Display.style.fontFamily}
       >
         <InvoiceHeader invoice_data={invoice_data} />
         <InvoiceBody order_total={order_total} />
