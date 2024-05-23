@@ -6,3 +6,9 @@ export type CustomInputProps = {
   placeholder: string;
   changeFunc: (...args: any[]) => void;
 };
+
+export type EyeContainerProps = {
+  showPassword: boolean;
+  setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
+  setDynamicType: React.Dispatch<React.SetStateAction<string>>;
+};

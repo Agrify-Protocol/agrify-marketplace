@@ -3,28 +3,16 @@
 import AuthPageHeading from "@/components/AuthPageComponents/AuthPageHeading/AuthPageHeading";
 import AuthPageSubmitButton from "@/components/AuthPageComponents/AuthPageSubmitButton/AuthPageSubmitButton";
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
-import PasswordInput from "@/components/Common/PasswordInput/PasswordInput";
 import useObjectCheck from "@/hooks/useObjectCheck";
 import { Box, Flex, FormControl } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-class ResetData {
-  verification_code;
-  new_password;
-  new_password2;
-  constructor(
-    verification_code: string,
-    new_password: string,
-    new_password2: string
-  ) {
-    this.verification_code = verification_code;
-    this.new_password = new_password;
-    this.new_password2 = new_password2;
-  }
-}
-
 const Reset = () => {
-  const [resetData, setResetData] = useState(new ResetData("", "", ""));
+  const [resetData, setResetData] = useState({
+    verification_code: "",
+    new_password: "",
+    new_password2: "",
+  });
   const [stage, setStage] = useState(1);
   const handleChange = (key: string, value: string) => {
     setResetData({ ...resetData, [key]: value });
@@ -55,14 +43,16 @@ const Reset = () => {
             </Box>
           ) : (
             <Flex flexDir={"column"} gap={"1.5rem"} mb={"3rem"}>
-              <PasswordInput
+              <CustomInput
+                type="password"
                 value={resetData.new_password}
                 label="New Password"
                 placeholder="preterlude 2930"
                 subtext="6 Characters Minimum"
                 changeFunc={(e) => handleChange("new_password", e.target.value)}
               />
-              <PasswordInput
+              <CustomInput
+                type="password"
                 value={resetData.new_password2}
                 label="Re-type Password"
                 placeholder="Re-type Password"

@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import useObjectCheck from "@/hooks/useObjectCheck";
 import AuthPageHeading from "@/components/AuthPageComponents/AuthPageHeading/AuthPageHeading";
 import AuthPageBottom from "@/components/AuthPageComponents/AuthPageBottom/AuthPageBottom";
-import PasswordInput from "@/components/Common/PasswordInput/PasswordInput";
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
 import AuthPageSubmitButton from "@/components/AuthPageComponents/AuthPageSubmitButton/AuthPageSubmitButton";
 
@@ -43,21 +42,20 @@ const Login = () => {
               type="email"
               placeholder="Enter email address"
               value={loginDetails.email}
-              changeFunc={(e: React.ChangeEvent<HTMLInputElement>) =>
-                updateDetails("email", e.target.value)
-              }
+              changeFunc={(e) => updateDetails("email", e.target.value)}
             />
-            <PasswordInput
+            <CustomInput
+              type="password"
+              placeholder="Password"
               value={loginDetails.password}
-              changeFunc={(e: React.ChangeEvent<HTMLInputElement>) =>
-                updateDetails("password", e.target.value)
-              }
+              changeFunc={(e) => updateDetails("password", e.target.value)}
             />
           </Flex>
           <AuthPageSubmitButton
             text="Sign In"
             detailsFilled={detailsFilled}
             isLoading={isLoading}
+            onClickFunc={() => {}}
           />
         </FormControl>
 
