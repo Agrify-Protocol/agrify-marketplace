@@ -43,7 +43,6 @@ const InsightBarChart = () => {
         data: [55, 30, 37, 51, 56, 33, 60, 45, 55, 57, 38, 50],
         backgroundColor: "#02A0FC",
         borderRadius: Number.MAX_VALUE,
-        barThickness: 14,
         borderSkipped: false,
       },
       {
@@ -51,7 +50,6 @@ const InsightBarChart = () => {
         data: [50, 50, 34, 56, 48, 38, 56, 50, 55, 54, 33, 45],
         backgroundColor: "#34B53A",
         borderRadius: Number.MAX_VALUE,
-        barThickness: 14,
         borderSkipped: false,
       },
     ],
@@ -70,7 +68,7 @@ const InsightBarChart = () => {
       },
     },
     datasets: {
-      bar: { barPercentage: 0.2, categoryPercentage: 0.5, indexAxis: "x" },
+      bar: { barPercentage: 0.6, categoryPercentage: 0.6 },
     },
     scales: {
       x: {
