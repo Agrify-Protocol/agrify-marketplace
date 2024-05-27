@@ -9,6 +9,7 @@ const AuthPageSubmitButton = ({
   isLoading,
   text,
   onClickFunc,
+  isDisabled,
 }: AuthPageSubmitBtnProps) => {
   return (
     <Button
@@ -23,6 +24,7 @@ const AuthPageSubmitButton = ({
       justifyContent={"space-between"}
       textAlign={"center"}
       onClick={onClickFunc}
+      isDisabled={isDisabled}
       rightIcon={
         isLoading ? (
           <LoaderCircle

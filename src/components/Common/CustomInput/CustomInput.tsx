@@ -13,6 +13,7 @@ const CustomInput = ({
   label,
   subtext,
   placeholder,
+  id,
 }: CustomInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [dynamicType, setDynamicType] = useState("password");
@@ -23,6 +24,7 @@ const CustomInput = ({
       </FormLabel>
       <Box position={"relative"}>
         <Input
+          id={id}
           type={type !== "password" ? type : dynamicType}
           placeholder={placeholder}
           h={"3.5rem"}
