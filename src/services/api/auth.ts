@@ -6,8 +6,7 @@ export const loginUser = async (data: LoginData) => {
     const request = await authInstance.post("/login", data);
     return request.data;
   } catch (error: any) {
-    const errorMessage = error.response.data.error;
-    throw new Error(errorMessage);
+    errorCreation(error);
   }
 };
 
@@ -23,7 +22,20 @@ export const registerUser = async (data: RegisterData) => {
     const request = await authInstance.post("/register", data);
     return request.data;
   } catch (error: any) {
-    const errorMessage = error.response.data.error;
-    throw new Error(errorMessage);
+    errorCreation(error);
   }
+};
+
+export const getVerificationToken = async (data: { email: string }) => {
+  try {
+    const request = await authInstance.post("/requestResetPassword", data);
+    return request.data;
+  } catch (error) {
+    errorCreation(error);
+  }
+};
+
+const errorCreation = (error: any) => {
+  const errorMessage = error.response.data.error;
+  throw new Error(errorMessage);
 };
