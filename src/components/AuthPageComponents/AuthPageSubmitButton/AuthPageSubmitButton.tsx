@@ -3,12 +3,14 @@ import { Box, Button } from "@chakra-ui/react";
 import { LoaderCircle } from "lucide-react";
 import React from "react";
 import { AuthPageSubmitBtnProps } from "./types";
+import { spinAnimation } from "./helpers";
 
 const AuthPageSubmitButton = ({
   detailsFilled,
   isLoading,
   text,
   onClickFunc,
+  isDisabled,
 }: AuthPageSubmitBtnProps) => {
   return (
     <Button
@@ -23,12 +25,18 @@ const AuthPageSubmitButton = ({
       justifyContent={"space-between"}
       textAlign={"center"}
       onClick={onClickFunc}
+      isDisabled={isDisabled}
       rightIcon={
         isLoading ? (
-          <LoaderCircle
-            opacity={0.4}
-            style={{ display: "block", marginLeft: "auto" }}
-          />
+          <Box animation={spinAnimation}>
+            <LoaderCircle
+              opacity={0.4}
+              style={{
+                display: "block",
+                marginLeft: "auto",
+              }}
+            />
+          </Box>
         ) : undefined
       }
     >

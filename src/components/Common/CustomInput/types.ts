@@ -1,4 +1,5 @@
 export type CustomInputProps = {
+  id: string;
   type: string;
   value: string;
   label?: string;

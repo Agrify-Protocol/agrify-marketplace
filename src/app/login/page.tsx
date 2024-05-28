@@ -1,20 +1,47 @@
 "use client";
 
-import { Flex, FormControl } from "@chakra-ui/react";
+import {
+  Flex,
+  FormControl,
+  UseToastOptions,
+  position,
+  useToast,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import useObjectCheck from "@/hooks/useObjectCheck";
 import AuthPageHeading from "@/components/AuthPageComponents/AuthPageHeading/AuthPageHeading";
 import AuthPageBottom from "@/components/AuthPageComponents/AuthPageBottom/AuthPageBottom";
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
 import AuthPageSubmitButton from "@/components/AuthPageComponents/AuthPageSubmitButton/AuthPageSubmitButton";
+import { loginUser } from "@/services/api/auth";
 
 const Login = () => {
+  const toast = useToast();
+  const errorToast: UseToastOptions = {
+    title: "Invalid credentials!",
+    description: "Incorrect username or password",
+    status: "error",
+    duration: 5000,
+    isClosable: true,
+    position: "top-right",
+  };
+
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   const detailsFilled = useObjectCheck(loginDetails);
   const [isLoading, setIsLoading] = useState(false);
 
   const updateDetails = (key: string, value: string) => {
     setLoginDetails({ ...loginDetails, [key]: value });
+  };
+
+  const handleLogin = () => {
+    loginUser(loginDetails)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch(() => {
+        toast(errorToast);
+      });
   };
 
   return (
@@ -39,12 +66,14 @@ const Login = () => {
             gap={"1rem"}
           >
             <CustomInput
+              id="email_input"
               type="email"
               placeholder="Enter email address"
               value={loginDetails.email}
               changeFunc={(e) => updateDetails("email", e.target.value)}
             />
             <CustomInput
+              id="password_input"
               type="password"
               placeholder="Password"
               value={loginDetails.password}
@@ -55,7 +84,8 @@ const Login = () => {
             text="Sign In"
             detailsFilled={detailsFilled}
             isLoading={isLoading}
-            onClickFunc={() => {}}
+            onClickFunc={handleLogin}
+            isDisabled={!detailsFilled}
           />
         </FormControl>
 
