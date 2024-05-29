@@ -1,46 +1,22 @@
 "use client";
 
-import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useState } from "react";
-import { AvailableCarbonProps, PillsData } from "./types";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import React, { useRef } from "react";
+import { AvailableCarbonProps } from "./types";
 import { CircleAlert } from "lucide-react";
+import useProgressPills from "@/hooks/useProgressPills";
 
 const AvailableCarbon = ({
   available_carbon,
   total_carbon,
 }: AvailableCarbonProps) => {
-  const numberOfPills = 42;
+  const pillContainerRef = useRef(null);
 
-  const arrayOfObjects: PillsData = useMemo(() => {
-    const data: PillsData = [];
-    for (let i = 0; i < numberOfPills; i++) {
-      data.push({ id: i + 1, isFilled: false });
-    }
-    return data;
-  }, []);
-
-  const [pills, setPills] = useState(arrayOfObjects);
-
-  useEffect(() => {
-    const fillPills = () => {
-      const availablePercentage = Math.ceil(
-        (available_carbon / total_carbon) * 100
-      );
-
-      const numberOfPillsToFill = Math.ceil(
-        (availablePercentage / 100) * numberOfPills
-      );
-
-      const updatedArrayOfPillObjects = pills.map((object) => {
-        if (object.id < numberOfPillsToFill) {
-          return { ...object, isFilled: true };
-        } else return { ...object, isFilled: false };
-      });
-
-      setPills(updatedArrayOfPillObjects);
-    };
-    fillPills();
-  }, [available_carbon, total_carbon]);
+  const pills = useProgressPills({
+    pillContainerRef,
+    available_carbon,
+    total_carbon,
+  });
 
   return (
     <Flex flexDir={"column"}>
@@ -61,6 +37,7 @@ const AvailableCarbon = ({
         justifyContent={"space-between"}
         gap={"0.25rem"}
         mt={"1.5rem"}
+        ref={pillContainerRef}
       >
         {pills.map((pill) => {
           return (
