@@ -20,7 +20,7 @@ const useProgressPills = ({
 }: UseProgressPillsType) => {
   const [pills, setPills] = useState<PillsData>([]);
 
-  useLayoutEffect(() => {
+  const calculatePills = () => {
     if (pillContainerRef.current) {
       let pillCount = 0;
       const container = pillContainerRef.current as HTMLDivElement;
@@ -53,6 +53,11 @@ const useProgressPills = ({
 
       setPills(updatedPillsData);
     }
+  };
+
+  useLayoutEffect(() => {
+    calculatePills();
+    window.addEventListener("resize", calculatePills);
   }, [pillContainerRef, available_carbon, total_carbon]);
 
   return pills;
