@@ -1,7 +1,11 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import { GlobalContextProps, GlobalContextType } from "./types";
+import {
+  AllProjectsResponse,
+  GlobalContextProps,
+  GlobalContextType,
+} from "./types";
 import { carbonPrice, vat } from "@/constants";
 
 const GlobalContext = createContext({} as GlobalContextType);
@@ -14,9 +18,20 @@ export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
     maximumFractionDigits: 2,
   });
 
+  const [allProjects, setAllProjects] = useState<AllProjectsResponse | null>(
+    null
+  );
+
   return (
     <GlobalContext.Provider
-      value={{ orderedAmount, setOrderedAmount, orderTotal, subTotal }}
+      value={{
+        orderedAmount,
+        setOrderedAmount,
+        orderTotal,
+        subTotal,
+        allProjects,
+        setAllProjects,
+      }}
     >
       {children}
     </GlobalContext.Provider>

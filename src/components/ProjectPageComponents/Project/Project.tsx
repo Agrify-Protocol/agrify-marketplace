@@ -15,8 +15,10 @@ const Project = ({
   const router = useRouter();
 
   const pushToProductPage = () => {
-    router.push(`/project/${project.id}`);
+    router.push(`/project/${project._id}`);
   };
+
+  const projectImpact = project.tags.length;
 
   return (
     <Box
@@ -31,14 +33,16 @@ const Project = ({
         !isGalleryItem
           ? pushToProductPage()
           : handleGalleryClick?.(
-              project.image,
+              project.coverImage,
               "Vulputate tempus nulla leo sed gravida diam commodo purus. Neque mattis odio sit volutpat duis. Metus suspendisse in ultricies morbi nullam vitae tortor hendrerit. "
             );
       }}
     >
       <Image
-        src={project.image}
+        src={project.coverImage}
         alt=""
+        width={389.7}
+        height={365}
         objectFit="contain"
         style={{
           width: "100%",
@@ -69,7 +73,7 @@ const Project = ({
           borderRadius={"0.425rem"}
           display={isGalleryItem ? "none" : "unset"}
         >
-          {project.impact}
+          {`${projectImpact}+ SDG Impact`}
         </Text>
         <Text
           maxW={"18.667rem"}
@@ -77,7 +81,7 @@ const Project = ({
           color={"white"}
           display={isGalleryItem ? "none" : "unset"}
         >
-          {project.name}
+          {project.title}
         </Text>
       </Flex>
     </Box>

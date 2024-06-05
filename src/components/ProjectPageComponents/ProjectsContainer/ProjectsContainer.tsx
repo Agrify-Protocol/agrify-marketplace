@@ -1,9 +1,21 @@
+"use client";
+
 import { Grid } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { projects } from "./constants";
 import Project from "../Project/Project";
+import { getAllProjects } from "@/services/api/projects";
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 
 const ProjectsContainer = () => {
+  const { allProjects, setAllProjects } = useGlobalContext();
+
+  useEffect(() => {
+    getAllProjects(1).then((result) => {
+      setAllProjects(result);
+    });
+  }, []);
+
   return (
     <Grid
       bg={"white"}
@@ -13,8 +25,8 @@ const ProjectsContainer = () => {
       gap={"2.44rem"}
       gridTemplateColumns={"repeat(auto-fill, minmax(17.5rem, 1fr))"}
     >
-      {projects.map((project) => {
-        return <Project key={project.id} project={project} />;
+      {allProjects?.projects.map((project) => {
+        return <Project key={project._id} project={project} />;
       })}
     </Grid>
   );

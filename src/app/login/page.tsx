@@ -14,18 +14,14 @@ import AuthPageBottom from "@/components/AuthPageComponents/AuthPageBottom/AuthP
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
 import AuthPageSubmitButton from "@/components/AuthPageComponents/AuthPageSubmitButton/AuthPageSubmitButton";
 import { loginUser } from "@/services/api/auth";
+import { errorToast, successToast } from "./constants";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const toast = useToast();
-  const errorToast: UseToastOptions = {
-    title: "Invalid credentials!",
-    description: "Incorrect username or password",
-    status: "error",
-    duration: 5000,
-    isClosable: true,
-    position: "top-right",
-  };
-
+  const router = useRouter();
+  const { setLoginResponse } = useAuthContext();
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   const detailsFilled = useObjectCheck(loginDetails);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,12 +31,18 @@ const Login = () => {
   };
 
   const handleLogin = () => {
+    setIsLoading(true);
     loginUser(loginDetails)
       .then((result) => {
-        console.log(result);
+        setLoginResponse(result);
+        toast(successToast);
+        router.push("/");
       })
       .catch(() => {
         toast(errorToast);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 

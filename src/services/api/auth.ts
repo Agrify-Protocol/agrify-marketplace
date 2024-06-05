@@ -1,4 +1,4 @@
-import { authInstance } from "../axios/authInstance";
+import { authInstance } from "../axios/instances";
 
 type LoginData = { email: string; password: string };
 export const loginUser = async (data: LoginData) => {
