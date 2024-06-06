@@ -9,7 +9,8 @@ import { refreshAccessToken } from "@/services/api/auth";
 const AuthContext = createContext({} as AuthContextType);
 
 export const AuthContextProvider = ({ children }: Props) => {
-  const storedUser = localStorage.getItem("carbon_user");
+  const storedUser =
+    typeof window !== "undefined" && window.localStorage.getItem("carbon_user");
   const parsedStoredUser = storedUser
     ? (JSON.parse(storedUser) as LoginResponse)
     : null;
@@ -20,7 +21,11 @@ export const AuthContextProvider = ({ children }: Props) => {
   useEffect(() => {
     if (loginResponse) {
       updateBearerToken(projectsInstance, loginResponse.token);
-      localStorage.setItem("carbon_user", JSON.stringify(loginResponse));
+      typeof window !== "undefined" &&
+        window.localStorage.setItem(
+          "carbon_user",
+          JSON.stringify(loginResponse)
+        );
     }
   }, [loginResponse]);
 
