@@ -53,7 +53,7 @@ const Confirmation = () => {
           mb={"3.288rem"}
         >
           <Image
-            src={projects[2].image}
+            src={projects[2].coverImage}
             alt=""
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
