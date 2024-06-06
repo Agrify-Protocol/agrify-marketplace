@@ -6,18 +6,11 @@ import Project from "../Project/Project";
 import { projectSections } from "@/context/ProjectsPageContext/constants";
 import ViewSectionButton from "@/components/Layout/ViewSectionButton/ViewSectionButton";
 import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
-import { Project as ProjectType } from "@/context/GlobalContext/types";
+import { createFauxProjects } from "@/utils/createFauxProjects";
 
 const ProjectOverviewGallery = () => {
   const { project } = useProjectPageContext();
-  const fauxProjects = project?.images.map((image) => {
-    return {
-      _id: image._id,
-      title: image.description,
-      tags: [],
-      coverImage: image.image,
-    } as ProjectType;
-  });
+  const fauxProjects = createFauxProjects(project!);
   return (
     <Box mt={"3rem"}>
       <Text fontSize={"1.125rem"} color={"black"} p={"0.714rem"} pl={0}>

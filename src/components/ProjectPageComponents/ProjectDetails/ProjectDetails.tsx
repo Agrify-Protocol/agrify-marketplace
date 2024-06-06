@@ -1,7 +1,10 @@
+"use client";
+import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 
 const ProjectDetails = () => {
+  const { project } = useProjectPageContext();
   return (
     <Box
       border={"1.1px solid rgba(0,0,0,0.1)"}
@@ -17,15 +20,14 @@ const ProjectDetails = () => {
         <Box mb={"1.649rem"}>
           <Text>Title of Project</Text>
           <Text fontSize={"1.25rem"} color={"black"}>
-            Oil Palm & Cocoa Agroforestry Project in Rivers State
+            {project?.title}
           </Text>
         </Box>
 
         <Box mb={"1.649rem"}>
           <Text>Description</Text>
           <Text fontSize={"1.25rem"} color={"black"}>
-            An Agroforestry project combining Oil Palm & Cocoa cultivation with
-            carbon capture and community development in Rivers state, Nigeria
+            {project?.description}
           </Text>
         </Box>
 
@@ -39,7 +41,7 @@ const ProjectDetails = () => {
         <Box mb={"1.649rem"}>
           <Text>Location</Text>
           <Text fontSize={"1.25rem"} color={"black"}>
-            Rivers State, Nigeria
+            {`${project?.location}, ${project?.countryOfOrigin}`}
           </Text>
         </Box>
 

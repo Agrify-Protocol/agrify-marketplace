@@ -32,10 +32,7 @@ const Project = ({
       onClick={() => {
         !isGalleryItem
           ? pushToProductPage()
-          : handleGalleryClick?.(
-              project.coverImage,
-              "Vulputate tempus nulla leo sed gravida diam commodo purus. Neque mattis odio sit volutpat duis. Metus suspendisse in ultricies morbi nullam vitae tortor hendrerit. "
-            );
+          : handleGalleryClick?.(project.coverImage, project.title);
       }}
     >
       <Image

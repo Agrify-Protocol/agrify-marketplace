@@ -1,3 +1,4 @@
+"use client";
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Project from "../Project/Project";
@@ -6,8 +7,11 @@ import FullGalleryImage from "../FullGalleryImage/FullGalleryImage";
 import { ViewedProject } from "./types";
 import { StaticImageData } from "next/image";
 import { useScreenFreeze } from "@/hooks/useScreenFreeze";
+import { createFauxProjects } from "@/utils/createFauxProjects";
+import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
 
 const ProjectGallery = () => {
+  const { project } = useProjectPageContext();
   const [viewedProject, setViewedProject] = useState<ViewedProject | null>(
     null
   );
@@ -22,6 +26,8 @@ const ProjectGallery = () => {
   const closeImage = () => setViewedProject(null);
 
   useScreenFreeze(viewedProject != null);
+
+  const galleryItems = createFauxProjects(project!);
 
   return (
     <Box>
@@ -39,26 +45,16 @@ const ProjectGallery = () => {
         gap={"0.813rem"}
         gridTemplateColumns={"repeat(auto-fill, minmax(20rem, 1fr))"}
       >
-        <Project
-          project={projects[2]}
-          isGalleryItem
-          handleGalleryClick={handleGalleryClick}
-        />
-        <Project
-          project={projects[2]}
-          isGalleryItem
-          handleGalleryClick={handleGalleryClick}
-        />
-        <Project
-          project={projects[2]}
-          isGalleryItem
-          handleGalleryClick={handleGalleryClick}
-        />
-        <Project
-          project={projects[2]}
-          isGalleryItem
-          handleGalleryClick={handleGalleryClick}
-        />
+        {galleryItems.map((item) => {
+          return (
+            <Project
+              key={item._id}
+              project={item}
+              isGalleryItem
+              handleGalleryClick={handleGalleryClick}
+            />
+          );
+        })}
       </Grid>
 
       {viewedProject && (
