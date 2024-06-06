@@ -6,17 +6,11 @@ import backgroundImage from "../../../assets/gradient-background.png";
 import ProjectIntroItem from "../ProjectIntroItem/ProjectIntroItem";
 import Link from "next/link";
 import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
+import { getCreditPeriod } from "@/utils/getCreditPeriod";
 
-const ProjectIntro = ({ projectOverview }: ProjectIntroProps) => {
+const ProjectIntro = () => {
   const { project } = useProjectPageContext();
 
-  const crediting_period =
-    project &&
-    `${new Date(project?.creditStartDate)
-      .toDateString()
-      .substring(3)} - ${new Date(project?.creditEndDate)
-      .toDateString()
-      .substring(3)}`;
   return (
     <Box
       mt={"2.5rem"}
@@ -76,7 +70,7 @@ const ProjectIntro = ({ projectOverview }: ProjectIntroProps) => {
         />
         <ProjectIntroItem
           title="Crediting Period"
-          content={crediting_period as string}
+          content={getCreditPeriod(project!)}
           padding_x="1.358rem"
           hideBorder
         />

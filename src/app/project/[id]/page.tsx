@@ -4,7 +4,6 @@ import BackButton from "@/components/Layout/BackButton/BackButton";
 import ProjectIntro from "@/components/ProjectPageComponents/ProjectIntro/ProjectIntro";
 import { Box, Flex } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { project_overview } from "./constants";
 import SectionTabs from "@/components/ProjectPageComponents/SectionTabs/SectionTabs";
 import {
   ProjectPageProvider,
@@ -12,7 +11,7 @@ import {
 } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import SectionParent from "@/components/ProjectPageComponents/SectionParent/SectionParent";
 import { projectSections } from "@/context/ProjectsPageContext/constants";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { getSingleProject } from "@/services/api/projects";
 import { LoaderCircle } from "lucide-react";
 import { motion } from "framer-motion";
@@ -44,7 +43,7 @@ const ProjectPageBody = () => {
       <BackButton />
       {project ? (
         <>
-          <ProjectIntro projectOverview={project_overview} />
+          <ProjectIntro />
           <SectionTabs
             sections={projectSections}
             currentSection={currentSection}

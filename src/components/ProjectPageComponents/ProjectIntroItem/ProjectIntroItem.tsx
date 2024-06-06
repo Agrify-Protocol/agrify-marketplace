@@ -14,6 +14,7 @@ const ProjectIntroItem = ({
       borderRight={hideBorder ? "transparent" : "1px solid rgba(0,0,0,0.1)"}
       py={"1.813rem"}
       px={padding_x ? padding_x : "unset"}
+      pr={"0.5rem"}
       alignItems={"center"}
       gap={"0.75rem"}
     >
@@ -23,7 +24,11 @@ const ProjectIntroItem = ({
           {content}
         </Text>
       </Box>
-      <CircleAlert size={"0.875rem"} color="rgba(1, 19, 8, 0.5)" />
+      <CircleAlert
+        size={"0.875rem"}
+        style={{ minWidth: "0.875rem", minHeight: "0.875rem" }}
+        color="rgba(1, 19, 8, 0.5)"
+      />
     </Flex>
   );
 };

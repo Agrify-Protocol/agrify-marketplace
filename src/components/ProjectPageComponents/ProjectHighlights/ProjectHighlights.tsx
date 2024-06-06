@@ -75,7 +75,12 @@ const HighlightBox = ({
           {title}
         </Text>
       </Flex>
-      <Text mt={"1rem"} color={"main_black_1"} fontWeight={450}>
+      <Text
+        mt={"1rem"}
+        color={"main_black_1"}
+        textAlign={"center"}
+        fontWeight={450}
+      >
         {content}
       </Text>
     </Flex>
