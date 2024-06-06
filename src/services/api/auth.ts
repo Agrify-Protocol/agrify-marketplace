@@ -1,4 +1,4 @@
-import { authInstance } from "../axios/authInstance";
+import { authInstance } from "../axios/instances";
 
 type LoginData = { email: string; password: string };
 export const loginUser = async (data: LoginData) => {
@@ -29,6 +29,15 @@ export const registerUser = async (data: RegisterData) => {
 export const getVerificationToken = async (data: { email: string }) => {
   try {
     const request = await authInstance.post("/requestResetPassword", data);
+    return request.data;
+  } catch (error) {
+    errorCreation(error);
+  }
+};
+
+export const refreshAccessToken = async (token: { refreshToken: string }) => {
+  try {
+    const request = await authInstance.post("/refreshToken", token);
     return request.data;
   } catch (error) {
     errorCreation(error);

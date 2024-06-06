@@ -45,6 +45,8 @@ const FullGalleryImage = ({
           <Image
             src={image}
             alt=""
+            width={684}
+            height={684}
             style={{
               width: "100%",
               height: "100%",

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import { ProjectProps } from "./types";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
@@ -15,8 +15,10 @@ const Project = ({
   const router = useRouter();
 
   const pushToProductPage = () => {
-    router.push(`/project/${project.id}`);
+    router.push(`/project/${project._id}`);
   };
+
+  const projectImpact = project.tags.length;
 
   return (
     <Box
@@ -31,18 +33,20 @@ const Project = ({
         !isGalleryItem
           ? pushToProductPage()
           : handleGalleryClick?.(
-              project.image,
+              project.coverImage,
               "Vulputate tempus nulla leo sed gravida diam commodo purus. Neque mattis odio sit volutpat duis. Metus suspendisse in ultricies morbi nullam vitae tortor hendrerit. "
             );
       }}
     >
       <Image
-        src={project.image}
+        src={project.coverImage}
         alt=""
-        objectFit="contain"
+        width={389.7}
+        height={365}
         style={{
           width: "100%",
           height: "100%",
+          objectFit: "cover",
           transition: "all 0.25s ease-in-out",
           scale: hovered ? "1.1" : "1",
         }}
@@ -69,7 +73,7 @@ const Project = ({
           borderRadius={"0.425rem"}
           display={isGalleryItem ? "none" : "unset"}
         >
-          {project.impact}
+          {`${projectImpact}+ SDG Impact`}
         </Text>
         <Text
           maxW={"18.667rem"}
@@ -77,7 +81,7 @@ const Project = ({
           color={"white"}
           display={isGalleryItem ? "none" : "unset"}
         >
-          {project.name}
+          {project.title}
         </Text>
       </Flex>
     </Box>

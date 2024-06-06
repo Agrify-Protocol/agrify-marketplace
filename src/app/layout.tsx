@@ -5,6 +5,7 @@ import { Suisse } from "../fonts";
 import Navbar from "@/components/Common/Navbar/Navbar";
 import { GlobalContextProvider } from "@/context/GlobalContext/GlobalContext";
 import Head from "next/head";
+import { AuthContextProvider } from "@/context/AuthContext/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,15 +21,17 @@ export default function RootLayout({
 }>) {
   return (
     <GlobalContextProvider>
-      <html lang="en">
-        <Head>
-          <link rel="icon" href="./agrify_icon.svg" type="image/svg+xml" />
-        </Head>
-        <body className={`${Suisse.className} ${inter.className}`}>
-          <Navbar />
-          <Providers>{children}</Providers>
-        </body>
-      </html>
+      <AuthContextProvider>
+        <html lang="en">
+          <Head>
+            <link rel="icon" href="./agrify_icon.svg" type="image/svg+xml" />
+          </Head>
+          <body className={`${Suisse.className} ${inter.className}`}>
+            <Navbar />
+            <Providers>{children}</Providers>
+          </body>
+        </html>
+      </AuthContextProvider>
     </GlobalContextProvider>
   );
 }
