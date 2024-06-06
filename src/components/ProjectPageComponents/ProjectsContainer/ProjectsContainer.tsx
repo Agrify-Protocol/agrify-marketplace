@@ -6,15 +6,19 @@ import { projects } from "./constants";
 import Project from "../Project/Project";
 import { getAllProjects } from "@/services/api/projects";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
 
 const ProjectsContainer = () => {
+  const { loginResponse } = useAuthContext();
   const { allProjects, setAllProjects } = useGlobalContext();
 
   useEffect(() => {
-    getAllProjects(1).then((result) => {
-      setAllProjects(result);
-    });
-  }, []);
+    if (loginResponse) {
+      getAllProjects(1).then((result) => {
+        setAllProjects(result);
+      });
+    }
+  }, [loginResponse]);
 
   return (
     <Grid

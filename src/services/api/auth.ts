@@ -35,6 +35,15 @@ export const getVerificationToken = async (data: { email: string }) => {
   }
 };
 
+export const refreshAccessToken = async (token: { refreshToken: string }) => {
+  try {
+    const request = await authInstance.post("/refreshToken", token);
+    return request.data;
+  } catch (error) {
+    errorCreation(error);
+  }
+};
+
 const errorCreation = (error: any) => {
   const errorMessage = error.response.data.error;
   throw new Error(errorMessage);

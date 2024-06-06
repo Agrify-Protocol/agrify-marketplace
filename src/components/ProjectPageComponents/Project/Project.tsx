@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import { ProjectProps } from "./types";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
@@ -43,10 +43,10 @@ const Project = ({
         alt=""
         width={389.7}
         height={365}
-        objectFit="contain"
         style={{
           width: "100%",
           height: "100%",
+          objectFit: "cover",
           transition: "all 0.25s ease-in-out",
           scale: hovered ? "1.1" : "1",
         }}
