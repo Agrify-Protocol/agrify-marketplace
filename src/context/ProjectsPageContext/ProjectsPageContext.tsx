@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode, createContext, useContext, useState } from "react";
-import { ProjectPageContextType } from "./types";
+import { ProjectPageContextType, SingleProjectResponse } from "./types";
 import { projectSections } from "./constants";
 
 const ProjectPageContext = createContext({} as ProjectPageContextType);
@@ -11,9 +11,12 @@ type Props = {
 };
 
 export const ProjectPageProvider = ({ children }: Props) => {
+  const [project, setProject] = useState<SingleProjectResponse | null>(null);
   const [currentSection, setCurrentSection] = useState(projectSections[0]);
   return (
-    <ProjectPageContext.Provider value={{ currentSection, setCurrentSection }}>
+    <ProjectPageContext.Provider
+      value={{ project, setProject, currentSection, setCurrentSection }}
+    >
       {children}
     </ProjectPageContext.Provider>
   );
