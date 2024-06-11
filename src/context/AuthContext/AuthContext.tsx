@@ -31,15 +31,21 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const fifteen_mins_in_millisecs = 900000;
-    setInterval(() => {
-      if (loginResponse) {
-        refreshAccessToken({ refreshToken: loginResponse.refreshToken }).then(
-          (result) => {
+    if (loginResponse) {
+      const handleRefresh = () => {
+        refreshAccessToken({ refreshToken: loginResponse.refreshToken })
+          .then((result) => {
             setLoginResponse({ ...loginResponse, token: result.token });
-          }
-        );
-      }
-    }, fifteen_mins_in_millisecs);
+          })
+          .finally(() => {
+            setTimeout(() => {
+              handleRefresh();
+            }, fifteen_mins_in_millisecs);
+          });
+      };
+
+      handleRefresh();
+    }
   }, []);
 
   return (

@@ -1,13 +1,23 @@
+"use client";
+
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import AvailableCarbon from "../AvailableCarbon/AvailableCarbon";
 import ProjectHighlights from "../ProjectHighlights/ProjectHighlights";
-import { highlights } from "./constants";
 import ProjectOverviewGallery from "../ProjectOverviewGallery/ProjectOverviewGallery";
 import ViewSectionButton from "@/components/Layout/ViewSectionButton/ViewSectionButton";
 import { projectSections } from "@/context/ProjectsPageContext/constants";
+import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
+import { getCreditPeriod } from "@/utils/getCreditPeriod";
 
 const ProjectOverview = () => {
+  const { project } = useProjectPageContext();
+  const highlights = {
+    price: project?.price!,
+    location: `${project?.location}, ${project?.countryOfOrigin}`,
+    crediting_period: getCreditPeriod(project!)!,
+    contract_type: project?.typeOfProject!,
+  };
   return (
     <Flex>
       <Box width={"23%"} py={"1.494rem"}>
@@ -48,11 +58,15 @@ const ProjectOverview = () => {
           fontWeight={450}
           fontSize={"1.125rem"}
           p={"0.714rem"}
+          pl={"unset"}
           mb={"1.5rem"}
         >
           Key Insights
         </Text>
-        <AvailableCarbon available_carbon={35670} total_carbon={45000} />
+        <AvailableCarbon
+          available_carbon={project?.availableTonnes!}
+          total_carbon={project?.totalTonnes!}
+        />
         <ProjectHighlights highlights={highlights} />
         <ProjectOverviewGallery />
       </Box>

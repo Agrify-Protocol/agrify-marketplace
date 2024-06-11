@@ -1,11 +1,16 @@
+"use client";
 import { Box, Button, Flex, Grid, Text } from "@chakra-ui/react";
 import React from "react";
 import { ProjectIntroProps } from "./type";
 import backgroundImage from "../../../assets/gradient-background.png";
 import ProjectIntroItem from "../ProjectIntroItem/ProjectIntroItem";
 import Link from "next/link";
+import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
+import { getCreditPeriod } from "@/utils/getCreditPeriod";
 
-const ProjectIntro = ({ projectOverview }: ProjectIntroProps) => {
+const ProjectIntro = () => {
+  const { project } = useProjectPageContext();
+
   return (
     <Box
       mt={"2.5rem"}
@@ -24,7 +29,7 @@ const ProjectIntro = ({ projectOverview }: ProjectIntroProps) => {
           fontWeight={500}
           lineHeight={"2.4rem"}
         >
-          {projectOverview.name}
+          {project?.title}
         </Text>
         <Link href={"/purchase"}>
           <Button
@@ -49,20 +54,23 @@ const ProjectIntro = ({ projectOverview }: ProjectIntroProps) => {
         px={"2.875rem"}
         gridTemplateColumns={"1fr 1fr 1fr 1.25fr"}
       >
-        <ProjectIntroItem title="Location" content={projectOverview.location} />
+        <ProjectIntroItem
+          title="Location"
+          content={`${project?.location}, ${project?.countryOfOrigin}`}
+        />
         <ProjectIntroItem
           title="Price"
-          content={projectOverview.price}
+          content={`$${project?.price} /tc02e`}
           padding_x="1.358rem"
         />
         <ProjectIntroItem
           title="Total Credits"
-          content={projectOverview.total_credits}
+          content={`${project?.totalTonnes} tons`}
           padding_x="1.358rem"
         />
         <ProjectIntroItem
           title="Crediting Period"
-          content={projectOverview.crediting_period}
+          content={getCreditPeriod(project!)}
           padding_x="1.358rem"
           hideBorder
         />
