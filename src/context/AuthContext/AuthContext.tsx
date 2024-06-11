@@ -38,7 +38,7 @@ export const AuthContextProvider = ({ children }: Props) => {
             setLoginResponse({ ...loginResponse, token: result.token });
           })
           .finally(() => {
-            setTimeout(() => {
+            setInterval(() => {
               handleRefresh();
             }, fifteen_mins_in_millisecs);
           });
