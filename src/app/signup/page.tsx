@@ -17,11 +17,11 @@ const Signup = () => {
   const router = useRouter();
   const toast = useToast();
   const [userData, setUserData] = useState({
+    firstname: "",
+    lastname: "",
     email: "",
-    first_name: "",
-    last_name: "",
     password: "",
-    password_2: "",
+    // password_2: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const detailsFilled = useObjectCheck(userData);
@@ -31,27 +31,27 @@ const Signup = () => {
 
   const handleRegister = () => {
     setIsLoading(true);
-    if (compareStrings(userData.password, userData.password_2)) {
-      registerUser(userData)
-        .then(() => {
-          toast(successToast);
-        })
-        .catch((err) => {
-          const errorToast = new ToastData(
-            "Something went wrong!",
-            err?.message,
-            "error"
-          );
-          toast(errorToast);
-        })
-        .finally(() => {
-          setIsLoading(false);
-          router.push("/login");
-        });
-    } else {
-      toast(passwordToast);
-      setIsLoading(false);
-    }
+    // if (compareStrings(userData.password, userData.password_2)) {
+    registerUser(userData)
+      .then(() => {
+        toast(successToast);
+        router.push("/login");
+      })
+      .catch((err) => {
+        const errorToast = new ToastData(
+          "Something went wrong!",
+          err?.message,
+          "error"
+        );
+        toast(errorToast);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+    // } else {
+    //   toast(passwordToast);
+    //   setIsLoading(false);
+    // }
   };
 
   return (
@@ -65,19 +65,19 @@ const Signup = () => {
           <Flex flexDir={"column"} gap={"1rem"} mb={"3rem"}>
             <CustomInput
               id="first_name"
-              value={userData.first_name}
+              value={userData.firstname}
               type="text"
               placeholder="Enter First Name"
               label="First Name"
-              changeFunc={(e) => handleChange("first_name", e.target.value)}
+              changeFunc={(e) => handleChange("firstname", e.target.value)}
             />
             <CustomInput
               id="last_name"
-              value={userData.last_name}
+              value={userData.lastname}
               type="text"
               placeholder="Enter Last Name"
               label="Last Name"
-              changeFunc={(e) => handleChange("last_name", e.target.value)}
+              changeFunc={(e) => handleChange("lastname", e.target.value)}
             />
             <CustomInput
               id="email"
@@ -96,14 +96,14 @@ const Signup = () => {
               changeFunc={(e) => handleChange("password", e.target.value)}
               subtext="Minimum of 6 Characters"
             />
-            <CustomInput
+            {/* <CustomInput
               id="password_2"
               type="password"
               value={userData.password_2}
               placeholder="Re-type Password"
               label="Re-type Password"
               changeFunc={(e) => handleChange("password_2", e.target.value)}
-            />
+            /> */}
           </Flex>
           <AuthPageSubmitButton
             isDisabled={!detailsFilled}

@@ -11,11 +11,11 @@ export const loginUser = async (data: LoginData) => {
 };
 
 type RegisterData = {
+  firstname: string;
+  lastname: string;
   email: string;
-  first_name: string;
-  last_name: string;
   password: string;
-  password_2: string;
+  // password_2: string;
 };
 export const registerUser = async (data: RegisterData) => {
   try {

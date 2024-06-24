@@ -55,6 +55,8 @@ const Confirmation = () => {
           <Image
             src={projects[2].coverImage}
             alt=""
+            width={255.23}
+            height={239.1}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
           <Box
