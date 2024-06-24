@@ -23,6 +23,13 @@ export default function RootLayout({
     <GlobalContextProvider>
       <AuthContextProvider>
         <html lang="en">
+          <head>
+            <link
+              rel="icon"
+              href="/icons/agrify_logo.svg"
+              type="image/svg+xml"
+            />
+          </head>
           <body className={`${Suisse.className} ${inter.className}`}>
             <Navbar />
             <Providers>{children}</Providers>
