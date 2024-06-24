@@ -24,11 +24,7 @@ export default function RootLayout({
       <AuthContextProvider>
         <html lang="en">
           <head>
-            <link
-              rel="icon"
-              href="/icons/agrify_logo.svg"
-              type="image/svg+xml"
-            />
+            <link rel="icon" href="/icons/logo.svg" type="image/svg+xml" />
           </head>
           <body className={`${Suisse.className} ${inter.className}`}>
             <Navbar />
