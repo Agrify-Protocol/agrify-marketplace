@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <Box px={"2.625rem"} py={"6.963rem"}>
       <Heading fontWeight={500} fontSize={"1.5rem"} mb={"1rem"}>
-        Hello Agrify Technologies
+        Hello, {loginResponse?.user.firstname}
       </Heading>
       <Text mb={"2.348rem"}>
         Here are projects that suits your carbon offset goals
