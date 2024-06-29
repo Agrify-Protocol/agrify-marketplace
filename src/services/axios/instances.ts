@@ -10,3 +10,7 @@ export const projectsInstance = axios.create({
   baseURL: `${BASE_URL}/projects`,
   headers: { "Content-Type": "application/json" },
 });
+
+export const invoiceInstance = axios.create({
+  baseURL: `${BASE_URL}/invoices`,
+});

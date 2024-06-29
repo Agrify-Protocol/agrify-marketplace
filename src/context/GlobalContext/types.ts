@@ -1,4 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
+import { SingleProjectResponse } from "../ProjectsPageContext/types";
 
 export type GlobalContextProps = {
   children: ReactNode;
@@ -11,6 +12,8 @@ export type GlobalContextType = {
   subTotal: string;
   allProjects: AllProjectsResponse | null;
   setAllProjects: Dispatch<SetStateAction<AllProjectsResponse | null>>;
+  chosenProject: SingleProjectResponse | null;
+  setChosenProject: Dispatch<SetStateAction<SingleProjectResponse | null>>;
 };
 
 export interface AllProjectsResponse {

@@ -1,6 +1,6 @@
 "use client";
 
-import { carbonPrice, vat } from "@/constants";
+import { vat } from "@/constants";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
