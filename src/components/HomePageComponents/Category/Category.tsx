@@ -1,10 +1,17 @@
+"use client";
+
 import React from "react";
 import { CategoryProps } from "./types";
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import leaf from "../../../assets/leaf.svg";
+import { useRouter } from "next/navigation";
 
 const Category = ({ category }: CategoryProps) => {
+  const router = useRouter();
+  const getUrlSafeName = () => {
+    return category.name.replace(" ", "_");
+  };
   return (
     <Flex
       h={"20.75rem"}
@@ -15,6 +22,7 @@ const Category = ({ category }: CategoryProps) => {
       justifyContent={"center"}
       gap={"0.75rem"}
       cursor={"pointer"}
+      onClick={() => router.push(`/category/${getUrlSafeName()}`)}
     >
       <Box
         shadow={"0 3px 10px rgba(0,0,0,0.15)"}
