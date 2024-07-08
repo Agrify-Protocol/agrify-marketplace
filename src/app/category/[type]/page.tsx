@@ -2,8 +2,10 @@
 
 import CategoryBanner from "@/components/CategoryPageComponents/CategoryBanner/CategoryBanner";
 import { categoryImages } from "@/components/CategoryPageComponents/CategoryBanner/constants";
+import ProjectTable from "@/components/CategoryPageComponents/ProjectTable/ProjectTable";
 import { Box } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
+import { stateProjects } from "./constants";
 
 const CategoryPage = () => {
   const { type } = useParams();
@@ -16,6 +18,7 @@ const CategoryPage = () => {
         carbon_credits={200000}
         image={categoryImages[categoryName as keyof typeof categoryImages]}
       />
+      <ProjectTable carbon_credits={200000} projects={stateProjects} />
     </Box>
   );
 };
