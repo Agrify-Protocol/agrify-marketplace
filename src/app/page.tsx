@@ -23,7 +23,7 @@ export default function Home() {
       <Flex alignItems={"center"} justifyContent={"space-between"}>
         <Box>
           <Heading fontWeight={500} fontSize={"1.5rem"} mb={"1rem"}>
-            Hello, {loginResponse!.user.firstname}
+            Hello, {loginResponse?.user.firstname}
           </Heading>
           <Text mb={"2.348rem"}>
             Here are projects that suits your carbon offset goals
