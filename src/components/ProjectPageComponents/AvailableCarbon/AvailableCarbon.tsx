@@ -16,6 +16,8 @@ const AvailableCarbon = ({
     pillContainerRef,
     available_carbon,
     total_carbon,
+    gapBetweenPillsInPx: 4,
+    pillWidthInPx: 20,
   });
 
   return (
