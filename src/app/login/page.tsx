@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Flex,
-  FormControl,
-  UseToastOptions,
-  position,
-  useToast,
-} from "@chakra-ui/react";
+import { Flex, FormControl, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import useObjectCheck from "@/hooks/useObjectCheck";
 import AuthPageHeading from "@/components/AuthPageComponents/AuthPageHeading/AuthPageHeading";
@@ -15,13 +9,14 @@ import CustomInput from "@/components/Common/CustomInput/CustomInput";
 import AuthPageSubmitButton from "@/components/AuthPageComponents/AuthPageSubmitButton/AuthPageSubmitButton";
 import { loginUser } from "@/services/api/auth";
 import { errorToast, successToast } from "./constants";
-import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { useRouter } from "next/navigation";
+import { preserveSession } from "../lib/actions";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
 
 const Login = () => {
   const toast = useToast();
   const router = useRouter();
-  const { setLoginResponse } = useAuthContext();
+  const { setUser } = useAuthContext();
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   const detailsFilled = useObjectCheck(loginDetails);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +29,8 @@ const Login = () => {
     setIsLoading(true);
     loginUser(loginDetails)
       .then((result) => {
-        setLoginResponse(result);
+        preserveSession(result.user, result.token, result.refreshToken);
+        setUser(result.user);
         toast(successToast);
         router.push("/");
       })

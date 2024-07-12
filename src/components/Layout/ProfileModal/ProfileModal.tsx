@@ -7,8 +7,11 @@ import Image from "next/image";
 import { ProfileModalProps } from "./types";
 import { useRouter } from "next/navigation";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { resetAuthCookies } from "@/app/lib/actions";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
 
 const ProfileModal = ({ setShowModal }: ProfileModalProps) => {
+  const { setUser } = useAuthContext();
   const router = useRouter();
   const modalRef = useRef(null);
 
@@ -17,7 +20,11 @@ const ProfileModal = ({ setShowModal }: ProfileModalProps) => {
   };
 
   const handleSignout = () => {
-    router.push("/login");
+    resetAuthCookies().then(() => {
+      setUser(null);
+      closeModal();
+      router.push("/login");
+    });
   };
 
   useOutsideClick(modalRef, setShowModal, "profile_modal");

@@ -2,28 +2,20 @@
 
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { Box, Heading, Text, Flex } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import no_poverty from "../assets/E_SDG_PRINT-01 1.svg";
 import clean from "../assets/E_SDG_PRINT-06 1.svg";
 import Image from "next/image";
 import CategoryContainer from "@/components/HomePageComponents/CategoryContainer/CategoryContainer";
 
 export default function Home() {
-  const { loginResponse } = useAuthContext();
-  const router = useRouter();
-  useEffect(() => {
-    if (!loginResponse) {
-      router.push("/login");
-    }
-  }, [loginResponse]);
+  const { user } = useAuthContext();
 
   return (
     <Box px={"2.625rem"} py={"6.963rem"}>
       <Flex alignItems={"center"} justifyContent={"space-between"}>
         <Box>
           <Heading fontWeight={500} fontSize={"1.5rem"} mb={"1rem"}>
-            Hello, {loginResponse?.user.firstname}
+            Hello, {user?.firstname}
           </Heading>
           <Text mb={"2.348rem"}>
             Here are projects that suits your carbon offset goals

@@ -1,8 +1,8 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
 export type AuthContextType = {
-  loginResponse: LoginResponse | null;
-  setLoginResponse: Dispatch<SetStateAction<LoginResponse | null>>;
+  user: User | null;
+  setUser: Dispatch<SetStateAction<User | null>>;
 };
 
 export type Props = {

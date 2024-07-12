@@ -9,16 +9,16 @@ import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 
 const ProjectsContainer = () => {
-  const { loginResponse } = useAuthContext();
+  const { user } = useAuthContext();
   const { allProjects, setAllProjects } = useGlobalContext();
 
   useEffect(() => {
-    if (loginResponse) {
+    if (user) {
       getAllProjects(1).then((result) => {
         setAllProjects(result);
       });
     }
-  }, [loginResponse]);
+  }, [user]);
 
   return (
     <Grid
