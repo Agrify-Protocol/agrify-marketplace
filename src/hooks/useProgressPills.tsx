@@ -34,10 +34,12 @@ const useProgressPills = ({
       );
       pillCount = displayablePills;
 
-      const initialPillData: PillsData = [];
-      for (let i = 0; i < pillCount; i++) {
-        initialPillData.push({ id: i + 1, isFilled: false });
-      }
+      const initialPillData: PillsData = Array.from(
+        { length: pillCount },
+        (_, index) => {
+          return { id: index + 1, isFilled: false };
+        }
+      );
 
       const availablePercentage = Math.ceil(
         (available_carbon / total_carbon) * 100
