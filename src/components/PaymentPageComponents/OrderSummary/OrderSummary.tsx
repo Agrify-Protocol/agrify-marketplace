@@ -7,7 +7,8 @@ import Link from "next/link";
 import React from "react";
 
 const OrderSummary = () => {
-  const { orderedAmount, orderTotal, subTotal } = useGlobalContext();
+  const { orderedAmount, orderTotal, subTotal, chosenProject } =
+    useGlobalContext();
 
   return (
     <Box>
@@ -19,17 +20,22 @@ const OrderSummary = () => {
           color={"main_black_1"}
           mt={"0.5rem"}
         >
-          ${orderTotal}
+          ${orderTotal.toLocaleString()}
         </Text>
       </Box>
 
       <Box mt={"2.563rem"}>
         <Flex alignItems={"center"} justifyContent={"space-between"}>
-          <Text color={"main_black_1"} fontWeight={500}>
-            Greenfield Farms Carbon Project
+          <Text
+            color={"main_black_1"}
+            fontWeight={500}
+            maxW={"65%"}
+            isTruncated
+          >
+            {chosenProject?.title}
           </Text>
           <Text color={"main_black_1"} fontWeight={500}>
-            ${orderTotal}
+            ${orderTotal.toLocaleString()}
           </Text>
         </Flex>
         <Text color={"main_black_1"} fontSize={"0.75rem"} fontWeight={500}>

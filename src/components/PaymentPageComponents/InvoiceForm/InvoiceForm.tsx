@@ -45,6 +45,7 @@ const InvoiceForm = () => {
           placeholder="Phone Number"
           borderColor={"gray_3"}
           value={invoiceData.phone_number}
+          type="number"
           onChange={(e) => updateInvoiceData("phone_number", e.target.value)}
         />
         <Input

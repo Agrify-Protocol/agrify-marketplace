@@ -45,7 +45,7 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const fifteen_mins_in_millisecs = 900000;
-    if (user) {
+    if (user && refreshToken) {
       const handleRefresh = () => {
         refreshAccessToken({ refreshToken })
           .then((result) => {

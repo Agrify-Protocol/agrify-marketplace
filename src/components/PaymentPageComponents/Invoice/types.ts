@@ -1,16 +1,14 @@
-import { InvoiceData } from "@/context/PaymentContext/classes";
-
 export type InvoiceProps = {
   invoice_data: InvoiceData;
-  order_total: number;
   isCompleted?: boolean;
 };
 
-export type InvoiceEndpointData = {
+export type InvoiceData = {
   clientName: string;
-  paymentDueData: string;
+  paymentDueDate: string;
   phoneNumber: string;
   projectId: string | undefined;
+  projectName: string | undefined;
   quantity: number;
   amount: string;
   totalAmount: number;

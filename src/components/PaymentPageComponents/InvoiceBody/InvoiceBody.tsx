@@ -3,8 +3,9 @@
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import React from "react";
 import { InvoiceBodyProps } from "./types";
+import { InvoiceProps } from "../Invoice/types";
 
-const InvoiceBody = ({ order_total }: InvoiceBodyProps) => {
+const InvoiceBody = ({ invoice_data }: InvoiceProps) => {
   return (
     <Box px={"1.25rem"}>
       <Box mb={"12.813rem"}>
@@ -28,11 +29,11 @@ const InvoiceBody = ({ order_total }: InvoiceBodyProps) => {
           mt={"1.875rem"}
           fontSize={"0.688rem"}
         >
-          <Text color={"main_black_1"}>Greenfield Farms Carbon Project</Text>
-          <Text align={"right"}>1000 tones</Text>
-          <Text align={"right"}>$100,001.46</Text>
+          <Text color={"main_black_1"}>{invoice_data.projectName}</Text>
+          <Text align={"right"}>{invoice_data.quantity} tonnes</Text>
+          <Text align={"right"}>${invoice_data.totalAmount}</Text>
           <Text align={"right"} color={"main_black_1"}>
-            $100,001.46
+            ${invoice_data.totalAmount}
           </Text>
         </Grid>
 
@@ -62,7 +63,7 @@ const InvoiceBody = ({ order_total }: InvoiceBodyProps) => {
             </Text>
             <Text fontWeight={700} color={"main_black_1"}>
               $
-              {order_total.toLocaleString("en", {
+              {invoice_data.totalAmount.toLocaleString("en", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
