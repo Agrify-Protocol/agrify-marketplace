@@ -1,6 +1,6 @@
-import farm_image_1 from "../../../assets/woods.jpeg";
-import farm_image_2 from "../../../assets/eaf82964b742659b33e869752d04bf78.jpeg";
-import farm_image_3 from "../../../assets/a3169f8d6856d8e9e87e37568c9d0ff0.jpeg";
+import farm_image_1 from "../../../assets/woods.jpg";
+import farm_image_2 from "../../../assets/eaf82964b742659b33e869752d04bf78.jpg";
+import farm_image_3 from "../../../assets/a3169f8d6856d8e9e87e37568c9d0ff0.jpg";
 
 export const farm_images = [
   farm_image_1.src,
