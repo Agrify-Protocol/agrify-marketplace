@@ -32,7 +32,7 @@ const CustomInput = ({
           bg={"white"}
           value={value}
           onChange={changeFunc}
-          color={"gray_1"}
+          color={"rgba(15, 15, 15, 0.7)"}
           _placeholder={{ color: "gray_1", fontSize: "0.875rem" }}
           fontFamily={Inter_Display.style.fontFamily}
         />

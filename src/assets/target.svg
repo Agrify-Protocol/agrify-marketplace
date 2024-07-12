@@ -1,0 +1,15 @@
+<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_10370_1196)">
+<path d="M1.77173 7.48535H3.52173" stroke="#0F0F0F" stroke-opacity="0.4" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11.6887 7.48535H13.4387" stroke="#0F0F0F" stroke-opacity="0.4" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.60522 1.65234V3.40234" stroke="#0F0F0F" stroke-opacity="0.4" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.60522 11.5684V13.3184" stroke="#0F0F0F" stroke-opacity="0.4" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.60531 11.569C9.86047 11.569 11.6886 9.74084 11.6886 7.48568C11.6886 5.23051 9.86047 3.40234 7.60531 3.40234C5.35014 3.40234 3.52197 5.23051 3.52197 7.48568C3.52197 9.74084 5.35014 11.569 7.60531 11.569Z" stroke="#0F0F0F" stroke-opacity="0.4" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.60522 9.23535C8.57172 9.23535 9.35522 8.45185 9.35522 7.48535C9.35522 6.51885 8.57172 5.73535 7.60522 5.73535C6.63873 5.73535 5.85522 6.51885 5.85522 7.48535C5.85522 8.45185 6.63873 9.23535 7.60522 9.23535Z" stroke="#0F0F0F" stroke-opacity="0.4" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_10370_1196">
+<rect width="14" height="14" fill="white" transform="translate(0.605225 0.485352)"/>
+</clipPath>
+</defs>
+</svg>

@@ -6,6 +6,8 @@ type UseProgressPillsType = {
   pillContainerRef: React.MutableRefObject<null>;
   available_carbon: number;
   total_carbon: number;
+  pillWidthInPx: number;
+  gapBetweenPillsInPx: number;
 };
 
 type PillsData = {
@@ -17,6 +19,8 @@ const useProgressPills = ({
   pillContainerRef,
   available_carbon,
   total_carbon,
+  pillWidthInPx,
+  gapBetweenPillsInPx,
 }: UseProgressPillsType) => {
   const [pills, setPills] = useState<PillsData>([]);
 
@@ -25,17 +29,17 @@ const useProgressPills = ({
       let pillCount = 0;
       const container = pillContainerRef.current as HTMLDivElement;
       const containerClientWidth = container.clientWidth;
-      const pillLengthInPx = 20;
-      const gapBetweenPillsInPx = 4;
       const displayablePills = Math.floor(
-        containerClientWidth / (pillLengthInPx + gapBetweenPillsInPx)
+        containerClientWidth / (pillWidthInPx + gapBetweenPillsInPx)
       );
       pillCount = displayablePills;
 
-      const initialPillData: PillsData = [];
-      for (let i = 0; i < pillCount; i++) {
-        initialPillData.push({ id: i + 1, isFilled: false });
-      }
+      const initialPillData: PillsData = Array.from(
+        { length: pillCount },
+        (_, index) => {
+          return { id: index + 1, isFilled: false };
+        }
+      );
 
       const availablePercentage = Math.ceil(
         (available_carbon / total_carbon) * 100
