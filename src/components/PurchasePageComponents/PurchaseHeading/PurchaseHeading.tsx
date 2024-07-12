@@ -1,7 +1,11 @@
+"use client";
+
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 
 const PurchaseHeading = () => {
+  const { chosenProject } = useGlobalContext();
   return (
     <Box>
       <Text
@@ -12,7 +16,7 @@ const PurchaseHeading = () => {
         You’re Purchasing
       </Text>
       <Text fontSize={"2rem"} color={"black"}>
-        Greenfield Farms Carbon Project
+        {chosenProject?.title}
       </Text>
     </Box>
   );

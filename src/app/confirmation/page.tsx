@@ -1,3 +1,5 @@
+"use client";
+
 import BackButton from "@/components/Layout/BackButton/BackButton";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import React from "react";
@@ -5,8 +7,10 @@ import check from "../../assets/icon-park-solid_check-one.svg";
 import Image from "next/image";
 import Project from "@/components/ProjectPageComponents/Project/Project";
 import { projects } from "@/components/ProjectPageComponents/ProjectsContainer/constants";
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 
 const Confirmation = () => {
+  const { chosenProject } = useGlobalContext();
   return (
     <Box my={"4rem"} px={"2.625rem"}>
       <BackButton />
@@ -53,7 +57,7 @@ const Confirmation = () => {
           mb={"3.288rem"}
         >
           <Image
-            src={projects[2].coverImage}
+            src={chosenProject?.coverImage!}
             alt=""
             width={255.23}
             height={239.1}

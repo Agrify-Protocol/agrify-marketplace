@@ -1,15 +1,17 @@
 "use client";
 import { Box, Button, Flex, Grid, Text } from "@chakra-ui/react";
 import React from "react";
-import { ProjectIntroProps } from "./type";
 import backgroundImage from "../../../assets/gradient-background.png";
 import ProjectIntroItem from "../ProjectIntroItem/ProjectIntroItem";
-import Link from "next/link";
 import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import { getCreditPeriod } from "@/utils/getCreditPeriod";
+import { useRouter } from "next/navigation";
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 
 const ProjectIntro = () => {
+  const router = useRouter();
   const { project } = useProjectPageContext();
+  const { setChosenProject } = useGlobalContext();
 
   return (
     <Box
@@ -31,19 +33,21 @@ const ProjectIntro = () => {
         >
           {project?.title}
         </Text>
-        <Link href={"/purchase"}>
-          <Button
-            bgColor={"agrify_green"}
-            color={"white"}
-            borderRadius={"2rem"}
-            px={"2.5rem"}
-            py={"0.75rem"}
-            fontWeight={400}
-            lineHeight={"1.2rem"}
-          >
-            Buy Carbon Credits
-          </Button>
-        </Link>
+        <Button
+          bgColor={"agrify_green"}
+          color={"white"}
+          borderRadius={"2rem"}
+          px={"2.5rem"}
+          py={"0.75rem"}
+          fontWeight={400}
+          lineHeight={"1.2rem"}
+          onClick={() => {
+            setChosenProject(project);
+            router.push("/purchase");
+          }}
+        >
+          Buy Carbon Credits
+        </Button>
       </Flex>
 
       <Grid

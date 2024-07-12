@@ -7,6 +7,7 @@ import {
   GlobalContextType,
 } from "./types";
 import { carbonPrice, vat } from "@/constants";
+import { SingleProjectResponse } from "../ProjectsPageContext/types";
 
 const GlobalContext = createContext({} as GlobalContextType);
 
@@ -17,6 +18,8 @@ export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+  const [chosenProject, setChosenProject] =
+    useState<SingleProjectResponse | null>(null);
 
   const [allProjects, setAllProjects] = useState<AllProjectsResponse | null>(
     null
@@ -31,6 +34,8 @@ export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
         subTotal,
         allProjects,
         setAllProjects,
+        chosenProject,
+        setChosenProject,
       }}
     >
       {children}

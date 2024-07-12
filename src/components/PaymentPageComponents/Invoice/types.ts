@@ -5,3 +5,17 @@ export type InvoiceProps = {
   order_total: number;
   isCompleted?: boolean;
 };
+
+export type InvoiceEndpointData = {
+  clientName: string;
+  paymentDueData: string;
+  phoneNumber: string;
+  projectId: string | undefined;
+  quantity: number;
+  amount: string;
+  totalAmount: number;
+  invoiceNo: string;
+  address: string | undefined;
+  contactNo: string;
+  issuedOn: string;
+};

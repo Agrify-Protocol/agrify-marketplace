@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContextType, LoginResponse, Props } from "./types";
 import { updateBearerToken } from "@/utils/updateBearerToken";
-import { projectsInstance } from "@/services/axios/instances";
+import { invoiceInstance, projectsInstance } from "@/services/axios/instances";
 import { refreshAccessToken } from "@/services/api/auth";
 
 const AuthContext = createContext({} as AuthContextType);
@@ -21,6 +21,7 @@ export const AuthContextProvider = ({ children }: Props) => {
   useEffect(() => {
     if (loginResponse) {
       updateBearerToken(projectsInstance, loginResponse.token);
+      updateBearerToken(invoiceInstance, loginResponse.token);
       typeof window !== "undefined" &&
         window.localStorage.setItem(
           "carbon_user",
