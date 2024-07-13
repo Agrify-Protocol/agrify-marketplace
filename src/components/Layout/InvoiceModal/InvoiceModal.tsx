@@ -5,12 +5,7 @@ import { InvoiceModalProps } from "./types";
 import Invoice from "@/components/PaymentPageComponents/Invoice/Invoice";
 import { Inter_Display } from "@/fonts";
 
-const InvoiceModal = ({
-  closeModal,
-  invoice_data,
-  order_total,
-  tonnes,
-}: InvoiceModalProps) => {
+const InvoiceModal = ({ closeModal, invoice_data }: InvoiceModalProps) => {
   return (
     <Box
       position={"fixed"}
@@ -41,13 +36,9 @@ const InvoiceModal = ({
           color={"main_black_1"}
           mt={"2.5rem"}
         >
-          {tonnes}tc02e
+          {invoice_data.quantity}tc02e
         </Text>
-        <Invoice
-          invoice_data={invoice_data}
-          order_total={order_total}
-          isCompleted
-        />
+        <Invoice invoice_data={invoice_data} isCompleted />
       </Box>
     </Box>
   );

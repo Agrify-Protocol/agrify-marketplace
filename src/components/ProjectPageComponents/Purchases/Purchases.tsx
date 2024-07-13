@@ -5,10 +5,10 @@ import React, { useState } from "react";
 import { purchases } from "./constants";
 import FourColumnTableRow from "@/components/Layout/FourColumnTableRow/FourColumnTableRow";
 import ReceiptModal from "@/components/Layout/ReceiptModal/ReceiptModal";
-import { InvoiceDataType, ReceiptType, TransactionModalType } from "./types";
+import { ReceiptType, TransactionModalType } from "./types";
 import { useScreenFreeze } from "@/hooks/useScreenFreeze";
 import InvoiceModal from "@/components/Layout/InvoiceModal/InvoiceModal";
-import { InvoiceData } from "@/context/PaymentContext/classes";
+import { parseDate } from "@/utils/parseData";
 
 const Purchases = () => {
   const [showTxDetails, setShowTxDetails] =
@@ -16,6 +16,21 @@ const Purchases = () => {
 
   const updateTxDetails = (data: TransactionModalType) => {
     setShowTxDetails(data);
+  };
+
+  const invoice_data = {
+    clientName: "invoiceData.client_name",
+    paymentDueDate: "2024-08-07",
+    phoneNumber: "1234-567-8910",
+    projectId: "66s57ds37wtjs",
+    projectName: "The title here",
+    quantity: 23,
+    amount: "3000",
+    totalAmount: 3004,
+    invoiceNo: `INV${Math.floor(Math.random() * 5000)}`,
+    address: "Konoha",
+    contactNo: "123-456-7890",
+    issuedOn: parseDate(new Date()),
   };
 
   useScreenFreeze(showTxDetails != null);
@@ -68,15 +83,7 @@ const Purchases = () => {
 
       {showTxDetails && showTxDetails.type == "invoice" && (
         <InvoiceModal
-          invoice_data={
-            new InvoiceData(
-              (showTxDetails.data as InvoiceDataType).client_name,
-              (showTxDetails.data as InvoiceDataType).number,
-              (showTxDetails.data as InvoiceDataType).due_date
-            )
-          }
-          order_total={(showTxDetails.data as InvoiceDataType).amount}
-          tonnes={(showTxDetails.data as InvoiceDataType).tonnes}
+          invoice_data={invoice_data}
           closeModal={() => setShowTxDetails(null)}
         />
       )}
