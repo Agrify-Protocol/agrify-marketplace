@@ -2,9 +2,10 @@
 
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
-import { InvoiceHeaderProps } from "./types";
+import { InvoiceProps } from "../Invoice/types";
+import { readableDate } from "@/utils/parseData";
 
-const InvoiceHeader = ({ invoice_data }: InvoiceHeaderProps) => {
+const InvoiceHeader = ({ invoice_data }: InvoiceProps) => {
   return (
     <Flex
       bg={"#F5F5F5"}
@@ -32,7 +33,7 @@ const InvoiceHeader = ({ invoice_data }: InvoiceHeaderProps) => {
             color={"main_black_1"}
             my={"0.438rem"}
           >
-            {invoice_data.client_name}
+            {invoice_data.clientName}
           </Text>
           <Text fontSize={"0.625rem"} color={"main_black_1"}>
             Address / Contact Info
@@ -52,7 +53,7 @@ const InvoiceHeader = ({ invoice_data }: InvoiceHeaderProps) => {
               color={"main_black_1"}
               fontWeight={700}
             >
-              #000123
+              {invoice_data.invoiceNo}
             </Text>
           </Box>
           <Box>
@@ -80,7 +81,7 @@ const InvoiceHeader = ({ invoice_data }: InvoiceHeaderProps) => {
               fontSize={"0.625rem"}
               color={"main_black_1"}
             >
-              December 7, 2024.
+              {readableDate(invoice_data.issuedOn)}
             </Text>
           </Box>
           <Box>
@@ -92,7 +93,7 @@ const InvoiceHeader = ({ invoice_data }: InvoiceHeaderProps) => {
               fontSize={"0.625rem"}
               color={"main_black_1"}
             >
-              December 22, 2024.
+              {readableDate(invoice_data.paymentDueDate)}
             </Text>
           </Box>
         </Box>

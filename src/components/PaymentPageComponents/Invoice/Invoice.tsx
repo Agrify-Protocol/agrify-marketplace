@@ -5,32 +5,15 @@ import InvoiceBody from "../InvoiceBody/InvoiceBody";
 import InvoiceFooter from "../InvoiceFooter/InvoiceFooter";
 import { InvoiceProps } from "./types";
 import { Inter_Display } from "@/fonts";
-import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
-import { parseDate } from "@/utils/parseData";
 import { useRouter } from "next/navigation";
-import { createInvoice } from "@/services/api/invoice";
-import { InvoiceDataType } from "@/components/ProjectPageComponents/Purchases/types";
+import { createInvoice, InvoicePayloadType } from "@/services/api/invoice";
 import { removeCommas } from "@/utils/removeCommas";
 import { ToastData } from "@/utils/classes";
 
-const Invoice = ({ invoice_data, order_total, isCompleted }: InvoiceProps) => {
+const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
   const toast = useToast();
   const router = useRouter();
-  const { chosenProject, orderedAmount, subTotal, orderTotal } =
-    useGlobalContext();
-  const allData = {
-    clientName: invoice_data.client_name,
-    paymentDueDate: invoice_data.due_date,
-    phoneNumber: invoice_data.phone_number,
-    projectId: chosenProject?._id,
-    quantity: orderedAmount,
-    amount: Number(removeCommas(subTotal)),
-    totalAmount: orderTotal,
-    invoiceNo: `INV${Math.floor(Math.random() * 5000)}`,
-    address: chosenProject?.location,
-    contactNo: "123-456-7890",
-    issuedOn: parseDate(new Date()),
-  };
+
   return (
     <Box>
       <Box
@@ -41,7 +24,7 @@ const Invoice = ({ invoice_data, order_total, isCompleted }: InvoiceProps) => {
         fontFamily={Inter_Display.style.fontFamily}
       >
         <InvoiceHeader invoice_data={invoice_data} />
-        <InvoiceBody order_total={order_total} />
+        <InvoiceBody invoice_data={invoice_data} />
         <InvoiceFooter />
       </Box>
       {!isCompleted && (
@@ -55,7 +38,11 @@ const Invoice = ({ invoice_data, order_total, isCompleted }: InvoiceProps) => {
           color="white"
           my={"3rem"}
           onClick={() => {
-            createInvoice(allData as unknown as InvoiceDataType)
+            const createInvoicePayload = {
+              ...invoice_data,
+              amount: Number(removeCommas(invoice_data.amount)),
+            };
+            createInvoice(createInvoicePayload as unknown as InvoicePayloadType)
               .then((result) => {
                 router.push("/confirmation");
               })

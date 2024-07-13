@@ -1,42 +1,55 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { AuthContextType, LoginResponse, Props } from "./types";
+import { AuthContextType, Props, User } from "./types";
 import { updateBearerToken } from "@/utils/updateBearerToken";
 import { invoiceInstance, projectsInstance } from "@/services/axios/instances";
 import { refreshAccessToken } from "@/services/api/auth";
+import {
+  getAccessToken,
+  getRefreshToken,
+  getUser,
+  preserveSession,
+} from "@/app/lib/actions";
+import { useRouter } from "next/navigation";
 
 const AuthContext = createContext({} as AuthContextType);
 
 export const AuthContextProvider = ({ children }: Props) => {
-  const storedUser =
-    typeof window !== "undefined" && window.localStorage.getItem("carbon_user");
-  const parsedStoredUser = storedUser
-    ? (JSON.parse(storedUser) as LoginResponse)
-    : null;
-  const [loginResponse, setLoginResponse] = useState<LoginResponse | null>(
-    parsedStoredUser
-  );
+  const router = useRouter();
+
+  const [user, setUser] = useState<User | null>(null);
+  const [accessToken, setAccessToken] = useState("");
+  const [refreshToken, setRefreshToken] = useState("");
 
   useEffect(() => {
-    if (loginResponse) {
-      updateBearerToken(projectsInstance, loginResponse.token);
-      updateBearerToken(invoiceInstance, loginResponse.token);
-      typeof window !== "undefined" &&
-        window.localStorage.setItem(
-          "carbon_user",
-          JSON.stringify(loginResponse)
-        );
+    getUser().then((user) => {
+      user ? setUser(user) : router.push("/login");
+    });
+
+    getAccessToken().then((token) => {
+      setAccessToken(token);
+    });
+
+    getRefreshToken().then((token) => {
+      setRefreshToken(token);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (accessToken) {
+      updateBearerToken(projectsInstance, accessToken);
+      updateBearerToken(invoiceInstance, accessToken);
     }
-  }, [loginResponse]);
+  }, [accessToken]);
 
   useEffect(() => {
     const fifteen_mins_in_millisecs = 900000;
-    if (loginResponse) {
+    if (user && refreshToken) {
       const handleRefresh = () => {
-        refreshAccessToken({ refreshToken: loginResponse.refreshToken })
+        refreshAccessToken({ refreshToken })
           .then((result) => {
-            setLoginResponse({ ...loginResponse, token: result.token });
+            preserveSession(user, result.token, refreshToken);
           })
           .finally(() => {
             setInterval(() => {
@@ -47,10 +60,10 @@ export const AuthContextProvider = ({ children }: Props) => {
 
       handleRefresh();
     }
-  }, []);
+  }, [user, refreshToken]);
 
   return (
-    <AuthContext.Provider value={{ loginResponse, setLoginResponse }}>
+    <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   );

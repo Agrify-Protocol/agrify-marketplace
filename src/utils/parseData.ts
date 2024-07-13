@@ -4,3 +4,9 @@ export const parseDate = (date: Date) => {
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
+
+export const readableDate = (date: string) => {
+  const initial = new Date(date).toDateString();
+  const split = initial.split(" ");
+  return `${split[1]} ${split[2]}, ${split[3]}`;
+};

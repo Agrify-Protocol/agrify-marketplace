@@ -6,7 +6,7 @@ import { Minus, Plus } from "lucide-react";
 import React, { useState } from "react";
 
 const CounterButton = () => {
-  let { orderedAmount, setOrderedAmount } = useGlobalContext();
+  let { orderedAmount, setOrderedAmount, chosenProject } = useGlobalContext();
   type CounterAction = "inc" | "dec";
 
   const updateCounter = (action: CounterAction) => {
