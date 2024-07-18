@@ -32,12 +32,12 @@ const Storefront = () => {
               mb={"1rem"}
               color={"main_black_2"}
             >
-              Buy Farm Produce
+              Pre-order Bulk Farm Produce
             </Text>
-            <Text w={"50%"} color={"rgba(15, 15, 15, 0.7)"}>
-              It’s been a whopping five years since I last shipped one of my
-              Shipping blog posts, and boy do I have a good one to come back
-              with.{" "}
+            <Text color={"rgba(15, 15, 15, 0.7)"}>
+              {
+                "Secure premium produce for your business directly from farms dedicated to sustainable and regenerative practices, boosting both your supply chain's sustainability and your brand's green credentials."
+              }
             </Text>
             <StoreFrontForm setStep={setStep} />
           </>

@@ -30,14 +30,16 @@ const ProjectOverview = () => {
           About
         </Text>
         <Text p={"0.714rem"} color={"rgba(15, 15, 15, 0.7)"}>
-          It’s been a whopping five years since I last shipped one of my
-          Shipping blog posts, and boy do I have a good one to come back with.
-          I’ve been working on Pierre for most of the last year and we’ve been
-          shipping some amazing stuff. <br />
-          <br /> With the release of macOS Sonoma and Safari 17.0 earlier this
-          week, we can now add web apps to the dock. Here’s a brief rundown of
-          my experience testing them and customizing how Pierre appears when
-          added to the dock.
+          This Carbon Project represents an aggregate of credits from farms
+          achieving high regenerative scores through adherence to sustainable
+          practices recommended by Agrify’s AI. <br />
+          <br /> This initiative not only boosts carbon sequestration but also
+          promotes ecosystem resilience and enhances soil health, leading to
+          better crop yields and stronger food security in the region.
+          <br />
+          <br /> Each farm’s progress and practices are transparently tracked,
+          offering clear insights into the tangible impacts of their
+          regenerative efforts.
         </Text>
         <ViewSectionButton
           text="View Project details"
