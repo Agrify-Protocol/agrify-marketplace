@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import {
   AllProjectsResponse,
+  CategoryObject,
   GlobalContextProps,
   GlobalContextType,
 } from "./types";
@@ -24,9 +25,12 @@ export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
     }
   );
 
+  // ====================THIS IS OUTDATED====================
   const [allProjects, setAllProjects] = useState<AllProjectsResponse | null>(
     null
   );
+  //============================================================
+  const [categories, setCategories] = useState<CategoryObject[]>([]);
 
   useEffect(() => {
     if (chosenProject) {
@@ -45,6 +49,8 @@ export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
         setAllProjects,
         chosenProject,
         setChosenProject,
+        categories,
+        setCategories,
       }}
     >
       {children}

@@ -1,14 +1,13 @@
-import casava from "../../../assets/casava.svg";
+import cassava from "../../../assets/casava.svg";
 import yam from "../../../assets/dried_yam_1_.svg";
 import tomato from "../../../assets/tomato.svg";
-import corn from "../../../assets/corn.svg";
-import { v4 as uuid } from "uuid";
+import maize from "../../../assets/corn.svg";
 
-export const categories = [
-  { id: uuid(), image: casava, name: "Casava Farms", carbon_credits: 200000 },
-  { id: uuid(), image: yam, name: "Yam Farms", carbon_credits: 200000 },
-  { id: uuid(), image: tomato, name: "Tomato Farms", carbon_credits: 200000 },
-  { id: uuid(), image: casava, name: "Soybean Farms", carbon_credits: 200000 },
-  { id: uuid(), image: casava, name: "Rice Farms", carbon_credits: 200000 },
-  { id: uuid(), image: corn, name: "Maize Farms", carbon_credits: 200000 },
-];
+export const categoryImages = {
+  cassava,
+  yam,
+  tomato,
+  maize,
+  rice: cassava,
+  soybean: cassava,
+};

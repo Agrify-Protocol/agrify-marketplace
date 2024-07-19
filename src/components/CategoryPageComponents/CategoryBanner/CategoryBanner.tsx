@@ -22,8 +22,8 @@ const CategoryBanner = ({
           <Image src={basket} alt="" />
           Produce Collection
         </Flex>
-        <Text fontSize={"2rem"} color={"black"}>
-          {name}
+        <Text fontSize={"2rem"} color={"black"} textTransform={"capitalize"}>
+          {name} Farms
         </Text>
         <Flex
           alignItems={"center"}

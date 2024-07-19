@@ -19,3 +19,14 @@ export const getSingleProject = async (id: string) => {
     console.error(error);
   }
 };
+
+export const getCategories = async (selectedCategory = "") => {
+  try {
+    const request = await projectsInstance.get(
+      `/aggregate/category/${selectedCategory}`
+    );
+    return request.data;
+  } catch (error) {
+    console.log("Error:", error);
+  }
+};
