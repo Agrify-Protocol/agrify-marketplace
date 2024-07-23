@@ -1,4 +1,6 @@
+import { Farm } from "../FarmlistTable/types";
+
 export type FarmTableRowProps = {
-  farm: { id: string; name: string; image: any; location: string };
+  farm: Farm;
   isLast: boolean;
 };

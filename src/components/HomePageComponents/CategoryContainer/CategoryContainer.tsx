@@ -1,9 +1,8 @@
 "use client";
 
 import { Grid } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Category from "../Category/Category";
-import { CategoryObject } from "./types";
 import { getCategories } from "@/services/api/projects";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
@@ -16,7 +15,6 @@ const CategoryContainer = () => {
       getCategories().then((response) => {
         if (response) {
           setCategories(response.data);
-          console.log("Response:", response);
         }
       });
     }

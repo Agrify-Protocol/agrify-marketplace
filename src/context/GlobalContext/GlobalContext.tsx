@@ -9,21 +9,22 @@ import {
 } from "./types";
 import { carbonPrice, vat } from "@/constants";
 import { SingleProjectResponse } from "../ProjectsPageContext/types";
+import { SingleProject } from "../ProjectsPageContext/types_2";
 
 const GlobalContext = createContext({} as GlobalContextType);
 
 export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
-  const [chosenProject, setChosenProject] =
-    useState<SingleProjectResponse | null>(null);
-  const [orderedAmount, setOrderedAmount] = useState(0);
-  const orderTotal = orderedAmount * chosenProject?.price! + vat;
-  const subTotal = (orderedAmount * chosenProject?.price!).toLocaleString(
-    "en",
-    {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }
+  const [chosenProject, setChosenProject] = useState<SingleProject | null>(
+    null
   );
+  const [orderedAmount, setOrderedAmount] = useState(0);
+  const orderTotal = orderedAmount * chosenProject?.projectToken.price! + vat;
+  const subTotal = (
+    orderedAmount * chosenProject?.projectToken.price!
+  ).toLocaleString("en", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
   // ====================THIS IS OUTDATED====================
   const [allProjects, setAllProjects] = useState<AllProjectsResponse | null>(

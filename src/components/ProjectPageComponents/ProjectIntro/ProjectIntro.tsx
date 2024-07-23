@@ -13,6 +13,10 @@ const ProjectIntro = () => {
   const { project } = useProjectPageContext();
   const { setChosenProject } = useGlobalContext();
 
+  if (!project) {
+    return null;
+  }
+
   return (
     <Box
       mt={"2.5rem"}
@@ -58,18 +62,15 @@ const ProjectIntro = () => {
         px={"2.875rem"}
         gridTemplateColumns={"1fr 1fr 1fr 1.25fr"}
       >
-        <ProjectIntroItem
-          title="Location"
-          content={`${project?.location}, ${project?.countryOfOrigin}`}
-        />
+        <ProjectIntroItem title="Location" content={project.location} />
         <ProjectIntroItem
           title="Price"
-          content={`$${project?.price} /tc02e`}
+          content={`$${project.projectToken.price} /tc02e`}
           padding_x="1.358rem"
         />
         <ProjectIntroItem
           title="Total Credits"
-          content={`${project?.totalTonnes} tons`}
+          content={`${project.projectToken.totalTonnes} tons`}
           padding_x="1.358rem"
         />
         <ProjectIntroItem

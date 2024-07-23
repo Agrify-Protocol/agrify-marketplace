@@ -1,10 +1,10 @@
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import target from "../../../assets/target.svg";
 import Image from "next/image";
-import { farms_list } from "./constants";
 import FarmTableRow from "../FarmTableRow/FarmTableRow";
+import { FarmListTableProps } from "./types";
 
-const FarmlistTable = () => {
+const FarmlistTable = ({ farm_list }: FarmListTableProps) => {
   return (
     <Box mb={"4rem"}>
       <Text fontSize={"1.5rem"} fontWeight={500} mb={"2rem"} color={"black"}>
@@ -24,9 +24,9 @@ const FarmlistTable = () => {
         </Box>
       </Grid>
       <Grid border={"1px solid rgba(0, 0, 0, 0.05)"} borderRadius={"1.099rem"}>
-        {farms_list.map((farm, index) => {
-          const isLast = index == farms_list.length - 1;
-          return <FarmTableRow key={farm.id} farm={farm} isLast={isLast} />;
+        {farm_list.map((farm, index) => {
+          const isLast = index == farm_list.length - 1;
+          return <FarmTableRow key={farm._id} farm={farm} isLast={isLast} />;
         })}
       </Grid>
     </Box>

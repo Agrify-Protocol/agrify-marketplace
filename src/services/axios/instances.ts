@@ -14,3 +14,8 @@ export const projectsInstance = axios.create({
 export const invoiceInstance = axios.create({
   baseURL: `${BASE_URL}/invoices`,
 });
+
+export const farmInstance = axios.create({
+  baseURL: `${BASE_URL}/farm`,
+  headers: { "Content-Type": "application/json" },
+});

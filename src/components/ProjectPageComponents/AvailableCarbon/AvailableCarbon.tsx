@@ -28,7 +28,7 @@ const AvailableCarbon = ({
             Available Tonnes
           </Text>
           <Text fontSize={"1.5rem"} color={"main_black_2"} fontWeight={500}>
-            {available_carbon.toLocaleString()} tc02e
+            {available_carbon?.toLocaleString()} tc02e
           </Text>
         </Box>
         <CircleAlert size={"0.875rem"} color="rgba(1, 19, 8, 0.5)" />
@@ -65,7 +65,7 @@ const AvailableCarbon = ({
           fontWeight={500}
           textAlign={"right"}
         >
-          {total_carbon.toLocaleString()}
+          {total_carbon?.toLocaleString()}
         </Text>
       </Box>
     </Flex>

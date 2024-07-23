@@ -15,6 +15,8 @@ import { useParams } from "next/navigation";
 import { getSingleProject } from "@/services/api/projects";
 import { LoaderCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import PageLoader from "@/components/Layout/PageLoader/PageLoader";
 
 const ProjectPage = () => {
   return (
@@ -29,14 +31,17 @@ export default ProjectPage;
 const ProjectPageBody = () => {
   const { currentSection, setCurrentSection, setProject, project } =
     useProjectPageContext();
+  const { user } = useAuthContext();
   const params = useParams();
   const { id } = params;
 
   useEffect(() => {
-    getSingleProject(id as string).then((result) => {
-      setProject(result);
-    });
-  }, [id]);
+    if (user) {
+      getSingleProject(id as string).then((result) => {
+        setProject(result);
+      });
+    }
+  }, [id, user]);
 
   return (
     <Box mt={"4rem"} px={"2.625rem"}>
@@ -52,14 +57,7 @@ const ProjectPageBody = () => {
           <SectionParent />
         </>
       ) : (
-        <Flex minH={"50vh"} alignItems={"center"} justifyContent={"center"}>
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          >
-            <LoaderCircle size={50} color="#0CC14C" />
-          </motion.div>
-        </Flex>
+        <PageLoader />
       )}
     </Box>
   );

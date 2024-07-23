@@ -13,7 +13,7 @@ export const getAllProjects = async (page: number) => {
 
 export const getSingleProject = async (id: string) => {
   try {
-    const request = await projectsInstance.get(`/${id}`);
+    const request = await projectsInstance.get(`/aggregate/${id}`);
     return request.data;
   } catch (error) {
     console.error(error);

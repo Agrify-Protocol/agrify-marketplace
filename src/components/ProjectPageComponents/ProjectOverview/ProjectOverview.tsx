@@ -12,12 +12,18 @@ import { getCreditPeriod } from "@/utils/getCreditPeriod";
 
 const ProjectOverview = () => {
   const { project } = useProjectPageContext();
+
+  if (!project) {
+    return null;
+  }
+
   const highlights = {
-    price: project?.price!,
-    location: `${project?.location}, ${project?.countryOfOrigin}`,
-    crediting_period: getCreditPeriod(project!)!,
-    contract_type: project?.typeOfProject!,
+    price: project.projectToken.price,
+    location: project.location,
+    crediting_period: getCreditPeriod(project)!,
+    contract_type: project.contractType,
   };
+
   return (
     <Flex>
       <Box width={"23%"} py={"1.494rem"}>
@@ -66,8 +72,8 @@ const ProjectOverview = () => {
           Key Insights
         </Text>
         <AvailableCarbon
-          available_carbon={project?.availableTonnes!}
-          total_carbon={project?.totalTonnes!}
+          available_carbon={project.projectToken.availableTonnes}
+          total_carbon={project.projectToken.totalTonnes}
         />
         <ProjectHighlights highlights={highlights} />
         <ProjectOverviewGallery />

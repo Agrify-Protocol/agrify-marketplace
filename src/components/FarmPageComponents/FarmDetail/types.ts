@@ -1,12 +1,7 @@
+import { DetailedFarm } from "@/app/farm/[id]/types";
+
 export type FarmDetailProps = {
-  detail: {
-    name: string;
-    score: number;
-    description: string;
-    location: string;
-    cultivation_type: string;
-    available_carbon: number;
-  };
+  detail: DetailedFarm;
 };
 
 export type HighlightItemProps = {

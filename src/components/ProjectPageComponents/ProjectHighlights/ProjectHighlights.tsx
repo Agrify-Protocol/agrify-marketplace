@@ -26,7 +26,7 @@ const ProjectHighlights = ({ highlights }: ProjectHighlightProps) => {
       >
         <HighlightBox
           title="Price"
-          content={`$${highlights.price.toLocaleString()}/tonne`}
+          content={`$${highlights.price?.toLocaleString()}/tonne`}
           Icon={CircleDollarSign}
         />
         <HighlightBox
