@@ -34,7 +34,7 @@ const PurchaseBody = () => {
         >
           <Text fontSize={"1.125rem"}>Price</Text>
           <Text fontSize={"1.125rem"} fontWeight={500} color={"main_black_1"}>
-            ${chosenProject?.price}/tc02e
+            ${chosenProject?.projectToken.price}/tc02e
           </Text>
         </Flex>
 
@@ -61,7 +61,8 @@ const PurchaseBody = () => {
             fontWeight={450}
             color={"rgba(1, 19, 8, 0.7)"}
           >
-            {chosenProject?.availableTonnes.toLocaleString()} tonnes
+            {chosenProject?.projectToken.availableTonnes.toLocaleString()}{" "}
+            tonnes
           </Text>
         </Flex>
 
@@ -72,7 +73,7 @@ const PurchaseBody = () => {
             fontWeight={450}
             color={"rgba(1, 19, 8, 0.7)"}
           >
-            {chosenProject?.minimumPurchaseTonnes} tonnes
+            {chosenProject?.projectToken.minimumPurchaseTonnes} tonnes
           </Text>
         </Flex>
       </Box>

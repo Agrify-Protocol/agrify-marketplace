@@ -4,11 +4,18 @@ import { vat } from "@/constants";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 const OrderSummary = () => {
   const { orderedAmount, orderTotal, subTotal, chosenProject } =
     useGlobalContext();
+  const router = useRouter();
+  useEffect(() => {
+    if (!chosenProject) {
+      router.push("/");
+    }
+  }, [chosenProject]);
 
   return (
     <Box>

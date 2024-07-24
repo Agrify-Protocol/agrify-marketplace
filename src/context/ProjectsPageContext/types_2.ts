@@ -14,7 +14,6 @@ export interface SingleProject {
   creditEndDate: Date;
   contractType: string;
   supportingDocument: string;
-  minimumPurchaseTonnes: number;
   mission: string;
   methodology: string;
   projectToken: ProjectToken;

@@ -11,7 +11,7 @@ import { resetAuthCookies } from "@/app/lib/actions";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 
 const ProfileModal = ({ setShowModal }: ProfileModalProps) => {
-  const { setUser } = useAuthContext();
+  const { setUser, user } = useAuthContext();
   const router = useRouter();
   const modalRef = useRef(null);
 
@@ -51,9 +51,9 @@ const ProfileModal = ({ setShowModal }: ProfileModalProps) => {
         </Box>
         <Box>
           <Text fontWeight={500} color={"#282828"}>
-            Agrify Technologies
+            {user?.firstname}
           </Text>
-          <Text fontSize={"0.75rem"}>contactagrify@gmail.com</Text>
+          <Text fontSize={"0.75rem"}>{user?.email}</Text>
         </Box>
       </Flex>
 

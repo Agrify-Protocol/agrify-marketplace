@@ -35,7 +35,7 @@ export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
 
   useEffect(() => {
     if (chosenProject) {
-      setOrderedAmount(chosenProject?.minimumPurchaseTonnes);
+      setOrderedAmount(chosenProject?.projectToken.minimumPurchaseTonnes);
     }
   }, [chosenProject]);
 
