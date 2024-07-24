@@ -1,18 +1,34 @@
 "use client";
 
-import { Box, Grid, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Box, Flex, Grid, Text } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import { purchases } from "./constants";
 import FourColumnTableRow from "@/components/Layout/FourColumnTableRow/FourColumnTableRow";
 import ReceiptModal from "@/components/Layout/ReceiptModal/ReceiptModal";
-import { ReceiptType, TransactionModalType } from "./types";
+import { ReceiptType, Transaction, TransactionModalType } from "./types";
 import { useScreenFreeze } from "@/hooks/useScreenFreeze";
 import InvoiceModal from "@/components/Layout/InvoiceModal/InvoiceModal";
 import { parseDate } from "@/utils/parseData";
+import { getPurchasesByProject } from "@/services/api/purchases";
+import { useParams } from "next/navigation";
+import Spinner from "@/components/Layout/Spinner/Spinner";
 
 const Purchases = () => {
+  const { id } = useParams();
   const [showTxDetails, setShowTxDetails] =
     useState<TransactionModalType | null>(null);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getPurchasesByProject(id as string).then((response) => {
+      if (Array.isArray(response)) {
+        setTransactions(response);
+      } else setTransactions([]);
+      setIsLoading(false);
+    });
+  }, []);
 
   const updateTxDetails = (data: TransactionModalType) => {
     setShowTxDetails(data);
@@ -34,6 +50,8 @@ const Purchases = () => {
   };
 
   useScreenFreeze(showTxDetails != null);
+
+  console.log({ transactions });
 
   return (
     <Box
@@ -58,18 +76,34 @@ const Purchases = () => {
         <Text>Date</Text>
       </Grid>
 
-      {purchases.map((purchase) => {
-        return (
-          <FourColumnTableRow
-            key={purchase.id}
-            name={purchase.payment_type}
-            payment_status={purchase.status}
-            location_or_tonnes={purchase.tonnes}
-            date={purchase.date}
-            clickHandler={updateTxDetails}
-          />
-        );
-      })}
+      <>
+        {isLoading && (
+          <Flex
+            h={"fit-content"}
+            w={"100%"}
+            alignItems={"center"}
+            justifyContent={"center"}
+          >
+            <Spinner />
+          </Flex>
+        )}
+
+        {!isLoading && transactions?.length < 1 && (
+          <Text textAlign={"center"} color={"black"}>
+            No purchases found for this project
+          </Text>
+        )}
+
+        {transactions?.map((transaction) => {
+          return (
+            <FourColumnTableRow
+              key={transaction._id}
+              transaction={transaction}
+              clickHandler={updateTxDetails}
+            />
+          );
+        })}
+      </>
 
       {showTxDetails && showTxDetails.type == "receipt" && (
         <ReceiptModal

@@ -7,6 +7,7 @@ import {
   farmInstance,
   invoiceInstance,
   projectsInstance,
+  purchaseInstance,
 } from "@/services/axios/instances";
 import { refreshAccessToken } from "@/services/api/auth";
 import {
@@ -45,6 +46,7 @@ export const AuthContextProvider = ({ children }: Props) => {
       updateBearerToken(projectsInstance, accessToken);
       updateBearerToken(invoiceInstance, accessToken);
       updateBearerToken(farmInstance, accessToken);
+      updateBearerToken(purchaseInstance, accessToken);
     }
   }, [accessToken]);
 

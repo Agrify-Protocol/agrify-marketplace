@@ -5,6 +5,19 @@ export type TransactionModalType = {
   data: ReceiptType | InvoiceDataType;
 };
 
+export type Transaction = {
+  _id: string;
+  purchaseType: string;
+  status: string;
+  tonnes: number;
+  projectId: string;
+  invoiceId: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+};
+
 export type ReceiptType = Omit<ReceiptModalProps, "closeModal">;
 export type InvoiceDataType = {
   amount: number;

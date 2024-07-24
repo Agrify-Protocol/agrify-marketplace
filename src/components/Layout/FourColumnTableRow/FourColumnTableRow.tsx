@@ -1,11 +1,9 @@
 import { Grid, Text } from "@chakra-ui/react";
 import { FourColumnTableRowProps } from "./types";
+import { parseDate, readableDate } from "@/utils/parseData";
 
 const FourColumnTableRow = ({
-  name,
-  payment_status,
-  location_or_tonnes,
-  date,
+  transaction,
   clickHandler,
 }: FourColumnTableRowProps) => {
   const statusColor: { [x: string]: { [x: string]: string } } = {
@@ -13,11 +11,11 @@ const FourColumnTableRow = ({
     confirmed: { bg: "rgba(12, 193, 76, 0.05)", color: "rgba(12, 193, 76, 1)" },
   };
 
-  const statusBgColor = statusColor[payment_status].bg;
-  const statusTextColor = statusColor[payment_status].color;
+  const statusBgColor = statusColor[transaction.status].bg;
+  const statusTextColor = statusColor[transaction.status].color;
 
   const handleClick = () => {
-    if (payment_status !== "pending") {
+    if (transaction.status !== "pending") {
       const data = {
         type: "receipt",
         data: {
@@ -43,6 +41,8 @@ const FourColumnTableRow = ({
     }
   };
 
+  console.log({ gg: transaction.createdAt });
+
   return (
     <Grid
       gridTemplateColumns={"2fr 1fr 1fr 1fr"}
@@ -53,7 +53,9 @@ const FourColumnTableRow = ({
       onClick={handleClick}
     >
       <Text fontWeight={450} color={"black"} pl={"1.25rem"}>
-        {name}
+        {transaction.purchaseType == "invoice"
+          ? "Generated Invoice"
+          : "Card Payment"}
       </Text>
       <Text
         textTransform={"capitalize"}
@@ -64,10 +66,10 @@ const FourColumnTableRow = ({
         borderRadius={"1.89rem"}
         fontSize={"0.875rem"}
       >
-        {payment_status}
+        {transaction.status}
       </Text>
-      <Text color={"black"}>{location_or_tonnes}</Text>
-      <Text color={"black"}>{date}</Text>
+      <Text color={"black"}>{transaction.tonnes}</Text>
+      <Text color={"black"}>{readableDate(String(transaction.createdAt))}</Text>
     </Grid>
   );
 };
