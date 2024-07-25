@@ -1,6 +1,9 @@
 import { Grid, Text } from "@chakra-ui/react";
 import { FourColumnTableRowProps } from "./types";
 import { parseDate, readableDate } from "@/utils/parseData";
+import { useEffect } from "react";
+import { getSingleInvoice } from "@/services/api/invoice";
+import { parseSingleInvoiceResponse } from "@/utils/parseSingleInvoiceResponse";
 
 const FourColumnTableRow = ({
   transaction,
@@ -15,33 +18,17 @@ const FourColumnTableRow = ({
   const statusTextColor = statusColor[transaction.status].color;
 
   const handleClick = () => {
-    if (transaction.status !== "pending") {
-      const data = {
-        type: "receipt",
-        data: {
-          amount: 502.64,
-          date_time: "12:00 March 14, 2024",
-          reference_code: "AGT88349990924",
-          tonnes: 50,
-        },
-      };
-      clickHandler?.(data);
-    } else {
-      const data = {
-        type: "invoice",
-        data: {
-          amount: 100001.46,
-          client_name: "Client Name",
-          number: "12345678",
-          due_date: "December 22, 2024",
-          tonnes: 1000,
-        },
-      };
-      clickHandler?.(data);
-    }
+    clickHandler?.({
+      type: transaction.purchaseType,
+      txID: transaction.invoiceId,
+    });
   };
 
-  console.log({ gg: transaction.createdAt });
+  useEffect(() => {
+    getSingleInvoice(transaction.invoiceId).then((response) => {
+      console.log({ response: parseSingleInvoiceResponse(response) });
+    });
+  }, []);
 
   return (
     <Grid

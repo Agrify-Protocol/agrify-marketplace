@@ -1,6 +1,7 @@
 import { InvoiceData } from "@/components/PaymentPageComponents/Invoice/types";
+import { TransactionModalType } from "@/components/ProjectPageComponents/Purchases/types";
 
 export type InvoiceModalProps = {
-  invoice_data: InvoiceData;
+  txDetail: TransactionModalType | null;
   closeModal: () => void;
 };

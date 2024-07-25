@@ -15,7 +15,7 @@ import Spinner from "@/components/Layout/Spinner/Spinner";
 
 const Purchases = () => {
   const { id } = useParams();
-  const [showTxDetails, setShowTxDetails] =
+  const [showTransaction, setShowTransaction] =
     useState<TransactionModalType | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,27 +31,10 @@ const Purchases = () => {
   }, []);
 
   const updateTxDetails = (data: TransactionModalType) => {
-    setShowTxDetails(data);
+    setShowTransaction(data);
   };
 
-  const invoice_data = {
-    clientName: "invoiceData.client_name",
-    paymentDueDate: "2024-08-07",
-    phoneNumber: "1234-567-8910",
-    projectId: "66s57ds37wtjs",
-    projectName: "The title here",
-    quantity: 23,
-    amount: "3000",
-    totalAmount: 3004,
-    invoiceNo: `INV${Math.floor(Math.random() * 5000)}`,
-    address: "Konoha",
-    contactNo: "123-456-7890",
-    issuedOn: parseDate(new Date()),
-  };
-
-  useScreenFreeze(showTxDetails != null);
-
-  console.log({ transactions });
+  useScreenFreeze(showTransaction != null);
 
   return (
     <Box
@@ -105,20 +88,14 @@ const Purchases = () => {
         })}
       </>
 
-      {showTxDetails && showTxDetails.type == "receipt" && (
-        <ReceiptModal
-          tonnes={(showTxDetails.data as ReceiptType).tonnes}
-          amount={(showTxDetails.data as ReceiptType).amount}
-          date_time={(showTxDetails.data as ReceiptType).date_time}
-          reference_code={(showTxDetails.data as ReceiptType).reference_code}
-          closeModal={() => setShowTxDetails(null)}
-        />
+      {showTransaction && showTransaction.type == "receipt" && (
+        <ReceiptModal closeModal={() => setShowTransaction(null)} />
       )}
 
-      {showTxDetails && showTxDetails.type == "invoice" && (
+      {showTransaction && showTransaction.type == "invoice" && (
         <InvoiceModal
-          invoice_data={invoice_data}
-          closeModal={() => setShowTxDetails(null)}
+          txDetail={showTransaction}
+          closeModal={() => setShowTransaction(null)}
         />
       )}
     </Box>

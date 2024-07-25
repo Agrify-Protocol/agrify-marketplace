@@ -2,6 +2,7 @@ import { Box, Grid, Text } from "@chakra-ui/react";
 import React from "react";
 import { fundedProjects } from "./constants";
 import FourColumnTableRow from "../../Layout/FourColumnTableRow/FourColumnTableRow";
+import { Transaction } from "@/components/ProjectPageComponents/Purchases/types";
 
 const FundedTable = () => {
   return (
@@ -25,10 +26,7 @@ const FundedTable = () => {
         return (
           <FourColumnTableRow
             key={project.id}
-            name={project.name}
-            payment_status={project.payment_status}
-            location_or_tonnes={project.location}
-            date={project.start_date}
+            transaction={{} as Transaction}
           />
         );
       })}
