@@ -1,10 +1,22 @@
-import { Box, Grid, Text } from "@chakra-ui/react";
-import React from "react";
-import { fundedProjects } from "./constants";
+"use client";
+
+import { Box, Flex, Grid, Text } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import FourColumnTableRow from "../../Layout/FourColumnTableRow/FourColumnTableRow";
 import { Transaction } from "@/components/ProjectPageComponents/Purchases/types";
+import { getAllPurchases } from "@/services/api/purchases";
+import Spinner from "@/components/Layout/Spinner/Spinner";
 
 const FundedTable = () => {
+  const [transactions, setTransations] = useState<Transaction[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    setIsLoading(true);
+    getAllPurchases().then((response) => {
+      setTransations(response);
+      setIsLoading(false);
+    });
+  }, []);
   return (
     <Box>
       <Grid
@@ -22,14 +34,32 @@ const FundedTable = () => {
         <Text>Start Date</Text>
       </Grid>
 
-      {fundedProjects.map((project) => {
-        return (
-          <FourColumnTableRow
-            key={project.id}
-            transaction={{} as Transaction}
-          />
-        );
-      })}
+      <>
+        {isLoading && (
+          <Flex
+            h={"fit-content"}
+            w={"100%"}
+            alignItems={"center"}
+            justifyContent={"center"}
+          >
+            <Spinner />
+          </Flex>
+        )}
+
+        {!isLoading && transactions?.length < 1 && (
+          <Text textAlign={"center"} color={"black"}>
+            No purchases found for this project
+          </Text>
+        )}
+        {transactions.map((transaction) => {
+          return (
+            <FourColumnTableRow
+              key={transaction._id}
+              transaction={transaction}
+            />
+          );
+        })}
+      </>
     </Box>
   );
 };

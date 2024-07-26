@@ -2,13 +2,11 @@
 
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { purchases } from "./constants";
 import FourColumnTableRow from "@/components/Layout/FourColumnTableRow/FourColumnTableRow";
 import ReceiptModal from "@/components/Layout/ReceiptModal/ReceiptModal";
-import { ReceiptType, Transaction, TransactionModalType } from "./types";
+import { Transaction, TransactionModalType } from "./types";
 import { useScreenFreeze } from "@/hooks/useScreenFreeze";
 import InvoiceModal from "@/components/Layout/InvoiceModal/InvoiceModal";
-import { parseDate } from "@/utils/parseData";
 import { getPurchasesByProject } from "@/services/api/purchases";
 import { useParams } from "next/navigation";
 import Spinner from "@/components/Layout/Spinner/Spinner";
