@@ -39,7 +39,7 @@ export const refreshAccessToken = async (token: { refreshToken: string }) => {
   try {
     const request = await authInstance.post("/refreshToken", token);
     return request.data;
-  } catch (error) {
+  } catch (error: any) {
     errorCreation(error);
   }
 };

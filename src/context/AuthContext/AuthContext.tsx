@@ -16,6 +16,7 @@ import {
   getRefreshToken,
   getUser,
   preserveSession,
+  resetAuthCookies,
 } from "@/app/lib/actions";
 import { useRouter } from "next/navigation";
 
@@ -59,6 +60,12 @@ export const AuthContextProvider = ({ children }: Props) => {
         refreshAccessToken({ refreshToken })
           .then((result) => {
             preserveSession(user, result.token, refreshToken);
+          })
+          .catch((err) => {
+            if (err.message == "Invalid or Expired Refresh Token") {
+              resetAuthCookies();
+              router.push("/login");
+            }
           })
           .finally(() => {
             setInterval(() => {
