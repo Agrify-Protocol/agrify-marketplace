@@ -34,6 +34,10 @@ const Purchases = () => {
     setShowTransaction(data);
   };
 
+  const selectedReceipt = transactions.find((tx) => {
+    return tx._id == showTransaction?.txID;
+  });
+
   useScreenFreeze(showTransaction != null);
 
   return (
@@ -88,8 +92,11 @@ const Purchases = () => {
         })}
       </>
 
-      {showTransaction && showTransaction.type == "receipt" && (
-        <ReceiptModal closeModal={() => setShowTransaction(null)} />
+      {showTransaction && showTransaction.type == "card" && (
+        <ReceiptModal
+          txDetail={selectedReceipt}
+          closeModal={() => setShowTransaction(null)}
+        />
       )}
 
       {showTransaction && showTransaction.type == "invoice" && (

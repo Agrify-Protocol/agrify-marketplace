@@ -13,6 +13,7 @@ export type Transaction = {
   projectId: string;
   invoiceId: string;
   userId: string;
+  paymentReference: string;
   createdAt: Date;
   updatedAt: Date;
   __v: number;

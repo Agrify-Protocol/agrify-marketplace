@@ -1,9 +1,6 @@
 import { Grid, Text } from "@chakra-ui/react";
 import { FourColumnTableRowProps } from "./types";
-import { parseDate, readableDate } from "@/utils/parseData";
-import { useEffect } from "react";
-import { getSingleInvoice } from "@/services/api/invoice";
-import { parseSingleInvoiceResponse } from "@/utils/parseSingleInvoiceResponse";
+import { readableDate } from "@/utils/parseData";
 
 const FourColumnTableRow = ({
   transaction,
@@ -20,15 +17,9 @@ const FourColumnTableRow = ({
   const handleClick = () => {
     clickHandler?.({
       type: transaction.purchaseType,
-      txID: transaction.invoiceId,
+      txID: transaction.invoiceId ? transaction.invoiceId : transaction._id,
     });
   };
-
-  useEffect(() => {
-    getSingleInvoice(transaction.invoiceId).then((response) => {
-      console.log({ response: parseSingleInvoiceResponse(response) });
-    });
-  }, []);
 
   return (
     <Grid
