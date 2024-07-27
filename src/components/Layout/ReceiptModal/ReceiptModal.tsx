@@ -5,14 +5,13 @@ import React from "react";
 import BackButton from "../BackButton/BackButton";
 import { ReceiptModalProps } from "./types";
 import { Inter_Display } from "@/fonts";
+import { readableDate } from "@/utils/parseData";
 
-const ReceiptModal = ({
-  amount,
-  date_time,
-  reference_code,
-  tonnes,
-  closeModal,
-}: ReceiptModalProps) => {
+const ReceiptModal = ({ txDetail, closeModal }: ReceiptModalProps) => {
+  if (!txDetail) {
+    return null;
+  }
+
   return (
     <Box
       position={"fixed"}
@@ -39,7 +38,7 @@ const ReceiptModal = ({
 
         <Box mt={"2.5rem"}>
           <Text fontWeight={600} fontSize={"2rem"} color={"main_black_1"}>
-            {tonnes}tc02e
+            {txDetail?.tonnes}tc02e
           </Text>
 
           <Box mt={"3rem"} fontSize={"1.125rem"}>
@@ -49,7 +48,9 @@ const ReceiptModal = ({
               mb={"1rem"}
             >
               <Text>Date & Time</Text>
-              <Text color={"main_black_1"}>{date_time}</Text>
+              <Text color={"main_black_1"}>
+                {readableDate(txDetail.createdAt.toString())}
+              </Text>
             </Flex>
             <Flex
               alignItems={"center"}
@@ -57,7 +58,7 @@ const ReceiptModal = ({
               mb={"1rem"}
             >
               <Text>Amount</Text>
-              <Text color={"main_black_1"}>${amount}</Text>
+              <Text color={"main_black_1"}>${500}</Text>
             </Flex>
             <Flex
               alignItems={"center"}
@@ -65,7 +66,7 @@ const ReceiptModal = ({
               mb={"1rem"}
             >
               <Text>Reference Code</Text>
-              <Text color={"main_black_1"}>{reference_code}</Text>
+              <Text color={"main_black_1"}>{txDetail?.paymentReference}</Text>
             </Flex>
           </Box>
 

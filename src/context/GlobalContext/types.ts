@@ -1,5 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { SingleProjectResponse } from "../ProjectsPageContext/types";
+import { SingleProject } from "../ProjectsPageContext/types_2";
 
 export type GlobalContextProps = {
   children: ReactNode;
@@ -12,8 +13,10 @@ export type GlobalContextType = {
   subTotal: string;
   allProjects: AllProjectsResponse | null;
   setAllProjects: Dispatch<SetStateAction<AllProjectsResponse | null>>;
-  chosenProject: SingleProjectResponse | null;
-  setChosenProject: Dispatch<SetStateAction<SingleProjectResponse | null>>;
+  chosenProject: SingleProject | null;
+  setChosenProject: Dispatch<SetStateAction<SingleProject | null>>;
+  categories: CategoryObject[];
+  setCategories: Dispatch<SetStateAction<CategoryObject[]>>;
 };
 
 export interface AllProjectsResponse {
@@ -36,3 +39,11 @@ export interface Tag {
   _id: string;
   icon: string;
 }
+
+export type CategoryObject = {
+  category: Category;
+  totalTonnes: number;
+  farms: number;
+};
+
+type Category = "cassava" | "tomato" | "rice" | "yam" | "maize" | "soybean";

@@ -29,11 +29,11 @@ const InvoiceBody = ({ invoice_data }: InvoiceProps) => {
           mt={"1.875rem"}
           fontSize={"0.688rem"}
         >
-          <Text color={"main_black_1"}>{invoice_data.projectName}</Text>
-          <Text align={"right"}>{invoice_data.quantity} tonnes</Text>
-          <Text align={"right"}>${invoice_data.totalAmount}</Text>
+          <Text color={"main_black_1"}>{invoice_data?.projectName}</Text>
+          <Text align={"right"}>{invoice_data?.quantity} tonnes</Text>
+          <Text align={"right"}>${invoice_data?.totalAmount}</Text>
           <Text align={"right"} color={"main_black_1"}>
-            ${invoice_data.totalAmount}
+            ${invoice_data?.totalAmount}
           </Text>
         </Grid>
 
@@ -63,7 +63,7 @@ const InvoiceBody = ({ invoice_data }: InvoiceProps) => {
             </Text>
             <Text fontWeight={700} color={"main_black_1"}>
               $
-              {invoice_data.totalAmount.toLocaleString("en", {
+              {invoice_data?.totalAmount?.toLocaleString("en", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}

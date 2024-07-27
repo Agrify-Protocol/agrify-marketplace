@@ -1,6 +1,6 @@
-import { StateProject } from "../ProjectTable/types";
+import { StateProjectData } from "@/app/category/[type]/types";
 
 export type ProjectTableRowProps = {
-  project: StateProject;
+  project: StateProjectData;
   total_carbon_credits: number;
 };

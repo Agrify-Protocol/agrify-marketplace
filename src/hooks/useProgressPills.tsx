@@ -50,7 +50,7 @@ const useProgressPills = ({
       );
 
       const updatedPillsData = initialPillData.map((object) => {
-        if (object.id < numberOfPillsToFill) {
+        if (object.id <= numberOfPillsToFill) {
           return { ...object, isFilled: true };
         } else return { ...object, isFilled: false };
       });

@@ -1,5 +1,6 @@
 "use client";
 
+import DatePicker from "@/components/Layout/DatePicker/DatePicker";
 import { usePaymentContext } from "@/context/PaymentContext/PaymentContext";
 import useObjectCheck from "@/hooks/useObjectCheck";
 import { Box, Button, FormControl, Input, Text } from "@chakra-ui/react";
@@ -7,7 +8,7 @@ import React from "react";
 
 const InvoiceForm = () => {
   const { invoiceData, setInvoiceData, setPaymentStage } = usePaymentContext();
-  const updateInvoiceData = (key: string, value: string) => {
+  const updateInvoiceData = (key: string, value: string | Date) => {
     setInvoiceData({ ...invoiceData, [key]: value });
   };
   const detailsFilled = useObjectCheck(invoiceData);
@@ -48,13 +49,8 @@ const InvoiceForm = () => {
           type="number"
           onChange={(e) => updateInvoiceData("phone_number", e.target.value)}
         />
-        <Input
-          h={"3.5rem"}
-          borderRadius={"1rem"}
-          placeholder="Payment Due Date"
-          borderColor={"gray_3"}
-          value={invoiceData.due_date}
-          onChange={(e) => updateInvoiceData("due_date", e.target.value)}
+        <DatePicker
+          updateDate={(value) => updateInvoiceData("due_date", value)}
         />
         <Button
           w={"100%"}

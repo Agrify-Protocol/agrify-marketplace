@@ -32,7 +32,7 @@ const FarmDetail = ({ detail }: FarmDetailProps) => {
             top={"1rem"}
             textAlign={"center"}
           >
-            {detail.score}
+            {7.5}
           </Text>
           <Image
             style={{ position: "absolute", bottom: "0" }}
@@ -48,14 +48,14 @@ const FarmDetail = ({ detail }: FarmDetailProps) => {
         <Text color={"black"} fontSize={"1.125rem"} mb={"1rem"}>
           Highlights
         </Text>
-        <HighlightItem title="Location" value={detail.location} />
+        <HighlightItem title="Location" value={detail.address} />
         <HighlightItem
           title="Cultivation Type"
-          value={detail.cultivation_type}
+          value={detail.cultivationType}
         />
         <HighlightItem
           title="Available Carbon"
-          value={detail.available_carbon.toLocaleString()}
+          value={detail.availableTonnes.toLocaleString()}
         />
       </Box>
     </Box>

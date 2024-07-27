@@ -16,7 +16,7 @@ const ProjectTableRow = ({
   const pillRef = useRef(null);
   const pills = useProgressPills({
     pillContainerRef: pillRef,
-    available_carbon: project.available_credits,
+    available_carbon: project.totalTonnes,
     total_carbon: total_carbon_credits,
     pillWidthInPx: 4,
     gapBetweenPillsInPx: 3.88,
@@ -33,7 +33,7 @@ const ProjectTableRow = ({
       cursor={"pointer"}
       transition={"all 0.25s ease-in-out"}
       _hover={{ borderColor: "#0CC14C" }}
-      onClick={() => router.push("/project/666079f35acc83a0db765d4e")}
+      onClick={() => router.push(`/project/${project.projectID}`)}
     >
       <Box>
         <Flex gap={"0.5rem"} fontSize={"1.125rem"} fontWeight={450}>
@@ -49,9 +49,9 @@ const ProjectTableRow = ({
             fontSize={"1rem"}
             fontWeight={400}
           >
-            {project.project_state[0]}
+            {project.state[0]}
           </Box>
-          {project.project_state}
+          {project.state}
         </Flex>
       </Box>
 
@@ -68,12 +68,12 @@ const ProjectTableRow = ({
       </Box>
 
       <Box textAlign={"center"}>
-        <Box>{project.no_of_farms}</Box>
+        <Box>{project.farms}</Box>
       </Box>
 
       <Box textAlign={"right"}>
         <Flex alignItems={"center"} gap={"1rem"}>
-          <Box w={"50%"}>{project.available_credits.toLocaleString()}</Box>
+          <Box w={"50%"}>{project.totalTonnes.toLocaleString()}</Box>
           <Flex
             w={"50%"}
             ref={pillRef}

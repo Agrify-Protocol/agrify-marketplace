@@ -41,7 +41,7 @@ const ProjectTable = ({ projects, carbon_credits }: ProjectTableProps) => {
         {projects.map((project) => {
           return (
             <ProjectTableRow
-              key={project.id}
+              key={project.projectID}
               project={project}
               total_carbon_credits={carbon_credits}
             />

@@ -17,6 +17,13 @@ type RegisterData = {
   password: string;
   // password_2: string;
 };
+
+type PasswordResetData = {
+  userId: string;
+  token: string;
+  password: string;
+};
+
 export const registerUser = async (data: RegisterData) => {
   try {
     const request = await authInstance.post("/register", data);
@@ -35,11 +42,20 @@ export const getVerificationToken = async (data: { email: string }) => {
   }
 };
 
+export const resetPassword = async (data: PasswordResetData) => {
+  try {
+    const request = await authInstance.post("/resetPassword", data);
+    return request.data;
+  } catch (error) {
+    errorCreation(error);
+  }
+};
+
 export const refreshAccessToken = async (token: { refreshToken: string }) => {
   try {
     const request = await authInstance.post("/refreshToken", token);
     return request.data;
-  } catch (error) {
+  } catch (error: any) {
     errorCreation(error);
   }
 };

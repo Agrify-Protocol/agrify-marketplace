@@ -2,15 +2,23 @@
 
 import BackButton from "@/components/Layout/BackButton/BackButton";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import check from "../../assets/icon-park-solid_check-one.svg";
 import Image from "next/image";
 import Project from "@/components/ProjectPageComponents/Project/Project";
 import { projects } from "@/components/ProjectPageComponents/ProjectsContainer/constants";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
+import { useRouter } from "next/navigation";
 
 const Confirmation = () => {
-  const { chosenProject } = useGlobalContext();
+  const router = useRouter();
+  const { chosenProject, setChosenProject, orderedAmount } = useGlobalContext();
+  useEffect(() => {
+    setTimeout(() => {
+      setChosenProject(null);
+      router.push("/");
+    }, 5000);
+  }, []);
   return (
     <Box my={"4rem"} px={"2.625rem"}>
       <BackButton />
@@ -44,7 +52,8 @@ const Confirmation = () => {
           mt={"1.708rem"}
           mb={"2.661rem"}
         >
-          You have successfully purchased 1,000 tones of C02
+          You have successfully purchased {orderedAmount.toLocaleString()} tones
+          of C02
         </Text>
 
         <Box
@@ -88,7 +97,7 @@ const Confirmation = () => {
           fontSize={"1.5rem"}
           mb={"2.648rem"}
         >
-          {`REDD+ Project in Eastern Côte D'Ivoire`}
+          {chosenProject?.title}
         </Text>
 
         <Button

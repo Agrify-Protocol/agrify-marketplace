@@ -7,7 +7,6 @@ import Image from "next/image";
 import { SliderProps } from "./types";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { slideVariants } from "./constants";
 
 const Slider = ({ images }: SliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -50,7 +49,7 @@ const Slider = ({ images }: SliderProps) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Image src={images[currentIndex]} alt="" fill />
+            <Image src={images[currentIndex].image} alt="" fill />
           </motion.div>
         </AnimatePresence>
       </Box>

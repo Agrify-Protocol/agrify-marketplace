@@ -5,8 +5,11 @@ import React, { useState } from "react";
 import { OptionProps } from "./types";
 
 import { usePaymentContext } from "@/context/PaymentContext/PaymentContext";
+import { payForCarbon, PaymentPayload } from "@/services/api/payments";
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 
 const PaymentOption = () => {
+  const { chosenProject, orderedAmount } = useGlobalContext();
   const { setPaymentStage } = usePaymentContext();
   const [chosenOption, setChosenOption] = useState(0);
   const handleSelect = (optionNumber: number) => {
@@ -14,8 +17,19 @@ const PaymentOption = () => {
   };
 
   const handleSubmit = () => {
-    if (chosenOption == 2) {
-      setPaymentStage(2);
+    switch (chosenOption) {
+      case 1:
+        const data: PaymentPayload = {
+          projectId: chosenProject?._id as string,
+          tonnes: orderedAmount,
+        };
+        payForCarbon(data).then((response) => {
+          window.open(response.data.authorization_url);
+        });
+        break;
+      case 2:
+        setPaymentStage(2);
+        break;
     }
   };
 

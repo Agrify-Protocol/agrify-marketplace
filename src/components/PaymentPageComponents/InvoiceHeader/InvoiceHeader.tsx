@@ -33,10 +33,10 @@ const InvoiceHeader = ({ invoice_data }: InvoiceProps) => {
             color={"main_black_1"}
             my={"0.438rem"}
           >
-            {invoice_data.clientName}
+            {invoice_data?.clientName}
           </Text>
           <Text fontSize={"0.625rem"} color={"main_black_1"}>
-            Address / Contact Info
+            {invoice_data?.address} / {invoice_data?.contactNo}
           </Text>
         </Box>
       </Box>
@@ -53,7 +53,7 @@ const InvoiceHeader = ({ invoice_data }: InvoiceProps) => {
               color={"main_black_1"}
               fontWeight={700}
             >
-              {invoice_data.invoiceNo}
+              {invoice_data?.invoiceNo}
             </Text>
           </Box>
           <Box>
@@ -81,7 +81,7 @@ const InvoiceHeader = ({ invoice_data }: InvoiceProps) => {
               fontSize={"0.625rem"}
               color={"main_black_1"}
             >
-              {readableDate(invoice_data.issuedOn)}
+              {readableDate(invoice_data?.issuedOn)}
             </Text>
           </Box>
           <Box>
@@ -93,7 +93,7 @@ const InvoiceHeader = ({ invoice_data }: InvoiceProps) => {
               fontSize={"0.625rem"}
               color={"main_black_1"}
             >
-              {readableDate(invoice_data.paymentDueDate)}
+              {readableDate(invoice_data?.paymentDueDate)}
             </Text>
           </Box>
         </Box>

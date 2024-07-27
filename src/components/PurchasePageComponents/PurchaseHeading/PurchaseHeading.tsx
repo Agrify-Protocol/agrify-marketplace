@@ -2,10 +2,17 @@
 
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { Box, Text } from "@chakra-ui/react";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 const PurchaseHeading = () => {
   const { chosenProject } = useGlobalContext();
+  const router = useRouter();
+  useEffect(() => {
+    if (!chosenProject) {
+      router.push("/");
+    }
+  }, [chosenProject]);
   return (
     <Box>
       <Text

@@ -4,12 +4,12 @@ import AuthPageHeading from "@/components/AuthPageComponents/AuthPageHeading/Aut
 import AuthPageSubmitButton from "@/components/AuthPageComponents/AuthPageSubmitButton/AuthPageSubmitButton";
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
 import useObjectCheck from "@/hooks/useObjectCheck";
-import { getVerificationToken } from "@/services/api/auth";
+import { getVerificationToken, resetPassword } from "@/services/api/auth";
 import { ToastData } from "@/utils/classes";
 import { compareStrings } from "@/utils/compareStrings";
 import { Box, Flex, FormControl, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { passwordToast } from "../signup/constants";
 
 const Reset = () => {
@@ -18,13 +18,18 @@ const Reset = () => {
   const [resetData, setResetData] = useState({
     email: "",
     verification_code: "",
+    user_id: "",
     new_password: "",
     new_password2: "",
   });
   const [stage, setStage] = useState(1);
-  const handleChange = (key: string, value: string) => {
+  const handleChange = (key: keyof typeof resetData, value: string) => {
     setResetData({ ...resetData, [key]: value });
   };
+
+  useEffect(() => {
+    console.log({ resetData });
+  }, [stage]);
 
   const detailsAreFilled = useObjectCheck(resetData);
   const verificationCodeAvailable = resetData.verification_code != "";
@@ -33,7 +38,15 @@ const Reset = () => {
     switch (stage) {
       case 1:
         getVerificationToken({ email: resetData.email })
-          .finally(() => {
+          .then((response) => {
+            const data = response.link.split("=");
+            let verification_code = data[1];
+            verification_code = verification_code.substring(
+              0,
+              verification_code.length - 3
+            );
+            const user_id = data[2];
+            setResetData({ ...resetData, user_id, verification_code });
             setStage(stage + 1);
           })
           .catch((err) => {
@@ -51,7 +64,20 @@ const Reset = () => {
         break;
       case 3:
         if (compareStrings(resetData.new_password, resetData.new_password2)) {
-          router.push("/login");
+          resetPassword({
+            userId: resetData.user_id,
+            token: resetData.verification_code,
+            password: resetData.new_password,
+          }).then((response) => {
+            toast(
+              new ToastData(
+                response.message,
+                "Your password has been updated successfully!",
+                "success"
+              )
+            );
+            router.push("/login");
+          });
         } else {
           toast(passwordToast);
         }

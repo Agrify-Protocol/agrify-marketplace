@@ -6,6 +6,9 @@ import FarmlistTable from "../FarmlistTable/FarmlistTable";
 
 const ProjectDetails = () => {
   const { project } = useProjectPageContext();
+  if (!project) {
+    return null;
+  }
   return (
     <>
       <Box
@@ -22,28 +25,28 @@ const ProjectDetails = () => {
           <Box mb={"1.649rem"}>
             <Text>Title of Project</Text>
             <Text fontSize={"1.25rem"} color={"black"}>
-              {project?.title}
+              {project.title}
             </Text>
           </Box>
 
           <Box mb={"1.649rem"}>
             <Text>Description</Text>
             <Text fontSize={"1.25rem"} color={"black"}>
-              {project?.description}
+              {project.description}
             </Text>
           </Box>
 
           <Box mb={"1.649rem"}>
             <Text>Mission</Text>
             <Text fontSize={"1.25rem"} color={"black"}>
-              To increase the jobs in the
+              {project.mission}
             </Text>
           </Box>
 
           <Box mb={"1.649rem"}>
             <Text>Location</Text>
             <Text fontSize={"1.25rem"} color={"black"}>
-              {`${project?.location}, ${project?.countryOfOrigin}`}
+              {project.location}
             </Text>
           </Box>
 
@@ -57,13 +60,13 @@ const ProjectDetails = () => {
           <Box>
             <Text>Project Activity</Text>
             <Text fontSize={"1.25rem"} color={"black"}>
-              Multi-Species Agroforrestry AGM001
+              {project.methodology}
             </Text>
           </Box>
         </Box>
       </Box>
 
-      <FarmlistTable />
+      <FarmlistTable farm_list={project.farms} />
     </>
   );
 };

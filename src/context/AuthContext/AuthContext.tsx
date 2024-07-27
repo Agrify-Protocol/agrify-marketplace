@@ -3,13 +3,20 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContextType, Props, User } from "./types";
 import { updateBearerToken } from "@/utils/updateBearerToken";
-import { invoiceInstance, projectsInstance } from "@/services/axios/instances";
+import {
+  farmInstance,
+  invoiceInstance,
+  paymentInstance,
+  projectsInstance,
+  purchaseInstance,
+} from "@/services/axios/instances";
 import { refreshAccessToken } from "@/services/api/auth";
 import {
   getAccessToken,
   getRefreshToken,
   getUser,
   preserveSession,
+  resetAuthCookies,
 } from "@/app/lib/actions";
 import { useRouter } from "next/navigation";
 
@@ -40,6 +47,9 @@ export const AuthContextProvider = ({ children }: Props) => {
     if (accessToken) {
       updateBearerToken(projectsInstance, accessToken);
       updateBearerToken(invoiceInstance, accessToken);
+      updateBearerToken(farmInstance, accessToken);
+      updateBearerToken(purchaseInstance, accessToken);
+      updateBearerToken(paymentInstance, accessToken);
     }
   }, [accessToken]);
 
@@ -50,6 +60,12 @@ export const AuthContextProvider = ({ children }: Props) => {
         refreshAccessToken({ refreshToken })
           .then((result) => {
             preserveSession(user, result.token, refreshToken);
+          })
+          .catch((err) => {
+            if (err.message == "Invalid or Expired Refresh Token") {
+              resetAuthCookies();
+              router.push("/login");
+            }
           })
           .finally(() => {
             setInterval(() => {

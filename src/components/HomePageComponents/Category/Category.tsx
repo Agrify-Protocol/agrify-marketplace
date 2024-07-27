@@ -6,12 +6,11 @@ import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import leaf from "../../../assets/leaf.svg";
 import { useRouter } from "next/navigation";
+import { categoryImages } from "../CategoryContainer/constants";
 
 const Category = ({ category }: CategoryProps) => {
   const router = useRouter();
-  const getUrlSafeName = () => {
-    return category.name.replace(" ", "_");
-  };
+
   return (
     <Flex
       h={"20.75rem"}
@@ -22,7 +21,7 @@ const Category = ({ category }: CategoryProps) => {
       justifyContent={"center"}
       gap={"0.75rem"}
       cursor={"pointer"}
-      onClick={() => router.push(`/category/${getUrlSafeName()}`)}
+      onClick={() => router.push(`/category/${category.category}`)}
     >
       <Box
         shadow={"0 3px 10px rgba(0,0,0,0.15)"}
@@ -30,10 +29,10 @@ const Category = ({ category }: CategoryProps) => {
         px={"1.75rem"}
         borderRadius={"0.75rem"}
       >
-        <Image src={category.image} alt="" />
+        <Image src={categoryImages[category.category]} alt="" />
       </Box>
       <Text fontSize={"1.125rem"} color={"black"} mt={"calc(2rem - 0.75rem)"}>
-        {category.name}
+        {category.category}
       </Text>
       <Flex
         fontSize={"0.75rem"}
@@ -44,7 +43,7 @@ const Category = ({ category }: CategoryProps) => {
         color={"rgba(141, 141, 141, 1)"}
       >
         <Image src={leaf} alt="" />
-        {category.carbon_credits.toLocaleString()} tco2e
+        {category.totalTonnes.toLocaleString()} tco2e
       </Flex>
     </Flex>
   );
