@@ -40,6 +40,7 @@ const ProfileModal = ({ setShowModal }: ProfileModalProps) => {
       zIndex={1}
       ref={modalRef}
       className="profile_modal"
+      boxShadow={"0 3px 10px rgba(0,0,0,0.125)"}
     >
       <Flex p={"0.5rem 1rem"} gap={"0.75rem"} alignItems={"center"}>
         <Box w={"3.5rem"} h={"3.5rem"}>
