@@ -37,7 +37,8 @@ const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
           borderRadius={"1.5rem"}
           color="white"
           my={"3rem"}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             const createInvoicePayload = {
               ...invoice_data,
               amount: Number(removeCommas(invoice_data.amount)),
