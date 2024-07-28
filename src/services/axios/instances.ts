@@ -29,3 +29,8 @@ export const paymentInstance = axios.create({
   baseURL: `${BASE_URL}/payments`,
   headers: { "Content-Type": "application/json" },
 });
+
+export const preorderInstance = axios.create({
+  baseURL: `${BASE_URL}/preorder`,
+  headers: { "Content-Type": "application/json" },
+});
