@@ -4,18 +4,23 @@ import CustomInput from "@/components/Common/CustomInput/CustomInput";
 import { Button, FormControl } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { StoreFrontFormProps } from "./types";
+import useObjectCheck from "@/hooks/useObjectCheck";
+import { createPreorder, PreorderPayload } from "@/services/api/preorder";
+import { useParams } from "next/navigation";
 
 const StoreFrontForm = ({ setStep }: StoreFrontFormProps) => {
+  const { id } = useParams();
   const initialState = {
-    contact_name: "",
-    phone_number: "",
+    name: "",
+    phoneNumber: "",
     amount: "",
-    location: "",
+    address: "",
   };
   const [data, setData] = useState(initialState);
   const updateData = (key: keyof typeof data, value: string | number) => {
     setData({ ...data, [key]: value });
   };
+  const detailsFilled = useObjectCheck(data);
 
   return (
     <FormControl
@@ -29,16 +34,16 @@ const StoreFrontForm = ({ setStep }: StoreFrontFormProps) => {
         placeholder="Enter Name"
         id="contact_name"
         type="text"
-        value={data.contact_name}
-        changeFunc={(e) => updateData("contact_name", e.currentTarget.value)}
+        value={data.name}
+        changeFunc={(e) => updateData("name", e.currentTarget.value)}
       />
       <CustomInput
         label="Phone Number"
         placeholder="Enter Number"
         id="phone_number"
         type="number"
-        value={data.phone_number}
-        changeFunc={(e) => updateData("phone_number", e.currentTarget.value)}
+        value={data.phoneNumber}
+        changeFunc={(e) => updateData("phoneNumber", e.currentTarget.value)}
       />
       <CustomInput
         label="Amount(In Kg)"
@@ -53,8 +58,8 @@ const StoreFrontForm = ({ setStep }: StoreFrontFormProps) => {
         placeholder="Enter location"
         id="location"
         type="text"
-        value={data.location}
-        changeFunc={(e) => updateData("location", e.currentTarget.value)}
+        value={data.address}
+        changeFunc={(e) => updateData("address", e.currentTarget.value)}
       />
       <Button
         w={"11.375rem"}
@@ -64,9 +69,16 @@ const StoreFrontForm = ({ setStep }: StoreFrontFormProps) => {
         borderRadius={"2rem"}
         fontWeight={500}
         type="submit"
+        isDisabled={!detailsFilled}
         onClick={(e) => {
           e.preventDefault();
-          setStep(2);
+          e.stopPropagation();
+          createPreorder(id as string, {
+            ...data,
+            amount: Number(data.amount),
+          }).then(() => {
+            setStep(2);
+          });
         }}
       >
         Submit
