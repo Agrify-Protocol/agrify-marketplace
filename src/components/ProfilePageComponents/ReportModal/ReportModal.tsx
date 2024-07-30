@@ -9,15 +9,19 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { ReportModalProps } from "./types";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { Inter_Display } from "@/fonts";
+import { createReport } from "@/services/api/profile";
 
 const ReportModal = ({ setShowModal }: ReportModalProps) => {
   const modalRef = useRef(null);
+  const [reportName, setReportName] = useState("");
   const closeModal = () => {
-    setShowModal(false);
+    createReport({ reportName }).then(() => {
+      setShowModal(false);
+    });
   };
 
   useOutsideClick(modalRef, setShowModal, "report_modal");
@@ -60,6 +64,8 @@ const ReportModal = ({ setShowModal }: ReportModalProps) => {
             fontFamily={Inter_Display.style.fontFamily}
             borderRadius={"1rem"}
             mb={"3rem"}
+            value={reportName}
+            onChange={(e) => setReportName(e.target.value)}
           />
 
           <Button
