@@ -16,6 +16,7 @@ export type Transaction = {
   paymentReference: string;
   createdAt: Date;
   updatedAt: Date;
+  amount: number;
   __v: number;
 };
 

@@ -58,7 +58,9 @@ const ReceiptModal = ({ txDetail, closeModal }: ReceiptModalProps) => {
               mb={"1rem"}
             >
               <Text>Amount</Text>
-              <Text color={"main_black_1"}>${500}</Text>
+              <Text color={"main_black_1"}>
+                ${txDetail.amount?.toLocaleString()}
+              </Text>
             </Flex>
             <Flex
               alignItems={"center"}
