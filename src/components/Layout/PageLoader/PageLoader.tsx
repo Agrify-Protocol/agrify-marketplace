@@ -8,7 +8,7 @@ const PageLoader = () => {
       minH={"50vh"}
       alignItems={"center"}
       justifyContent={"center"}
-      minW={"100vw"}
+      minW={"calc(100vw - (2.75rem * 2))"}
     >
       <Spinner />
     </Flex>

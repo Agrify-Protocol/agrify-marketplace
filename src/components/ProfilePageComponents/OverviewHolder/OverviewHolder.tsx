@@ -1,25 +1,65 @@
-import { Grid } from "@chakra-ui/react";
-import React from "react";
+"use client";
+
+import { Flex, Grid } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import { overviews } from "./constants";
 import OverviewBox from "../OverviewBox/OverviewBox";
+import { getOverview } from "@/services/api/profile";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import { OverviewType } from "./types";
+import Spinner from "@/components/Layout/Spinner/Spinner";
 
 const OverviewHolder = () => {
+  const { user } = useAuthContext();
+  const [overview, setOverview] = useState<OverviewType | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (user) {
+      setIsLoading(true);
+      getOverview().then((response) => {
+        if (response) {
+          setOverview(response.data);
+          setIsLoading(false);
+        }
+      });
+    }
+  }, [user]);
+
   return (
     <Grid
       gridTemplateColumns={"repeat(2, 1fr)"}
       gap={"5.956rem"}
       rowGap={"2.888rem"}
     >
-      {overviews.map((overview) => {
-        return (
+      {isLoading && !overview ? (
+        <Flex
+          h={"fit-content"}
+          minW={"calc(100vw - (2.75rem * 2))"}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
+          <Spinner />
+        </Flex>
+      ) : (
+        <>
           <OverviewBox
-            key={overview.title}
-            title={overview.title}
-            heading={overview.heading}
-            content={overview.content}
+            title={overviews[0].title}
+            heading={`${overview?.totalTonnes}`}
+            content={overviews[0].content}
           />
-        );
-      })}
+          <OverviewBox
+            title={overviews[1].title}
+            heading={`${overview?.totalProjectsFunded}`}
+            content={overviews[1].content}
+          />
+          <OverviewBox
+            title={overviews[2].title}
+            heading={`${overview?.totalAmount}`}
+            content={overviews[2].content}
+          />
+        </>
+      )}
     </Grid>
   );
 };
