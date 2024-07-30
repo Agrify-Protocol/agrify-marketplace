@@ -34,3 +34,8 @@ export const preorderInstance = axios.create({
   baseURL: `${BASE_URL}/preorder`,
   headers: { "Content-Type": "application/json" },
 });
+
+export const profileInstance = axios.create({
+  baseURL: `${BASE_URL}/profile`,
+  headers: { "Content-Type": "application/json" },
+});
