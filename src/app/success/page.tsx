@@ -2,23 +2,50 @@
 
 import BackButton from "@/components/Layout/BackButton/BackButton";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import check from "../../assets/icon-park-solid_check-one.svg";
 import Image from "next/image";
 import Project from "@/components/ProjectPageComponents/Project/Project";
 import { projects } from "@/components/ProjectPageComponents/ProjectsContainer/constants";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { getPurchasesByReference } from "@/services/api/purchases";
+import { getSingleProject } from "@/services/api/projects";
 
 const Confirmation = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const trxref = searchParams.get("trxref");
+  const reference = searchParams.get("reference");
+
+  const params = useParams();
   const { chosenProject, setChosenProject, orderedAmount } = useGlobalContext();
+  const [purchasedTonnes, setPurchasedTonnes] = useState(0);
+  const [isRedirect, setIsRedirect] = useState(false);
+
   useEffect(() => {
-    setTimeout(() => {
-      setChosenProject(null);
-      router.push("/");
-    }, 5000);
-  }, []);
+    if (!chosenProject) {
+      if (trxref && reference) {
+        setIsRedirect(true);
+        getPurchasesByReference(trxref).then((response) => {
+          if (response) {
+            const tx = response[0];
+            setPurchasedTonnes(tx.tonnes);
+            getSingleProject(tx.projectId).then((response) => {
+              setChosenProject(response);
+              console.log({ response });
+            });
+          }
+        });
+      }
+    }
+
+    // setTimeout(() => {
+    //   setChosenProject(null);
+    //   router.push("/");
+    // }, 5000);
+  }, [params, trxref, reference]);
   return (
     <Box my={"4rem"} px={"2.625rem"}>
       <BackButton />
@@ -44,7 +71,7 @@ const Confirmation = () => {
         </Flex>
 
         <Text fontSize={"1.5rem"} fontWeight={600} color={"#011308"}>
-          Invoice Generated!
+          {isRedirect ? "Purchase Completed!" : "Invoice Generated!"}
         </Text>
         <Text
           fontSize={"1.125rem"}
@@ -52,7 +79,8 @@ const Confirmation = () => {
           mt={"1.708rem"}
           mb={"2.661rem"}
         >
-          You have successfully purchased {orderedAmount.toLocaleString()} tones
+          You have successfully purchased{" "}
+          {isRedirect ? purchasedTonnes : orderedAmount.toLocaleString()} tones
           of C02
         </Text>
 
@@ -66,7 +94,10 @@ const Confirmation = () => {
           mb={"3.288rem"}
         >
           <Image
-            src={chosenProject?.coverImage!}
+            src={
+              chosenProject?.coverImage! ||
+              chosenProject?.farms[0].farmImages[0].image!
+            }
             alt=""
             width={255.23}
             height={239.1}

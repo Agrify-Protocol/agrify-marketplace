@@ -3,17 +3,32 @@
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import { Minus, Plus } from "lucide-react";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 const CounterButton = () => {
+  const router = useRouter();
   let { orderedAmount, setOrderedAmount, chosenProject } = useGlobalContext();
   type CounterAction = "inc" | "dec";
 
   const updateCounter = (action: CounterAction) => {
     if (action == "inc") {
-      setOrderedAmount(orderedAmount++);
-    } else setOrderedAmount(orderedAmount--);
+      setOrderedAmount(orderedAmount + 1);
+    } else {
+      if (
+        orderedAmount >=
+        (chosenProject?.projectToken.minimumPurchaseTonnes as number)
+      ) {
+        setOrderedAmount(orderedAmount - 1);
+      }
+    }
   };
+
+  useEffect(() => {
+    if (!chosenProject) {
+      router.push("/");
+    }
+  }, [chosenProject]);
 
   return (
     <Flex

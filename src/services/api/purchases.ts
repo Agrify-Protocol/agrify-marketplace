@@ -16,3 +16,13 @@ export const getPurchasesByProject = async (id: string) => {
     console.error(error);
   }
 };
+export const getPurchasesByReference = async (ref_id: string) => {
+  try {
+    const request = await purchaseInstance.get(
+      `/get-by-ref/paystack_${ref_id}`
+    );
+    return request.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

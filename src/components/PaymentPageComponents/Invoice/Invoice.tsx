@@ -45,7 +45,7 @@ const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
             };
             createInvoice(createInvoicePayload as unknown as InvoicePayloadType)
               .then((result) => {
-                router.push("/confirmation");
+                router.push("/success");
               })
               .catch((err) => {
                 toast(

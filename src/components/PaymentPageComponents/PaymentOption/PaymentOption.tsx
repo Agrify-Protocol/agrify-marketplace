@@ -24,7 +24,7 @@ const PaymentOption = () => {
           tonnes: orderedAmount,
         };
         payForCarbon(data).then((response) => {
-          window.open(response.data.authorization_url);
+          window.open(response.data.authorization_url, "_self");
         });
         break;
       case 2:
