@@ -30,6 +30,9 @@ export interface Farm {
   state: string;
   farmer: string;
   availableTonnes: number;
+  farmImages: {
+    image: string;
+  }[];
 }
 
 export interface Image {

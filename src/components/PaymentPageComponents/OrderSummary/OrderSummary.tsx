@@ -93,12 +93,12 @@ const OrderSummary = () => {
       </Box>
 
       <Flex gap={"1rem"} alignItems={"center"}>
-        <Link href="">
+        <Link href="/terms">
           <Text fontSize={"0.75rem"} fontWeight={500}>
             Terms
           </Text>
         </Link>
-        <Link href="">
+        <Link href="/privacy">
           <Text fontSize={"0.75rem"} fontWeight={500}>
             Privacy
           </Text>
