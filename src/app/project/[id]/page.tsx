@@ -2,7 +2,7 @@
 
 import BackButton from "@/components/Layout/BackButton/BackButton";
 import ProjectIntro from "@/components/ProjectPageComponents/ProjectIntro/ProjectIntro";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import SectionTabs from "@/components/ProjectPageComponents/SectionTabs/SectionTabs";
 import {
@@ -13,8 +13,6 @@ import SectionParent from "@/components/ProjectPageComponents/SectionParent/Sect
 import { projectSections } from "@/context/ProjectsPageContext/constants";
 import { useParams } from "next/navigation";
 import { getSingleProject } from "@/services/api/projects";
-import { LoaderCircle } from "lucide-react";
-import { motion } from "framer-motion";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import PageLoader from "@/components/Layout/PageLoader/PageLoader";
 

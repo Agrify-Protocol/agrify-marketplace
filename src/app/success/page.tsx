@@ -137,6 +137,7 @@ const Confirmation = () => {
           color={"white"}
           bgColor={"main_black_1"}
           borderRadius={"2rem"}
+          onClick={() => router.push(`/project/${chosenProject?._id}`)}
         >
           View Purchase
         </Button>

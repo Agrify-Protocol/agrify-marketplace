@@ -1,10 +1,24 @@
-import { AxiosInstance } from "axios";
+import {
+  farmInstance,
+  invoiceInstance,
+  paymentInstance,
+  preorderInstance,
+  profileInstance,
+  projectsInstance,
+  purchaseInstance,
+} from "@/services/axios/instances";
 
-export const updateBearerToken = (
-  axiosInstace: AxiosInstance,
-  accessToken: string
-) => {
-  axiosInstace.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${accessToken}`;
+export const updateBearerToken = (accessToken: string) => {
+  const instances = [
+    projectsInstance,
+    farmInstance,
+    invoiceInstance,
+    paymentInstance,
+    preorderInstance,
+    profileInstance,
+    purchaseInstance,
+  ];
+  instances.forEach((instance) => {
+    instance.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  });
 };

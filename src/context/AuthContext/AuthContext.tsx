@@ -3,15 +3,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContextType, Props, User } from "./types";
 import { updateBearerToken } from "@/utils/updateBearerToken";
-import {
-  farmInstance,
-  invoiceInstance,
-  paymentInstance,
-  preorderInstance,
-  profileInstance,
-  projectsInstance,
-  purchaseInstance,
-} from "@/services/axios/instances";
 import { refreshAccessToken } from "@/services/api/auth";
 import {
   getAccessToken,
@@ -47,13 +38,7 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (accessToken) {
-      updateBearerToken(projectsInstance, accessToken);
-      updateBearerToken(invoiceInstance, accessToken);
-      updateBearerToken(farmInstance, accessToken);
-      updateBearerToken(purchaseInstance, accessToken);
-      updateBearerToken(paymentInstance, accessToken);
-      updateBearerToken(preorderInstance, accessToken);
-      updateBearerToken(profileInstance, accessToken);
+      updateBearerToken(accessToken);
     }
   }, [accessToken]);
 

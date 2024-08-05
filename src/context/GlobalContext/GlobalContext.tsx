@@ -7,8 +7,7 @@ import {
   GlobalContextProps,
   GlobalContextType,
 } from "./types";
-import { carbonPrice, vat } from "@/constants";
-import { SingleProjectResponse } from "../ProjectsPageContext/types";
+import { vat } from "@/constants";
 import { SingleProject } from "../ProjectsPageContext/types_2";
 
 const GlobalContext = createContext({} as GlobalContextType);
