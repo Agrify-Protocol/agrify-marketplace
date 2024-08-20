@@ -11,12 +11,13 @@ import {
   preserveSession,
   resetAuthCookies,
 } from "@/app/lib/actions";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const AuthContext = createContext({} as AuthContextType);
 
 export const AuthContextProvider = ({ children }: Props) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const [user, setUser] = useState<User | null>(null);
   const [accessToken, setAccessToken] = useState("");
@@ -24,7 +25,13 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     getUser().then((user) => {
-      user ? setUser(user) : router.push("/login");
+      if (user) {
+        setUser(user);
+      } else if (["/reset-password", "/signup"].includes(pathname)) {
+        return null;
+      } else {
+        router.push("/login");
+      }
     });
 
     getAccessToken().then((token) => {

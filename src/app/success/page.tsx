@@ -34,7 +34,6 @@ const Confirmation = () => {
             setPurchasedTonnes(tx.tonnes);
             getSingleProject(tx.projectId).then((response) => {
               setChosenProject(response);
-              console.log({ response });
             });
           }
         });

@@ -16,8 +16,11 @@ const AuthPageSubmitButton = ({
     <Button
       minH={"3.5rem"}
       borderRadius={"1rem"}
-      bg={detailsFilled ? "agrify_green" : "white"}
-      color={detailsFilled ? "white" : "unset"}
+      bg={!isDisabled ? "agrify_green" : "white"}
+      _hover={{
+        bg: !isDisabled ? "#0ba842" : "white",
+      }}
+      color={!isDisabled ? "white" : "unset"}
       w={"100%"}
       mb={"2.404rem"}
       fontFamily={Inter_Display.style.fontFamily}

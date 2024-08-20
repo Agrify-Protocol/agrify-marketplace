@@ -12,18 +12,32 @@ import { errorToast, successToast } from "./constants";
 import { useRouter } from "next/navigation";
 import { preserveSession } from "../lib/actions";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import { validateEmail, validateLength } from "@/utils/validationSchema";
 
 const Login = () => {
   const toast = useToast();
   const router = useRouter();
   const { setUser } = useAuthContext();
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
-  const detailsFilled = useObjectCheck(loginDetails);
+  const [isValid, setIsValid] = useState({ email: false, password: false });
   const [isLoading, setIsLoading] = useState(false);
 
   const updateDetails = (key: string, value: string) => {
+    const validate = () => {
+      switch (key) {
+        case "email":
+          return validateEmail(value);
+        case "password":
+          return validateLength(value, 6);
+        default:
+          return true;
+      }
+    };
+
+    setIsValid((prev) => ({ ...prev, [key]: validate() }));
     setLoginDetails({ ...loginDetails, [key]: value });
   };
+
 
   const handleLogin = () => {
     setIsLoading(true);
@@ -67,23 +81,29 @@ const Login = () => {
               id="email_input"
               type="email"
               placeholder="Enter email address"
+              isInvalid={!isValid.email}
               value={loginDetails.email}
               changeFunc={(e) => updateDetails("email", e.target.value)}
+              errorMsg="Email address must be valid"
             />
             <CustomInput
               id="password_input"
               type="password"
               placeholder="Password"
+              isInvalid={!isValid.password}
               value={loginDetails.password}
               changeFunc={(e) => updateDetails("password", e.target.value)}
+              errorMsg="Password must have minimum of 6 characters"
             />
           </Flex>
           <AuthPageSubmitButton
             text="Sign In"
-            detailsFilled={detailsFilled}
             isLoading={isLoading}
             onClickFunc={handleLogin}
-            isDisabled={!detailsFilled}
+            isDisabled={
+              Object.values(isValid).some((item) => !item) ||
+              Object.values(loginDetails).some((item) => item === "")
+            }
           />
         </FormControl>
 

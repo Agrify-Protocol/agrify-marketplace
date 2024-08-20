@@ -1,5 +1,5 @@
 export type AuthPageSubmitBtnProps = {
-  detailsFilled: boolean;
+  detailsFilled?: boolean;
   isLoading: boolean;
   text: string;
   isDisabled: boolean;
