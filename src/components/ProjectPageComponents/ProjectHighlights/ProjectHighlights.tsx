@@ -41,7 +41,11 @@ const ProjectHighlights = ({ highlights }: ProjectHighlightProps) => {
         />
         <HighlightBox
           title="Contract Type"
-          content={highlights.contract_type}
+          content={
+            highlights.contract_type.trim().length
+              ? highlights.contract_type
+              : "N/A"
+          }
           Icon={ReceiptText}
           hideBorder
         />

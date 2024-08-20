@@ -13,10 +13,15 @@ export function validateEmail(str: string) {
 }
 
 export function validatePhoneNumber(str: string) {
-  const regex = /^\d{6,}$/;
-  return regex.test(str);
+  const regex = /^[0-9]+$/;
+  return regex.test(str) && str.length >= 6;
 }
 
 export function validateLength(str: string, length: number) {
-    return str.length >= length;
-  }
+  return str.length >= length;
+}
+
+export function validateNumberInput(str: string) {
+  const regex = /^[0-9]+$/;
+  return regex.test(str);
+}

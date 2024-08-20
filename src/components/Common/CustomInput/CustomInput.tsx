@@ -20,7 +20,7 @@ const CustomInput = ({
   const [showPassword, setShowPassword] = useState(false);
   const [dynamicType, setDynamicType] = useState("password");
   return (
-    <Box fontFamily={Inter_Display.style.fontFamily}>
+    <Box fontFamily={Inter_Display.style.fontFamily} position="relative">
       <FormLabel fontFamily={Inter_Display.style.fontFamily} fontWeight={400}>
         {label}
       </FormLabel>
@@ -49,7 +49,7 @@ const CustomInput = ({
           />
         )}
       </Box>
-      {isInvalid && value !== '' ? <Text color="red" fontSize="12px">{errorMsg}</Text> : null}
+      {isInvalid && value !== '' ? <Text color="red" fontSize="12px" position="absolute">{errorMsg}</Text> : null}
       {subtext && (
         <Flex alignItems={"center"}>
           <Dot color="#A6A6A6" />

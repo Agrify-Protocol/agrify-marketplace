@@ -33,6 +33,9 @@ const ProfilePageHeading = () => {
       <Button
         w={"8.938rem"}
         bgColor={"main_black_1"}
+        _hover={{
+          bg: "#404040"
+        }}
         color={"white"}
         borderRadius={"0.5rem"}
         fontWeight={400}

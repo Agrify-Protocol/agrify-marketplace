@@ -60,6 +60,10 @@ const PaymentOption = () => {
         transition={"all 0.25s ease-in-out"}
         onClick={handleSubmit}
         disabled={!chosenOption}
+        cursor={chosenOption ? "pointer" : "not-allowed"}
+        _hover={{
+          bg: chosenOption ? "#0ba842" : "gray_3",
+        }}
       >
         Continue
       </Button>
