@@ -49,7 +49,7 @@ const CustomInput = ({
           />
         )}
       </Box>
-      {isInvalid && value !== '' ? <Text color="red" fontSize="12px" position="absolute">{errorMsg}</Text> : null}
+      {isInvalid && value !== '' ? <Text color="red" fontSize="12px">{errorMsg}</Text> : null}
       {subtext && (
         <Flex alignItems={"center"}>
           <Dot color="#A6A6A6" />

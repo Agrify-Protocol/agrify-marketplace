@@ -12,6 +12,7 @@ const CategoryContainer = () => {
   const { user } = useAuthContext();
   const { categories, setCategories } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     if (user) {
       setIsLoading(true);
@@ -23,6 +24,7 @@ const CategoryContainer = () => {
       });
     }
   }, [user]);
+  
   return (
     <Grid
       gap={"4.75rem"}
