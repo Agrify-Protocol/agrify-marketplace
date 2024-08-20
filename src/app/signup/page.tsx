@@ -8,10 +8,10 @@ import { Box, Flex, FormControl, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import AuthPageBottom from "@/components/AuthPageComponents/AuthPageBottom/AuthPageBottom";
 import { registerUser } from "@/services/api/auth";
-import { compareStrings } from "@/utils/compareStrings";
-import { passwordToast, successToast } from "./constants";
+import { successToast } from "./constants";
 import { ToastData } from "@/utils/classes";
 import { useRouter } from "next/navigation";
+import { validateEmail, validateLength } from "@/utils/validationSchema";
 
 const Signup = () => {
   const router = useRouter();
@@ -21,17 +21,35 @@ const Signup = () => {
     lastname: "",
     email: "",
     password: "",
-    // password_2: "",
+  });
+  const [tempPassword, setTempPassword] = useState("");
+  const [isValid, setIsValid] = useState({
+    firstname: true,
+    lastname: true,
+    email: true,
+    password: true,
   });
   const [isLoading, setIsLoading] = useState(false);
   const detailsFilled = useObjectCheck(userData);
+
   const handleChange = (key: string, value: string) => {
+    const validate = () => {
+      switch (key) {
+        case "email":
+          return validateEmail(value);
+        case "password":
+          return validateLength(value, 6);
+        default:
+          return true;
+      }
+    };
+
     setUserData({ ...userData, [key]: value });
+    setIsValid((prev) => ({ ...prev, [key]: validate() }));
   };
 
   const handleRegister = () => {
     setIsLoading(true);
-    // if (compareStrings(userData.password, userData.password_2)) {
     registerUser(userData)
       .then(() => {
         toast(successToast);
@@ -70,6 +88,8 @@ const Signup = () => {
               placeholder="Enter First Name"
               label="First Name"
               changeFunc={(e) => handleChange("firstname", e.target.value)}
+              isInvalid={!isValid.firstname}
+              errorMsg="Name can not be empty"
             />
             <CustomInput
               id="last_name"
@@ -78,6 +98,8 @@ const Signup = () => {
               placeholder="Enter Last Name"
               label="Last Name"
               changeFunc={(e) => handleChange("lastname", e.target.value)}
+              isInvalid={!isValid.lastname}
+              errorMsg="Name can not be empty"
             />
             <CustomInput
               id="email"
@@ -86,6 +108,8 @@ const Signup = () => {
               placeholder="Enter email address"
               label="Email Address"
               changeFunc={(e) => handleChange("email", e.target.value)}
+              isInvalid={!isValid.email}
+              errorMsg="Email address must be valid"
             />
             <CustomInput
               id="password_1"
@@ -95,18 +119,26 @@ const Signup = () => {
               label="Password"
               changeFunc={(e) => handleChange("password", e.target.value)}
               subtext="Minimum of 6 Characters"
+              isInvalid={!isValid.password}
+              errorMsg="Password must have minimum of 6 characters"
             />
-            {/* <CustomInput
+            <CustomInput
               id="password_2"
               type="password"
-              value={userData.password_2}
+              value={tempPassword}
               placeholder="Re-type Password"
               label="Re-type Password"
-              changeFunc={(e) => handleChange("password_2", e.target.value)}
-            /> */}
+              changeFunc={(e) => setTempPassword(e.target.value)}
+              isInvalid={userData.password !== tempPassword}
+              errorMsg="Password must match"
+            />
           </Flex>
           <AuthPageSubmitButton
-            isDisabled={!detailsFilled}
+            isDisabled={
+              Object.values(isValid).some((item: boolean) => !item) ||
+              Object.values(userData).some((item: string) => item === "") ||
+              userData.password !== tempPassword
+            }
             text="Sign Up"
             detailsFilled={detailsFilled}
             isLoading={isLoading}

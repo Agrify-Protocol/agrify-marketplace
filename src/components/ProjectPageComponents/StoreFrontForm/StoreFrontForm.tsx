@@ -2,11 +2,15 @@
 
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
 import { Button, FormControl } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { StoreFrontFormProps } from "./types";
 import useObjectCheck from "@/hooks/useObjectCheck";
-import { createPreorder, PreorderPayload } from "@/services/api/preorder";
+import { createPreorder } from "@/services/api/preorder";
 import { useParams } from "next/navigation";
+import {
+  validateNumberInput,
+  validatePhoneNumber,
+} from "@/utils/validationSchema";
 
 const StoreFrontForm = ({ setStep }: StoreFrontFormProps) => {
   const { id } = useParams();
@@ -21,6 +25,14 @@ const StoreFrontForm = ({ setStep }: StoreFrontFormProps) => {
     setData({ ...data, [key]: value });
   };
   const detailsFilled = useObjectCheck(data);
+
+  const isPhoneValid = useMemo(() => {
+    return validatePhoneNumber(data.phoneNumber);
+  }, [data.phoneNumber]);
+
+  const isAmountValid = useMemo(() => {
+    return validateNumberInput(data.amount);
+  }, [data.amount]);
 
   return (
     <FormControl
@@ -41,17 +53,21 @@ const StoreFrontForm = ({ setStep }: StoreFrontFormProps) => {
         label="Phone Number"
         placeholder="Enter Number"
         id="phone_number"
-        type="number"
+        type="text"
         value={data.phoneNumber}
         changeFunc={(e) => updateData("phoneNumber", e.currentTarget.value)}
+        isInvalid={!isPhoneValid}
+        errorMsg="Phone number must be valid"
       />
       <CustomInput
         label="Amount(In Kg)"
         placeholder="Enter size"
         id="amount"
-        type="number"
+        type="text"
         value={data.amount}
         changeFunc={(e) => updateData("amount", e.currentTarget.value)}
+        isInvalid={!isAmountValid}
+        errorMsg="Amount must be a number"
       />
       <CustomInput
         label="Delivery Location"
@@ -70,6 +86,9 @@ const StoreFrontForm = ({ setStep }: StoreFrontFormProps) => {
         fontWeight={500}
         type="submit"
         isDisabled={!detailsFilled}
+        _hover={{
+          bg: detailsFilled ? "#0ba842" : "white",
+        }}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();

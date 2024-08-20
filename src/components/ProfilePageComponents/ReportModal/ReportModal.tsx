@@ -61,6 +61,7 @@ const ReportModal = ({ setShowModal }: ReportModalProps) => {
             placeholder="Enter name"
             w={"100%"}
             h={"3.5rem"}
+            focusBorderColor="gray_2"
             fontFamily={Inter_Display.style.fontFamily}
             borderRadius={"1rem"}
             mb={"3rem"}
@@ -71,11 +72,15 @@ const ReportModal = ({ setShowModal }: ReportModalProps) => {
           <Button
             h={"3.5rem"}
             bgColor={"agrify_green"}
+            isDisabled={reportName === ""}
             color={"white"}
             w={"100%"}
             borderRadius={"2.119rem"}
             fontWeight={500}
             onClick={closeModal}
+            _hover={{
+              bg: "#0ba842",
+            }}
           >
             Generate
           </Button>

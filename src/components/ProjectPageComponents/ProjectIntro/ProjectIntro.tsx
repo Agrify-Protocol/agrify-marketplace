@@ -49,6 +49,9 @@ const ProjectIntro = () => {
             setChosenProject(project);
             router.push("/purchase");
           }}
+          _hover={{
+            bg: "#0ba842",
+          }}
         >
           Buy Carbon Credits
         </Button>

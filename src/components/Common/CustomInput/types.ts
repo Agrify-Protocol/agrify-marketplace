@@ -6,6 +6,8 @@ export type CustomInputProps = {
   subtext?: string;
   placeholder: string;
   changeFunc: (...args: any[]) => void;
+  isInvalid?: boolean;
+  errorMsg?: string;
 };
 
 export type EyeContainerProps = {

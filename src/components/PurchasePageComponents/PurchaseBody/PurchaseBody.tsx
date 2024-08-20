@@ -114,6 +114,9 @@ const PurchaseBody = () => {
         fontWeight={500}
         color={"white"}
         borderRadius={"2.119rem"}
+        _hover={{
+          bg: "#0ba842",
+        }}
         onClick={() => router.push("/payment")}
       >
         Continue Purchase

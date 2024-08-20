@@ -9,8 +9,9 @@ import { ToastData } from "@/utils/classes";
 import { compareStrings } from "@/utils/compareStrings";
 import { Box, Flex, FormControl, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { passwordToast } from "../signup/constants";
+import { validateEmail, validateLength } from "@/utils/validationSchema";
 
 const Reset = () => {
   const router = useRouter();
@@ -23,22 +24,30 @@ const Reset = () => {
     new_password2: "",
   });
   const [stage, setStage] = useState(1);
+
+  const isValid = useMemo(() => {
+    return {
+      email: validateEmail(resetData.email),
+      new_password: validateLength(resetData.new_password, 6),
+      new_password2: validateLength(resetData.new_password2, 6),
+    };
+  }, [resetData.email, resetData.new_password, resetData.new_password2]);
+
   const handleChange = (key: keyof typeof resetData, value: string) => {
     setResetData({ ...resetData, [key]: value });
   };
 
-  useEffect(() => {
-    console.log({ resetData });
-  }, [stage]);
-
   const detailsAreFilled = useObjectCheck(resetData);
   const verificationCodeAvailable = resetData.verification_code != "";
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = () => {
+    setIsLoading(true);
     switch (stage) {
       case 1:
         getVerificationToken({ email: resetData.email })
           .then((response) => {
+            setIsLoading(false);
             const data = response.link.split("=");
             let verification_code = data[1];
             verification_code = verification_code.substring(
@@ -55,6 +64,7 @@ const Reset = () => {
               err.message,
               "error"
             );
+            setIsLoading(false);
             toast(errToast);
             setStage(1);
           });
@@ -76,10 +86,12 @@ const Reset = () => {
                 "success"
               )
             );
+            setIsLoading(false);
             router.push("/login");
           });
         } else {
           toast(passwordToast);
+          setIsLoading(false);
         }
         break;
     }
@@ -108,6 +120,8 @@ const Reset = () => {
                 changeFunc={(e) => handleChange("email", e.target.value)}
                 value={resetData.email}
                 label="Email Address"
+                errorMsg="Email address must be valid"
+                isInvalid={!isValid.email}
               />
             </Box>
           )}
@@ -134,16 +148,20 @@ const Reset = () => {
                 type="password"
                 value={resetData.new_password}
                 label="New Password"
-                placeholder="preterlude 2930"
+                placeholder="Password"
                 subtext="6 Characters Minimum"
+                isInvalid={!isValid.new_password}
+                errorMsg="Password must have minimum of 6 characters"
                 changeFunc={(e) => handleChange("new_password", e.target.value)}
               />
               <CustomInput
                 id="password_2"
                 type="password"
                 value={resetData.new_password2}
+                isInvalid={!isValid.new_password2}
                 label="Re-type Password"
                 placeholder="Re-type Password"
+                errorMsg="Password must match"
                 changeFunc={(e) =>
                   handleChange("new_password2", e.target.value)
                 }
@@ -152,12 +170,18 @@ const Reset = () => {
           )}
 
           <AuthPageSubmitButton
-            isDisabled={!button_disabled_map[stage]}
+            isDisabled={
+              stage === 3
+                ? resetData.new_password !== resetData.new_password2 ||
+                  !isValid.new_password ||
+                  !isValid.new_password2
+                : !button_disabled_map[stage] || !isValid.email
+            }
             text={stage == 1 ? "Continue" : "Reset Password"}
             detailsFilled={
               stage == 1 ? verificationCodeAvailable : detailsAreFilled
             }
-            isLoading={false}
+            isLoading={isLoading}
             onClickFunc={handleSubmit}
           />
         </FormControl>

@@ -34,7 +34,6 @@ const Confirmation = () => {
             setPurchasedTonnes(tx.tonnes);
             getSingleProject(tx.projectId).then((response) => {
               setChosenProject(response);
-              console.log({ response });
             });
           }
         });
@@ -137,6 +136,9 @@ const Confirmation = () => {
           color={"white"}
           bgColor={"main_black_1"}
           borderRadius={"2rem"}
+          _hover={{
+            bg: "#404040"
+          }}
           onClick={() => router.push(`/project/${chosenProject?._id}`)}
         >
           View Purchase

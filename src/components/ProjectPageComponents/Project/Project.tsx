@@ -23,7 +23,6 @@ const Project = ({
   return (
     <Box
       maxH={"22.818rem"}
-      cursor={"pointer"}
       borderRadius={"0.849rem"}
       overflow={"hidden"}
       position={"relative"}

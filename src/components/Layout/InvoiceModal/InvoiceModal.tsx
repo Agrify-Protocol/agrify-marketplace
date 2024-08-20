@@ -40,7 +40,8 @@ const InvoiceModal = ({ closeModal, txDetail }: InvoiceModalProps) => {
         ml={"auto"}
         mr={"2.145rem"}
         fontFamily={Inter_Display.style.fontFamily}
-        maxH={"37.5rem"}
+        minH={"37.5rem"}
+        width="45%"
         overflowY={"auto"}
       >
         {isLoading && !invoiceData ? (

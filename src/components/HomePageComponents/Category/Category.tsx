@@ -22,6 +22,9 @@ const Category = ({ category }: CategoryProps) => {
       gap={"0.75rem"}
       cursor={"pointer"}
       onClick={() => router.push(`/category/${category.category}`)}
+      transition="ease-in-out"
+      transitionDuration=".1s"
+      _hover={{ border: "1px solid #0CC14C" }}
     >
       <Box
         shadow={"0 3px 10px rgba(0,0,0,0.15)"}
@@ -31,7 +34,7 @@ const Category = ({ category }: CategoryProps) => {
       >
         <Image src={categoryImages[category.category]} alt="" />
       </Box>
-      <Text fontSize={"1.125rem"} color={"black"} mt={"calc(2rem - 0.75rem)"}>
+      <Text fontSize={"1.125rem"} color={"black"} mt={"calc(2rem - 0.75rem)"} textTransform="capitalize">
         {category.category}
       </Text>
       <Flex

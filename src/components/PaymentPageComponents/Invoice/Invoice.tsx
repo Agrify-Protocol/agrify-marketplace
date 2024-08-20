@@ -1,5 +1,5 @@
 import { Box, Button, useToast } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import InvoiceHeader from "../InvoiceHeader/InvoiceHeader";
 import InvoiceBody from "../InvoiceBody/InvoiceBody";
 import InvoiceFooter from "../InvoiceFooter/InvoiceFooter";
@@ -13,6 +13,7 @@ import { ToastData } from "@/utils/classes";
 const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
   const toast = useToast();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Box>
@@ -37,17 +38,24 @@ const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
           borderRadius={"1.5rem"}
           color="white"
           my={"3rem"}
+          _hover={{
+            bg: "#0ba842"
+          }}
+          isLoading={isLoading}
           onClick={(e) => {
+            setIsLoading(true);
             e.stopPropagation();
             const createInvoicePayload = {
               ...invoice_data,
               amount: Number(removeCommas(invoice_data.amount)),
             };
             createInvoice(createInvoicePayload as unknown as InvoicePayloadType)
-              .then((result) => {
+              .then((_result) => {
+                setIsLoading(false);
                 router.push("/success");
               })
               .catch((err) => {
+                setIsLoading(false);
                 toast(
                   new ToastData("Something went wrong", err.message, "error")
                 );

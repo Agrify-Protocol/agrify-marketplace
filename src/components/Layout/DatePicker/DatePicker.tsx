@@ -30,6 +30,7 @@ const DatePicker = ({ updateDate }: DatePickerProps) => {
         className="can_click"
         h={"3.5rem"}
         border={"1px solid"}
+        _hover={{bg: "white"}}
         w={"100%"}
         p={"1rem"}
         display={"flex"}

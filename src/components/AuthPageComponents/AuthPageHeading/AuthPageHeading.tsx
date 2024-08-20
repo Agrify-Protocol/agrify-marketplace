@@ -4,6 +4,7 @@ import { AuthPageHeadingProps } from "./types";
 import { Inter_Display } from "@/fonts";
 import Image from "next/image";
 import agrify_icon from "../../../assets/agrify_icon.svg";
+import Link from "next/link";
 
 const AuthPageHeading = ({
   main_heading,
@@ -11,7 +12,9 @@ const AuthPageHeading = ({
 }: AuthPageHeadingProps) => {
   return (
     <Box fontFamily={Inter_Display.style.fontFamily} textAlign={"center"}>
-      <Image src={agrify_icon} alt="" style={{ margin: "auto" }} />
+      <Link href="/login" style={{ width: "fit-content" }}>
+        <Image src={agrify_icon} alt="" style={{ width: "fit-content", margin: "auto" }} />
+      </Link>
       <Text
         fontWeight={500}
         fontSize={"2rem"}
