@@ -17,7 +17,7 @@ import { validateEmail, validateLength } from "@/utils/validationSchema";
 const Login = () => {
   const toast = useToast();
   const router = useRouter();
-  const { setUser } = useAuthContext();
+  const { setUser, setAccessToken, setRefreshToken } = useAuthContext();
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   const [isValid, setIsValid] = useState({ email: false, password: false });
   const [isLoading, setIsLoading] = useState(false);
@@ -38,15 +38,19 @@ const Login = () => {
     setLoginDetails({ ...loginDetails, [key]: value });
   };
 
-
   const handleLogin = () => {
     setIsLoading(true);
     loginUser(loginDetails)
       .then((result) => {
-        preserveSession(result.user, result.token, result.refreshToken);
-        setUser(result.user);
-        toast(successToast);
-        router.push("/");
+        preserveSession(result.user, result.token, result.refreshToken).then(
+          () => {
+            setUser(result.user);
+            setAccessToken(result.token);
+            setRefreshToken(result.refreshToken);
+            toast(successToast);
+            router.push("/");
+          }
+        );
       })
       .catch(() => {
         toast(errorToast);

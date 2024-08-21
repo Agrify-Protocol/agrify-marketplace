@@ -3,6 +3,8 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 export type AuthContextType = {
   user: User | null;
   setUser: Dispatch<SetStateAction<User | null>>;
+  setAccessToken: Dispatch<SetStateAction<string>>;
+  setRefreshToken: Dispatch<SetStateAction<string>>;
 };
 
 export type Props = {
