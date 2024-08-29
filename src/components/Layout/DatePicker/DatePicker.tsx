@@ -6,7 +6,7 @@ import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { Calendar } from "lucide-react";
 import { parseDate } from "@/utils/parseData";
 import { usePaymentContext } from "@/context/PaymentContext/PaymentContext";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 
 const DatePicker = ({ updateDate }: DatePickerProps) => {
   const { invoiceData } = usePaymentContext();
@@ -26,6 +26,7 @@ const DatePicker = ({ updateDate }: DatePickerProps) => {
 
   return (
     <Box position={"relative"}>
+      <Text>Due date</Text>
       <Button
         className="can_click"
         h={"3.5rem"}

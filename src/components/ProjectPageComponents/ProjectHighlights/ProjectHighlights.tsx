@@ -15,7 +15,7 @@ const ProjectHighlights = ({ highlights }: ProjectHighlightProps) => {
     <Box mt={"2.5rem"}>
       <Flex alignItems={"center"} gap={"0.75rem"}>
         <Text>Highlights</Text>
-        <CircleAlert size={"0.875rem"} color="rgba(1, 19, 8, 0.5)" />
+        {/* <CircleAlert size={"0.875rem"} color="rgba(1, 19, 8, 0.5)" /> */}
       </Flex>
       <Grid
         gridTemplateColumns={"repeat(4, 1fr)"}
@@ -50,7 +50,7 @@ const ProjectHighlights = ({ highlights }: ProjectHighlightProps) => {
           hideBorder
         />
       </Grid>
-      <ViewSectionButton text="View Insights" section={projectSections[2]} />
+      {/* <ViewSectionButton text="View Insights" section={projectSections[2]} /> */}
     </Box>
   );
 };

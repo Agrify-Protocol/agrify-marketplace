@@ -1,7 +1,7 @@
 export const projectSections = [
   "Overview",
   "Project Details",
-  "Insights",
+  // "Insights",
   "Gallery",
   "Storefront",
   "My Purchases",

@@ -32,7 +32,7 @@ const FarmDetail = ({ detail }: FarmDetailProps) => {
             top={"1rem"}
             textAlign={"center"}
           >
-            {7.5}
+            {detail?.farmSuggestion?.FarmScore?.toLocaleString() ?? "N/A"}
           </Text>
           <Image
             style={{ position: "absolute", bottom: "0" }}
