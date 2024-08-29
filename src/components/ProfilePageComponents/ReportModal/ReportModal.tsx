@@ -18,9 +18,12 @@ import { createReport } from "@/services/api/profile";
 const ReportModal = ({ setShowModal }: ReportModalProps) => {
   const modalRef = useRef(null);
   const [reportName, setReportName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const closeModal = () => {
+    setIsLoading(true);
     createReport({ reportName }).then(() => {
       setShowModal(false);
+      setIsLoading(false);
     });
   };
 
@@ -75,6 +78,7 @@ const ReportModal = ({ setShowModal }: ReportModalProps) => {
             isDisabled={reportName === ""}
             color={"white"}
             w={"100%"}
+            isLoading={isLoading}
             borderRadius={"2.119rem"}
             fontWeight={500}
             onClick={closeModal}

@@ -29,6 +29,8 @@ const ProjectGallery = () => {
 
   const galleryItems = createFauxProjects(project!);
 
+  console.log("galleryItems", galleryItems);
+
   return (
     <Box>
       <Text
@@ -45,16 +47,20 @@ const ProjectGallery = () => {
         gap={"0.813rem"}
         gridTemplateColumns={"repeat(auto-fill, minmax(20rem, 1fr))"}
       >
-        {galleryItems.map((item) => {
-          return (
-            <Project
-              key={item._id}
-              project={item}
-              isGalleryItem
-              handleGalleryClick={handleGalleryClick}
-            />
-          );
-        })}
+        {galleryItems.length ? (
+          galleryItems.map((item) => {
+            return (
+              <Project
+                key={item._id}
+                project={item}
+                isGalleryItem
+                handleGalleryClick={handleGalleryClick}
+              />
+            );
+          })
+        ) : (
+          <Text mx={10}>Nothing to display.</Text>
+        )}
       </Grid>
 
       {viewedProject && (

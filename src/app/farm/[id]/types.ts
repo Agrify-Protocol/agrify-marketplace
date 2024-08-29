@@ -16,6 +16,7 @@ export interface DetailedFarm {
   farmer: string;
   availableTonnes: number;
   milestones: any[];
+  farmSuggestion?: any;
 }
 
 export interface FarmImage {

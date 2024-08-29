@@ -87,7 +87,7 @@ const StoreFrontForm = ({ setStep }: StoreFrontFormProps) => {
         type="submit"
         isDisabled={!detailsFilled}
         _hover={{
-          bg: detailsFilled ? "#0ba842" : "white",
+          bg: "#0ba842",
         }}
         onClick={(e) => {
           e.preventDefault();

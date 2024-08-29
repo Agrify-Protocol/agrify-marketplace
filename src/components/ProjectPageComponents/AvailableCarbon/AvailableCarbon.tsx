@@ -31,7 +31,7 @@ const AvailableCarbon = ({
             {available_carbon?.toLocaleString()} tc02e
           </Text>
         </Box>
-        <CircleAlert size={"0.875rem"} color="rgba(1, 19, 8, 0.5)" />
+        {/* <CircleAlert size={"0.875rem"} color="rgba(1, 19, 8, 0.5)" /> */}
       </Flex>
 
       <Flex

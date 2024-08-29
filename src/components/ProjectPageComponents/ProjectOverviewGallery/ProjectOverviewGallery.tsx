@@ -25,7 +25,7 @@ const ProjectOverviewGallery = () => {
           return <Project key={project._id} project={project} isGalleryItem />;
         })}
       </Grid>
-      <ViewSectionButton text="Go to gallery" section={projectSections[3]} />
+      <ViewSectionButton text="Go to gallery" section={projectSections[2]} />
     </Box>
   );
 };

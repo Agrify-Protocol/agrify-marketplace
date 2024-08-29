@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
 import logo from "../../../assets/agrify_logo.svg";
 import profile_pic from "../../../assets/agrify_pfp.svg";
@@ -17,6 +17,7 @@ const Navbar = () => {
     "/payment": true,
     "/reset-password": true,
     "/signup": true,
+    "/profile/report": true,
   };
   const isProfilePage = pathName == "/profile";
 
@@ -35,7 +36,9 @@ const Navbar = () => {
       alignItems={"center"}
       justifyContent={"space-between"}
       px={"2.625rem"}
-      position={"relative"}
+      position={"sticky"}
+      top={0}
+      zIndex={10}
     >
       <Link href={"/"}>
         <Image src={logo} alt="" />

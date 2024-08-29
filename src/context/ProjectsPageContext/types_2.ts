@@ -21,6 +21,7 @@ export interface SingleProject {
   createdAt: Date;
   updatedAt: Date;
   __v: number;
+  about: string;
 }
 
 export interface Farm {

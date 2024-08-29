@@ -24,6 +24,8 @@ const ProjectOverview = () => {
     contract_type: project.contractType,
   };
 
+  console.log(project)
+
   return (
     <Flex>
       <Box width={"23%"} py={"1.494rem"}>
@@ -35,18 +37,7 @@ const ProjectOverview = () => {
         >
           About
         </Text>
-        <Text p={"0.714rem"} color={"rgba(15, 15, 15, 0.7)"}>
-          This Carbon Project represents an aggregate of credits from farms
-          achieving high regenerative scores through adherence to sustainable
-          practices recommended by Agrify’s AI. <br />
-          <br /> This initiative not only boosts carbon sequestration but also
-          promotes ecosystem resilience and enhances soil health, leading to
-          better crop yields and stronger food security in the region.
-          <br />
-          <br /> Each farm’s progress and practices are transparently tracked,
-          offering clear insights into the tangible impacts of their
-          regenerative efforts.
-        </Text>
+        <Text p={"0.714rem"} color={"rgba(15, 15, 15, 0.7)"}>{project?.about}</Text>
         <ViewSectionButton
           text="View Project details"
           section={projectSections[1]}

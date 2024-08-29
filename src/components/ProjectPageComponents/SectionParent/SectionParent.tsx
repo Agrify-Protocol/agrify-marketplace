@@ -17,10 +17,10 @@ const SectionParent = () => {
     <Box>
       {currentSection === projectSections[0] && <ProjectOverview />}
       {currentSection === projectSections[1] && <ProjectDetails />}
-      {currentSection === projectSections[2] && <ProjectInsights />}
-      {currentSection === projectSections[3] && <ProjectGallery />}
-      {currentSection === projectSections[4] && <Storefront />}
-      {currentSection === projectSections[5] && <Purchases />}
+      {/* {currentSection === projectSections[2] && <ProjectInsights />} */}
+      {currentSection === projectSections[2] && <ProjectGallery />}
+      {currentSection === projectSections[3] && <Storefront />}
+      {currentSection === projectSections[4] && <Purchases />}
     </Box>
   );
 };

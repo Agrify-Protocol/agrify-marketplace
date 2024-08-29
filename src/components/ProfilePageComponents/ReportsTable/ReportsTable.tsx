@@ -42,16 +42,20 @@ const ReportsTable = () => {
       {!isLoading && reports.length < 1 && (
         <Text textAlign={"center"}>No reports found</Text>
       )}
+      <Box display="flex" flexDirection="column" gap={5}>
       {reports.map((report) => {
         return (
           <ReportRow
             key={report._id}
+            id={report._id}
             name={report.reportName}
             creation_time={getReportTime(report.createdAt.toString())}
             creation_date={readableDate(report.createdAt.toString())}
           />
         );
       })}
+      </Box>
+     
     </Box>
   );
 };

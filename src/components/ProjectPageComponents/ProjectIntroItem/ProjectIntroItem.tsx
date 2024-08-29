@@ -24,11 +24,11 @@ const ProjectIntroItem = ({
           {content}
         </Text>
       </Box>
-      <CircleAlert
+      {/* <CircleAlert
         size={"0.875rem"}
         style={{ minWidth: "0.875rem", minHeight: "0.875rem" }}
         color="rgba(1, 19, 8, 0.5)"
-      />
+      /> */}
     </Flex>
   );
 };

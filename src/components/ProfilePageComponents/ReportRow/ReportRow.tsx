@@ -1,8 +1,20 @@
 import { Box, Button, Grid, Text } from "@chakra-ui/react";
 import React from "react";
 import { ReportRowProps } from "./types";
+import Link from "next/link";
 
-const ReportRow = ({ name, creation_time, creation_date }: ReportRowProps) => {
+const ReportRow = ({
+  id,
+  name,
+  creation_time,
+  creation_date,
+}: ReportRowProps) => {
+  const details = {
+    id,
+    name,
+    creation_time,
+    creation_date,
+  };
   return (
     <Grid gridTemplateColumns={"3fr 1fr 1fr 1fr"} alignItems={"center"}>
       <Box ml={"4.287rem"}>
@@ -19,7 +31,13 @@ const ReportRow = ({ name, creation_time, creation_date }: ReportRowProps) => {
         <Text color={"black"}>{creation_date}</Text>
         <Text fontSize={"0.875rem"}>Creation Date</Text>
       </Box>
-      <Box>
+      <Link
+        href={`/profile/report?id=${id}`}
+        target="_blank"
+        onClick={() =>
+          localStorage.setItem("pdf_details", JSON.stringify(details))
+        }
+      >
         <Button
           bgColor={"transparent"}
           display={"block"}
@@ -29,7 +47,7 @@ const ReportRow = ({ name, creation_time, creation_date }: ReportRowProps) => {
         >
           View
         </Button>
-      </Box>
+      </Link>
     </Grid>
   );
 };
