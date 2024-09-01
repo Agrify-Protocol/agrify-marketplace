@@ -24,8 +24,6 @@ const ProjectOverview = () => {
     contract_type: project.contractType,
   };
 
-  console.log(project)
-
   return (
     <Flex>
       <Box width={"23%"} py={"1.494rem"}>

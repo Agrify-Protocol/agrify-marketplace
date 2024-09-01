@@ -1,6 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { SingleProjectResponse } from "../ProjectsPageContext/types";
 import { SingleProject } from "../ProjectsPageContext/types_2";
+import { ReportType } from "@/components/ProfilePageComponents/ReportsTable/types";
 
 export type GlobalContextProps = {
   children: ReactNode;
@@ -17,6 +18,8 @@ export type GlobalContextType = {
   setChosenProject: Dispatch<SetStateAction<SingleProject | null>>;
   categories: CategoryObject[];
   setCategories: Dispatch<SetStateAction<CategoryObject[]>>;
+  reports: ReportType[];
+  setReports: Dispatch<SetStateAction<ReportType[]>>;
 };
 
 export interface AllProjectsResponse {

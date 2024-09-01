@@ -9,11 +9,12 @@ import { ReportType } from "./types";
 import { getReportTime } from "@/utils/reportTime";
 import { readableDate } from "@/utils/parseData";
 import Spinner from "@/components/Layout/Spinner/Spinner";
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 
 const ReportsTable = () => {
   const { user } = useAuthContext();
-  const [reports, setReports] = useState<ReportType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { reports, setReports } = useGlobalContext();
 
   useEffect(() => {
     if (user) {
@@ -43,19 +44,18 @@ const ReportsTable = () => {
         <Text textAlign={"center"}>No reports found</Text>
       )}
       <Box display="flex" flexDirection="column" gap={5}>
-      {reports.map((report) => {
-        return (
-          <ReportRow
-            key={report._id}
-            id={report._id}
-            name={report.reportName}
-            creation_time={getReportTime(report.createdAt.toString())}
-            creation_date={readableDate(report.createdAt.toString())}
-          />
-        );
-      })}
+        {reports.map((report) => {
+          return (
+            <ReportRow
+              key={report._id}
+              id={report._id}
+              name={report.reportName}
+              creation_time={getReportTime(report.createdAt.toString())}
+              creation_date={readableDate(report.createdAt.toString())}
+            />
+          );
+        })}
       </Box>
-     
     </Box>
   );
 };
