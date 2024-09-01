@@ -9,6 +9,7 @@ import {
 } from "./types";
 import { vat } from "@/constants";
 import { SingleProject } from "../ProjectsPageContext/types_2";
+import { ReportType } from "@/components/ProfilePageComponents/ReportsTable/types";
 
 const GlobalContext = createContext({} as GlobalContextType);
 
@@ -38,6 +39,8 @@ export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
     }
   }, [chosenProject]);
 
+  const [reports, setReports] = useState<ReportType[]>([]);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -51,6 +54,8 @@ export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
         setChosenProject,
         categories,
         setCategories,
+        reports,
+        setReports,
       }}
     >
       {children}

@@ -13,17 +13,25 @@ import React, { useRef, useState } from "react";
 import { ReportModalProps } from "./types";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { Inter_Display } from "@/fonts";
-import { createReport } from "@/services/api/profile";
+import { createReport, getReports } from "@/services/api/profile";
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 
 const ReportModal = ({ setShowModal }: ReportModalProps) => {
   const modalRef = useRef(null);
   const [reportName, setReportName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { setReports } = useGlobalContext();
+
   const closeModal = () => {
     setIsLoading(true);
     createReport({ reportName }).then(() => {
-      setShowModal(false);
-      setIsLoading(false);
+      getReports().then((response) => {
+        if (response) {
+          setReports(response);
+          setIsLoading(false);
+          setShowModal(false);
+        }
+      });
     });
   };
 
