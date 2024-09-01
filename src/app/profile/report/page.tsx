@@ -7,9 +7,9 @@ import {
   Text,
   View,
   StyleSheet,
-  PDFViewer,
   Image,
 } from "@react-pdf/renderer";
+import dynamic from "next/dynamic";
 
 const styles = StyleSheet.create({
   page: {
@@ -31,17 +31,16 @@ const styles = StyleSheet.create({
   image: {
     maxWidth: "100px",
     marginLeft: "-20px",
-    marginBottom: "20px"
-
-    // marginTop: "40px"
+    marginBottom: "20px",
   },
   viewer: {
-    width: window.innerWidth, //the pdf viewer will take up all of the width and height
-    height: window.innerHeight,
+    width: typeof window !== "undefined" ? window.innerWidth : 800,
+    height: typeof window !== "undefined" ? window.innerHeight : 600,
   },
 });
 
-const details = localStorage.getItem("pdf_details");
+const details =
+  typeof window !== "undefined" ? localStorage.getItem("pdf_details") : null;
 const parsedDetails = details ? JSON.parse(details) : {};
 
 const parsedDetailsObj = [
@@ -60,6 +59,12 @@ const parsedDetailsObj = [
 ];
 
 const ViewGeneratedReport = () => {
+  const PDFViewer = dynamic(
+    () => import("@react-pdf/renderer").then((module) => module.PDFViewer),
+    {
+      ssr: false,
+    }
+  );
   return (
     <PDFViewer style={styles.viewer}>
       <Document title="Report Details">
@@ -71,7 +76,7 @@ const ViewGeneratedReport = () => {
             />
           </View>
           {parsedDetailsObj.map((item) => (
-            <div key={item.title} style={{ marginLeft: "20px"}}>
+            <div key={item.title} style={{ marginLeft: "20px" }}>
               <View style={styles.title}>
                 <Text>{item.title}</Text>
               </View>
