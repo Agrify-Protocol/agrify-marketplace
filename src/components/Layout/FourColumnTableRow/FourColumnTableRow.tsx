@@ -27,7 +27,6 @@ const FourColumnTableRow = ({
       mb={"1.5rem"}
       py={"1.25rem"}
       alignItems={"center"}
-      cursor={"pointer"}
       onClick={handleClick}
     >
       <Text fontWeight={450} color={"black"} pl={"1.25rem"}>

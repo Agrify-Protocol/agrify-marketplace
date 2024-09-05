@@ -1,5 +1,4 @@
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
-import info from "../../../assets/info.svg";
 import seal from "../../../assets/seal.svg";
 import { FarmDetailProps, HighlightItemProps } from "./types";
 import Image from "next/image";
@@ -17,7 +16,6 @@ const FarmDetail = ({ detail }: FarmDetailProps) => {
 
       <Box mb={"3.125rem"}>
         <Flex alignItems={"center"} gap={"0.5rem"}>
-          <Image src={info} alt="" />
           Farm Score
         </Flex>
 
