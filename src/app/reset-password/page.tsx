@@ -70,6 +70,7 @@ const Reset = () => {
           });
         break;
       case 2:
+        setIsLoading(false);
         setStage(stage + 1);
         break;
       case 3:

@@ -20,6 +20,7 @@ const Slider = ({ images }: SliderProps) => {
       prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1
     );
   };
+
   return (
     <Flex gap={"3.375rem"} alignItems={"center"}>
       <Button
@@ -30,6 +31,7 @@ const Slider = ({ images }: SliderProps) => {
         bgColor={"white"}
         p={"0.6875rem"}
         onClick={handlePrevious}
+        isDisabled={currentIndex === 0}
       >
         <Image src={left} alt="" />
       </Button>
@@ -61,6 +63,7 @@ const Slider = ({ images }: SliderProps) => {
         bgColor={"white"}
         p={"0.6875rem"}
         onClick={handleNext}
+        isDisabled={currentIndex === images.length - 1}
       >
         <Image src={right} alt="" />
       </Button>
