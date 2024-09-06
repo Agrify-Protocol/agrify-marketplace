@@ -12,18 +12,22 @@ import ProfileModal from "../../Layout/ProfileModal/ProfileModal";
 
 const Navbar = () => {
   const pathName = usePathname();
-  const nullRoutes: { [x: string]: boolean } = {
-    "/login": true,
-    "/payment": true,
-    "/reset-password": true,
-    "/signup": true,
-    "/profile/report": true,
-  };
+
+  const baseRoutes = [
+    "/category",
+    "/farm",
+    "/profile",
+    "/project",
+    "/purchase",
+  ];
+
   const isProfilePage = pathName == "/profile";
+  const isCurrentRouteValid =
+    baseRoutes.some((route) => pathName.startsWith(route)) || pathName === "/";
 
   const [showModal, setShowModal] = useState(false);
 
-  if (nullRoutes[pathName]) {
+  if (!isCurrentRouteValid) {
     return null;
   }
 

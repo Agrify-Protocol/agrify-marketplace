@@ -30,7 +30,7 @@ const ProfilePageHeading = () => {
         </Box>
       </Box>
 
-      <Button
+      {/* <Button
         w={"8.938rem"}
         bgColor={"main_black_1"}
         _hover={{
@@ -43,7 +43,7 @@ const ProfilePageHeading = () => {
       >
         Generate Report
       </Button>
-      {showModal && <ReportModal setShowModal={setShowModal} />}
+      {showModal && <ReportModal setShowModal={setShowModal} />} */}
     </Flex>
   );
 };

@@ -2,7 +2,6 @@
 
 import { Flex, FormControl, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
-import useObjectCheck from "@/hooks/useObjectCheck";
 import AuthPageHeading from "@/components/AuthPageComponents/AuthPageHeading/AuthPageHeading";
 import AuthPageBottom from "@/components/AuthPageComponents/AuthPageBottom/AuthPageBottom";
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
