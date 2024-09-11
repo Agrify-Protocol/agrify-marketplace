@@ -3,8 +3,8 @@
 import React from "react";
 import PaystackRedirection from "@/components/PaystackRedirection";
 
-const Confirmation = () => {
-  return <PaystackRedirection type="success" />;
+const Error = () => {
+  return <PaystackRedirection type="error" />;
 };
 
-export default Confirmation;
+export default Error;

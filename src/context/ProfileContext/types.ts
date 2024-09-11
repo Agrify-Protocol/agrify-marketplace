@@ -1,8 +1,7 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ReactNode } from "react";
 
 export type ProfileContextType = {
-  currentSection: string;
-  setCurrentSection: Dispatch<SetStateAction<string>>;
+  tabId: string | null;
 };
 
 export type ProfileContextProps = {

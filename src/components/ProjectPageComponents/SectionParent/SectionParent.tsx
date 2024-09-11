@@ -4,7 +4,6 @@ import { Box } from "@chakra-ui/react";
 import React from "react";
 import ProjectOverview from "../ProjectOverview/ProjectOverview";
 import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
-import { projectSections } from "@/context/ProjectsPageContext/constants";
 import ProjectDetails from "../ProjectDetails/ProjectDetails";
 import ProjectGallery from "../ProjectGallery/ProjectGallery";
 import Storefront from "../Storefront/Storefront";
@@ -12,17 +11,27 @@ import ProjectInsights from "../ProjectInsights/ProjectInsights";
 import Purchases from "../Purchases/Purchases";
 
 const SectionParent = () => {
-  const { currentSection } = useProjectPageContext();
-  return (
-    <Box>
-      {currentSection === projectSections[0] && <ProjectOverview />}
-      {currentSection === projectSections[1] && <ProjectDetails />}
-      {/* {currentSection === projectSections[2] && <ProjectInsights />} */}
-      {currentSection === projectSections[2] && <ProjectGallery />}
-      {currentSection === projectSections[3] && <Storefront />}
-      {currentSection === projectSections[4] && <Purchases />}
-    </Box>
-  );
+  const { tabId } = useProjectPageContext();
+  const currentBody = () => {
+    switch (tabId) {
+      case "overview":
+        return <ProjectOverview />;
+      case "project details":
+        return <ProjectDetails />;
+      case "insights":
+        return <ProjectInsights />;
+      case "gallery":
+        return <ProjectGallery />;
+      case "storefront":
+        return <Storefront />;
+      case "my purchases":
+        return <Purchases />;
+      default:
+        return <ProjectOverview />;
+    }
+  };
+
+  return <Box>{currentBody()}</Box>;
 };
 
 export default SectionParent;

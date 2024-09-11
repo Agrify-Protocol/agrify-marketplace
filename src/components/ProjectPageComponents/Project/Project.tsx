@@ -15,7 +15,7 @@ const Project = ({
   const router = useRouter();
 
   const pushToProductPage = () => {
-    router.push(`/project/${project._id}`);
+    router.push(`/project/${project._id}?id=overview`);
   };
 
   const projectImpact = project.tags.length;

@@ -27,11 +27,8 @@ const ProjectPage = () => {
 export default ProjectPage;
 
 const ProjectPageBody = () => {
-  const { currentSection, setCurrentSection, setProject, project } =
-    useProjectPageContext();
+  const { setProject, project, tabId, id } = useProjectPageContext();
   const { user } = useAuthContext();
-  const params = useParams();
-  const { id } = params;
 
   useEffect(() => {
     if (user) {
@@ -48,9 +45,10 @@ const ProjectPageBody = () => {
         <>
           <ProjectIntro />
           <SectionTabs
+            type="projects"
             sections={projectSections}
-            currentSection={currentSection}
-            setCurrentSection={setCurrentSection}
+            currentSection={tabId}
+            id={id}
           />
           <SectionParent />
         </>

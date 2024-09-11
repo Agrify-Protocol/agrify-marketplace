@@ -3,14 +3,16 @@
 import { createContext, useContext, useState } from "react";
 import { ProfileContextProps, ProfileContextType } from "./types";
 import { profileSections } from "./constants";
+import { useSearchParams } from "next/navigation";
 
 const ProfileContext = createContext({} as ProfileContextType);
 
 export const ProfileContextProvider = ({ children }: ProfileContextProps) => {
-  const [currentSection, setCurrentSection] = useState(profileSections[0]);
+  const searchParams = useSearchParams();
+  const tabId = searchParams.get("id");
 
   return (
-    <ProfileContext.Provider value={{ currentSection, setCurrentSection }}>
+    <ProfileContext.Provider value={{ tabId }}>
       {children}
     </ProfileContext.Provider>
   );

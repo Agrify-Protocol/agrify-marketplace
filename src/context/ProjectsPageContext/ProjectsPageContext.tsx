@@ -1,9 +1,9 @@
 "use client";
 
 import { ReactNode, createContext, useContext, useState } from "react";
-import { ProjectPageContextType, SingleProjectResponse } from "./types";
-import { projectSections } from "./constants";
+import { ProjectPageContextType } from "./types";
 import { SingleProject } from "./types_2";
+import { useParams, useSearchParams } from "next/navigation";
 
 const ProjectPageContext = createContext({} as ProjectPageContextType);
 
@@ -13,11 +13,12 @@ type Props = {
 
 export const ProjectPageProvider = ({ children }: Props) => {
   const [project, setProject] = useState<SingleProject | null>(null);
-  const [currentSection, setCurrentSection] = useState(projectSections[0]);
+  const searchParams = useSearchParams();
+  const tabId = searchParams.get("id");
+  const { id } = useParams();
+
   return (
-    <ProjectPageContext.Provider
-      value={{ project, setProject, currentSection, setCurrentSection }}
-    >
+    <ProjectPageContext.Provider value={{ project, setProject, tabId, id }}>
       {children}
     </ProjectPageContext.Provider>
   );
