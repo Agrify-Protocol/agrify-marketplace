@@ -8,13 +8,13 @@ import React from "react";
 import ContentParent from "../ContentParent/ContentParent";
 
 const ProfilePageBody = () => {
-  const { currentSection, setCurrentSection } = useProfileContext();
+  const { tabId } = useProfileContext();
   return (
     <Box>
       <SectionTabs
         sections={profileSections}
-        currentSection={currentSection}
-        setCurrentSection={setCurrentSection}
+        currentSection={tabId}
+        type="my profile"
       />
       <ContentParent />
     </Box>

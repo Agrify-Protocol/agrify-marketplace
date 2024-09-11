@@ -5,7 +5,12 @@ import React from "react";
 import { SectionTabProps } from "./types";
 import { useRouter } from "next/navigation";
 
-const SectionTabs = ({ sections, currentSection, id }: SectionTabProps) => {
+const SectionTabs = ({
+  sections,
+  currentSection,
+  id,
+  type,
+}: SectionTabProps) => {
   const router = useRouter();
   return (
     <Flex
@@ -29,7 +34,11 @@ const SectionTabs = ({ sections, currentSection, id }: SectionTabProps) => {
               color={isCurrent ? "main_black_1" : "gray_1"}
               bg={isCurrent ? "gray_3" : "transparent"}
               onClick={() =>
-                router.push(`/project/${id}?id=${section.toLocaleLowerCase()}`)
+                router.push(
+                  type === "my profile"
+                    ? `/profile?id=${section.toLocaleLowerCase()}`
+                    : `/project/${id}?id=${section.toLocaleLowerCase()}`
+                )
               }
             >
               {section}

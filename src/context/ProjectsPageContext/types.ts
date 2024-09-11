@@ -2,7 +2,8 @@ import { Dispatch, SetStateAction } from "react";
 import { SingleProject } from "./types_2";
 
 export type ProjectPageContextType = {
-  paramsId: string | null;
+  tabId: string | null;
+  id: string | string[];
   project: SingleProject | null;
   setProject: Dispatch<SetStateAction<SingleProject | null>>;
 };

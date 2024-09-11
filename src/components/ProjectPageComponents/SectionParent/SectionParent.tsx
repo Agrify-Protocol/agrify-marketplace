@@ -11,9 +11,9 @@ import ProjectInsights from "../ProjectInsights/ProjectInsights";
 import Purchases from "../Purchases/Purchases";
 
 const SectionParent = () => {
-  const { paramsId } = useProjectPageContext();
+  const { tabId } = useProjectPageContext();
   const currentBody = () => {
-    switch (paramsId) {
+    switch (tabId) {
       case "overview":
         return <ProjectOverview />;
       case "project details":

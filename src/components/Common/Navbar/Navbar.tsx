@@ -21,7 +21,7 @@ const Navbar = () => {
     "/purchase",
   ];
 
-  const isProfilePage = pathName == "/profile";
+  const isProfilePage = pathName.startsWith("/profile");
   const isCurrentRouteValid =
     baseRoutes.some((route) => pathName.startsWith(route)) || pathName === "/";
 
@@ -61,7 +61,7 @@ const Navbar = () => {
           Projects
         </Link>
         <Link
-          href={"/profile"}
+          href={"/profile?id=overview"}
           style={{
             backgroundColor: isProfilePage ? "#EEEEEE" : "transparent",
             borderRadius: "1.905rem",

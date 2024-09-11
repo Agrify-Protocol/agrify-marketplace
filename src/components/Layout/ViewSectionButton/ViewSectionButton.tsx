@@ -5,13 +5,15 @@ import { ChevronRight } from "lucide-react";
 import React from "react";
 import { ViewSolutionButtonProps } from "./types";
 import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
+import { useRouter } from "next/navigation";
 
 const ViewSectionButton = ({
   text,
   section,
   bgColor,
 }: ViewSolutionButtonProps) => {
-  const { setCurrentSection } = useProjectPageContext();
+  const { id } = useProjectPageContext();
+  const router = useRouter();
   return (
     <Button
       mt={"1.209rem"}
@@ -19,9 +21,11 @@ const ViewSectionButton = ({
       bgColor={bgColor ? bgColor : "white"}
       color={"secondary_foreground"}
       rightIcon={<ChevronRight />}
-      onClick={() => {
-        section && setCurrentSection(section);
-      }}
+      onClick={() =>
+        section
+          ? router.push(`/project/${id}?id=${section?.toLocaleLowerCase()}`)
+          : null
+      }
     >
       {text}
     </Button>

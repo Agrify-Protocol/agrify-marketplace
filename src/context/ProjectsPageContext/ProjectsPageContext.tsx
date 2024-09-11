@@ -3,7 +3,7 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { ProjectPageContextType } from "./types";
 import { SingleProject } from "./types_2";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 const ProjectPageContext = createContext({} as ProjectPageContextType);
 
@@ -14,10 +14,11 @@ type Props = {
 export const ProjectPageProvider = ({ children }: Props) => {
   const [project, setProject] = useState<SingleProject | null>(null);
   const searchParams = useSearchParams();
-  const paramsId = searchParams.get("id");
+  const tabId = searchParams.get("id");
+  const { id } = useParams();
 
   return (
-    <ProjectPageContext.Provider value={{ project, setProject, paramsId }}>
+    <ProjectPageContext.Provider value={{ project, setProject, tabId, id }}>
       {children}
     </ProjectPageContext.Provider>
   );
