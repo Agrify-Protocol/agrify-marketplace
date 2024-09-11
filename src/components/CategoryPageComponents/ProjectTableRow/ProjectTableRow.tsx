@@ -33,7 +33,7 @@ const ProjectTableRow = ({
       cursor={"pointer"}
       transition={"all 0.25s ease-in-out"}
       _hover={{ borderColor: "#0CC14C" }}
-      onClick={() => router.push(`/project/${project.projectID}`)}
+      onClick={() => router.push(`/project/${project.projectID}?id=overview`)}
     >
       <Box>
         <Flex gap={"0.5rem"} fontSize={"1.125rem"} fontWeight={450}>

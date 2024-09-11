@@ -3,12 +3,10 @@
 import { Box, Button, Flex } from "@chakra-ui/react";
 import React from "react";
 import { SectionTabProps } from "./types";
+import { useRouter } from "next/navigation";
 
-const SectionTabs = ({
-  sections,
-  currentSection,
-  setCurrentSection,
-}: SectionTabProps) => {
+const SectionTabs = ({ sections, currentSection, id }: SectionTabProps) => {
+  const router = useRouter();
   return (
     <Flex
       mt={"4rem"}
@@ -17,7 +15,7 @@ const SectionTabs = ({
       gap={"0.714rem"}
     >
       {sections.map((section) => {
-        const isCurrent = currentSection === section;
+        const isCurrent = currentSection === section.toLowerCase();
         return (
           <Box
             key={section}
@@ -30,7 +28,9 @@ const SectionTabs = ({
               borderRadius={"1.905rem"}
               color={isCurrent ? "main_black_1" : "gray_1"}
               bg={isCurrent ? "gray_3" : "transparent"}
-              onClick={() => setCurrentSection(section)}
+              onClick={() =>
+                router.push(`/project/${id}?id=${section.toLocaleLowerCase()}`)
+              }
             >
               {section}
             </Button>

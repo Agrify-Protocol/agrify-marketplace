@@ -27,8 +27,7 @@ const ProjectPage = () => {
 export default ProjectPage;
 
 const ProjectPageBody = () => {
-  const { currentSection, setCurrentSection, setProject, project } =
-    useProjectPageContext();
+  const { setProject, project, paramsId } = useProjectPageContext();
   const { user } = useAuthContext();
   const params = useParams();
   const { id } = params;
@@ -49,8 +48,8 @@ const ProjectPageBody = () => {
           <ProjectIntro />
           <SectionTabs
             sections={projectSections}
-            currentSection={currentSection}
-            setCurrentSection={setCurrentSection}
+            currentSection={paramsId}
+            id={id}
           />
           <SectionParent />
         </>
