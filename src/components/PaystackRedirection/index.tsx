@@ -39,8 +39,8 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               setChosenProject(response);
             });
           }
-          setIsLoading(false);
         });
+        setIsLoading(false);
       }
     }
   }, [params, trxref, reference]);
