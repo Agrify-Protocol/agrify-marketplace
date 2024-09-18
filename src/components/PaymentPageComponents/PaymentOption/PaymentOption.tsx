@@ -21,7 +21,7 @@ const PaymentOption = () => {
       case 1:
         const data: PaymentPayload = {
           projectId: chosenProject?._id as string,
-          tonnes: orderedAmount,
+          tonnes: +orderedAmount,
         };
         payForCarbon(data).then((response) => {
           window.open(response.data.authorization_url, "_self");

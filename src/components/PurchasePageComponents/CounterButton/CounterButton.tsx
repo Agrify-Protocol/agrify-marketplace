@@ -4,23 +4,31 @@ import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import { Minus, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 const CounterButton = () => {
   const router = useRouter();
   let { orderedAmount, setOrderedAmount, chosenProject } = useGlobalContext();
+
   type CounterAction = "inc" | "dec";
 
   const updateCounter = (action: CounterAction) => {
     if (action == "inc") {
-      setOrderedAmount(orderedAmount + 1);
+      setOrderedAmount((prev) => +prev + 1);
     } else {
       if (
-        orderedAmount >=
-        (chosenProject?.projectToken.minimumPurchaseTonnes as number)
+        +orderedAmount >
+          (chosenProject?.projectToken.minimumPurchaseTonnes as number) &&
+        +orderedAmount >= 0
       ) {
-        setOrderedAmount(orderedAmount - 1);
+        setOrderedAmount((prev) => +prev - 1);
       }
+    }
+  };
+
+  const handleChange = (e: { target: { value: string } }) => {
+    if (e.target.value !== "0" && !e.target.value.includes("-")) {
+      setOrderedAmount(e.target.value);
     }
   };
 
@@ -59,12 +67,19 @@ const CounterButton = () => {
       >
         <Input
           value={orderedAmount}
-          onChange={(e) => setOrderedAmount(Number(e.target.value))}
+          onChange={handleChange}
           border={"none"}
           fontSize={"1.5rem"}
           px={0}
           w={"45%"}
           _focus={{ ring: "none" }}
+          onBlur={() => {
+            orderedAmount === ""
+              ? setOrderedAmount(
+                  chosenProject?.projectToken.minimumPurchaseTonnes ?? 0
+                )
+              : null;
+          }}
           type="number"
         />
         <Text textAlign={"center"} fontSize={"1.5rem"} color={"black"}>

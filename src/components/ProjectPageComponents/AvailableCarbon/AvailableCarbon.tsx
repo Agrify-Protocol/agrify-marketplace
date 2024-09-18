@@ -40,6 +40,8 @@ const AvailableCarbon = ({
         gap={"0.25rem"}
         mt={"1.5rem"}
         ref={pillContainerRef}
+        width={"100%"}
+        minW={"15rem"}
       >
         {pills.map((pill) => {
           return (

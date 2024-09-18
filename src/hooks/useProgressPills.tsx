@@ -3,7 +3,7 @@
 import { useLayoutEffect, useState } from "react";
 
 type UseProgressPillsType = {
-  pillContainerRef: React.MutableRefObject<null>;
+  pillContainerRef: React.MutableRefObject<HTMLDivElement | null>;
   available_carbon: number;
   total_carbon: number;
   pillWidthInPx: number;
@@ -26,13 +26,14 @@ const useProgressPills = ({
 
   const calculatePills = () => {
     if (pillContainerRef.current) {
-      let pillCount = 0;
-      const container = pillContainerRef.current as HTMLDivElement;
+      const container = pillContainerRef.current;
       const containerClientWidth = container.clientWidth;
-      const displayablePills = Math.floor(
-        containerClientWidth / (pillWidthInPx + gapBetweenPillsInPx)
+      const pillSpace = pillWidthInPx + gapBetweenPillsInPx;
+      
+      const pillCount = Math.max(
+        Math.floor(containerClientWidth / pillSpace),
+        1
       );
-      pillCount = displayablePills;
 
       const initialPillData: PillsData = Array.from(
         { length: pillCount },
@@ -41,19 +42,16 @@ const useProgressPills = ({
         }
       );
 
-      const availablePercentage = Math.ceil(
-        (available_carbon / total_carbon) * 100
-      );
+      const availablePercentage = (available_carbon / total_carbon) * 100;
 
       const numberOfPillsToFill = Math.ceil(
         (availablePercentage / 100) * pillCount
       );
 
-      const updatedPillsData = initialPillData.map((object) => {
-        if (object.id <= numberOfPillsToFill) {
-          return { ...object, isFilled: true };
-        } else return { ...object, isFilled: false };
-      });
+      const updatedPillsData = initialPillData.map((pill) => ({
+        ...pill,
+        isFilled: pill.id <= numberOfPillsToFill,
+      }));
 
       setPills(updatedPillsData);
     }
@@ -62,7 +60,11 @@ const useProgressPills = ({
   useLayoutEffect(() => {
     calculatePills();
     window.addEventListener("resize", calculatePills);
-  }, [pillContainerRef, available_carbon, total_carbon]);
+
+    return () => {
+      window.removeEventListener("resize", calculatePills);
+    };
+  }, [pillContainerRef, available_carbon, total_carbon, pillWidthInPx, gapBetweenPillsInPx]);
 
   return pills;
 };
