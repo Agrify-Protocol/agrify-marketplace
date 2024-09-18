@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   AllProjectsResponse,
   CategoryObject,
@@ -12,15 +12,16 @@ import { SingleProject } from "../ProjectsPageContext/types_2";
 import { ReportType } from "@/components/ProfilePageComponents/ReportsTable/types";
 
 const GlobalContext = createContext({} as GlobalContextType);
-
 export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
   const [chosenProject, setChosenProject] = useState<SingleProject | null>(
     null
   );
-  const [orderedAmount, setOrderedAmount] = useState(0);
-  const orderTotal = orderedAmount * chosenProject?.projectToken.price! + vat;
+  const [orderedAmount, setOrderedAmount] = useState<number | string>(
+    chosenProject?.projectToken.minimumPurchaseTonnes ?? 0
+  );
+  const orderTotal = +orderedAmount * chosenProject?.projectToken.price! + vat;
   const subTotal = (
-    orderedAmount * chosenProject?.projectToken.price!
+    +orderedAmount * chosenProject?.projectToken.price!
   ).toLocaleString("en", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,

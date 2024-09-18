@@ -31,7 +31,7 @@ const DatePicker = ({ updateDate }: DatePickerProps) => {
         className="can_click"
         h={"3.5rem"}
         border={"1px solid"}
-        _hover={{bg: "white"}}
+        _hover={{ bg: "white" }}
         w={"100%"}
         p={"1rem"}
         display={"flex"}
@@ -53,7 +53,12 @@ const DatePicker = ({ updateDate }: DatePickerProps) => {
           ref={calendarRef}
           className="bg-white dark:bg-secondary_dark shadow-md absolute top-[-23rem]"
         >
-          <DayPicker mode="single" selected={selected} onSelect={setSelected} />
+          <DayPicker
+            mode="single"
+            selected={selected}
+            onSelect={setSelected}
+            disabled={{ before: new Date() }}
+          />
         </div>
       )}
     </Box>

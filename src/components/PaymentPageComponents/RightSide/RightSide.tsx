@@ -17,12 +17,12 @@ const RightSide = () => {
     phoneNumber: invoiceData.phone_number,
     projectId: chosenProject?._id,
     projectName: chosenProject?.title,
-    quantity: orderedAmount,
+    quantity: +orderedAmount,
     amount: subTotal,
     totalAmount: orderTotal,
     invoiceNo: `INV${Math.floor(Math.random() * 5000)}`,
     address: chosenProject?.location,
-    contactNo: "123-456-7890",
+    contactNo: invoiceData.phone_number,
     issuedOn: parseDate(new Date()),
   };
   return (

@@ -72,8 +72,8 @@ const ProjectIntro = () => {
           padding_x="1.358rem"
         />
         <ProjectIntroItem
-          title="Total Credits"
-          content={`${project.projectToken.totalTonnes} tons`}
+          title="Available Credits"
+          content={`${project.projectToken.availableTonnes.toLocaleString()} tonnes`}
           padding_x="1.358rem"
         />
         <ProjectIntroItem

@@ -8,8 +8,8 @@ export type GlobalContextProps = {
 };
 
 export type GlobalContextType = {
-  orderedAmount: number;
-  setOrderedAmount: Dispatch<SetStateAction<number>>;
+  orderedAmount: string | number;
+  setOrderedAmount: Dispatch<SetStateAction<string | number>>;
   orderTotal: number;
   subTotal: string;
   allProjects: AllProjectsResponse | null;
