@@ -45,6 +45,10 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
     }
   }, [params, trxref, reference]);
 
+  const getTonnesString = (value: number) => {
+    return `${value} ton${value > 1 ? "nes" : ""} of C02`;
+  };
+
   return (
     <Box my={"4rem"} px={"2.625rem"}>
       {isLoading ? (
@@ -88,24 +92,22 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               mb={"2.661rem"}
             >
               {type === "success"
-                ? ` You have successfully purchased ${
+                ? `You have successfully purchased ${getTonnesString(
                     isRedirect
-                      ? purchasedTonnes
-                      : orderedAmount.toLocaleString()
-                  } tonnes of C02`
-                : `Unfortunately, the purchase of ${
+                      ? +purchasedTonnes.toLocaleString()
+                      : +orderedAmount.toLocaleString()
+                  )} of C02`
+                : `Unfortunately, the purchase of ${getTonnesString(
                     isRedirect
-                      ? purchasedTonnes
-                      : orderedAmount.toLocaleString()
-                  } tonnes of CO2 could not be completed.
-            `}
+                      ? +purchasedTonnes.toLocaleString()
+                      : +orderedAmount.toLocaleString()
+                  )} of CO2 could not be completed.`}
               {type === "error" ? (
                 <Text as="span" display="block">
                   Please try again.
                 </Text>
               ) : null}
             </Text>
-
             <Box
               w={"15.952rem"}
               maxH={"14.944rem"}

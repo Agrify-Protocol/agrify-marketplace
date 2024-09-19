@@ -30,7 +30,9 @@ const InvoiceBody = ({ invoice_data }: InvoiceProps) => {
           fontSize={"0.688rem"}
         >
           <Text color={"main_black_1"}>{invoice_data?.projectName}</Text>
-          <Text align={"right"}>{invoice_data?.quantity} tonnes</Text>
+          <Text align={"right"}>{`${invoice_data?.quantity} ton${
+            invoice_data?.quantity > 1 ? "nes" : ""
+          }`}</Text>
           <Text align={"right"}>${invoice_data?.totalAmount}</Text>
           <Text align={"right"} color={"main_black_1"}>
             ${invoice_data?.totalAmount}

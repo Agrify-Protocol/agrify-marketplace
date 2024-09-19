@@ -48,8 +48,8 @@ const OrderSummary = () => {
         <Text color={"main_black_1"} fontSize={"0.75rem"} fontWeight={500}>
           <Text as={"span"} color={"gray_1"}>
             Qty
-          </Text>{" "}
-          {orderedAmount} tonnes
+          </Text>
+          {`${+orderedAmount} ton${+orderedAmount > 1 ? 'nes' : ''}`}
         </Text>
       </Box>
 
