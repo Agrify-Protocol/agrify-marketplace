@@ -73,7 +73,9 @@ const ProjectIntro = () => {
         />
         <ProjectIntroItem
           title="Available Credits"
-          content={`${project.projectToken.availableTonnes.toLocaleString()} tonnes`}
+          content={`${project.projectToken.availableTonnes.toLocaleString()} ton${
+            project.projectToken.availableTonnes > 1 ? "nes" : ""
+          }`}
           padding_x="1.358rem"
         />
         <ProjectIntroItem

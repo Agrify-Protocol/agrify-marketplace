@@ -61,8 +61,11 @@ const PurchaseBody = () => {
             fontWeight={450}
             color={"rgba(1, 19, 8, 0.7)"}
           >
-            {chosenProject?.projectToken.availableTonnes.toLocaleString()}{" "}
-            tonnes
+            {`${chosenProject?.projectToken?.availableTonnes.toLocaleString()} ton${
+              (chosenProject?.projectToken?.availableTonnes ?? 0) > 1
+                ? "nes"
+                : ""
+            }`}
           </Text>
         </Flex>
 
@@ -73,7 +76,11 @@ const PurchaseBody = () => {
             fontWeight={450}
             color={"rgba(1, 19, 8, 0.7)"}
           >
-            {chosenProject?.projectToken.minimumPurchaseTonnes} tonnes
+            {`${chosenProject?.projectToken.minimumPurchaseTonnes.toLocaleString()} ton${
+              (chosenProject?.projectToken.minimumPurchaseTonnes ?? 0) > 1
+                ? "nes"
+                : ""
+            }`}
           </Text>
         </Flex>
       </Box>
