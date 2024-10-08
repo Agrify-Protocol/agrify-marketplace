@@ -6,12 +6,16 @@ import React from "react";
 
 const Purchase = () => {
   return (
-    <Box px={"2.5rem"}>
-      <Box mt={"4rem"}>
+    <Box px={{base: "24px", lg:"2.5rem"}}>
+      <Box mt={{ base: "39px", lg: "4rem" }}>
         <BackButton />
       </Box>
 
-      <Box my={"7.688rem"} mx={"auto"} w={"38.648rem"}>
+      <Box
+        my={{ base: "32px", lg: "7.688rem" }}
+        mx={"auto"}
+        w={{ lg: "38.648rem" }}
+      >
         <PurchaseHeading />
         <PurchaseBody />
       </Box>

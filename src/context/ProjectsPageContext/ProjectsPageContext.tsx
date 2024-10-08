@@ -14,7 +14,7 @@ type Props = {
 export const ProjectPageProvider = ({ children }: Props) => {
   const [project, setProject] = useState<SingleProject | null>(null);
   const searchParams = useSearchParams();
-  const tabId = searchParams.get("id");
+  const tabId = searchParams.get("id") as string;
   const { id } = useParams();
 
   return (

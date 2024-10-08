@@ -1,9 +1,8 @@
 "use client";
 
 import { Box, Flex, Text } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { AvailableCarbonProps } from "./types";
-import { CircleAlert } from "lucide-react";
 import useProgressPills from "@/hooks/useProgressPills";
 
 const AvailableCarbon = ({
@@ -12,19 +11,43 @@ const AvailableCarbon = ({
 }: AvailableCarbonProps) => {
   const pillContainerRef = useRef(null);
 
+  const [gapAndWidth, setGapAndWidth] = useState(() => {
+    const screenWidth = window.innerWidth;
+    return {
+      gap: screenWidth >= 768 ? 1 : 4,
+      width: screenWidth >= 768 ? 5 : 20,
+    };
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      setGapAndWidth({
+        gap: screenWidth >= 768 ? 4 : 10,
+        width: screenWidth >= 768 ? 20 : 5,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const pills = useProgressPills({
     pillContainerRef,
     available_carbon,
     total_carbon,
     gapBetweenPillsInPx: 4,
-    pillWidthInPx: 20,
+    pillWidthInPx: 20
   });
 
   return (
     <Flex flexDir={"column"}>
-      <Flex alignItems={"center"} gap={"0.75rem"}>
+      <Flex alignItems={"center"}>
         <Box>
-          <Text fontSize={"0.875rem"} mb={"0.5rem"}>
+          <Text fontSize={"0.875rem"} mb={{ base: "8px", lg: "0.5rem" }}>
             Available Tonnes
           </Text>
           <Text fontSize={"1.5rem"} color={"main_black_2"} fontWeight={500}>
@@ -37,18 +60,18 @@ const AvailableCarbon = ({
       <Flex
         alignItems={"stretch"}
         justifyContent={"space-between"}
-        gap={"0.25rem"}
+        gap={{ base: "3px", lg: "0.25rem" }}
         mt={"1.5rem"}
         ref={pillContainerRef}
         width={"100%"}
-        minW={"15rem"}
+        minW={{ lg: "15rem" }}
       >
         {pills.map((pill) => {
           return (
             <Box
               key={pill.id}
               bg={pill.isFilled ? "agrify_green" : "gray_2"}
-              minW={"1.25rem"}
+              minW={{ base: "7.75px", lg: "1.25rem" }}
               minH={"3.5rem"}
               borderRadius={"2rem"}
               transition={"all 0.25s ease-in-out"}

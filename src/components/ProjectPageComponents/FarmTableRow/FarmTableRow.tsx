@@ -8,7 +8,7 @@ const FarmTableRow = ({ farm, isLast }: FarmTableRowProps) => {
   const router = useRouter();
   return (
     <Grid
-      gridTemplateColumns={"8fr 2fr"}
+      gridTemplateColumns={{ lg: "8fr 2fr" }}
       p={"2rem 1rem"}
       alignItems={"center"}
       border={"1px solid transparent"}
@@ -16,7 +16,7 @@ const FarmTableRow = ({ farm, isLast }: FarmTableRowProps) => {
       cursor={"pointer"}
       onClick={() => router.push(`/farm/${farm._id}`)}
     >
-      <Flex alignItems={"center"} gap={"0.5rem"}>
+      <Flex alignItems={"center"} gap={{ base: "14px", lg: "0.5rem" }}>
         <Box
           w={"41px"}
           h={"41px"}
@@ -27,10 +27,19 @@ const FarmTableRow = ({ farm, isLast }: FarmTableRowProps) => {
           <Image src={farm.farmImages?.[0].image || profileImg} fill alt="" />
         </Box>
 
-        <Text color={"black"}>{farm.name}</Text>
+        <Box>
+          <Text color={"black"}>{farm.name}</Text>
+          <Text
+            color={"black"}
+            display={{ base: "block", lg: "none" }}
+          >{`${farm.state}, ${farm.country}`}</Text>
+        </Box>
       </Flex>
 
-      <Text color={"black"}>{`${farm.state}, ${farm.country}`}</Text>
+      <Text
+        color={"black"}
+        display={{ base: "none", lg: "block" }}
+      >{`${farm.state}, ${farm.country}`}</Text>
     </Grid>
   );
 };

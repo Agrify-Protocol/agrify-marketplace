@@ -23,7 +23,7 @@ const ProfileModal = ({ setShowModal }: ProfileModalProps) => {
     resetAuthCookies().then(() => {
       setUser(null);
       closeModal();
-      router.push("/login");
+      router.push("/auth/login");
     });
   };
 

@@ -1,8 +1,7 @@
 "use client";
 
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
-import ReportModal from "../ReportModal/ReportModal";
 import { useScreenFreeze } from "@/hooks/useScreenFreeze";
 
 const ProfilePageHeading = () => {
@@ -23,7 +22,11 @@ const ProfilePageHeading = () => {
         </Text>
 
         <Box mt={"1.444rem"}>
-          <Text fontSize={"1.5rem"} fontWeight={450} color={"main_black_1"}>
+          <Text
+            fontSize={{ base: "20px", lg: "1.5rem" }}
+            fontWeight={450}
+            color={"main_black_1"}
+          >
             Sustainability Profile Overview
           </Text>
           <Text>Here’s your carbon profile insights</Text>

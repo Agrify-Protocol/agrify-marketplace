@@ -39,7 +39,10 @@ const CategoryPage = () => {
   }
 
   return (
-    <Box mt={"3.215rem"} px={"2.625rem"}>
+    <Box
+      mt={{ base: "40px", lg: "3.215rem" }}
+      px={{ base: "24px", lg: "2.625rem" }}
+    >
       <CategoryBanner
         name={type as string}
         carbon_credits={categoryData?.["Total Available Credits"]}
@@ -48,6 +51,7 @@ const CategoryPage = () => {
       <ProjectTable
         carbon_credits={categoryData["Total Available Credits"]}
         projects={categoryData.data}
+        type={type}
       />
     </Box>
   );

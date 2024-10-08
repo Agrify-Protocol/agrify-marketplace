@@ -53,7 +53,7 @@ const Signup = () => {
     registerUser(userData)
       .then(() => {
         toast(successToast);
-        router.push("/login");
+        router.push("/auth/login");
       })
       .catch((err) => {
         const errorToast = new ToastData(
@@ -66,15 +66,16 @@ const Signup = () => {
       .finally(() => {
         setIsLoading(false);
       });
-    // } else {
-    //   toast(passwordToast);
-    //   setIsLoading(false);
-    // }
   };
 
   return (
     <Box>
-      <Box w={"34.875rem"} mx={"auto"} my={"6.219rem"}>
+      <Box
+        w={{ lg: "34.875rem" }}
+        mx={"auto"}
+        my={{ base: "80px", lg: "6.219rem" }}
+        px={{ base: "28px", lg: 0 }}
+      >
         <AuthPageHeading
           main_heading="Register on Agrify"
           sub_heading="Enter you credentials to register on Agfiry"
@@ -149,7 +150,7 @@ const Signup = () => {
           line_1={{
             question: "Already have an account?",
             link_text: "Sign In",
-            route: "/login",
+            route: "/auth/login",
           }}
           line_2={{
             question: "Forgot Password?",

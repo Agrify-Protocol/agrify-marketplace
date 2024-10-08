@@ -28,9 +28,16 @@ const FarmPage = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <Box my={"4rem"} px={"2.625rem"}>
+    <Box
+      my={{ base: "25px", lg: "4rem" }}
+      px={{ base: "25px", lg: "2.625rem" }}
+    >
       <BackButton />
-      <Grid mt={"3rem"} gridTemplateColumns={"3fr 2fr"} gap={"6.5rem"}>
+      <Grid
+        mt={{ base: "24px", lg: "3rem" }}
+        gridTemplateColumns={{ lg: "3fr 2fr" }}
+        gap={{ base: "48px", lg: "6.5rem" }}
+      >
         <Slider images={farm?.farmImages} />
         <FarmDetail detail={farm} />
       </Grid>

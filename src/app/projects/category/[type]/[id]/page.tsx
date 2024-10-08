@@ -11,7 +11,6 @@ import {
 } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import SectionParent from "@/components/ProjectPageComponents/SectionParent/SectionParent";
 import { projectSections } from "@/context/ProjectsPageContext/constants";
-import { useParams } from "next/navigation";
 import { getSingleProject } from "@/services/api/projects";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import PageLoader from "@/components/Layout/PageLoader/PageLoader";
@@ -39,7 +38,10 @@ const ProjectPageBody = () => {
   }, [id, user]);
 
   return (
-    <Box mt={"4rem"} px={"2.625rem"}>
+    <Box
+      mt={{ base: "39px", lg: "4rem" }}
+      px={{ base: "24px", lg: "2.625rem" }}
+    >
       <BackButton />
       {project ? (
         <>

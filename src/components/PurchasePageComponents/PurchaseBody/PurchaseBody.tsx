@@ -14,14 +14,14 @@ const PurchaseBody = () => {
     <Box
       bgColor={"white"}
       borderRadius={"1rem"}
-      px={"2rem"}
-      py={"2.813rem"}
+      px={{ base: "20px", lg: "2rem" }}
+      py={{ base: "20px", lg: "2.813rem" }}
       mt={"3rem"}
     >
       <Box>
         <Text
           fontWeight={500}
-          fontSize={"1.5rem"}
+          fontSize={{ base: "24px", lg: "1.5rem" }}
           color={"main_black_1"}
           mb={"2.5rem"}
         >
@@ -32,14 +32,18 @@ const PurchaseBody = () => {
           justifyContent={"space-between"}
           mb={"1rem"}
         >
-          <Text fontSize={"1.125rem"}>Price</Text>
-          <Text fontSize={"1.125rem"} fontWeight={500} color={"main_black_1"}>
+          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>Price</Text>
+          <Text
+            fontSize={{ base: "14px", lg: "1.125rem" }}
+            fontWeight={500}
+            color={"main_black_1"}
+          >
             ${chosenProject?.projectToken.price}/tc02e
           </Text>
         </Flex>
 
         <Flex alignItems={"center"} justifyContent={"space-between"}>
-          <Text fontSize={"1.125rem"}>Amount</Text>
+          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>Amount</Text>
           <CounterButton />
         </Flex>
       </Box>
@@ -55,9 +59,11 @@ const PurchaseBody = () => {
           justifyContent={"space-between"}
           mb={"1rem"}
         >
-          <Text fontSize={"1.125rem"}>Available Tonnes</Text>
+          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>
+            Available Tonnes
+          </Text>
           <Text
-            fontSize={"1.125rem"}
+            fontSize={{ base: "14px", lg: "1.125rem" }}
             fontWeight={450}
             color={"rgba(1, 19, 8, 0.7)"}
           >
@@ -70,9 +76,11 @@ const PurchaseBody = () => {
         </Flex>
 
         <Flex alignItems={"center"} justifyContent={"space-between"}>
-          <Text fontSize={"1.125rem"}>Minimum Purchase</Text>
+          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>
+            Minimum Purchase
+          </Text>
           <Text
-            fontSize={"1.125rem"}
+            fontSize={{ base: "14px", lg: "1.125rem" }}
             fontWeight={450}
             color={"rgba(1, 19, 8, 0.7)"}
           >
@@ -91,9 +99,9 @@ const PurchaseBody = () => {
           justifyContent={"space-between"}
           mb={"1rem"}
         >
-          <Text fontSize={"1.125rem"}>Payment fee</Text>
+          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>Payment fee</Text>
           <Text
-            fontSize={"1.125rem"}
+            fontSize={{ base: "14px", lg: "1.125rem" }}
             fontWeight={450}
             color={"rgba(1, 19, 8, 0.7)"}
           >
@@ -102,9 +110,9 @@ const PurchaseBody = () => {
         </Flex>
 
         <Flex alignItems={"center"} justifyContent={"space-between"}>
-          <Text fontSize={"1.125rem"}>VAT</Text>
+          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>VAT</Text>
           <Text
-            fontSize={"1.125rem"}
+            fontSize={{ base: "14px", lg: "1.125rem" }}
             fontWeight={450}
             color={"rgba(1, 19, 8, 0.7)"}
           >
@@ -124,6 +132,7 @@ const PurchaseBody = () => {
         _hover={{
           bg: "#0ba842",
         }}
+        fontSize={{ base: "14px", lg: "1.125rem" }}
         onClick={() => router.push("/payment")}
       >
         Continue Purchase

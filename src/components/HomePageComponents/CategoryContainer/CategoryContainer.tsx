@@ -24,12 +24,12 @@ const CategoryContainer = () => {
       });
     }
   }, [user]);
-  
+
   return (
     <Grid
-      gap={"4.75rem"}
+      gap={{ base: "48px", lg: "4.75rem" }}
       mt={"3.5rem"}
-      gridTemplateColumns={"repeat(auto-fill, minmax(23.063rem, 1fr))"}
+      gridTemplateColumns={{ md: "repeat(auto-fill, minmax(23.063rem, 1fr))" }}
     >
       {isLoading ? (
         <PageLoader />

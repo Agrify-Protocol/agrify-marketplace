@@ -26,7 +26,7 @@ const RightSide = () => {
     issuedOn: parseDate(new Date()),
   };
   return (
-    <Box flexBasis={"50%"} minH={"100vh"} bgColor={"white"}>
+    <Box flexBasis={"50%"} minH={{ lg: "100vh" }} bgColor={{ lg: "white" }}>
       {paymentStage === 1 && <PaymentOption />}
       {paymentStage === 2 && <InvoiceForm />}
       {paymentStage === 3 && <Invoice invoice_data={invoice_data} />}

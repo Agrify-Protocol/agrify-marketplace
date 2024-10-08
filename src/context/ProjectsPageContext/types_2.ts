@@ -22,6 +22,8 @@ export interface SingleProject {
   updatedAt: Date;
   __v: number;
   about: string;
+  longitude: number,
+  latitude: number,
 }
 
 export interface Farm {

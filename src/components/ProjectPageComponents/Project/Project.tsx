@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { ProjectProps } from "./types";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Project = ({
   project,
@@ -13,9 +13,10 @@ const Project = ({
 }: ProjectProps) => {
   const [hovered, setHovered] = useState(false);
   const router = useRouter();
+  const pathName = usePathname();
 
   const pushToProductPage = () => {
-    router.push(`/project/${project._id}?id=overview`);
+    router.push(`/${pathName}id?=${project._id}?id=overview`);
   };
 
   const projectImpact = project.tags.length;

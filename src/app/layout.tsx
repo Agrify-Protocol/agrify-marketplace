@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import { Suisse } from "../fonts";
-import Navbar from "@/components/Common/Navbar/Navbar";
 import { GlobalContextProvider } from "@/context/GlobalContext/GlobalContext";
 import { AuthContextProvider } from "@/context/AuthContext/AuthContext";
+import Navbar from "@/components/Common/Navbar/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,8 +26,10 @@ export default function RootLayout({
             <link rel="icon" href="/icons/logo.svg" type="image/svg+xml" />
           </head>
           <body className={`${Suisse.className} ${inter.className}`}>
-            <Navbar />
-            <Providers>{children}</Providers>
+            <Providers>
+              <Navbar />
+              {children}
+            </Providers>
           </body>
         </html>
       </AuthContextProvider>

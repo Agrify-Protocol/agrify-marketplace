@@ -7,11 +7,12 @@ import AuthPageBottom from "@/components/AuthPageComponents/AuthPageBottom/AuthP
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
 import AuthPageSubmitButton from "@/components/AuthPageComponents/AuthPageSubmitButton/AuthPageSubmitButton";
 import { loginUser } from "@/services/api/auth";
-import { errorToast, successToast } from "./constants";
 import { useRouter } from "next/navigation";
-import { preserveSession } from "../lib/actions";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { validateEmail, validateLength } from "@/utils/validationSchema";
+import { preserveSession } from "@/app/lib/actions";
+import { errorToast, successToast } from "./constants";
+
 
 const Login = () => {
   const toast = useToast();
@@ -47,7 +48,7 @@ const Login = () => {
             setAccessToken(result.token);
             setRefreshToken(result.refreshToken);
             toast(successToast);
-            router.push("/");
+            router.push("/projects");
           }
         );
       })
@@ -60,7 +61,12 @@ const Login = () => {
   };
 
   return (
-    <Flex minH={"100vh"} alignItems={"center"} justifyContent={"center"}>
+    <Flex
+      minH={"100vh"}
+      alignItems={"center"}
+      justifyContent={"center"}
+      paddingX={{ base: "24px", lg: 0 }}
+    >
       <Flex
         flexDir={"column"}
         alignItems={"center"}
@@ -75,7 +81,7 @@ const Login = () => {
         <FormControl>
           <Flex
             w={"100%"}
-            mt={"2rem"}
+            mt={{ base: "32px", lg: "2rem" }}
             mb={"3rem"}
             flexDir={"column"}
             gap={"1rem"}

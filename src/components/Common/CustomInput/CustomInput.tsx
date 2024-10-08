@@ -31,7 +31,7 @@ const CustomInput = ({
           placeholder={placeholder}
           focusBorderColor="gray_2"
           h={"3.5rem"}
-          borderColor={isInvalid && value !== '' ? "red" : "gray_2"}
+          borderColor={isInvalid && value !== "" ? "red" : "gray_2"}
           borderRadius={"1rem"}
           bg={"white"}
           value={value}
@@ -49,7 +49,11 @@ const CustomInput = ({
           />
         )}
       </Box>
-      {isInvalid && value !== '' ? <Text color="red" fontSize="12px">{errorMsg}</Text> : null}
+      {isInvalid && value !== "" ? (
+        <Text color="red" fontSize="12px">
+          {errorMsg}
+        </Text>
+      ) : null}
       {subtext && (
         <Flex alignItems={"center"}>
           <Dot color="#A6A6A6" />

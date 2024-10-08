@@ -6,14 +6,20 @@ import { FarmListTableProps } from "./types";
 
 const FarmlistTable = ({ farm_list }: FarmListTableProps) => {
   return (
-    <Box mb={"4rem"}>
-      <Text fontSize={"1.5rem"} fontWeight={500} mb={"2rem"} color={"black"}>
+    <Box mb={{ base: "24px", lg: "4rem" }}>
+      <Text
+        fontSize={{ base: "18px", lg: "1.5rem" }}
+        fontWeight={500}
+        mb={{ base: "24px", lg: "2rem" }}
+        color={"black"}
+      >
         Farm List
       </Text>
       <Grid
         gridTemplateColumns={"8fr 2fr"}
         color={"secondary_foreground"}
         p={"2rem 1rem"}
+        display={{ base: "none", lg: "grid" }}
       >
         <Box>Farm</Box>
         <Box>
