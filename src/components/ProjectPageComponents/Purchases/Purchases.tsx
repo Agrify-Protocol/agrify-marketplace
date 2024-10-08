@@ -54,11 +54,21 @@ const Purchases = () => {
         py={"0.375rem"}
         mb={"1.5rem"}
         color={"rgba(0,0,0,0.4)"}
+        gap={{ base: "50px", lg: "0px" }}
+        // overflow={{ base: "scroll" }}
       >
-        <Text>Payment Type</Text>
-        <Text>Status</Text>
-        <Text>Tonnes</Text>
-        <Text>Date</Text>
+        {["Payment Type", "Status", "Tonnes", "Date"].map((item) => (
+          <Text
+            style={{ textWrap: "nowrap" }}
+            key={item}
+            display={{
+              base: item === "Payment Type" ? "block" : "none",
+              lg: "block",
+            }}
+          >
+            {item}
+          </Text>
+        ))}
       </Grid>
 
       <>
@@ -79,15 +89,17 @@ const Purchases = () => {
           </Text>
         )}
 
-        {transactions?.map((transaction) => {
-          return (
-            <FourColumnTableRow
-              key={transaction._id}
-              transaction={transaction}
-              clickHandler={updateTxDetails}
-            />
-          );
-        })}
+        <Box overflow="scroll">
+          {transactions?.map((transaction) => {
+            return (
+              <FourColumnTableRow
+                key={transaction._id}
+                transaction={transaction}
+                clickHandler={updateTxDetails}
+              />
+            );
+          })}
+        </Box>
       </>
 
       {showTransaction && showTransaction.type == "card" && (

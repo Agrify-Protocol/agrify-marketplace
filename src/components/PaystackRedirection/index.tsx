@@ -19,7 +19,6 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   const searchParams = useSearchParams();
   const trxref = searchParams.get("trxref");
   const reference = searchParams.get("reference");
-
   const params = useParams();
   const { chosenProject, setChosenProject, orderedAmount } = useGlobalContext();
   const [purchasedTonnes, setPurchasedTonnes] = useState(0);
@@ -50,7 +49,10 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   };
 
   return (
-    <Box my={"4rem"} px={"2.625rem"}>
+    <Box
+      my={{ base: "24px", lg: "4rem" }}
+      px={{ base: "36px", lg: "2.625rem" }}
+    >
       {isLoading ? (
         <PageLoader />
       ) : (
@@ -58,11 +60,11 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
           <BackButton />
           <Box
             w={"100%"}
-            bgColor={"white"}
-            mt={"3.028rem"}
+            bgColor={{ lg: "white" }}
+            mt={{ lg: "3.028rem" }}
             borderRadius={"0.953rem"}
-            border="0.95px solid rgba(169, 169, 169, 0.3)"
-            py={"5.238rem"}
+            border={{ lg: "0.95px solid rgba(169, 169, 169, 0.3)" }}
+            py={{ base: "70px", lg: "5.238rem" }}
             textAlign={"center"}
           >
             <Flex
@@ -73,12 +75,16 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               justifyContent={"center"}
               mx={"auto"}
               borderRadius={"0.476rem"}
-              mb={"2.444rem"}
+              mb={{ lg: "2.444rem" }}
             >
               <Image src={type === "success" ? check : error} alt="" />
             </Flex>
 
-            <Text fontSize={"1.5rem"} fontWeight={600} color={"#011308"}>
+            <Text
+              fontSize={{ base: "18px", lg: "1.5rem" }}
+              fontWeight={600}
+              color={"#011308"}
+            >
               {!isRedirect
                 ? type === "success"
                   ? "Invoice Generated!"
@@ -86,10 +92,10 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                 : "Purchase Completed!"}
             </Text>
             <Text
-              fontSize={"1.125rem"}
+              fontSize={{ lg: "1.125rem" }}
               fontWeight={450}
-              mt={"1.708rem"}
-              mb={"2.661rem"}
+              mt={{ base: "21px", lg: "1.708rem" }}
+              mb={{ base: "33px", lg: "2.661rem" }}
             >
               {type === "success"
                 ? `You have successfully purchased ${getTonnesString(
@@ -149,7 +155,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
             <Text
               fontWeight={450}
               color={"black"}
-              fontSize={"1.5rem"}
+              fontSize={{ base: "16px", lg: "1.5rem" }}
               mb={"2.648rem"}
             >
               {chosenProject?.title}

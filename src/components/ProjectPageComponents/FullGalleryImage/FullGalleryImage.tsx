@@ -11,20 +11,25 @@ const FullGalleryImage = ({
 }: FullGalleryImageProps) => {
   return (
     <Flex
-      display={"block"}
+      // display={{ base: "none", lg: "block" }}
       position={"fixed"}
       bgColor={"rgba(0,0,0,0.4)"}
       zIndex={100}
-      minW={"100vw"}
-      minH={"100vh"}
+      minW={{ lg: "100vw" }}
+      minH={{ lg: "100vh" }}
       inset={0}
       alignItems={"center"}
       justifyContent={"center"}
       flexDir={"column"}
       py={"2.5rem"}
     >
-      <Box w={"43rem"} mx={"auto"}>
-        <Box bg={"white"} px={"2.438rem"} py={"1.75rem"} borderRadius={"1rem"}>
+      <Box w={{ lg: "43rem" }} mx={"auto"} px={{ base: "16px", lg: "0px" }}>
+        <Box
+          bg={"white"}
+          px={{ base: "16px", lg: "2.438rem" }}
+          py={{ base: "16px", lg: "1.75rem" }}
+          borderRadius={"1rem"}
+        >
           <Flex alignItems={"center"} justifyContent={"space-between"}>
             <Text>About Media</Text>
             <Button
@@ -35,13 +40,14 @@ const FullGalleryImage = ({
               <X size={"1rem"} />
             </Button>
           </Flex>
-
-          <Text mt={"0.75rem"} color={"main_black_1"} lineHeight={"1.2rem"}>
-            {metadata}
-          </Text>
+          {metadata ? (
+            <Text mt={"0.75rem"} color={"main_black_1"} lineHeight={"1.2rem"}>
+              {metadata}
+            </Text>
+          ) : null}
         </Box>
 
-        <Box mt={"1.5rem"} w={"100%"} h={"32rem"}>
+        <Box mt={"1.5rem"} w={"100%"} h={{ base: "60vh", lg: "32rem" }}>
           <Image
             src={image}
             alt=""

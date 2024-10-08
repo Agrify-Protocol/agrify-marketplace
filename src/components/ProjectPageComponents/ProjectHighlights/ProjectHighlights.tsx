@@ -1,54 +1,59 @@
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
-import {
-  CircleAlert,
-  CircleDollarSign,
-  LocateFixed,
-  ReceiptText,
-} from "lucide-react";
+import { CircleDollarSign, LocateFixed, ReceiptText } from "lucide-react";
 import React from "react";
 import { HighlightBoxProps, ProjectHighlightProps } from "./types";
-import ViewSectionButton from "@/components/Layout/ViewSectionButton/ViewSectionButton";
-import { projectSections } from "@/context/ProjectsPageContext/constants";
 
 const ProjectHighlights = ({ highlights }: ProjectHighlightProps) => {
+  const highlightsSection = [
+    {
+      title: "Price",
+      content: `$${highlights.price?.toLocaleString()}/tonne`,
+      icon: CircleDollarSign,
+    },
+    {
+      title: "Location",
+      content: highlights.location,
+      icon: LocateFixed,
+    },
+    {
+      title: "Crediting Period",
+      content: highlights.crediting_period,
+      icon: LocateFixed,
+    },
+    {
+      title: "Contract Type",
+      content: highlights.contract_type.trim().length
+        ? highlights.contract_type
+        : "N/A",
+      icon: ReceiptText,
+    },
+  ];
   return (
-    <Box mt={"2.5rem"}>
-      <Flex alignItems={"center"} gap={"0.75rem"}>
+    <Box mt={{ base: "32px", lg: "2.5rem" }}>
+      <Flex
+        alignItems={"center"}
+        gap={"0.75rem"}
+        display={{ base: "none", lg: "flex" }}
+      >
         <Text>Highlights</Text>
         {/* <CircleAlert size={"0.875rem"} color="rgba(1, 19, 8, 0.5)" /> */}
       </Flex>
       <Grid
-        gridTemplateColumns={"repeat(4, 1fr)"}
+        gridTemplateColumns={{ base: "repeat(1, 1fr)", lg: "repeat(4, 1fr)" }}
         bg={"white"}
         borderRadius={"1rem"}
         overflow={"hidden"}
         mt={"1rem"}
       >
-        <HighlightBox
-          title="Price"
-          content={`$${highlights.price?.toLocaleString()}/tonne`}
-          Icon={CircleDollarSign}
-        />
-        <HighlightBox
-          title="Location"
-          content={highlights.location}
-          Icon={LocateFixed}
-        />
-        <HighlightBox
-          title="Crediting Period"
-          content={highlights.crediting_period}
-          Icon={LocateFixed}
-        />
-        <HighlightBox
-          title="Contract Type"
-          content={
-            highlights.contract_type.trim().length
-              ? highlights.contract_type
-              : "N/A"
-          }
-          Icon={ReceiptText}
-          hideBorder
-        />
+        {highlightsSection.map((item, index) => (
+          <HighlightBox
+            title={item.title}
+            content={item.content}
+            Icon={item.icon}
+            key={item.title}
+            hideBorder={index === highlightsSection.length - 1}
+          />
+        ))}
       </Grid>
       {/* <ViewSectionButton text="View Insights" section={projectSections[2]} /> */}
     </Box>
@@ -70,7 +75,9 @@ const HighlightBox = ({
       flexDir={"column"}
       py={"1.5rem"}
       borderRight={"1px"}
-      borderRightStyle={hideBorder ? "unset" : "dashed"}
+      borderRightStyle={{ base: "none", lg: hideBorder ? "unset" : "dashed" }}
+      borderBottom={"1px"}
+      borderBottomStyle="dashed"
       borderRadius={"1rem"}
     >
       <Flex alignItems={"center"} gap={"0.375rem"}>

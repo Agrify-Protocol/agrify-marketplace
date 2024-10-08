@@ -1,6 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
 export type AuthContextType = {
+  fetchingUser: boolean;
   user: User | null;
   setUser: Dispatch<SetStateAction<User | null>>;
   setAccessToken: Dispatch<SetStateAction<string>>;

@@ -4,16 +4,16 @@ import { Button } from "@chakra-ui/react";
 import { ChevronRight } from "lucide-react";
 import React from "react";
 import { ViewSolutionButtonProps } from "./types";
-import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const ViewSectionButton = ({
   text,
   section,
   bgColor,
 }: ViewSolutionButtonProps) => {
-  const { id } = useProjectPageContext();
   const router = useRouter();
+  const pathname = usePathname();
+
   return (
     <Button
       mt={"1.209rem"}
@@ -23,7 +23,7 @@ const ViewSectionButton = ({
       rightIcon={<ChevronRight />}
       onClick={() =>
         section
-          ? router.push(`/project/${id}?id=${section?.toLocaleLowerCase()}`)
+          ? router.push(`${pathname}?id=${section?.toLocaleLowerCase()}`)
           : null
       }
     >

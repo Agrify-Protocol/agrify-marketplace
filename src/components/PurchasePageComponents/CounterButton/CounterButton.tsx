@@ -34,13 +34,13 @@ const CounterButton = () => {
 
   useEffect(() => {
     if (!chosenProject) {
-      router.push("/");
+      router.push("/projects");
     }
   }, [chosenProject]);
 
   return (
     <Flex
-      w={"16.75rem"}
+      w={{ base: "60%", lg: "16.75rem" }}
       h={"2.847rem"}
       alignItems={"stretch"}
       justifyContent={"space-between"}
@@ -50,7 +50,8 @@ const CounterButton = () => {
     >
       <Button
         h={"100%"}
-        w={"19%"}
+        w={{ lg: "19%" }}
+        padding="0"
         borderRight={"1px solid black"}
         borderRadius={0}
         bg={"transparent"}
@@ -60,7 +61,7 @@ const CounterButton = () => {
       </Button>
 
       <Flex
-        w={"62%"}
+        w={{ base: "40%", lg: "62%" }}
         h={"100%"}
         alignItems={"center"}
         justifyContent={"center"}
@@ -69,7 +70,7 @@ const CounterButton = () => {
           value={orderedAmount}
           onChange={handleChange}
           border={"none"}
-          fontSize={"1.5rem"}
+          fontSize={{ base: "14px", lg: "1.5rem" }}
           px={0}
           w={"45%"}
           _focus={{ ring: "none" }}
@@ -82,14 +83,19 @@ const CounterButton = () => {
           }}
           type="number"
         />
-        <Text textAlign={"center"} fontSize={"1.5rem"} color={"black"}>
+        <Text
+          textAlign={"center"}
+          fontSize={{ base: "14px", lg: "1.5rem" }}
+          color={"black"}
+        >
           t/C02e
         </Text>
       </Flex>
 
       <Button
         h={"100%"}
-        w={"19%"}
+        padding="0"
+        w={{ lg: "19%" }}
         borderLeft={"1px solid black"}
         borderRadius={0}
         bg={"transparent"}

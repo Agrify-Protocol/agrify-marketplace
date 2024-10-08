@@ -23,11 +23,12 @@ const FourColumnTableRow = ({
 
   return (
     <Grid
-      gridTemplateColumns={"2fr 1fr 1fr 1fr"}
+      gridTemplateColumns={{ lg: "2fr 1fr 1fr 1fr" }}
       mb={"1.5rem"}
-      py={"1.25rem"}
+      py={{ lg: "1.25rem" }}
       alignItems={"center"}
       onClick={handleClick}
+      gap={{ base: "50px", lg: "0px" }}
     >
       <Text fontWeight={450} color={"black"} pl={"1.25rem"}>
         {transaction.purchaseType == "invoice"
@@ -42,11 +43,20 @@ const FourColumnTableRow = ({
         p={"0.5rem 1rem"}
         borderRadius={"1.89rem"}
         fontSize={"0.875rem"}
+        display={{ base: "none", lg: "block" }}
       >
         {transaction.status}
       </Text>
-      <Text color={"black"}>{transaction.tonnes}</Text>
-      <Text color={"black"}>{readableDate(String(transaction.createdAt))}</Text>
+      <Text color={"black"} display={{ base: "none", lg: "block" }}>
+        {transaction.tonnes}
+      </Text>
+      <Text
+        color={"black"}
+        display={{ base: "none", lg: "block" }}
+        style={{ textWrap: "nowrap" }}
+      >
+        {readableDate(String(transaction.createdAt))}
+      </Text>
     </Grid>
   );
 };

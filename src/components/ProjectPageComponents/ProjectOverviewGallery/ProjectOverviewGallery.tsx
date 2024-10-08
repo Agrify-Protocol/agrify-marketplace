@@ -17,7 +17,7 @@ const ProjectOverviewGallery = () => {
         Gallery
       </Text>
       <Grid
-        gap={"2.44rem"}
+        gap={{ base: "13px", lg: "2.44rem" }}
         gridTemplateColumns={"repeat(auto-fill, minmax(17.5rem, 1fr))"}
         mt={"1.5rem"}
       >

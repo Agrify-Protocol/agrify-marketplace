@@ -88,7 +88,7 @@ const Reset = () => {
               )
             );
             setIsLoading(false);
-            router.push("/login");
+            router.push("/auth/login");
           });
         } else {
           toast(passwordToast);
@@ -106,7 +106,7 @@ const Reset = () => {
 
   return (
     <Flex minH={"100vh"} alignItems={"center"} justifyContent={"center"}>
-      <Box w={"34.875rem"}>
+      <Box w={{ lg: "34.875rem" }} px={{ base: "28px", lg: 0 }}>
         <AuthPageHeading
           main_heading="Reset Password"
           sub_heading="Please enter the verification code sent to your mail."

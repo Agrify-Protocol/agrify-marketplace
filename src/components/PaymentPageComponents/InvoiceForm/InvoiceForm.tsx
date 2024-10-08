@@ -21,11 +21,11 @@ const InvoiceForm = () => {
   };
 
   const isPhoneValid = useMemo(() => {
-    return  validatePhoneNumber(invoiceData.phone_number);
+    return validatePhoneNumber(invoiceData.phone_number);
   }, [invoiceData.phone_number]);
 
   return (
-    <Box w={"34.875rem"} mx={"auto"} my={"8.5rem"}>
+    <Box w={{ lg: "34.875rem" }} mx={"auto"} my={"8.5rem"}>
       <Box>
         <Text fontSize={"1.5rem"} fontWeight={500} color={"main_black_1"}>
           Generate Invoice
@@ -53,7 +53,7 @@ const InvoiceForm = () => {
             borderRadius={"1rem"}
             placeholder="Phone Number"
             borderColor={
-              !isPhoneValid && invoiceData.phone_number !== ''
+              !isPhoneValid && invoiceData.phone_number !== ""
                 ? "red"
                 : "gray_3"
             }
@@ -61,8 +61,13 @@ const InvoiceForm = () => {
             type="text"
             onChange={(e) => updateInvoiceData("phone_number", e.target.value)}
           />
-          {!isPhoneValid && invoiceData.phone_number !== ''  ? (
-            <Text color="red" fontSize="12px" position="absolute" marginTop="-15px">
+          {!isPhoneValid && invoiceData.phone_number !== "" ? (
+            <Text
+              color="red"
+              fontSize="12px"
+              position="absolute"
+              marginTop="-15px"
+            >
               Phone number must be valid
             </Text>
           ) : null}

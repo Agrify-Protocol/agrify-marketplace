@@ -23,7 +23,7 @@ const ContentParent = () => {
   };
   return (
     <Box
-      p={"2.814rem 2.893rem"}
+      p={{ base: "27px 10px", lg: "2.814rem 2.893rem" }}
       bgColor={"white"}
       borderRadius={"0.963rem"}
       my={"1.5rem"}

@@ -29,9 +29,9 @@ const FundedTable = () => {
         color={"rgba(0,0,0,0.4)"}
       >
         <Text>Name</Text>
-        <Text>Payment</Text>
-        <Text>Location</Text>
-        <Text>Start Date</Text>
+        <Text display={{ base: "none", lg: "block" }}>Payment</Text>
+        <Text display={{ base: "none", lg: "block" }}>Location</Text>
+        <Text display={{ base: "none", lg: "block" }}>Start Date</Text>
       </Grid>
 
       <>

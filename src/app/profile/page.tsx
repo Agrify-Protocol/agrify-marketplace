@@ -7,7 +7,7 @@ import React from "react";
 const Profile = () => {
   return (
     <ProfileContextProvider>
-      <Box p={"7.5rem 2.75rem"}>
+      <Box p={{ base: "40px 24px", lg: "7.5rem 2.75rem" }}>
         <ProfilePageHeading />
         <ProfilePageBody />
       </Box>

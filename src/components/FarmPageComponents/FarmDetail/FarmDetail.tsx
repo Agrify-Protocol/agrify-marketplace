@@ -6,15 +6,19 @@ import Image from "next/image";
 const FarmDetail = ({ detail }: FarmDetailProps) => {
   return (
     <Box
-      pl={"1rem"}
-      border={"1px solid transparent"}
+      pl={{ lg: "1rem" }}
+      px={{ base: "16px", lg: 0 }}
+      border={{ base: "1px solid transparent", lg: "none" }}
+      display="flex"
+      flexDir="column"
+      gap={{ base: "37px", lg: "3.125rem" }}
       borderLeftColor={"rgba(0, 0, 0, 0.05)"}
     >
-      <Text fontSize={"2rem"} color={"black"} mb={"3.125rem"}>
+      <Text fontSize={{ base: "24px", lg: "2rem" }} color={"black"}>
         {detail.name}
       </Text>
 
-      <Box mb={"3.125rem"}>
+      <Box>
         <Flex alignItems={"center"} gap={"0.5rem"}>
           Farm Score
         </Flex>
@@ -42,7 +46,7 @@ const FarmDetail = ({ detail }: FarmDetailProps) => {
 
       <Text color={"black"}>{detail.description}</Text>
 
-      <Box mt={"2.313rem"}>
+      <Box>
         <Text color={"black"} fontSize={"1.125rem"} mb={"1rem"}>
           Highlights
         </Text>

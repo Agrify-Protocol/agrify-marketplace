@@ -1,8 +1,7 @@
 "use client";
-import { Box, Flex, Grid, Text } from "@chakra-ui/react";
+import { Box, Grid, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Project from "../Project/Project";
-import { projects } from "../ProjectsContainer/constants";
 import FullGalleryImage from "../FullGalleryImage/FullGalleryImage";
 import { ViewedProject } from "./types";
 import { StaticImageData } from "next/image";
@@ -28,8 +27,6 @@ const ProjectGallery = () => {
   useScreenFreeze(viewedProject != null);
 
   const galleryItems = createFauxProjects(project!);
-
-  console.log("galleryItems", galleryItems);
 
   return (
     <Box>
