@@ -49,21 +49,21 @@ This documentation provides insight into how the platform communicates with the 
 ## 🗂️ Folder Structure
 
 The Agrify Marketplace codebase follows a well-structured and modular approach to ensure maintainability and clarity:<br /><br />
-<img width="364" alt="Screenshot 2024-10-13 at 18 00 37" src="https://github.com/user-attachments/assets/09b619e3-646e-481e-9e3a-e7a64e4e07c7"><br />
+<img width="352" alt="Screenshot 2024-10-13 at 18 35 50" src="https://github.com/user-attachments/assets/b10fc467-7a9a-47bd-9c81-73f49b1c60d3"><br />
 
 - 📁 `/public`: Contains all public-facing assets such as icons, the Google Analytics HTML snippet, and other static files.<br />
 - 📁 `/src`: The core of the app’s codebase, with the following structure:
 
   - 📁 `/src/app`: This folder contains all the routes following Next.js conventions. Each route folder contains:
     <br />
-    <img width="352" alt="Screenshot 2024-10-13 at 18 05 13" src="https://github.com/user-attachments/assets/4f70f0f9-0c00-44ff-8131-4fa0b86126c6"><br />
+    <img width="352" alt="Screenshot 2024-10-13 at 18 37 03" src="https://github.com/user-attachments/assets/9c20666f-e7c3-4b0b-a68e-dc13c2d0eb3b"><br />
     - `/src/app/page.tsx`: The main page component rendered when the user visits that route.
     - `/src/app/types.ts`: **(Optional)** Defines TypeScript types or interfaces for that route.
     - `/src/app/constant.ts`: **(Optional)** Exports constants used in the route. Not every folder has these files; they are only included when necessary.<br /> <br />
   - 📁 `/src/assets`: Stores all the assets used in the app, such as images and icons.<br />
   - 📁 `/src/components`: This folder contains components divided into two main categories:
-    - Page-specific Components:<br /> Components related to a specific route. For example, <br /><br />
-      <img width="352" alt="Screenshot 2024-10-13 at 18 18 48" src="https://github.com/user-attachments/assets/9df8e4bf-cc3c-4a49-a673-69c51ae4186d"><br /><br />
+    - Page-specific Components:<br /> Components related to a specific route. For example, <br />
+      <img width="352" alt="Screenshot 2024-10-13 at 18 18 48" src="https://github.com/user-attachments/assets/9df8e4bf-cc3c-4a49-a673-69c51ae4186d"><br />
       The `/auth` route has an `AuthPageComponents` folder containing components specific to the authentication pages.
     - Common Components:<br /> Found in `/src/components/common`, these are reusable components, such as the Navbar, that can be used across different routes.<br />
       <img width="352" alt="Screenshot 2024-10-13 at 18 20 28" src="https://github.com/user-attachments/assets/14d7bc81-dd5b-4b72-9e97-cc65fbdec2e3"><br /><br />
