@@ -64,6 +64,8 @@ const ProfileModal = ({ setShowModal }: ProfileModalProps) => {
           p={"0.625rem 1rem"}
           justifyContent={"normal"}
           mb={"0.5rem"}
+          bg="transparent"
+          _hover={{ bg: "transparent" }}
           onClick={closeModal}
         >
           Settings
@@ -72,6 +74,8 @@ const ProfileModal = ({ setShowModal }: ProfileModalProps) => {
           w={"100%"}
           p={"0.625rem 1rem"}
           justifyContent={"normal"}
+          bg="transparent"
+          _hover={{ bg: "transparent" }}
           onClick={closeModal}
         >
           Help Center
@@ -81,6 +85,8 @@ const ProfileModal = ({ setShowModal }: ProfileModalProps) => {
         w={"100%"}
         p={"0.625rem 1rem"}
         justifyContent={"normal"}
+        bg="transparent"
+        _hover={{ bg: "transparent" }}
         color={"#EC1B1B"}
         mt={"0.5rem"}
         onClick={handleSignout}

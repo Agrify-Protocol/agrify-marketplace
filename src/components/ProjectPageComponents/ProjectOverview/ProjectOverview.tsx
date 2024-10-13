@@ -5,10 +5,10 @@ import React from "react";
 import AvailableCarbon from "../AvailableCarbon/AvailableCarbon";
 import ProjectHighlights from "../ProjectHighlights/ProjectHighlights";
 import ProjectOverviewGallery from "../ProjectOverviewGallery/ProjectOverviewGallery";
-import ViewSectionButton from "@/components/Layout/ViewSectionButton/ViewSectionButton";
 import { projectSections } from "@/context/ProjectsPageContext/constants";
 import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import { getCreditPeriod } from "@/utils/getCreditPeriod";
+import ViewSectionButton from "@/components/Common/ViewSectionButton/ViewSectionButton";
 
 const ProjectOverview = () => {
   const { project } = useProjectPageContext();

@@ -2,14 +2,14 @@
 
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import FourColumnTableRow from "@/components/Layout/FourColumnTableRow/FourColumnTableRow";
-import ReceiptModal from "@/components/Layout/ReceiptModal/ReceiptModal";
 import { Transaction, TransactionModalType } from "./types";
 import { useScreenFreeze } from "@/hooks/useScreenFreeze";
-import InvoiceModal from "@/components/Layout/InvoiceModal/InvoiceModal";
 import { getPurchasesByProject } from "@/services/api/purchases";
 import { useParams } from "next/navigation";
-import Spinner from "@/components/Layout/Spinner/Spinner";
+import Spinner from "@/components/Common/Spinner/Spinner";
+import FourColumnTableRow from "@/components/Common/FourColumnTableRow/FourColumnTableRow";
+import ReceiptModal from "@/components/Common/ReceiptModal/ReceiptModal";
+import InvoiceModal from "@/components/Common/InvoiceModal/InvoiceModal";
 
 const Purchases = () => {
   const { id } = useParams();

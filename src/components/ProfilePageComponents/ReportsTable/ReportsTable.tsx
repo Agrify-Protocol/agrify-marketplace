@@ -7,8 +7,8 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { getReports } from "@/services/api/profile";
 import { getReportTime } from "@/utils/reportTime";
 import { readableDate } from "@/utils/parseData";
-import Spinner from "@/components/Layout/Spinner/Spinner";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
+import Spinner from "@/components/Common/Spinner/Spinner";
 
 const ReportsTable = () => {
   const { user } = useAuthContext();

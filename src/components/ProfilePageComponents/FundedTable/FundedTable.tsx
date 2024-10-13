@@ -2,10 +2,10 @@
 
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import FourColumnTableRow from "../../Layout/FourColumnTableRow/FourColumnTableRow";
 import { Transaction } from "@/components/ProjectPageComponents/Purchases/types";
 import { getAllPurchases } from "@/services/api/purchases";
-import Spinner from "@/components/Layout/Spinner/Spinner";
+import Spinner from "@/components/Common/Spinner/Spinner";
+import FourColumnTableRow from "@/components/Common/FourColumnTableRow/FourColumnTableRow";
 
 const FundedTable = () => {
   const [transactions, setTransations] = useState<Transaction[]>([]);

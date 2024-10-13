@@ -7,7 +7,7 @@ import OverviewBox from "../OverviewBox/OverviewBox";
 import { getOverview } from "@/services/api/profile";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { OverviewType } from "./types";
-import Spinner from "@/components/Layout/Spinner/Spinner";
+import Spinner from "@/components/Common/Spinner/Spinner";
 
 const OverviewHolder = () => {
   const { user } = useAuthContext();

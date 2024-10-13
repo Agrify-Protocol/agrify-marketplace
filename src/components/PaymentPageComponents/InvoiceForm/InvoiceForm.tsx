@@ -1,6 +1,6 @@
 "use client";
 
-import DatePicker from "@/components/Layout/DatePicker/DatePicker";
+import DatePicker from "@/components/Common/DatePicker/DatePicker";
 import { usePaymentContext } from "@/context/PaymentContext/PaymentContext";
 import useObjectCheck from "@/hooks/useObjectCheck";
 import { validatePhoneNumber } from "@/utils/validationSchema";

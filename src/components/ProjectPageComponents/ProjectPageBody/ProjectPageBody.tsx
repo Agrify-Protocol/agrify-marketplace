@@ -1,5 +1,5 @@
-import BackButton from "@/components/Layout/BackButton/BackButton";
-import PageLoader from "@/components/Layout/PageLoader/PageLoader";
+import BackButton from "@/components/Common/BackButton/BackButton";
+import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import ProjectIntro from "@/components/ProjectPageComponents/ProjectIntro/ProjectIntro";
 import SectionParent from "@/components/ProjectPageComponents/SectionParent/SectionParent";
 import SectionTabs from "@/components/ProjectPageComponents/SectionTabs/SectionTabs";

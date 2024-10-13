@@ -1,6 +1,6 @@
 "use client";
 
-import BackButton from "@/components/Layout/BackButton/BackButton";
+import BackButton from "@/components/Common/BackButton/BackButton";
 import OrderSummary from "@/components/PaymentPageComponents/OrderSummary/OrderSummary";
 import RightSide from "@/components/PaymentPageComponents/RightSide/RightSide";
 import { PaymentContextProvider } from "@/context/PaymentContext/PaymentContext";

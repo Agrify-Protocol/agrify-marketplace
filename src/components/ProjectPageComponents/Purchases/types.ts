@@ -1,4 +1,4 @@
-import { ReceiptModalProps } from "@/components/Layout/ReceiptModal/types";
+import { ReceiptModalProps } from "@/components/Common/ReceiptModal/types";
 
 export type TransactionModalType = {
   type: string;

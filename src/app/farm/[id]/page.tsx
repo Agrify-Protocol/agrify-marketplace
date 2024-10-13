@@ -2,13 +2,13 @@
 
 import FarmDetail from "@/components/FarmPageComponents/FarmDetail/FarmDetail";
 import Slider from "@/components/FarmPageComponents/Slider/Slider";
-import BackButton from "@/components/Layout/BackButton/BackButton";
 import { Box, Grid } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getFarm } from "@/services/api/farm";
 import { DetailedFarm } from "./types";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
-import PageLoader from "@/components/Layout/PageLoader/PageLoader";
+import PageLoader from "@/components/Common/PageLoader/PageLoader";
+import BackButton from "@/components/Common/BackButton/BackButton";
 
 const FarmPage = ({ params }: { params: { id: string } }) => {
   const { user } = useAuthContext();

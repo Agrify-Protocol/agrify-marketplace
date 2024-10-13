@@ -4,9 +4,9 @@ import { Box, Grid, Text } from "@chakra-ui/react";
 import React from "react";
 import Project from "../Project/Project";
 import { projectSections } from "@/context/ProjectsPageContext/constants";
-import ViewSectionButton from "@/components/Layout/ViewSectionButton/ViewSectionButton";
 import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import { createFauxProjects } from "@/utils/createFauxProjects";
+import ViewSectionButton from "@/components/Common/ViewSectionButton/ViewSectionButton";
 
 const ProjectOverviewGallery = () => {
   const { project } = useProjectPageContext();

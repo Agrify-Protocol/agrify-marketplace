@@ -3,8 +3,8 @@
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { Box, Heading, Text, Flex } from "@chakra-ui/react";
 import CategoryContainer from "@/components/HomePageComponents/CategoryContainer/CategoryContainer";
-import PageLoader from "@/components/Layout/PageLoader/PageLoader";
 import Stickers from "@/components/HomePageComponents/Stickers/Stickers";
+import PageLoader from "@/components/Common/PageLoader/PageLoader";
 
 export default function Home() {
   const { fetchingUser, user } = useAuthContext();
