@@ -6,7 +6,7 @@ import Category from "../Category/Category";
 import { getCategories } from "@/services/api/projects";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
-import PageLoader from "@/components/Layout/PageLoader/PageLoader";
+import PageLoader from "@/components/Common/PageLoader/PageLoader";
 
 const CategoryContainer = () => {
   const { user } = useAuthContext();

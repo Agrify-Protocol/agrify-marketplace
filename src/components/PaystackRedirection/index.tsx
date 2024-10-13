@@ -1,5 +1,4 @@
 import { Box, Flex, Text, Button } from "@chakra-ui/react";
-import BackButton from "../Layout/BackButton/BackButton";
 import check from "../../assets/icon-park-solid_check-one.svg";
 import error from "../../assets/error.svg";
 import Image from "next/image";
@@ -8,8 +7,9 @@ import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { getSingleProject } from "@/services/api/projects";
 import { getPurchasesByReference } from "@/services/api/purchases";
 import { useState, useEffect } from "react";
-import PageLoader from "../Layout/PageLoader/PageLoader";
 import { PaystackRedirectionProps } from "./types";
+import PageLoader from "../Common/PageLoader/PageLoader";
+import BackButton from "../Common/BackButton/BackButton";
 
 const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   const router = useRouter();
