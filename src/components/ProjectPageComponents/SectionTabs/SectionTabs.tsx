@@ -8,13 +8,11 @@ import { usePathname, useRouter } from "next/navigation";
 const SectionTabs = ({
   sections,
   currentSection,
-  id,
   type,
 }: SectionTabProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  console.log('currentSection', currentSection)
   return (
     <Box marginTop={{ base: "40px", lg: 0 }}>
       <Flex

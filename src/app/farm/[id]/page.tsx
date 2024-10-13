@@ -5,7 +5,6 @@ import Slider from "@/components/FarmPageComponents/Slider/Slider";
 import BackButton from "@/components/Layout/BackButton/BackButton";
 import { Box, Grid } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { farm_detail } from "./constants";
 import { getFarm } from "@/services/api/farm";
 import { DetailedFarm } from "./types";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";

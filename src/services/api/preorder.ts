@@ -1,11 +1,5 @@
 import { preorderInstance } from "../axios/instances";
-
-export type PreorderPayload = {
-  name: string;
-  phoneNumber: string;
-  amount: number;
-  address: string;
-};
+import { PreorderPayload } from "./types";
 
 export const createPreorder = async (id: string, data: PreorderPayload) => {
   try {

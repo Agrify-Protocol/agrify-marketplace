@@ -1,5 +1,4 @@
 import { Project } from "@/context/GlobalContext/types";
-import { SingleProjectResponse } from "@/context/ProjectsPageContext/types";
 import { SingleProject } from "@/context/ProjectsPageContext/types_2";
 
 export const createFauxProjects = (project: SingleProject) => {

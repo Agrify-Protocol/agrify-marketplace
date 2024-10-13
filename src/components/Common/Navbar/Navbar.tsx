@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, BoxProps, Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
 import logo from "../../../assets/agrify_logo.svg";
 import profile_pic from "../../../assets/agrify_pfp.svg";
@@ -10,19 +10,57 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import ProfileModal from "../../Layout/ProfileModal/ProfileModal";
 import { useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
+interface NavButtonsProps extends BoxProps {
+  route: AppRouterInstance;
+  pathName: string;
+}
+
+const NavButtons = ({ route, pathName, ...rest }: NavButtonsProps) => {
+  return (
+    <Box {...rest}>
+      {[
+        {
+          title: "Projects",
+          link: "/projects",
+          base: ["/projects", "/farm", "/payment"],
+        },
+        {
+          title: "My Profile",
+          link: "/profile?id=overview",
+          base: ["/profile"],
+        },
+      ].map((item) => (
+        <Box
+          as="button"
+          key={item.link}
+          onClick={() => route.push(item.link)}
+          background={
+            item.base.some((base) => pathName.includes(base))
+              ? "#EEEEEE"
+              : "transparent"
+          }
+          borderRadius="1.905rem"
+          padding="5.71px 11.43px 5.71px 11.43px"
+          transition="all 0.25s ease-in-out"
+          fontWeight="450"
+          textColor={
+            item.base.some((base) => pathName.includes(base))
+              ? "black"
+              : "#A6A6A6"
+          }
+        >
+          {item.title}
+        </Box>
+      ))}
+    </Box>
+  );
+};
 
 const Navbar = () => {
   const pathName = usePathname();
   const route = useRouter();
-
-  const baseRoutes = [
-    "/category",
-    "/farm",
-    "/profile",
-    "/project",
-    "/purchase",
-    "/projects",
-  ];
 
   const isAuthPage = pathName.startsWith("/auth");
   const [showModal, setShowModal] = useState(false);
@@ -48,31 +86,11 @@ const Navbar = () => {
         <Link href={"/"}>
           <Image src={logo} alt="" />
         </Link>
-        <Box display={{ base: "none", lg: "block" }}>
-          {[
-            { title: "Projects", link: "/projects", base: "/projects" },
-            {
-              title: "My Profile",
-              link: "/profile?id=overview",
-              base: "/profile",
-            },
-          ].map((item) => (
-            <Button
-              key={item.link}
-              onClick={() => route.push(item.link)}
-              background={
-                pathName.includes(item.base) ? "#EEEEEE" : "transparent"
-              }
-              borderRadius="1.905rem"
-              padding="5.71px 11.43px 5.71px 11.43px"
-              transition="all 0.25s ease-in-out"
-              fontWeight="450"
-              textColor={pathName.includes(item.base) ? "black" : "#A6A6A6"}
-            >
-              {item.title}
-            </Button>
-          ))}
-        </Box>
+        <NavButtons
+          route={route}
+          pathName={pathName}
+          display={{ base: "none", lg: "block" }}
+        />
         <Flex
           gap={"0.5rem"}
           alignItems={"center"}
@@ -87,31 +105,11 @@ const Navbar = () => {
         </Flex>
         {showModal && <ProfileModal setShowModal={setShowModal} />}
       </Box>
-      <Box display={{ base: "block", lg: "none" }}>
-        {[
-          { title: "Projects", link: "/projects", base: "/projects" },
-          {
-            title: "My Profile",
-            link: "/profile?id=overview",
-            base: "/profile",
-          },
-        ].map((item) => (
-          <Button
-            key={item.link}
-            onClick={() => route.push(item.link)}
-            background={
-              pathName.includes(item.base) ? "#EEEEEE" : "transparent"
-            }
-            borderRadius="1.905rem"
-            padding="5.71px 11.43px 5.71px 11.43px"
-            transition="all 0.25s ease-in-out"
-            fontWeight="450"
-            textColor={pathName.includes(item.base) ? "black" : "#A6A6A6"}
-          >
-            {item.title}
-          </Button>
-        ))}
-      </Box>
+      <NavButtons
+        route={route}
+        pathName={pathName}
+        display={{ base: "block", lg: "none" }}
+      />
     </Box>
   );
 };

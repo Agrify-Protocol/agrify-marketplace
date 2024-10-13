@@ -6,9 +6,10 @@ import InvoiceFooter from "../InvoiceFooter/InvoiceFooter";
 import { InvoiceProps } from "./types";
 import { Inter_Display } from "@/fonts";
 import { useRouter } from "next/navigation";
-import { createInvoice, InvoicePayloadType } from "@/services/api/invoice";
+import { createInvoice } from "@/services/api/invoice";
 import { removeCommas } from "@/utils/removeCommas";
 import { ToastData } from "@/utils/classes";
+import { InvoicePayloadType } from "@/services/api/types";
 
 const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
   const toast = useToast();

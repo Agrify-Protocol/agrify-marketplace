@@ -1,4 +1,4 @@
-import { SingleInvoiceResponse } from "@/services/api/invoice";
+import { SingleInvoiceResponse } from "@/services/api/types";
 import { readableDate } from "./parseData";
 import { InvoiceData } from "@/components/PaymentPageComponents/Invoice/types";
 

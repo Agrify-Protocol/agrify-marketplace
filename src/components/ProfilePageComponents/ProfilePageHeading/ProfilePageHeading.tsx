@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useScreenFreeze } from "@/hooks/useScreenFreeze";
 
 const ProfilePageHeading = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, _setShowModal] = useState(false);
   useScreenFreeze(showModal);
   return (
     <Flex w={"100%"} alignItems={"start"} justifyContent={"space-between"}>

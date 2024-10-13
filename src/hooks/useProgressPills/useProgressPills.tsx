@@ -1,19 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useState } from "react";
-
-type UseProgressPillsType = {
-  pillContainerRef: React.MutableRefObject<HTMLDivElement | null>;
-  available_carbon: number;
-  total_carbon: number;
-  pillWidthInPx: number;
-  gapBetweenPillsInPx: number;
-};
-
-type PillsData = {
-  id: number;
-  isFilled: boolean;
-}[];
+import { PillsData, UseProgressPillsType } from "./types";
 
 const useProgressPills = ({
   pillContainerRef,
@@ -29,7 +17,7 @@ const useProgressPills = ({
       const container = pillContainerRef.current;
       const containerClientWidth = container.clientWidth;
       const pillSpace = pillWidthInPx + gapBetweenPillsInPx;
-      
+
       const pillCount = Math.max(
         Math.floor(containerClientWidth / pillSpace),
         1
@@ -64,7 +52,13 @@ const useProgressPills = ({
     return () => {
       window.removeEventListener("resize", calculatePills);
     };
-  }, [pillContainerRef, available_carbon, total_carbon, pillWidthInPx, gapBetweenPillsInPx]);
+  }, [
+    pillContainerRef,
+    available_carbon,
+    total_carbon,
+    pillWidthInPx,
+    gapBetweenPillsInPx,
+  ]);
 
   return pills;
 };
