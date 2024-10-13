@@ -5,10 +5,10 @@ import React from "react";
 import AvailableCarbon from "../AvailableCarbon/AvailableCarbon";
 import ProjectHighlights from "../ProjectHighlights/ProjectHighlights";
 import ProjectOverviewGallery from "../ProjectOverviewGallery/ProjectOverviewGallery";
-import ViewSectionButton from "@/components/Layout/ViewSectionButton/ViewSectionButton";
 import { projectSections } from "@/context/ProjectsPageContext/constants";
 import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import { getCreditPeriod } from "@/utils/getCreditPeriod";
+import ViewSectionButton from "@/components/Common/ViewSectionButton/ViewSectionButton";
 
 const ProjectOverview = () => {
   const { project } = useProjectPageContext();
@@ -25,8 +25,8 @@ const ProjectOverview = () => {
   };
 
   return (
-    <Flex>
-      <Box width={"23%"} py={"1.494rem"}>
+    <Flex flexDir={{ base: "column", lg: "row" }}>
+      <Box width={{ lg: "23%" }} py={"1.494rem"}>
         <Text
           color={"black"}
           fontWeight={450}
@@ -35,28 +35,28 @@ const ProjectOverview = () => {
         >
           About
         </Text>
-        <Text p={"0.714rem"} color={"rgba(15, 15, 15, 0.7)"}>{project?.about}</Text>
+        <Text p={"0.714rem"} color={"rgba(15, 15, 15, 0.7)"}>
+          {project?.about}
+        </Text>
         <ViewSectionButton
           text="View Project details"
           section={projectSections[1]}
         />
       </Box>
       <Box
-        width={"77%"}
+        width={{ lg: "77%" }}
         py={"1.494rem"}
-        px={"1.25rem"}
+        px={{ lg: "1.25rem" }}
         pr={0}
-        borderLeft={"1px"}
-        borderLeftStyle={"dashed"}
-        borderLeftColor={"rgba(0,0,0,0.1)"}
+        borderLeft={{ lg: "1px dashed rgba(0,0,0,0.1)" }}
       >
         <Text
           color={"black"}
           fontWeight={450}
           fontSize={"1.125rem"}
-          p={"0.714rem"}
+          p={{ lg: "0.714rem" }}
           pl={"unset"}
-          mb={"1.5rem"}
+          mb={{ base: "20px", lg: "1.5rem" }}
         >
           Key Insights
         </Text>

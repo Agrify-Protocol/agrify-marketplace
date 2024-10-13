@@ -6,7 +6,6 @@ import { AuthPageSubmitBtnProps } from "./types";
 import { spinAnimation } from "./helpers";
 
 const AuthPageSubmitButton = ({
-  detailsFilled,
   isLoading,
   text,
   onClickFunc,

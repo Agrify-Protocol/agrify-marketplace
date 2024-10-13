@@ -7,7 +7,7 @@ import OverviewBox from "../OverviewBox/OverviewBox";
 import { getOverview } from "@/services/api/profile";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { OverviewType } from "./types";
-import Spinner from "@/components/Layout/Spinner/Spinner";
+import Spinner from "@/components/Common/Spinner/Spinner";
 
 const OverviewHolder = () => {
   const { user } = useAuthContext();
@@ -28,14 +28,14 @@ const OverviewHolder = () => {
 
   return (
     <Grid
-      gridTemplateColumns={"repeat(2, 1fr)"}
-      gap={"5.956rem"}
-      rowGap={"2.888rem"}
+      gridTemplateColumns={{ lg: "repeat(2, 1fr)" }}
+      gap={{ base: "13px", lg: "5.956rem" }}
+      rowGap={{ base: "13px", lg: "2.888rem" }}
     >
       {isLoading && !overview ? (
         <Flex
           h={"fit-content"}
-          minW={"calc(100vw - (2.75rem * 2))"}
+          minW={{ lg: "calc(100vw - (2.75rem * 2))" }}
           alignItems={"center"}
           justifyContent={"center"}
         >

@@ -11,11 +11,14 @@ const OrderSummary = () => {
   const { orderedAmount, orderTotal, subTotal, chosenProject } =
     useGlobalContext();
   const router = useRouter();
+
   useEffect(() => {
     if (!chosenProject) {
-      router.push("/");
+      router.push("/projects");
     }
   }, [chosenProject]);
+
+  console.log('chosenProject', chosenProject)
 
   return (
     <Box>
@@ -49,12 +52,12 @@ const OrderSummary = () => {
           <Text as={"span"} color={"gray_1"}>
             Qty
           </Text>
-          {`${+orderedAmount} ton${+orderedAmount > 1 ? 'nes' : ''}`}
+          {`${+orderedAmount} ton${+orderedAmount > 1 ? "nes" : ""}`}
         </Text>
       </Box>
 
-      <Box mt={"3rem"} mb={"15.875rem"}>
-        <Box w={"50%"} ml={"auto"}>
+      <Box mt={"3rem"} mb={{lg: "15.875rem"}}>
+        <Box w={{ base: "70%", lg: "50%" }} ml={"auto"}>
           <Flex
             alignItems={"center"}
             justifyContent={"space-between"}
@@ -92,7 +95,11 @@ const OrderSummary = () => {
         </Box>
       </Box>
 
-      <Flex gap={"1rem"} alignItems={"center"}>
+      <Flex
+        gap={"1rem"}
+        alignItems={"center"}
+        display={{ base: "none", lg: "flex" }}
+      >
         <Link href="/terms">
           <Text fontSize={"0.75rem"} fontWeight={500}>
             Terms

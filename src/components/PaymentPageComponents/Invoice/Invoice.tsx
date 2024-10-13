@@ -6,9 +6,10 @@ import InvoiceFooter from "../InvoiceFooter/InvoiceFooter";
 import { InvoiceProps } from "./types";
 import { Inter_Display } from "@/fonts";
 import { useRouter } from "next/navigation";
-import { createInvoice, InvoicePayloadType } from "@/services/api/invoice";
+import { createInvoice } from "@/services/api/invoice";
 import { removeCommas } from "@/utils/removeCommas";
 import { ToastData } from "@/utils/classes";
+import { InvoicePayloadType } from "@/services/api/types";
 
 const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
   const toast = useToast();
@@ -18,7 +19,7 @@ const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
   return (
     <Box>
       <Box
-        w={"37.188rem"}
+        w={{lg: "37.188rem"}}
         p={"0.625rem"}
         py={"2.75rem"}
         mx={"auto"}
@@ -30,7 +31,7 @@ const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
       </Box>
       {!isCompleted && (
         <Button
-          w={"34.875rem"}
+          w={{lg: "34.875rem"}}
           h={"3.5rem"}
           bgColor={"agrify_green"}
           display={"block"}

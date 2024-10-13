@@ -8,85 +8,66 @@ import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import ProfileModal from "../../Layout/ProfileModal/ProfileModal";
+import { useRouter } from "next/navigation";
+import NavButtons from "./NavButtons";
+import ProfileModal from "../ProfileModal/ProfileModal";
 
 const Navbar = () => {
   const pathName = usePathname();
-
-  const baseRoutes = [
-    "/category",
-    "/farm",
-    "/profile",
-    "/project",
-    "/purchase",
-  ];
-
-  const isProfilePage = pathName.startsWith("/profile");
-  const isCurrentRouteValid =
-    baseRoutes.some((route) => pathName.startsWith(route)) || pathName === "/";
-
+  const route = useRouter();
+  const routesWithNav = ["/farm", "/profile", "/projects"];
+  const isAuthPage = pathName.startsWith("/auth");
   const [showModal, setShowModal] = useState(false);
-
-  if (!isCurrentRouteValid) {
-    return null;
-  }
 
   return (
     <Box
-      as="nav"
       bgColor={"white"}
-      h={"4.762rem"}
-      display={"flex"}
-      alignItems={"center"}
+      minH={"4.762rem"}
+      flexDir="column"
+      display={
+        isAuthPage || !routesWithNav.some((item) => pathName.includes(item))
+          ? "none"
+          : "flex"
+      }
       justifyContent={"space-between"}
-      px={"2.625rem"}
+      p={{ base: "25px", lg: "25px 2.625rem" }}
       position={"sticky"}
       top={0}
+      gap="25px"
       zIndex={10}
     >
-      <Link href={"/"}>
-        <Image src={logo} alt="" />
-      </Link>
-
-      <Flex gap={"1rem"} justifyContent={"center"} w={"calc(100%/3)"}>
-        <Link
-          href={"/"}
-          style={{
-            backgroundColor: !isProfilePage ? "#EEEEEE" : "transparent",
-            borderRadius: "1.905rem",
-            padding: "5.71px 11.43px 5.71px 11.43px",
-            transition: "all 0.25s ease-in-out",
-          }}
-        >
-          Projects
-        </Link>
-        <Link
-          href={"/profile?id=overview"}
-          style={{
-            backgroundColor: isProfilePage ? "#EEEEEE" : "transparent",
-            borderRadius: "1.905rem",
-            padding: "5.71px 11.43px 5.71px 11.43px",
-            transition: "all 0.25s ease-in-out",
-          }}
-        >
-          My Profile
-        </Link>
-      </Flex>
-
-      <Flex
-        gap={"0.5rem"}
+      <Box
+        display="flex"
         alignItems={"center"}
-        cursor={"pointer"}
-        className="profile_modal"
-        onClick={() => {
-          setShowModal(!showModal);
-        }}
+        justifyContent={"space-between"}
       >
-        <Image className="profile_modal" src={profile_pic} alt="" />
-        <ChevronDown className="profile_modal" />
-      </Flex>
-
-      {showModal && <ProfileModal setShowModal={setShowModal} />}
+        <Link href={"/"}>
+          <Image src={logo} alt="" />
+        </Link>
+        <NavButtons
+          route={route}
+          pathName={pathName}
+          display={{ base: "none", lg: "block" }}
+        />
+        <Flex
+          gap={"0.5rem"}
+          alignItems={"center"}
+          cursor={"pointer"}
+          className="profile_modal"
+          onClick={() => {
+            setShowModal(!showModal);
+          }}
+        >
+          <Image className="profile_modal" src={profile_pic} alt="" />
+          <ChevronDown className="profile_modal" />
+        </Flex>
+        {showModal && <ProfileModal setShowModal={setShowModal} />}
+      </Box>
+      <NavButtons
+        route={route}
+        pathName={pathName}
+        display={{ base: "block", lg: "none" }}
+      />
     </Box>
   );
 };

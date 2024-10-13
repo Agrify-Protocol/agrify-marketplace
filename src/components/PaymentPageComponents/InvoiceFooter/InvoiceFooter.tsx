@@ -6,7 +6,7 @@ import { IdTextProps } from "./types";
 
 const InvoiceFooter = () => {
   return (
-    <Box px={"1.25rem"}>
+    <Box px={"1.25rem"} display={{ base: "none", lg: "block" }}>
       <Image src={pfp} alt="" />
       <Grid
         gridTemplateColumns={"repeat(3, 1fr)"}

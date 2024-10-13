@@ -4,12 +4,13 @@ import { Box, Flex, Grid } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { ProjectTableRowProps } from "./types";
 import { generateRandomColorWithOpacity } from "@/utils/randomColors";
-import useProgressPills from "@/hooks/useProgressPills";
 import { useRouter } from "next/navigation";
+import useProgressPills from "@/hooks/useProgressPills/useProgressPills";
 
 const ProjectTableRow = ({
   project,
   total_carbon_credits,
+  type,
 }: ProjectTableRowProps) => {
   const router = useRouter();
   const { rgb, rgba } = generateRandomColorWithOpacity();
@@ -24,8 +25,8 @@ const ProjectTableRow = ({
 
   return (
     <Grid
-      p={"1rem 3rem"}
-      gridTemplateColumns={"repeat(4, 1fr)"}
+      p={{ base: "12px 0", lg: "1rem 3rem" }}
+      gridTemplateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
       border={"1px solid"}
       borderColor={"transparent"}
       borderBottomColor={"rgba(0, 0, 0, 0.03)"}
@@ -33,7 +34,7 @@ const ProjectTableRow = ({
       cursor={"pointer"}
       transition={"all 0.25s ease-in-out"}
       _hover={{ borderColor: "#0CC14C" }}
-      onClick={() => router.push(`/project/${project.projectID}?id=overview`)}
+      onClick={() => router.push(`/projects/category/${type}/${project.projectID}?id=overview`)}
     >
       <Box>
         <Flex gap={"0.5rem"} fontSize={"1.125rem"} fontWeight={450}>
@@ -55,7 +56,7 @@ const ProjectTableRow = ({
         </Flex>
       </Box>
 
-      <Box textAlign={"center"}>
+      <Box textAlign={"center"} display={{ base: "none", lg: "block" }}>
         <Box
           w={"fit-content"}
           mx={"auto"}
@@ -67,14 +68,17 @@ const ProjectTableRow = ({
         </Box>
       </Box>
 
-      <Box textAlign={"center"}>
+      <Box textAlign={"center"} display={{ base: "none", lg: "block" }}>
         <Box>{project.farms}</Box>
       </Box>
 
       <Box textAlign={"right"}>
-        <Flex alignItems={"center"} gap={"1rem"}>
-          <Box w={"50%"}>{project.totalTonnes.toLocaleString()}</Box>
+        <Flex alignItems={{ base: "end", lg: "center" }} gap={"1rem"}>
+          <Box w={{ base: "100%", lg: "50%" }}>
+            {project.totalTonnes.toLocaleString()}
+          </Box>
           <Flex
+            display={{ base: "none", lg: "flex" }}
             w={"50%"}
             ref={pillRef}
             gap={"0.243rem"}

@@ -12,21 +12,21 @@ export async function preserveSession(
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60 * 24 * 7, // one week
-    path: "/",
+    // path: "/auth/login",
   });
 
   cookies().set("carbon_session_access_token", accessToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60, // 60 minutes
-    path: "/",
+    // path: "/auth/login",
   });
 
   cookies().set("carbon_session_refresh_token", refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60 * 24 * 7, // one week
-    path: "/",
+    // path: "/auth/login",
   });
 }
 

@@ -2,14 +2,13 @@
 
 import FarmDetail from "@/components/FarmPageComponents/FarmDetail/FarmDetail";
 import Slider from "@/components/FarmPageComponents/Slider/Slider";
-import BackButton from "@/components/Layout/BackButton/BackButton";
 import { Box, Grid } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { farm_detail } from "./constants";
 import { getFarm } from "@/services/api/farm";
 import { DetailedFarm } from "./types";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
-import PageLoader from "@/components/Layout/PageLoader/PageLoader";
+import PageLoader from "@/components/Common/PageLoader/PageLoader";
+import BackButton from "@/components/Common/BackButton/BackButton";
 
 const FarmPage = ({ params }: { params: { id: string } }) => {
   const { user } = useAuthContext();
@@ -28,9 +27,16 @@ const FarmPage = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <Box my={"4rem"} px={"2.625rem"}>
+    <Box
+      my={{ base: "25px", lg: "4rem" }}
+      px={{ base: "25px", lg: "2.625rem" }}
+    >
       <BackButton />
-      <Grid mt={"3rem"} gridTemplateColumns={"3fr 2fr"} gap={"6.5rem"}>
+      <Grid
+        mt={{ base: "24px", lg: "3rem" }}
+        gridTemplateColumns={{ lg: "3fr 2fr" }}
+        gap={{ base: "48px", lg: "6.5rem" }}
+      >
         <Slider images={farm?.farmImages} />
         <FarmDetail detail={farm} />
       </Grid>

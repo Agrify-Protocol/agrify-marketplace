@@ -6,7 +6,7 @@ import Category from "../Category/Category";
 import { getCategories } from "@/services/api/projects";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
-import PageLoader from "@/components/Layout/PageLoader/PageLoader";
+import PageLoader from "@/components/Common/PageLoader/PageLoader";
 
 const CategoryContainer = () => {
   const { user } = useAuthContext();
@@ -24,12 +24,12 @@ const CategoryContainer = () => {
       });
     }
   }, [user]);
-  
+
   return (
     <Grid
-      gap={"4.75rem"}
+      gap={{ base: "48px", lg: "4.75rem" }}
       mt={"3.5rem"}
-      gridTemplateColumns={"repeat(auto-fill, minmax(23.063rem, 1fr))"}
+      gridTemplateColumns={{ md: "repeat(auto-fill, minmax(23.063rem, 1fr))" }}
     >
       {isLoading ? (
         <PageLoader />

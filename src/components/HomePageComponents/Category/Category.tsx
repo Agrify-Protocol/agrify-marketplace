@@ -2,7 +2,7 @@
 
 import React from "react";
 import { CategoryProps } from "./types";
-import { Box, Flex, Grid, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import leaf from "../../../assets/leaf.svg";
 import { useRouter } from "next/navigation";
@@ -13,7 +13,7 @@ const Category = ({ category }: CategoryProps) => {
 
   return (
     <Flex
-      h={"20.75rem"}
+      h={{ base: "307.99px", lg: "20.75rem" }}
       bgColor={"white"}
       borderRadius={"0.75rem"}
       flexDir={"column"}
@@ -21,20 +21,28 @@ const Category = ({ category }: CategoryProps) => {
       justifyContent={"center"}
       gap={"0.75rem"}
       cursor={"pointer"}
-      onClick={() => router.push(`/category/${category.category}`)}
+      onClick={() => router.push(`/projects/category/${category.category}`)}
       transition="ease-in-out"
       transitionDuration=".1s"
       _hover={{ border: "1px solid #0CC14C" }}
     >
       <Box
         shadow={"0 3px 10px rgba(0,0,0,0.15)"}
-        py={"2rem"}
-        px={"1.75rem"}
+        w="111.32px"
+        h="111.32px"
+        display="flex"
+        justifyContent="center"
+        alignContent="center"
         borderRadius={"0.75rem"}
       >
         <Image src={categoryImages[category.category]} alt="" />
       </Box>
-      <Text fontSize={"1.125rem"} color={"black"} mt={"calc(2rem - 0.75rem)"} textTransform="capitalize">
+      <Text
+        fontSize={"1.125rem"}
+        color={"black"}
+        mt={"calc(2rem - 0.75rem)"}
+        textTransform="capitalize"
+      >
         {category.category}
       </Text>
       <Flex

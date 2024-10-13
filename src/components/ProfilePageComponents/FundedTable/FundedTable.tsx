@@ -2,10 +2,10 @@
 
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import FourColumnTableRow from "../../Layout/FourColumnTableRow/FourColumnTableRow";
 import { Transaction } from "@/components/ProjectPageComponents/Purchases/types";
 import { getAllPurchases } from "@/services/api/purchases";
-import Spinner from "@/components/Layout/Spinner/Spinner";
+import Spinner from "@/components/Common/Spinner/Spinner";
+import FourColumnTableRow from "@/components/Common/FourColumnTableRow/FourColumnTableRow";
 
 const FundedTable = () => {
   const [transactions, setTransations] = useState<Transaction[]>([]);
@@ -29,13 +29,13 @@ const FundedTable = () => {
         color={"rgba(0,0,0,0.4)"}
       >
         <Text>Name</Text>
-        <Text>Payment</Text>
-        <Text>Location</Text>
-        <Text>Start Date</Text>
+        <Text display={{ base: "none", lg: "block" }}>Payment</Text>
+        <Text display={{ base: "none", lg: "block" }}>Location</Text>
+        <Text display={{ base: "none", lg: "block" }}>Start Date</Text>
       </Grid>
 
       <>
-        {isLoading && (
+        {isLoading ? (
           <Flex
             h={"fit-content"}
             w={"100%"}
@@ -44,21 +44,22 @@ const FundedTable = () => {
           >
             <Spinner />
           </Flex>
-        )}
-
-        {!isLoading && transactions?.length < 1 && (
+        ) : transactions?.length < 1 ? (
           <Text textAlign={"center"} color={"black"}>
             No purchases found for this project
           </Text>
+        ) : (
+          <>
+            {transactions?.map((transaction) => {
+              return (
+                <FourColumnTableRow
+                  key={transaction._id}
+                  transaction={transaction}
+                />
+              );
+            })}
+          </>
         )}
-        {transactions.map((transaction) => {
-          return (
-            <FourColumnTableRow
-              key={transaction._id}
-              transaction={transaction}
-            />
-          );
-        })}
       </>
     </Box>
   );

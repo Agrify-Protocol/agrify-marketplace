@@ -1,9 +1,5 @@
 import { paymentInstance } from "../axios/instances";
-
-export type PaymentPayload = {
-  projectId: string;
-  tonnes: number;
-};
+import { PaymentPayload } from "./types";
 
 export const payForCarbon = async (payload: PaymentPayload) => {
   try {

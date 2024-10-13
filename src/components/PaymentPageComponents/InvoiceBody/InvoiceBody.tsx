@@ -2,13 +2,12 @@
 
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import React from "react";
-import { InvoiceBodyProps } from "./types";
 import { InvoiceProps } from "../Invoice/types";
 
 const InvoiceBody = ({ invoice_data }: InvoiceProps) => {
   return (
     <Box px={"1.25rem"}>
-      <Box mb={"12.813rem"}>
+      <Box mb={{ base: "24px", lg: "12.813rem" }}>
         <Grid gridTemplateColumns={"1.5fr 1fr 1fr 1fr"}>
           <Text color={"main_black_1"} fontSize={"0.813rem"} fontWeight={700}>
             Project
@@ -26,7 +25,7 @@ const InvoiceBody = ({ invoice_data }: InvoiceProps) => {
 
         <Grid
           gridTemplateColumns={"1.5fr 1fr 1fr 1fr"}
-          mt={"1.875rem"}
+          mt={{ lg: "1.875rem" }}
           fontSize={"0.688rem"}
         >
           <Text color={"main_black_1"}>{invoice_data?.projectName}</Text>
@@ -39,7 +38,11 @@ const InvoiceBody = ({ invoice_data }: InvoiceProps) => {
           </Text>
         </Grid>
 
-        <Flex mt={"12.813rem"} mb={"2.5rem"} alignItems={"center"}>
+        <Flex
+          mt={{ base: "80px", lg: "12.813rem" }}
+          mb={{ base: "80px", lg: "2.5rem" }}
+          alignItems={"center"}
+        >
           <Box
             h={"1px"}
             w={"calc(100% - 15.188rem)"}

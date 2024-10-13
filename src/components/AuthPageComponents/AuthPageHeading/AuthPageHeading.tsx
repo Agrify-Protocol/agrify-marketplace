@@ -12,14 +12,18 @@ const AuthPageHeading = ({
 }: AuthPageHeadingProps) => {
   return (
     <Box fontFamily={Inter_Display.style.fontFamily} textAlign={"center"}>
-      <Link href="/login" style={{ width: "fit-content" }}>
-        <Image src={agrify_icon} alt="" style={{ width: "fit-content", margin: "auto" }} />
+      <Link href="/auth/login" style={{ width: "fit-content" }}>
+        <Image
+          src={agrify_icon}
+          alt="agrify logo"
+          style={{ width: "fit-content", margin: "auto" }}
+        />
       </Link>
       <Text
         fontWeight={500}
-        fontSize={"2rem"}
-        lineHeight={"38.4px"}
-        mt={"3rem"}
+        fontSize={{ base: "24px", lg: "2rem" }}
+        lineHeight={{ lg: "38.4px" }}
+        mt={{ base: "48px", lg: "3rem" }}
         color={"main_black_1"}
       >
         {main_heading}

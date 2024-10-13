@@ -13,8 +13,10 @@ const CategoryBanner = ({
     <Flex
       bgColor={"white"}
       borderRadius={"1.5rem"}
-      p={"3.313rem 2.938rem"}
-      alignItems={"center"}
+      gap={{ base: "51px", lg: 0 }}
+      p={{ base: "59px 21px", lg: "3.313rem 2.938rem" }}
+      alignItems={{ lg: "center" }}
+      flexDir={{ base: "column", lg: "row" }}
       justifyContent={"space-between"}
     >
       <Box>
@@ -35,8 +37,13 @@ const CategoryBanner = ({
           Total available credits: {carbon_credits.toLocaleString()} tco2e
         </Flex>
       </Box>
-
-      <Image src={image} alt="" width={120} height={120} />
+      <Box width={120} height={120} margin={{ base: "0 auto", lg: "0" }}>
+        <Image
+          src={image}
+          alt={`${name} icon`}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </Box>
     </Flex>
   );
 };

@@ -10,7 +10,7 @@ const PurchaseHeading = () => {
   const router = useRouter();
   useEffect(() => {
     if (!chosenProject) {
-      router.push("/");
+      router.push("/projects");
     }
   }, [chosenProject]);
   return (
@@ -22,7 +22,11 @@ const PurchaseHeading = () => {
       >
         You’re Purchasing
       </Text>
-      <Text fontSize={"2rem"} color={"black"}>
+      <Text
+        fontSize={{ base: "20px", lg: "2rem" }}
+        fontWeight={{ base: "500", lg: "400" }}
+        color={"black"}
+      >
         {chosenProject?.title}
       </Text>
     </Box>

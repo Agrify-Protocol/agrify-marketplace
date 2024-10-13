@@ -4,9 +4,33 @@ import { Box, Button, Flex } from "@chakra-ui/react";
 import left from "../../../assets/arrow_left.svg";
 import right from "../../../assets/arrow_right.svg";
 import Image from "next/image";
-import { SliderProps } from "./types";
+import { NavigateBtnProps, SliderProps } from "./types";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+
+
+const NavigateBtn = ({
+  onClick,
+  isDisabled,
+  src,
+  ...rest
+}: NavigateBtnProps) => {
+  return (
+    <Button
+      w={"2.5rem"}
+      h={"2.5rem"}
+      boxSizing="border-box"
+      borderRadius={"50%"}
+      bgColor={"white"}
+      p={"0.6875rem"}
+      onClick={onClick}
+      isDisabled={isDisabled}
+      {...rest}
+    >
+      <Image src={src} alt="navigate button icon" />
+    </Button>
+  );
+};
 
 const Slider = ({ images }: SliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,23 +46,21 @@ const Slider = ({ images }: SliderProps) => {
   };
 
   return (
-    <Flex gap={"3.375rem"} alignItems={"center"}>
-      <Button
-        w={"2.5rem"}
-        h={"2.5rem"}
-        boxSizing="border-box"
-        borderRadius={"50%"}
-        bgColor={"white"}
-        p={"0.6875rem"}
+    <Flex
+      gap={{ base: "32px", lg: "3.375rem" }}
+      alignItems={"center"}
+      flexDir={{ base: "column", lg: "row" }}
+    >
+      <NavigateBtn
         onClick={handlePrevious}
         isDisabled={currentIndex === 0}
-      >
-        <Image src={left} alt="" />
-      </Button>
+        src={left}
+        display={{ base: "none", lg: "block" }}
+      />
 
       <Box
-        w={"37.56rem"}
-        h={"37.56rem"}
+        w={{ base: "100%", lg: "37.56rem" }}
+        h={{ base: "342px", lg: "37.56rem" }}
         borderRadius={"1.89rem"}
         position={"relative"}
         overflow={"hidden"}
@@ -51,22 +73,37 @@ const Slider = ({ images }: SliderProps) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Image src={images[currentIndex].image} alt="" fill />
+            <Image
+              src={images[currentIndex].image}
+              alt=""
+              fill
+              style={{ height: "100%", width: "100%", objectFit: "cover" }}
+            />
           </motion.div>
         </AnimatePresence>
       </Box>
 
-      <Button
-        w={"2.5rem"}
-        h={"2.5rem"}
-        borderRadius={"50%"}
-        bgColor={"white"}
-        p={"0.6875rem"}
+      <NavigateBtn
         onClick={handleNext}
         isDisabled={currentIndex === images.length - 1}
-      >
-        <Image src={right} alt="" />
-      </Button>
+        src={right}
+        display={{ base: "none", lg: "block" }}
+      />
+
+      <Box display={{ base: "flex", lg: "block" }} gap="16px">
+        <NavigateBtn
+          onClick={handlePrevious}
+          isDisabled={currentIndex === 0}
+          src={left}
+          display={{ base: "block", lg: "none" }}
+        />
+        <NavigateBtn
+          onClick={handleNext}
+          isDisabled={currentIndex === images.length - 1}
+          src={right}
+          display={{ base: "block", lg: "none" }}
+        />
+      </Box>
     </Flex>
   );
 };

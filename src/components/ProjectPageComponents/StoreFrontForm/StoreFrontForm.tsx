@@ -36,10 +36,10 @@ const StoreFrontForm = ({ setStep }: StoreFrontFormProps) => {
 
   return (
     <FormControl
-      mt={"3.502rem"}
+      mt={{ base: "34px", lg: "3.502rem" }}
       display={"grid"}
-      gridTemplateColumns={"repeat(2, 1fr)"}
-      gap={"2.5rem"}
+      gridTemplateColumns={{ lg: "repeat(2, 1fr)" }}
+      gap={{ base: "24px", lg: "2.5rem" }}
     >
       <CustomInput
         label="Contact Name"
