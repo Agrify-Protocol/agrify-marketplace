@@ -5,8 +5,9 @@ import React, { useState } from "react";
 import { OptionProps } from "./types";
 
 import { usePaymentContext } from "@/context/PaymentContext/PaymentContext";
-import { payForCarbon, PaymentPayload } from "@/services/api/payments";
+import { payForCarbon } from "@/services/api/payments";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
+import { PaymentPayload } from "@/services/api/types";
 
 const PaymentOption = () => {
   const { chosenProject, orderedAmount } = useGlobalContext();

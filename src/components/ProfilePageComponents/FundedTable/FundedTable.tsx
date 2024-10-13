@@ -35,7 +35,7 @@ const FundedTable = () => {
       </Grid>
 
       <>
-        {isLoading && (
+        {isLoading ? (
           <Flex
             h={"fit-content"}
             w={"100%"}
@@ -44,21 +44,22 @@ const FundedTable = () => {
           >
             <Spinner />
           </Flex>
-        )}
-
-        {!isLoading && transactions?.length < 1 && (
+        ) : transactions?.length < 1 ? (
           <Text textAlign={"center"} color={"black"}>
             No purchases found for this project
           </Text>
+        ) : (
+          <>
+            {transactions?.map((transaction) => {
+              return (
+                <FourColumnTableRow
+                  key={transaction._id}
+                  transaction={transaction}
+                />
+              );
+            })}
+          </>
         )}
-        {transactions.map((transaction) => {
-          return (
-            <FourColumnTableRow
-              key={transaction._id}
-              transaction={transaction}
-            />
-          );
-        })}
       </>
     </Box>
   );

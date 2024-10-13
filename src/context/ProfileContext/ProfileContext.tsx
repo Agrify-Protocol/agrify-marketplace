@@ -1,8 +1,7 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 import { ProfileContextProps, ProfileContextType } from "./types";
-import { profileSections } from "./constants";
 import { useSearchParams } from "next/navigation";
 
 const ProfileContext = createContext({} as ProfileContextType);

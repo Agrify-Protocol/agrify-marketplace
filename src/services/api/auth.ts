@@ -1,6 +1,6 @@
 import { authInstance } from "../axios/instances";
+import { LoginData, RegisterData, PasswordResetData } from "./types";
 
-type LoginData = { email: string; password: string };
 export const loginUser = async (data: LoginData) => {
   try {
     const request = await authInstance.post("/login", data);
@@ -8,20 +8,6 @@ export const loginUser = async (data: LoginData) => {
   } catch (error: any) {
     errorCreation(error);
   }
-};
-
-type RegisterData = {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  // password_2: string;
-};
-
-type PasswordResetData = {
-  userId: string;
-  token: string;
-  password: string;
 };
 
 export const registerUser = async (data: RegisterData) => {

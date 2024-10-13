@@ -4,8 +4,8 @@ import { Box, Flex, Grid } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { ProjectTableRowProps } from "./types";
 import { generateRandomColorWithOpacity } from "@/utils/randomColors";
-import useProgressPills from "@/hooks/useProgressPills";
 import { useRouter } from "next/navigation";
+import useProgressPills from "@/hooks/useProgressPills/useProgressPills";
 
 const ProjectTableRow = ({
   project,

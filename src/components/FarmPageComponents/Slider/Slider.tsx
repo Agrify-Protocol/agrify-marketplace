@@ -1,19 +1,13 @@
 "use client";
 
-import { Box, Button, ButtonProps, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex } from "@chakra-ui/react";
 import left from "../../../assets/arrow_left.svg";
 import right from "../../../assets/arrow_right.svg";
 import Image from "next/image";
-import { SliderProps } from "./types";
+import { NavigateBtnProps, SliderProps } from "./types";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
-interface NavigateBtnProps extends ButtonProps {
-  onClick: () => void;
-  isDisabled: boolean;
-  src: string | StaticImport;
-}
 
 const NavigateBtn = ({
   onClick,

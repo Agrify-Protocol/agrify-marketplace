@@ -3,7 +3,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React, { useRef, useState, useEffect } from "react";
 import { AvailableCarbonProps } from "./types";
-import useProgressPills from "@/hooks/useProgressPills";
+import useProgressPills from "@/hooks/useProgressPills/useProgressPills";
 
 const AvailableCarbon = ({
   available_carbon,
@@ -14,8 +14,8 @@ const AvailableCarbon = ({
   const [gapAndWidth, setGapAndWidth] = useState(() => {
     const screenWidth = window.innerWidth;
     return {
-      gap: screenWidth >= 768 ? 1 : 4,
-      width: screenWidth >= 768 ? 5 : 20,
+      gap: screenWidth >= 768 ? 4 : 5,
+      width: screenWidth >= 768 ? 20 : 10,
     };
   });
 
@@ -23,8 +23,8 @@ const AvailableCarbon = ({
     const handleResize = () => {
       const screenWidth = window.innerWidth;
       setGapAndWidth({
-        gap: screenWidth >= 768 ? 4 : 10,
-        width: screenWidth >= 768 ? 20 : 5,
+        gap: screenWidth >= 768 ? 4 : 5,
+        width: screenWidth >= 768 ? 20 : 10,
       });
     };
 
@@ -39,8 +39,8 @@ const AvailableCarbon = ({
     pillContainerRef,
     available_carbon,
     total_carbon,
-    gapBetweenPillsInPx: 4,
-    pillWidthInPx: 20
+    gapBetweenPillsInPx: gapAndWidth.gap,
+    pillWidthInPx: gapAndWidth.width
   });
 
   return (

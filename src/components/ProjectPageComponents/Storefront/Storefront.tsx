@@ -1,9 +1,8 @@
 "use client";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import StoreFrontForm from "../StoreFrontForm/StoreFrontForm";
-import check from "../../../assets/icon-park-solid_check-one.svg";
-import Image from "next/image";
+import CompleteRequest from "./CompleteRequest";
 
 const Storefront = () => {
   const [step, setStep] = useState(1);
@@ -40,7 +39,7 @@ const Storefront = () => {
             >
               Secure premium produce for your business directly from farms
               dedicated to sustainable and regenerative practices, boosting both
-              your supply chain's sustainability and your brand's green
+              your supply chain&apos;s sustainability and your brand&apos;s green
               credentials.
             </Text>
             <StoreFrontForm setStep={setStep} />
@@ -55,32 +54,3 @@ const Storefront = () => {
 
 export default Storefront;
 
-const CompleteRequest = () => {
-  return (
-    <Flex
-      alignItems={"center"}
-      justifyContent={"center"}
-      flexDir={"column"}
-      py={"3rem"}
-    >
-      <Image src={check} alt="" />
-      <Text
-        fontSize={{ base: "24px", lg: "1.5rem" }}
-        fontWeight={500}
-        color={"black"}
-        mt={"3.799rem"}
-        mb={"1.5rem"}
-      >
-        Request Received!
-      </Text>
-      <Text
-        color={"rgba(15, 15, 15, 0.7)"}
-        textAlign={"center"}
-        w={{ lg: "27.563rem" }}
-      >
-        You have successfully requested for a produce! We would reach out to you
-        shortly with more details and how to proceed with the next steps{" "}
-      </Text>
-    </Flex>
-  );
-};

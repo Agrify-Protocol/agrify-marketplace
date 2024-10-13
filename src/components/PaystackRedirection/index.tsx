@@ -9,10 +9,7 @@ import { getSingleProject } from "@/services/api/projects";
 import { getPurchasesByReference } from "@/services/api/purchases";
 import { useState, useEffect } from "react";
 import PageLoader from "../Layout/PageLoader/PageLoader";
-
-interface PaystackRedirectionProps {
-  type: "success" | "error";
-}
+import { PaystackRedirectionProps } from "./types";
 
 const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   const router = useRouter();
