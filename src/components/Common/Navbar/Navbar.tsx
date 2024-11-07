@@ -41,7 +41,7 @@ const Navbar = () => {
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-        <Link href={"/"}>
+        <Link href={"/projects"}>
           <Image src={logo} alt="" />
         </Link>
         <NavButtons

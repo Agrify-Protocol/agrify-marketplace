@@ -1,6 +1,6 @@
 "use client";
 
-import { Grid } from "@chakra-ui/react";
+import { Grid, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Category from "../Category/Category";
 import { getCategories } from "@/services/api/projects";
@@ -18,7 +18,7 @@ const CategoryContainer = () => {
       setIsLoading(true);
       getCategories().then((response) => {
         if (response) {
-          setCategories(response.data);
+          setCategories(response?.data);
           setIsLoading(false);
         }
       });
@@ -26,21 +26,27 @@ const CategoryContainer = () => {
   }, [user]);
 
   return (
-    <Grid
-      gap={{ base: "48px", lg: "4.75rem" }}
-      mt={"3.5rem"}
-      gridTemplateColumns={{ md: "repeat(auto-fill, minmax(23.063rem, 1fr))" }}
-    >
+    <>
       {isLoading ? (
         <PageLoader />
+      ) : categories?.length ? (
+        <Grid
+          gap={{ base: "48px", lg: "4.75rem" }}
+          mt={"3.5rem"}
+          gridTemplateColumns={{
+            md: "repeat(auto-fill, minmax(23.063rem, 1fr))",
+          }}
+        >
+          {categories.map((category) => (
+            <Category key={category.category} category= {category} />
+          ))}
+        </Grid>
       ) : (
-        <>
-          {categories.map((category) => {
-            return <Category key={category.category} category={category} />;
-          })}
-        </>
+        <Text textAlign="center" w="100%" my="15vh">
+          Oops! Nothing to display here :(
+        </Text>
       )}
-    </Grid>
+    </>
   );
 };
 

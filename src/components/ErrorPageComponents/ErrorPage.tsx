@@ -8,8 +8,16 @@ import errorIcon from "../../../public/icons/error.svg";
 
 const ErrorPage = () => {
   const route = useRouter();
+
   return (
-    <Box maxW="558px" mx="auto" display="flex" alignItems="center" h="100vh" px={{base: "28px", lg: 0}}>
+    <Box
+      maxW="558px"
+      mx="auto"
+      display="flex"
+      alignItems="center"
+      h="100vh"
+      px={{ base: "28px", lg: 0 }}
+    >
       <Box w="100%" textAlign="center">
         <Box mb="48px" display="flex" justifyContent="center">
           <Image src={errorIcon} alt="error icon" />

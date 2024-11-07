@@ -13,7 +13,6 @@ import { validateEmail, validateLength } from "@/utils/validationSchema";
 import { preserveSession } from "@/app/lib/actions";
 import { errorToast, successToast } from "./constants";
 
-
 const Login = () => {
   const toast = useToast();
   const router = useRouter();
@@ -120,12 +119,12 @@ const Login = () => {
           line_1={{
             question: "New to Agrify?",
             link_text: "Sign Up",
-            route: "/signup",
+            route: "/auth/signup",
           }}
           line_2={{
             question: "Forgot Password?",
             link_text: "Reset Password",
-            route: "/reset-password",
+            route: "/auth/reset-password",
           }}
         />
       </Flex>

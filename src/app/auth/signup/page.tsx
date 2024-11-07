@@ -155,7 +155,7 @@ const Signup = () => {
           line_2={{
             question: "Forgot Password?",
             link_text: "Reset Password",
-            route: "reset-password",
+            route: "/auth/reset-password",
           }}
         />
       </Box>

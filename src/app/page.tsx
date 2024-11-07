@@ -1,9 +1,14 @@
 "use client";
 
-import ErrorPage from "@/components/ErrorPageComponents/ErrorPage";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
+export default function IndexPage() {
+  const router = useRouter();
 
+  useEffect(() => {
+    router.push("/auth/login");
+  }, [router]);
 
-export default function Login() {
-  return <ErrorPage />;
+  return null;
 }
