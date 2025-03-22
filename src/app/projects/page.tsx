@@ -29,10 +29,10 @@ export default function Home() {
             <Stickers display={{ base: "none", lg: "flex" }} />
           </Flex>
           <Text mt={"0.5rem"} mb={{ base: "18px", lg: "2.348rem" }}>
-            Browse a selection of aggregated regenerative farm projects tailored
-            for comprehensive sustainability impact. By Investing in these
-            carbon credits, you advance food security and fortify farmer
-            resilience while fulfilling your carbon offset goals.
+            Browse a selection of aggregated regenerative farm projects offering
+            sustainably grown produce. By purchasing directly from these
+            farmers, you support food security, strengthen local communities,
+            and enjoy high-quality crops grown with the environment in mind.
           </Text>
           <Stickers display={{ base: "flex", lg: "none" }} mb="50px" />
           <CategoryContainer />
