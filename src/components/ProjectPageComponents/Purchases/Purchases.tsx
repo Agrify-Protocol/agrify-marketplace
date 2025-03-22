@@ -57,7 +57,7 @@ const Purchases = () => {
         gap={{ base: "50px", lg: "0px" }}
         // overflow={{ base: "scroll" }}
       >
-        {["Payment Type", "Status", "Tonnes", "Date"].map((item) => (
+        {["Payment Type", "Status", "Kg", "Date"].map((item) => (
           <Text
             style={{ textWrap: "nowrap" }}
             key={item}

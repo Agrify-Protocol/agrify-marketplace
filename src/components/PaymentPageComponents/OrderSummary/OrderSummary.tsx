@@ -50,9 +50,9 @@ const OrderSummary = () => {
         </Flex>
         <Text color={"main_black_1"} fontSize={"0.75rem"} fontWeight={500}>
           <Text as={"span"} color={"gray_1"}>
-            Qty
+            Qty{" "}
           </Text>
-          {`${+orderedAmount} ton${+orderedAmount > 1 ? "nes" : ""}`}
+          {`${+orderedAmount} kg`}
         </Text>
       </Box>
 
@@ -84,6 +84,7 @@ const OrderSummary = () => {
             alignItems={"center"}
             justifyContent={"space-between"}
             py={"0.75rem"}
+            wrap="wrap"
           >
             <Text fontWeight={450} color={"main_black_1"}>
               Total due
