@@ -18,8 +18,6 @@ const OrderSummary = () => {
     }
   }, [chosenProject]);
 
-  console.log('chosenProject', chosenProject)
-
   return (
     <Box>
       <Box mt={"1.438rem"}>
@@ -50,13 +48,13 @@ const OrderSummary = () => {
         </Flex>
         <Text color={"main_black_1"} fontSize={"0.75rem"} fontWeight={500}>
           <Text as={"span"} color={"gray_1"}>
-            Qty
+            Qty{" "}
           </Text>
-          {`${+orderedAmount} ton${+orderedAmount > 1 ? "nes" : ""}`}
+          {`${+orderedAmount} kg`}
         </Text>
       </Box>
 
-      <Box mt={"3rem"} mb={{lg: "15.875rem"}}>
+      <Box mt={"3rem"} mb={{ lg: "15.875rem" }}>
         <Box w={{ base: "70%", lg: "50%" }} ml={"auto"}>
           <Flex
             alignItems={"center"}
@@ -84,12 +82,13 @@ const OrderSummary = () => {
             alignItems={"center"}
             justifyContent={"space-between"}
             py={"0.75rem"}
+            wrap="wrap"
           >
             <Text fontWeight={450} color={"main_black_1"}>
               Total due
             </Text>
             <Text fontWeight={500} color={"rgba(26, 31, 54, 1)"}>
-              ${orderTotal}
+              ${orderTotal.toLocaleString()}
             </Text>
           </Flex>
         </Box>

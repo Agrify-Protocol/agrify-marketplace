@@ -88,7 +88,7 @@ const CounterButton = () => {
           fontSize={{ base: "14px", lg: "1.5rem" }}
           color={"black"}
         >
-          t/C02e
+          kg
         </Text>
       </Flex>
 

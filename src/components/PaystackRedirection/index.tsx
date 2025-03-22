@@ -54,7 +54,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
         <PageLoader />
       ) : (
         <>
-          <BackButton />
+          <BackButton customFunction={() => router.push("/projects")} />
           <Box
             w={"100%"}
             bgColor={{ lg: "white" }}
@@ -99,12 +99,12 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                     isRedirect
                       ? +purchasedTonnes.toLocaleString()
                       : +orderedAmount.toLocaleString()
-                  )} of C02`
+                  )}`
                 : `Unfortunately, the purchase of ${getTonnesString(
                     isRedirect
                       ? +purchasedTonnes.toLocaleString()
                       : +orderedAmount.toLocaleString()
-                  )} of CO2 could not be completed.`}
+                  )} could not be completed.`}
               {type === "error" ? (
                 <Text as="span" display="block">
                   Please try again.
@@ -174,9 +174,9 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               }}
               onClick={() =>
                 router.push(
-                  `/project/${chosenProject?._id}?id=${
-                    type === "success" ? "my purchases" : "overview"
-                  }`
+                  `/project/category/${chosenProject?.category}/${
+                    chosenProject?._id
+                  }?id=${type === "success" ? "my purchases" : "overview"}`
                 )
               }
             >

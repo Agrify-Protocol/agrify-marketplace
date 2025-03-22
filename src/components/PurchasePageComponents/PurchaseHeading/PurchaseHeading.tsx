@@ -13,6 +13,7 @@ const PurchaseHeading = () => {
       router.push("/projects");
     }
   }, [chosenProject]);
+
   return (
     <Box>
       <Text
@@ -28,6 +29,13 @@ const PurchaseHeading = () => {
         color={"black"}
       >
         {chosenProject?.title}
+      </Text>
+      <Text
+        fontSize={"1rem"}
+        color={"secondary_foreground"}
+        mb={"0.872rem"}
+      >
+       Secure your high-quality cassava directly from local farmers.
       </Text>
     </Box>
   );

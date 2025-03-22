@@ -6,25 +6,23 @@ import { HighlightBoxProps, ProjectHighlightProps } from "./types";
 const ProjectHighlights = ({ highlights }: ProjectHighlightProps) => {
   const highlightsSection = [
     {
-      title: "Price",
-      content: `$${highlights.price?.toLocaleString()}/tonne`,
+      title: "Direct Sourcing",
+      content: "Purchase cassava straight from community farms",
       icon: CircleDollarSign,
     },
     {
-      title: "Location",
-      content: highlights.location,
+      title: "Quality Assurance:",
+      content: "Farmers follow best practices to deliver premium cassava",
       icon: LocateFixed,
     },
     {
-      title: "Crediting Period",
-      content: highlights.crediting_period,
+      title: "Local Impact",
+      content: "Your purchases boost income for smallholder farmers.",
       icon: LocateFixed,
     },
     {
-      title: "Contract Type",
-      content: highlights.contract_type.trim().length
-        ? highlights.contract_type
-        : "N/A",
+      title: "Scalable Supply",
+      content: "Easily adjust volumes to meet your demand.",
       icon: ReceiptText,
     },
   ];
@@ -70,10 +68,10 @@ const HighlightBox = ({
 }: HighlightBoxProps) => {
   return (
     <Flex
-      alignItems={"center"}
-      justifyContent={"center"}
+      // alignItems={"center"}
+      // justifyContent={"center"}
       flexDir={"column"}
-      py={"1.5rem"}
+      p={"1.5rem"}
       borderRight={"1px"}
       borderRightStyle={{ base: "none", lg: hideBorder ? "unset" : "dashed" }}
       borderBottom={"1px"}
@@ -89,7 +87,7 @@ const HighlightBox = ({
       <Text
         mt={"1rem"}
         color={"main_black_1"}
-        textAlign={"center"}
+        // textAlign={"center"}
         fontWeight={450}
       >
         {content}

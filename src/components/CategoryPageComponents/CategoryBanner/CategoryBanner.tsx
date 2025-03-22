@@ -34,7 +34,7 @@ const CategoryBanner = ({
           color={"#8D8D8D"}
         >
           <Image src={leaf} alt="" />
-          Total available credits: {carbon_credits.toLocaleString()} tco2e
+          Total available produce: {carbon_credits.toLocaleString()}
         </Flex>
       </Box>
       <Box width={120} height={120} margin={{ base: "0 auto", lg: "0" }}>

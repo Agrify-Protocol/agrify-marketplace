@@ -16,7 +16,6 @@ const CategoryPage = () => {
   const { type } = useParams();
   const { user } = useAuthContext();
   const [categoryData, setCategoryData] = useState<CategoryData | null>(null);
-
   useEffect(() => {
     if (user) {
       getCategories(type as string).then((response) => {

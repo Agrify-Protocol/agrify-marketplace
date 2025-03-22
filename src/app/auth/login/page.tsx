@@ -37,27 +37,23 @@ const Login = () => {
     setLoginDetails({ ...loginDetails, [key]: value });
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setIsLoading(true);
-    loginUser(loginDetails)
-      .then((result) => {
-        preserveSession(result.user, result.token, result.refreshToken).then(
-          () => {
-            setUser(result.user);
-            setAccessToken(result.token);
-            setRefreshToken(result.refreshToken);
-            toast(successToast);
-            router.push("/projects");
-          }
-        );
-      })
-      .catch(() => {
-        toast(errorToast);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      const result = await loginUser(loginDetails);
+      await preserveSession(result.user, result.token, result.refreshToken);
+      setUser(result.user);
+      setAccessToken(result.token);
+      setRefreshToken(result.refreshToken);
+      toast(successToast);
+      window.location.href = "/projects";
+    } catch (error) {
+      toast(errorToast);
+    } finally {
+      setIsLoading(false);
+    }
   };
+  
 
   return (
     <Flex

@@ -25,7 +25,7 @@ const PurchaseBody = () => {
           color={"main_black_1"}
           mb={"2.5rem"}
         >
-          Transaction Details
+          Order Details
         </Text>
         <Flex
           alignItems={"center"}
@@ -38,7 +38,7 @@ const PurchaseBody = () => {
             fontWeight={500}
             color={"main_black_1"}
           >
-            ${chosenProject?.projectToken.price}/tc02e
+            ${chosenProject?.projectToken.price}/kg
           </Text>
         </Flex>
 
@@ -60,35 +60,27 @@ const PurchaseBody = () => {
           mb={"1rem"}
         >
           <Text fontSize={{ base: "14px", lg: "1.125rem" }}>
-            Available Tonnes
+          Available Stock
           </Text>
           <Text
             fontSize={{ base: "14px", lg: "1.125rem" }}
             fontWeight={450}
             color={"rgba(1, 19, 8, 0.7)"}
           >
-            {`${chosenProject?.projectToken?.availableTonnes.toLocaleString()} ton${
-              (chosenProject?.projectToken?.availableTonnes ?? 0) > 1
-                ? "nes"
-                : ""
-            }`}
+            {`${chosenProject?.projectToken?.availableTonnes.toLocaleString()} kg`}
           </Text>
         </Flex>
 
         <Flex alignItems={"center"} justifyContent={"space-between"}>
           <Text fontSize={{ base: "14px", lg: "1.125rem" }}>
-            Minimum Purchase
+            Minimum Order
           </Text>
           <Text
             fontSize={{ base: "14px", lg: "1.125rem" }}
             fontWeight={450}
             color={"rgba(1, 19, 8, 0.7)"}
           >
-            {`${chosenProject?.projectToken.minimumPurchaseTonnes.toLocaleString()} ton${
-              (chosenProject?.projectToken.minimumPurchaseTonnes ?? 0) > 1
-                ? "nes"
-                : ""
-            }`}
+            {`${chosenProject?.projectToken.minimumPurchaseTonnes.toLocaleString()} kg`}
           </Text>
         </Flex>
       </Box>

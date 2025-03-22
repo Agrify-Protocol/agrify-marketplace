@@ -43,15 +43,14 @@ const ProjectIntro = () => {
   }
 
   const section = [
-    { title: "Location", content: project.location },
-    { title: "Price", content: `$${project.projectToken.price} /tc02e` },
+    { title: "Location", content: project?.location },
+    { title: "Price", content: `$${project?.projectToken?.price}/kg` },
     {
-      title: "Available Credits",
-      content: `${project.projectToken.availableTonnes.toLocaleString()} ton${
-        project.projectToken.availableTonnes > 1 ? "nes" : ""
-      }`,
+      title: "Available Produce",
+      content: `${project?.projectToken?.availableTonnes.toLocaleString()}kg`,
     },
-    { title: "Crediting Period", content: getCreditPeriod(project!) },
+    { title: "Harvest Period", content: getCreditPeriod(project!) },
+    { title: "Contract Type", content: project?.contractType },
   ];
 
   return (
@@ -93,9 +92,9 @@ const ProjectIntro = () => {
         borderColor={{ lg: "rgba(0,0,0,0.1)" }}
         borderX={{ lg: "transparent" }}
         mt={{ base: "16px", lg: "3rem" }}
-        px={{ lg: "2.875rem" }}
+        px={{ lg: ".5rem" }}
         gap={{ base: "24px", lg: 0 }}
-        gridTemplateColumns={{ lg: "1fr 1fr 1fr 1.25fr" }}
+        gridTemplateColumns={{ lg: `repeat(5, 1fr)` }}
       >
         {section.map((item, index) => (
           <ProjectIntroItem

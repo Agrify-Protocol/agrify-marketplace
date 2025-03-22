@@ -54,7 +54,7 @@ const Category = ({ category }: CategoryProps) => {
         color={"rgba(141, 141, 141, 1)"}
       >
         <Image src={leaf} alt="" />
-        {category.totalTonnes.toLocaleString()} tco2e
+        {category.totalTonnes.toLocaleString()} kg
       </Flex>
     </Flex>
   );

@@ -17,7 +17,7 @@ const ProjectIntroItem = ({
       py={{ lg: "1.813rem" }}
       px={padding_x ? { base: "0", lg: padding_x } : "unset"}
       pr={"0.5rem"}
-      alignItems={"center"}
+      // alignItems={"center"} 
       gap={"0.75rem"}
       {...rest}
     >

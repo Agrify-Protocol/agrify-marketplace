@@ -48,10 +48,10 @@ const AvailableCarbon = ({
       <Flex alignItems={"center"}>
         <Box>
           <Text fontSize={"0.875rem"} mb={{ base: "8px", lg: "0.5rem" }}>
-            Available Tonnes
+            Available Produce
           </Text>
           <Text fontSize={"1.5rem"} color={"main_black_2"} fontWeight={500}>
-            {available_carbon?.toLocaleString()} tc02e
+            {available_carbon?.toLocaleString()}kg
           </Text>
         </Box>
         {/* <CircleAlert size={"0.875rem"} color="rgba(1, 19, 8, 0.5)" /> */}
@@ -82,7 +82,7 @@ const AvailableCarbon = ({
 
       <Box mt={"1rem"} ml={"auto"}>
         <Text fontSize={"0.875rem"} mb={"0.5rem"} textAlign={"right"}>
-          Total C02 Tonnes
+          Total Produce
         </Text>
         <Text
           fontSize={"1.5rem"}
