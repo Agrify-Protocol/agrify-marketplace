@@ -6,6 +6,7 @@ import {
   profileInstance,
   projectsInstance,
   purchaseInstance,
+  xrpInstance,
 } from "@/services/axios/instances";
 
 export const updateBearerToken = (accessToken: string) => {
@@ -17,8 +18,17 @@ export const updateBearerToken = (accessToken: string) => {
     preorderInstance,
     profileInstance,
     purchaseInstance,
+    xrpInstance,
   ];
+
   instances.forEach((instance) => {
-    instance.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    instance.interceptors.request.use((config) => {
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
+      return config;
+    });
+
+    return instance;
   });
 };

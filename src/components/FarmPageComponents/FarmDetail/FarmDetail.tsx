@@ -18,31 +18,33 @@ const FarmDetail = ({ detail }: FarmDetailProps) => {
         {detail.name}
       </Text>
 
-      <Box>
-        <Flex alignItems={"center"} gap={"0.5rem"}>
-          Farm Score
-        </Flex>
+      {detail?.farmSuggestion?.FarmScore ? (
+        <Box>
+          <Flex alignItems={"center"} gap={"0.5rem"}>
+            Farm Score
+          </Flex>
 
-        <Box w={"4.5rem"} h={"4.5rem"} position={"relative"}>
-          <Text
-            fontSize={"1.5rem"}
-            fontWeight={500}
-            color={"black"}
-            position={"absolute"}
-            left={0}
-            right={0}
-            top={"1rem"}
-            textAlign={"center"}
-          >
-            {detail?.farmSuggestion?.FarmScore?.toLocaleString() ?? "N/A"}
-          </Text>
-          <Image
-            style={{ position: "absolute", bottom: "0" }}
-            src={seal}
-            alt=""
-          />
+          <Box w={"4.5rem"} h={"4.5rem"} position={"relative"}>
+            <Text
+              fontSize={"1.5rem"}
+              fontWeight={500}
+              color={"black"}
+              position={"absolute"}
+              left={0}
+              right={0}
+              top={"1rem"}
+              textAlign={"center"}
+            >
+              {detail?.farmSuggestion?.FarmScore?.toLocaleString() ?? "N/A"}
+            </Text>
+            <Image
+              style={{ position: "absolute", bottom: "0" }}
+              src={seal}
+              alt=""
+            />
+          </Box>
         </Box>
-      </Box>
+      ) : null}
 
       <Text color={"black"}>{detail.description}</Text>
 

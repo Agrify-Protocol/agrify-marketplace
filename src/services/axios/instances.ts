@@ -39,3 +39,8 @@ export const profileInstance = axios.create({
   baseURL: `${BASE_URL}/profile`,
   headers: { "Content-Type": "application/json" },
 });
+
+export const xrpInstance = axios.create({
+  baseURL: `${BASE_URL}/xrp`,
+  headers: { "Content-Type": "application/json" },
+});

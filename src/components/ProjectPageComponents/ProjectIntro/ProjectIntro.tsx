@@ -28,7 +28,7 @@ const BuyCarbonCreditBtn = ({ onClick, ...rest }: BuyCarbonCreditBtn) => {
       }}
       {...rest}
     >
-      Buy Carbon Credits
+      Buy farm produce
     </Button>
   );
 };
