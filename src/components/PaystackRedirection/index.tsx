@@ -174,7 +174,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               }}
               onClick={() =>
                 router.push(
-                  `/project/category/${chosenProject?.category}/${
+                  `/projects/category/${chosenProject?.category}/${
                     chosenProject?._id
                   }?id=${type === "success" ? "my purchases" : "overview"}`
                 )
