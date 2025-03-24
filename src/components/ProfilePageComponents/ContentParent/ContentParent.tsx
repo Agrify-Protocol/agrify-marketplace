@@ -6,6 +6,7 @@ import OverviewHolder from "../OverviewHolder/OverviewHolder";
 import { useProfileContext } from "@/context/ProfileContext/ProfileContext";
 import ReportsTable from "../ReportsTable/ReportsTable";
 import FundedTable from "../FundedTable/FundedTable";
+import ProduceBoughtTable from "../ProduceBoughtTable";
 
 const ContentParent = () => {
   const { tabId } = useProfileContext();
@@ -17,6 +18,8 @@ const ContentParent = () => {
         return <FundedTable />;
       case "reports generated":
         return <ReportsTable />;
+      case "produce bought":
+        return <ProduceBoughtTable />;
       default:
         return <OverviewHolder />;
     }

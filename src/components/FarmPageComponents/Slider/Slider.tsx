@@ -8,7 +8,6 @@ import { NavigateBtnProps, SliderProps } from "./types";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-
 const NavigateBtn = ({
   onClick,
   isDisabled,
@@ -36,12 +35,12 @@ const Slider = ({ images }: SliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex + 1 === images.length ? 0 : prevIndex + 1
+      prevIndex + 1 === images?.length ? 0 : prevIndex + 1
     );
   };
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1
+      prevIndex - 1 < 0 ? images?.length - 1 : prevIndex - 1
     );
   };
 
@@ -74,7 +73,7 @@ const Slider = ({ images }: SliderProps) => {
             transition={{ duration: 0.5 }}
           >
             <Image
-              src={images[currentIndex].image}
+              src={images ? images[currentIndex]?.image : ""}
               alt=""
               fill
               style={{ height: "100%", width: "100%", objectFit: "cover" }}
@@ -85,7 +84,7 @@ const Slider = ({ images }: SliderProps) => {
 
       <NavigateBtn
         onClick={handleNext}
-        isDisabled={currentIndex === images.length - 1}
+        isDisabled={currentIndex === images?.length - 1}
         src={right}
         display={{ base: "none", lg: "block" }}
       />
@@ -99,7 +98,7 @@ const Slider = ({ images }: SliderProps) => {
         />
         <NavigateBtn
           onClick={handleNext}
-          isDisabled={currentIndex === images.length - 1}
+          isDisabled={currentIndex === images?.length - 1}
           src={right}
           display={{ base: "block", lg: "none" }}
         />

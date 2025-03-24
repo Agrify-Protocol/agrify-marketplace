@@ -12,6 +12,7 @@ import {
   resetAuthCookies,
 } from "@/app/lib/actions";
 import { usePathname, useRouter } from "next/navigation";
+import { xrpInstance } from "@/services/axios/instances";
 
 const AuthContext = createContext({} as AuthContextType);
 
@@ -86,7 +87,14 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   return (
     <AuthContext.Provider
-      value={{ fetchingUser, user, setUser, setAccessToken, setRefreshToken }}
+      value={{
+        fetchingUser,
+        user,
+        accessToken,
+        setUser,
+        setAccessToken,
+        setRefreshToken,
+      }}
     >
       {children}
     </AuthContext.Provider>

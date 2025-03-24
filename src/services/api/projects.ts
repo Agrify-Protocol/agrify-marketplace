@@ -27,6 +27,6 @@ export const getCategories = async (selectedCategory = "") => {
     );
     return request.data;
   } catch (error) {
-    console.log("Error:", error);
+    return(error);
   }
 };

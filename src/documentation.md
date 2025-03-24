@@ -23,7 +23,7 @@ We aggregate a variety of regenerative farm projects across different regions, m
   - Storefront: Where users can purchase carbon credits.
   - My Purchases: Overview of the user’s purchases.
 - **Profile Section** 👤: <br />
-  - Overview: Funds deployed, projects funded, total offsets (tonnes).
+  - Overview: Funds deployed, projects funded, Total Purchase (kg).
   - Projects Funded: A list of projects users have supported.
   - Reports Generated: Detailed reports on the user’s contributions.
 
