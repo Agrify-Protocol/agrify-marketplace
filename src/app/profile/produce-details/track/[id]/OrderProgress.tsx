@@ -59,7 +59,7 @@ const OrderProgress = ({
         </Box>
         <Box mt="50px">
           {progress.map((item, index) => (
-            <Box display="flex" gap="8px">
+            <Box display="flex" gap="8px" key={item.title}>
               <Box display="flex" flexDir="column" alignItems="center">
                 <Box>{item.icon}</Box>
                 {progress.length - 1 !== index ? (
