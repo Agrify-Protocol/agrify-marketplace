@@ -11,7 +11,7 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 const FundedTable = () => {
   const { user } = useAuthContext();
   const [transactions, setTransations] = useState<Transaction[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     if (user) {
       setIsLoading(true);
