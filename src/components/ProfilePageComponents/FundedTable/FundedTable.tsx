@@ -6,17 +6,21 @@ import { Transaction } from "@/components/ProjectPageComponents/Purchases/types"
 import { getAllPurchases } from "@/services/api/purchases";
 import Spinner from "@/components/Common/Spinner/Spinner";
 import FourColumnTableRow from "@/components/Common/FourColumnTableRow/FourColumnTableRow";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
 
 const FundedTable = () => {
+  const { user } = useAuthContext();
   const [transactions, setTransations] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    setIsLoading(true);
-    getAllPurchases().then((response) => {
-      setTransations(response);
-      setIsLoading(false);
-    });
-  }, []);
+    if (user) {
+      setIsLoading(true);
+      getAllPurchases().then((response) => {
+        setTransations(response);
+        setIsLoading(false);
+      });
+    }
+  }, [user]);
   return (
     <Box>
       <Grid
