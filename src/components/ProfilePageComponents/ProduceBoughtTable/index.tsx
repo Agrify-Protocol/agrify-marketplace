@@ -2,6 +2,7 @@
 
 import FourColumnTableRow from "@/components/Common/FourColumnTableRow/FourColumnTableRow";
 import Spinner from "@/components/Common/Spinner/Spinner";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { getOrders } from "@/services/api/profile";
 import { readableDate } from "@/utils/parseData";
 import { Flex, Grid, Box, Text } from "@chakra-ui/react";
@@ -9,10 +10,12 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const ProduceBoughtTable = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<any>([]);
 
   useEffect(() => {
+    if (user) {
       setIsLoading(true);
       getOrders().then((response) => {
         if (response) {
@@ -20,7 +23,8 @@ const ProduceBoughtTable = () => {
           setIsLoading(false);
         }
       });
-  }, []);
+    }
+  }, [user]);
 
   const router = useRouter();
   const getStatusProps = (status: string) => {
