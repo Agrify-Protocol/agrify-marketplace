@@ -6,7 +6,10 @@ const Subsections = ({ details }: { details: any }) => {
   const detailsObj = [
     { title: "Farmer", value: details?.project?.farms[0]?.farmer?.firstname },
     { title: "Location", value: details?.project?.farms[0]?.address },
-    { title: "Cultivation Type", value: details?.project?.farms[0]?.cultivationType },
+    {
+      title: "Cultivation Type",
+      value: details?.project?.farms[0]?.cultivationType,
+    },
     {
       title: "Available Quantity",
       value: details?.project?.farms[0]?.availableTonnes?.toLocaleString(),
@@ -45,38 +48,40 @@ const Subsections = ({ details }: { details: any }) => {
           Images
         </Text>
         <Box display="flex" flexDir="column" gap="16px">
-          {details?.project?.farms[0]?.farmImages?.map((item: any, idx: number) => (
-           <Box
-           borderRadius="16px"
-           key={item._id}
-           maxW="425px"
-           maxH="320px"
-           overflow="hidden"
-           position="relative" 
-         >
-           <Image
-             src={item.image}
-             width="100"
-             height="100"
-             alt={`produce img ${idx + 1}`}
-             style={{
-               height: "100%",
-               width: "100%",
-               objectFit: "cover",
-             }}
-           />
-         
-           <Box
-             position="absolute"
-             top="0"
-             left="0"
-             width="100%"
-             height="100%"
-             bg="rgba(0, 0, 0, 0.4)"
-             zIndex="1"
-           />
-         </Box>
-          ))}
+          {details?.project?.farms[0]?.farmImages?.map(
+            (item: any, idx: number) => (
+              <Box
+                borderRadius="16px"
+                key={item._id}
+                w="425px"
+                h="320px"
+                overflow="hidden"
+                position="relative"
+              >
+                <Image
+                  src={item.image}
+                  width="100"
+                  height="100"
+                  alt={`produce img ${idx + 1}`}
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+
+                <Box
+                  position="absolute"
+                  top="0"
+                  left="0"
+                  width="100%"
+                  height="100%"
+                  bg="rgba(0, 0, 0, 0.4)"
+                  zIndex="1"
+                />
+              </Box>
+            )
+          )}
         </Box>
       </Box>
     </Box>

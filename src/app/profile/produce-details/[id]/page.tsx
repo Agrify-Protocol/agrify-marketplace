@@ -2,11 +2,12 @@
 
 import ProduceDetails from "@/components/ProfilePageComponents/ProduceDetails/page";
 import { useEffect, useState } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import Spinner from "@/components/Common/Spinner/Spinner";
 import { getProduceDetails } from "@/services/api/profile";
 import { useParams } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import Link from "next/link";
 
 const Details = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +38,50 @@ const Details = () => {
           <Spinner />
         </Flex>
       ) : (
-        <ProduceDetails details={data} />
+        <ProduceDetails
+          details={data}
+          btns={
+            <>
+              <Link href={data?.txHash} target="_blank">
+                <Button
+                  bgColor="white"
+                  color="#282828"
+                  borderRadius={"2rem"}
+                  px={"2.5rem"}
+                  py="14px"
+                  fontWeight={400}
+                  mt="32px"
+                  mb="32px"
+                  _hover={{
+                    bg: "white",
+                  }}
+                  width="100%"
+                >
+                  View on Block Explorer
+                </Button>
+              </Link>
+
+              <Link href={`/profile/produce-details/track/${data?.orderId}`}>
+                <Button
+                  bgColor="transparent"
+                  color="#282828"
+                  borderRadius={"2rem"}
+                  px={"2.5rem"}
+                  py="14px"
+                  fontWeight={400}
+                  mb="48px"
+                  border="1px solid #282828"
+                  _hover={{
+                    bg: "rgba(40, 40, 40, .1)",
+                  }}
+                  width="100%"
+                >
+                  Track Order
+                </Button>
+              </Link>
+            </>
+          }
+        />
       )}
     </>
   );

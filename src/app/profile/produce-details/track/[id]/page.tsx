@@ -16,7 +16,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const TrackOrder = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(4);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -28,7 +28,7 @@ const TrackOrder = () => {
 
   return (
     <>
-      <Box display="flex">
+      <Box display="flex" h="100vh">
         <OrderProgress step={step} />
         <InputSteps step={step} setStep={setStep} />
         {step >= 2 && step < 5 ? (

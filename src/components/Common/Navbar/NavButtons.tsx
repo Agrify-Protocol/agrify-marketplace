@@ -6,7 +6,7 @@ const NavButtons = ({ route, pathName, ...rest }: NavButtonsProps) => {
     <Box {...rest}>
       {[
         {
-          title: "Projects",
+          title: "Marketplace",
           link: "/projects",
           base: ["/projects", "/farm", "/payment"],
         },

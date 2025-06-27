@@ -1,43 +1,79 @@
 "use client";
 
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
-import { Box, Heading, Text, Flex } from "@chakra-ui/react";
-import CategoryContainer from "@/components/HomePageComponents/CategoryContainer/CategoryContainer";
-import Stickers from "@/components/HomePageComponents/Stickers/Stickers";
+import { Box, Flex, Input, Text } from "@chakra-ui/react";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
+import Image from "next/image";
+import corn from "@/assets/corn.svg";
+import bg from "../../assets/hero-bg.png";
+import CategoryContainer from "@/components/HomePageComponents/CategoryContainer/CategoryContainer";
+import Search from "@/components/Common/Search/Search";
 
 export default function Home() {
-  const { fetchingUser, user } = useAuthContext();
+  const { fetchingUser } = useAuthContext();
 
   return (
     <Box
-      px={{ base: "25px", lg: "2.625rem" }}
-      py={{ base: "39px", lg: "6.963rem" }}
+      px={{ base: "20px", sm: "25px", md: "35px", lg: "2.625rem" }}
+      py={{ base: "32px", sm: "39px", md: "50px", lg: "6.963rem" }}
     >
-      {fetchingUser ? (
-        <PageLoader />
-      ) : (
-        <>
-          <Flex alignItems={"center"} justifyContent={"space-between"}>
-            <Heading
-              fontWeight={500}
-              fontSize={{ base: "24px", lg: "1.5rem" }}
-              mb={"1rem"}
-            >
-              Hello, {user?.firstname}
-            </Heading>
-            <Stickers display={{ base: "none", lg: "flex" }} />
-          </Flex>
-          <Text mt={"0.5rem"} mb={{ base: "18px", lg: "2.348rem" }}>
-            Browse a selection of aggregated regenerative farm projects offering
-            sustainably grown produce. By purchasing directly from these
-            farmers, you support food security, strengthen local communities,
-            and enjoy high-quality crops grown with the environment in mind.
+      <Box
+        maxW="1370px"
+        height={{ base: "260px", sm: "280px", md: "210px" }}
+        mb={{ base: "60px", sm: "80px", md: "100px" }}
+        position="relative"
+        rounded="16px"
+        overflow="hidden"
+      >
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          width="100%"
+          height="100%"
+          bgImage={`linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${bg.src})`}
+          bgSize="cover"
+          bgPos="center"
+          zIndex="0"
+        />
+
+        <Flex
+          position="relative"
+          height="100%"
+          flexDir="column"
+          alignItems="center"
+          justifyContent="center"
+          zIndex="1"
+          textAlign="center"
+          px={{ base: "3", sm: "4" }}
+        >
+          <Image
+            src={corn}
+            alt="corn svg"
+            style={{ marginBottom: "10px" }}
+            width={40}
+            height={40}
+          />
+          <Text
+            color="white"
+            fontSize={{ base: "20px", sm: "24px", md: "32px" }}
+            fontWeight="600"
+          >
+            Buy Organic Produce
           </Text>
-          <Stickers display={{ base: "flex", lg: "none" }} mb="50px" />
-          <CategoryContainer />
-        </>
-      )}
+          <Text
+            color="white"
+            fontSize={{ base: "14px", sm: "15px", md: "16px" }}
+            maxW={{ base: "100%", sm: "90%", md: "70%" }}
+            mx="auto"
+          >
+            Buy sustainably farmed produce that from healthy soils that promote
+            biodiversity and climate change resilience
+          </Text>
+        </Flex>
+      </Box>
+      <Search text="Trending Produce" />
+      {fetchingUser ? <PageLoader /> : <CategoryContainer />}
     </Box>
   );
 }

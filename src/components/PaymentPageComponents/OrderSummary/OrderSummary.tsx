@@ -12,11 +12,11 @@ const OrderSummary = () => {
     useGlobalContext();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!chosenProject) {
-      router.push("/projects");
-    }
-  }, [chosenProject]);
+  // useEffect(() => {
+  //   if (!chosenProject) {
+  //     router.push("/projects");
+  //   }
+  // }, [chosenProject]);
 
   return (
     <Box>

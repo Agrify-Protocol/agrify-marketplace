@@ -19,13 +19,16 @@ const Navbar = () => {
   const isAuthPage = pathName.startsWith("/auth");
   const [showModal, setShowModal] = useState(false);
 
+  console.log("route", pathName);
   return (
     <Box
       bgColor={"white"}
       minH={"4.762rem"}
       flexDir="column"
       display={
-        isAuthPage || !routesWithNav.some((item) => pathName.includes(item))
+        isAuthPage ||
+        !routesWithNav.some((item) => pathName.includes(item)) ||
+        pathName.includes("track")
           ? "none"
           : "flex"
       }

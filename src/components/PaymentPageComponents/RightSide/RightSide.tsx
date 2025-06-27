@@ -6,6 +6,7 @@ import InvoiceForm from "../InvoiceForm/InvoiceForm";
 import Invoice from "../Invoice/Invoice";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { parseDate } from "@/utils/parseData";
+import DeliveryDetails from "../DeliveryDetails/DeliveryDetails";
 
 const RightSide = () => {
   const { paymentStage, invoiceData } = usePaymentContext();
@@ -26,8 +27,13 @@ const RightSide = () => {
     issuedOn: parseDate(new Date()),
   };
   return (
-    <Box flexBasis={"50%"} minH={{ lg: "100vh" }} bgColor={{ lg: "white" }}>
-      {paymentStage === 1 && <PaymentOption />}
+    <Box
+      flexBasis={"50%"}
+      minH={{ lg: "100vh" }}
+      bgColor={{ lg: "white" }}
+      alignContent="center"
+    >
+      {paymentStage === 1 && <DeliveryDetails />}
       {paymentStage === 2 && <InvoiceForm />}
       {paymentStage === 3 && <Invoice invoice_data={invoice_data} />}
     </Box>

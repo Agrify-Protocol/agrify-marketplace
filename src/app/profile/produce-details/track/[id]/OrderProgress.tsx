@@ -12,11 +12,7 @@ import Transit from "@/assets/track/Transit";
 import Delivered from "@/assets/track/Delivered";
 import Arrived from "@/assets/track/Arrived";
 
-const OrderProgress = ({
-  step,
-}: {
-  step: number;
-}) => {
+const OrderProgress = ({ step }: { step: number }) => {
   const progress = useMemo(() => {
     return [
       { title: "Order Accepted", icon: <Accepted status={step >= 0} /> },
@@ -38,7 +34,7 @@ const OrderProgress = ({
   }, [step]);
 
   return (
-    <Box w="50%">
+    <Box w="50%" alignSelf="center">
       {/* display="flex" alignItems="center" */}
       <Box maxW="300px" margin="10px auto">
         <BackButton />
@@ -89,6 +85,16 @@ const OrderProgress = ({
           ))}
         </Box>
       </Box>
+      <Box
+        position="absolute"
+        bottom="0"
+        left="0"
+        right="0"
+        height={`${100 - step * 15}%`}
+        bgGradient="linear(to-b, rgba(255,255,255,0), white)"
+        pointerEvents="none"
+        zIndex="1"
+      />
     </Box>
   );
 };

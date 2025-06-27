@@ -14,6 +14,8 @@ const ProjectPageBody = () => {
   const { setProject, project, tabId, id } = useProjectPageContext();
   const { user } = useAuthContext();
 
+  console.log("project", project);
+
   useEffect(() => {
     if (user) {
       getSingleProject(id as string).then((result) => {
@@ -24,7 +26,7 @@ const ProjectPageBody = () => {
 
   return (
     <Box
-      mt={{ base: "39px", lg: "4rem" }}
+      mt={{ base: "40px", lg: "3.215rem" }}
       px={{ base: "24px", lg: "2.625rem" }}
     >
       <BackButton />
