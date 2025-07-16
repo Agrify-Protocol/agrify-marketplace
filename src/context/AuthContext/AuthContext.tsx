@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContextType, Props, User } from "./types";
-import { updateBearerToken } from "@/utils/updateBearerToken";
 import { refreshAccessToken } from "@/services/api/auth";
 import {
   getAccessToken,
@@ -12,7 +11,6 @@ import {
   resetAuthCookies,
 } from "@/app/lib/actions";
 import { usePathname, useRouter } from "next/navigation";
-import { xrpInstance } from "@/services/axios/instances";
 
 const AuthContext = createContext({} as AuthContextType);
 
@@ -33,7 +31,12 @@ export const AuthContextProvider = ({ children }: Props) => {
           setUser(user);
           setFetchingUser(false);
         } else if (
-          ["/auth/reset-password", "/auth/signup"].includes(pathname)
+          [
+            "/auth/reset-password",
+            "/auth/signup",
+            "/auth/login",
+            "/product-story",
+          ].includes(pathname)
         ) {
           return null;
         } else {
@@ -56,7 +59,9 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (accessToken) {
-      updateBearerToken(accessToken);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("access_token", accessToken);
+      }
     }
   }, [accessToken]);
 
@@ -69,7 +74,8 @@ export const AuthContextProvider = ({ children }: Props) => {
             preserveSession(user, result.token, refreshToken);
           })
           .catch((err) => {
-            if (err.message == "Invalid or Expired Refresh Token") {
+            if (err.message) {
+              alert(err.message);
               resetAuthCookies();
               router.push("/auth/login");
             }

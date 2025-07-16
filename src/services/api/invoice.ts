@@ -1,7 +1,6 @@
 import { invoiceInstance } from "../axios/instances";
 import { InvoicePayloadType } from "./types";
 
-
 export const createInvoice = async (data: InvoicePayloadType) => {
   try {
     const request = await invoiceInstance.post("/create", data);

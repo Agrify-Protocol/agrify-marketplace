@@ -19,7 +19,6 @@ const Navbar = () => {
   const isAuthPage = pathName.startsWith("/auth");
   const [showModal, setShowModal] = useState(false);
 
-  console.log("route", pathName);
   return (
     <Box
       bgColor={"white"}

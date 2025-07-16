@@ -29,7 +29,7 @@ export const createReport = async (data: { reportName: string }) => {
 
 export const getOrders = async () => {
   try {
-    const request = await xrpInstance.get("/orders");
+    const request = await xrpInstance.get("/orders/placed");
     return request.data;
   } catch (error) {
     return error;

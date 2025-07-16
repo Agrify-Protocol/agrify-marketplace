@@ -5,6 +5,6 @@ export const getFarm = async (id: string) => {
     const request = await farmInstance.get(`/${id}`);
     return request.data;
   } catch (error) {
-    return(error);
+    return error;
   }
 };

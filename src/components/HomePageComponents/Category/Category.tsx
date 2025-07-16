@@ -1,23 +1,15 @@
 "use client";
 
 import React from "react";
-import { CategoryProps } from "./types";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const Category = ({ category }: CategoryProps) => {
-  const router = useRouter();
-
-  const getProduceIcon = (category: string) => {
-    return category.toLocaleLowerCase().split(" ").join("-");
-  };
-
+const Category = ({ category }: { key: number | string; category: any }) => {
   return (
-    <Link href={`/projects/category/${category.category}`}>
+    <Link href={`/projects/category/${category?.name}`}>
       <Flex
-        w={{ base: "100%", sm: "300px", md: "360px", lg: "425px" }}
+        w={{ base: "100%", sm: "300px", lg: "425px" }}
         minH={{ base: "380px", md: "400px", lg: "425px" }}
         bgColor="white"
         borderRadius="15.04px"
@@ -45,16 +37,16 @@ const Category = ({ category }: CategoryProps) => {
             color="black"
             textTransform="capitalize"
           >
-            {category.category}
+            {category?.name?.split("_").join(" ")}
           </Text>
         </Box>
         <Box
-          maxW={{ base: "160px", sm: "200px", md: "220px", lg: "263.28px" }}
-          maxH={{ base: "160px", sm: "200px", md: "220px", lg: "263.28px" }}
+          maxW={{ base: "160px", sm: "200px", md: "220px", lg: "188px" }}
+          maxH={{ base: "160px", sm: "200px", md: "220px", lg: "188px" }}
         >
           <Image
-            src={`/icons/produce/${getProduceIcon(category.category)}.svg`}
-            alt={`${category.category} produce icon`}
+            src={category?.coverImage}
+            alt={`${category?.category} produce icon`}
             width={1000}
             height={1000}
           />

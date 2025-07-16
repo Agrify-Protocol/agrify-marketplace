@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Button, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import InvoiceHeader from "../InvoiceHeader/InvoiceHeader";
@@ -19,7 +21,7 @@ const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
   return (
     <Box>
       <Box
-        w={{lg: "37.188rem"}}
+        w={{ lg: "37.188rem" }}
         p={"0.625rem"}
         py={"2.75rem"}
         mx={"auto"}
@@ -31,7 +33,7 @@ const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
       </Box>
       {!isCompleted && (
         <Button
-          w={{lg: "34.875rem"}}
+          w={{ lg: "34.875rem" }}
           h={"3.5rem"}
           bgColor={"agrify_green"}
           display={"block"}
@@ -40,7 +42,7 @@ const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
           color="white"
           my={"3rem"}
           _hover={{
-            bg: "#0ba842"
+            bg: "#0ba842",
           }}
           isLoading={isLoading}
           onClick={(e) => {
@@ -48,7 +50,7 @@ const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
             e.stopPropagation();
             const createInvoicePayload = {
               ...invoice_data,
-              amount: Number(removeCommas(invoice_data.amount)),
+              amount: Number(removeCommas("")),
             };
             createInvoice(createInvoicePayload as unknown as InvoicePayloadType)
               .then((_result) => {

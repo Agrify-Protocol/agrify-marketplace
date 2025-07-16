@@ -11,8 +11,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Inter_Display } from "@/fonts";
+import { useState } from "react";
 
 const DeliveryDetails = () => {
+  const [payload, setPayload] = useState({});
   const chosenOption = 1;
   const form = [
     {
@@ -39,18 +41,23 @@ const DeliveryDetails = () => {
       label: "Postal Code",
       type: "input",
       placeHolder: "Enter Postal Code",
-      id: "postal",
+      id: "postalCode",
     },
     {
       label: "Phone Number",
       type: "input",
       placeHolder: "Enter Phone Number",
-      id: "phone",
+      id: "phoneNumber",
     },
   ];
 
   return (
-    <Box px="75px">
+    <Box
+      px="75px"
+      mb={{ base: "2rem", lg: 0 }}
+      pl={{ base: "1.5rem", md: "2rem" }}
+      pr={{ base: "1.5rem", md: "2rem" }}
+    >
       <Text fontSize="24px" color="black">
         Enter Delivery Details
       </Text>
@@ -64,9 +71,10 @@ const DeliveryDetails = () => {
               changeFunc={() => null}
               placeholder={input.placeHolder}
               id={input.id}
+              key={input.id}
             />
           ) : (
-            <Box>
+            <Box key={input.id}>
               <Text
                 color="black"
                 fontFamily={Inter_Display.style.fontFamily}

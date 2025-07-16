@@ -42,7 +42,10 @@ const Details = () => {
           details={data}
           btns={
             <>
-              <Link href={data?.txHash} target="_blank">
+              <Link
+                href={`/product-story/${data?.listing?._id}`}
+                target="_blank"
+              >
                 <Button
                   bgColor="white"
                   color="#282828"
@@ -57,28 +60,30 @@ const Details = () => {
                   }}
                   width="100%"
                 >
-                  View on Block Explorer
+                  View Product Story
                 </Button>
               </Link>
 
-              <Link href={`/profile/produce-details/track/${data?.orderId}`}>
-                <Button
-                  bgColor="transparent"
-                  color="#282828"
-                  borderRadius={"2rem"}
-                  px={"2.5rem"}
-                  py="14px"
-                  fontWeight={400}
-                  mb="48px"
-                  border="1px solid #282828"
-                  _hover={{
-                    bg: "rgba(40, 40, 40, .1)",
-                  }}
-                  width="100%"
-                >
-                  Track Order
-                </Button>
-              </Link>
+              {data?.deliveryStatus !== "completed" && (
+                <Link href={`/profile/produce-details/track/${data?.orderId}`}>
+                  <Button
+                    bgColor="transparent"
+                    color="#282828"
+                    borderRadius={"2rem"}
+                    px={"2.5rem"}
+                    py="14px"
+                    fontWeight={400}
+                    mb="48px"
+                    border="1px solid #282828"
+                    _hover={{
+                      bg: "rgba(40, 40, 40, .1)",
+                    }}
+                    width="100%"
+                  >
+                    Track Order
+                  </Button>
+                </Link>
+              )}
             </>
           }
         />

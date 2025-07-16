@@ -14,8 +14,6 @@ const ProjectPageBody = () => {
   const { setProject, project, tabId, id } = useProjectPageContext();
   const { user } = useAuthContext();
 
-  console.log("project", project);
-
   useEffect(() => {
     if (user) {
       getSingleProject(id as string).then((result) => {
