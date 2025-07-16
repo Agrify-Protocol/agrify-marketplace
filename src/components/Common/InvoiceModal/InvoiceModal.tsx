@@ -27,7 +27,7 @@ const InvoiceModal = ({ closeModal, txDetail }: InvoiceModalProps) => {
     <Box
       position={"fixed"}
       inset={0}
-      overflow={{base: "scroll", lg: "unset"}}
+      overflow={{ base: "scroll", lg: "unset" }}
       w={{ lg: "100vw" }}
       h={{ lg: "100vh" }}
       bgColor={"rgba(0,0,0,0.4)"}
@@ -69,7 +69,7 @@ const InvoiceModal = ({ closeModal, txDetail }: InvoiceModalProps) => {
               color={"main_black_1"}
               mt={{ base: "40px", lg: "2.5rem" }}
             >
-              {invoiceData?.quantity}tc02e
+              {/* {invoiceData?.quantity}tc02e */}
             </Text>
             <Invoice invoice_data={invoiceData as InvoiceData} isCompleted />
           </>

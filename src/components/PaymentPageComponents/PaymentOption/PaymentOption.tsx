@@ -10,7 +10,7 @@ import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { PaymentPayload } from "@/services/api/types";
 
 const PaymentOption = () => {
-  const { chosenProject, orderedAmount } = useGlobalContext();
+  const { chosenProject } = useGlobalContext(); // orderedAmount
   const { setPaymentStage } = usePaymentContext();
   const [chosenOption, setChosenOption] = useState(0);
   const handleSelect = (optionNumber: number) => {
@@ -22,7 +22,7 @@ const PaymentOption = () => {
       case 1:
         const data: PaymentPayload = {
           projectId: chosenProject?._id as string,
-          tonnes: +orderedAmount,
+          tonnes: 0, //+orderedAmount,
         };
         payForCarbon(data).then((response) => {
           window.open(response.data.authorization_url, "_self");

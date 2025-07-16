@@ -45,7 +45,7 @@ const ProjectGallery = () => {
         gridTemplateColumns={"repeat(auto-fill, minmax(20rem, 1fr))"}
       >
         {galleryItems.length ? (
-          galleryItems.map((item) => {
+          galleryItems.map((item: any) => {
             return (
               <Project
                 key={item._id}

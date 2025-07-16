@@ -21,7 +21,7 @@ const ProjectOverviewGallery = () => {
         gridTemplateColumns={"repeat(auto-fill, minmax(17.5rem, 1fr))"}
         mt={"1.5rem"}
       >
-        {fauxProjects?.map((project) => {
+        {fauxProjects?.map((project: any) => {
           return <Project key={project._id} project={project} isGalleryItem />;
         })}
       </Grid>

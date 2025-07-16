@@ -18,7 +18,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   const trxref = searchParams.get("trxref");
   const reference = searchParams.get("reference");
   const params = useParams();
-  const { chosenProject, setChosenProject, orderedAmount } = useGlobalContext();
+  const { chosenProject, setChosenProject } = useGlobalContext(); //orderedAmount
   const [purchasedTonnes, setPurchasedTonnes] = useState(0);
   const [isRedirect, setIsRedirect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -98,14 +98,10 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
             >
               {type === "success"
                 ? `You have successfully purchased ${getTonnesString(
-                    isRedirect
-                      ? +purchasedTonnes.toLocaleString()
-                      : +orderedAmount.toLocaleString()
+                    isRedirect ? +purchasedTonnes.toLocaleString() : 0 //+orderedAmount.toLocaleString()
                   )}`
                 : `Unfortunately, the purchase of ${getTonnesString(
-                    isRedirect
-                      ? +purchasedTonnes.toLocaleString()
-                      : +orderedAmount.toLocaleString()
+                    isRedirect ? +purchasedTonnes.toLocaleString() : 0 //+orderedAmount.toLocaleString()
                   )} could not be completed.`}
               {type === "error" ? (
                 <Text as="span" display="block">
