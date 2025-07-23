@@ -23,16 +23,17 @@ const CategoryPage = () => {
   const toast = useToast();
 
   useEffect(() => {
-    getListingsByCategories(type as string, toast).then((response) => {
-      if (response) {
-        setCategoryData(response);
-        setIsLoading(false);
-        window.scroll({
-          top: 0,
-          behavior: "smooth",
-        });
-      }
-    });
+    getListingsByCategories(type as string, toast)
+      .then((response) => {
+        if (response) {
+          setCategoryData(response);
+          window.scroll({
+            top: 0,
+            behavior: "smooth",
+          });
+        }
+      })
+      .finally(() => setIsLoading(false));
   }, [type, user]);
 
   return (

@@ -10,7 +10,7 @@ import BackButton from "@/components/Common/BackButton/BackButton";
 import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
 import { usePathname } from "next/navigation";
 
-const ProduceDetails = ({ user, details, btns }: ProduceDetailsProps) => {
+const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
   const pathname = usePathname();
 
   const detailsByUrl = (path: string) => {

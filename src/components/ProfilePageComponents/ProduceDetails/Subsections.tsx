@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import getStatusProps from "@/utils/getStatusProps";
+import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
 
 const Subsections = ({ details }: { details: any }) => {
   return (
@@ -45,7 +46,7 @@ const Subsections = ({ details }: { details: any }) => {
                   borderRadius={"1.89rem"}
                   fontSize={"0.875rem"}
                 >
-                  {item.value}
+                  {getProductCategoryTitle(item.value)}
                 </Text>
               ) : (
                 item.value

@@ -26,7 +26,6 @@ const ProduceBoughtTable = () => {
             setData(response?.orders ?? []);
             setIsLoading(false);
           }
-          setData([]);
         })
         .catch(() => setData([]));
     }
@@ -93,7 +92,7 @@ const ProduceBoughtTable = () => {
                           fontSize={"0.875rem"}
                           display={{ base: "none", lg: "block" }}
                         >
-                          {order?.deliveryStatus}
+                          {getProductCategoryTitle(order?.deliveryStatus)}
                         </Text>
                         <Text
                           color={"black"}

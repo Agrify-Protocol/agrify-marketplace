@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Flex } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import logo from "../../../assets/agrify_logo.svg";
 import profile_pic from "../../../assets/agrify_pfp.svg";
 import unautheticated_pic from "../../../assets/profile.svg";
@@ -12,7 +12,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NavButtons from "./NavButtons";
 import ProfileModal from "../ProfileModal/ProfileModal";
-import { useAuthContext } from "@/context/AuthContext/AuthContext";
 
 const Navbar = () => {
   const pathName = usePathname();
@@ -20,7 +19,15 @@ const Navbar = () => {
   const routesWithNav = ["/farm", "/profile", "/projects"];
   const isAuthPage = pathName.startsWith("/auth");
   const [showModal, setShowModal] = useState(false);
-  const { user } = useAuthContext();
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    setAccessToken(token);
+  }, []);
+
+  const isLoggedIn = useMemo(() => !!accessToken, [accessToken]);
+
   return (
     <Box
       bgColor={"white"}
@@ -49,12 +56,12 @@ const Navbar = () => {
           <Image src={logo} alt="" />
         </Link>
         <NavButtons
-          user={!!user}
+          user={isLoggedIn}
           route={route}
           pathName={pathName}
-          display={{ base: !!user ? "none" : "block", lg: "block" }}
+          display={{ base: isLoggedIn ? "none" : "block", lg: "block" }}
         />
-        {!!user ? (
+        {isLoggedIn ? (
           <>
             <Flex
               gap={"0.5rem"}
@@ -95,10 +102,10 @@ const Navbar = () => {
         )}
       </Box>
       <NavButtons
-        user={!!user}
+        user={isLoggedIn}
         route={route}
         pathName={pathName}
-        display={{ base: !!user ? "block" : "none", lg: "none" }}
+        display={{ base: isLoggedIn ? "block" : "none", lg: "none" }}
       />
     </Box>
   );

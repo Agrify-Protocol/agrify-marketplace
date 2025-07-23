@@ -1,6 +1,6 @@
 "use client";
 
-import { Grid } from "@chakra-ui/react";
+import { Grid, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Category from "../Category/Category";
 import { getCategories } from "@/services/api/projects";
@@ -10,15 +10,15 @@ import EmptyText from "@/components/Common/EmptyText/EmptyText";
 
 const CategoryContainer = ({ search }: { search: string }) => {
   const { categories, setCategories } = useGlobalContext();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const toast = useToast();
 
   useEffect(() => {
-    setIsLoading(true);
-    getCategories(search).then((response) => {
+    getCategories(toast, search).then((response) => {
       if (response) {
         setCategories(response?.products);
-        setIsLoading(false);
       }
+      setIsLoading(false);
     });
   }, [search]);
 

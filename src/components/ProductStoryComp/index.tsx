@@ -35,10 +35,14 @@ const ProductStoryComp = () => {
 
   useEffect(() => {
     getProductStory(id, toast).then((response) => {
-      setRes(response);
+      if (response) {
+        setRes(response);
+      }
       setLoading(false);
     });
   }, [id]);
+
+  console.log("res", res);
 
   return (
     <Box bg="white">
@@ -95,7 +99,7 @@ const ProductStoryComp = () => {
       >
         {loading ? (
           <PageLoader />
-        ) : res ? (
+        ) : res?.listing ? (
           <Box
             width={{ base: "100%", sm: "90%", md: "457px" }}
             rounded="16px"

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ProjectPageProvider } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import ProduceDetails from "@/components/ProfilePageComponents/ProduceDetails/page";
 import Link from "next/link";
@@ -14,12 +14,19 @@ import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
 
 const ProjectPage = () => {
   const { setChosenProject } = useGlobalContext();
-  const { user } = useAuthContext();
   const { id } = useParams();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<any>([]);
   const toast = useToast();
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    setAccessToken(token);
+  }, []);
+
+  const isLoggedIn = useMemo(() => !!accessToken, [accessToken]);
 
   useEffect(() => {
     getListingsById(id as string, toast).then((response) => {
@@ -28,7 +35,7 @@ const ProjectPage = () => {
         setIsLoading(false);
       }
     });
-  }, [id, user]);
+  }, [id, isLoggedIn]);
 
   return (
     <ProjectPageProvider>
@@ -36,11 +43,11 @@ const ProjectPage = () => {
         <PageLoader />
       ) : (
         <ProduceDetails
-          user={user}
+          user={isLoggedIn}
           details={data}
           btns={
             <>
-              {!!user ? (
+              {!!isLoggedIn ? (
                 <>
                   <Button
                     borderRadius="2rem"
@@ -48,7 +55,8 @@ const ProjectPage = () => {
                     py={{ base: "12px", md: "14px" }}
                     fontSize={{ base: "14px", md: "16px" }}
                     fontWeight={400}
-                    mb={{ base: "32px", md: "48px" }}
+                    mb={{ base: "24px", md: "32px" }}
+                    mt={{ base: "24px", md: "32px" }}
                     width="100%"
                     bg="agrify_green"
                     _hover={{ bg: "#0ba842" }}
@@ -69,11 +77,10 @@ const ProjectPage = () => {
                       py={{ base: "12px", md: "14px" }}
                       fontSize={{ base: "14px", md: "16px" }}
                       fontWeight={400}
-                      mb={{ base: "24px", md: "32px" }}
+                      mb={{ base: "32px", md: "48px" }}
                       border="1px solid #282828"
                       _hover={{ bg: "rgba(40, 40, 40, .1)" }}
                       width="100%"
-                      mt={{ base: "24px", md: "32px" }}
                     >
                       View Product Story
                     </Button>

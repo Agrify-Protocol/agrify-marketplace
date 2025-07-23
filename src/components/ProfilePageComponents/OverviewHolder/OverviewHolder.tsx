@@ -19,6 +19,7 @@ const OverviewHolder = () => {
     if (user) {
       setIsLoading(true);
       getOverview(toast).then((response) => {
+        console.log("response", response);
         if (response) {
           setOverview(response.data);
           setIsLoading(false);
@@ -26,6 +27,8 @@ const OverviewHolder = () => {
       });
     }
   }, [user]);
+
+  console.log("user", user);
 
   return (
     <Grid

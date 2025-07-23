@@ -1,10 +1,9 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { AuthContextType, Props, User } from "./types";
 import { refreshAccessToken } from "@/services/api/auth";
 import {
-  getAccessToken,
   getRefreshToken,
   getUser,
   preserveSession,
@@ -33,6 +32,7 @@ export const AuthContextProvider = ({ children }: Props) => {
   ];
 
   const toast = useToast();
+  const isLoggedIn = useMemo(() => !!accessToken, [accessToken]);
 
   useEffect(() => {
     const handleUser = async () => {
@@ -41,7 +41,11 @@ export const AuthContextProvider = ({ children }: Props) => {
         if (user) {
           setUser(user);
         }
-        if (!unauthenticatedRoutes.includes(pathname) && !!user) {
+        if (
+          !unauthenticatedRoutes.includes(pathname) &&
+          !!user &&
+          !isLoggedIn
+        ) {
           router.push("/auth/login");
         }
         setFetchingUser(false);
@@ -50,14 +54,10 @@ export const AuthContextProvider = ({ children }: Props) => {
 
     handleUser();
 
-    getAccessToken().then((token) => {
-      setAccessToken(token);
-    });
-
     getRefreshToken().then((token) => {
       setRefreshToken(token);
     });
-  }, [user, pathname]);
+  }, []);
 
   useEffect(() => {
     if (accessToken) {
@@ -76,7 +76,12 @@ export const AuthContextProvider = ({ children }: Props) => {
             if (result) {
               preserveSession(user, result.token, refreshToken);
             }
-            resetAuthCookies();
+          })
+          .catch((err) => {
+            if (err.message) {
+              resetAuthCookies();
+              router.push("/auth/login");
+            }
           })
           .finally(() => {
             setInterval(() => {

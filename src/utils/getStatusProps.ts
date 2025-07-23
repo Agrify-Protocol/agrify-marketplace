@@ -6,14 +6,14 @@ const getStatusProps = (status: string) => {
         bg: "rgba(12, 193, 76, 0.1)",
         text: "rgba(12, 193, 76, 1)",
       };
-    case "inprogress":
+    case "in_progress":
     case "pending":
     case "processing":
       return {
         bg: "rgba(245, 203, 37, 0.1)",
         text: "rgba(245, 203, 37, 1)",
       };
-    case "intransit":
+    case "in_transit":
       return {
         bg: "rgba(0, 174, 239, 0.1)",
         text: "rgba(0, 174, 239, 1)",

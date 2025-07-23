@@ -1,10 +1,9 @@
-import { User } from "@/context/AuthContext/types";
 import React from "react";
 
 export interface ProduceDetailsProps {
   details: any;
   btns: React.ReactNode;
-  user: User | null;
+  user?: boolean;
 }
 
 export interface HighlightItemProps {

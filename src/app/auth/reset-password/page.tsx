@@ -58,9 +58,8 @@ const Reset = () => {
               const user_id = data[2];
               setResetData({ ...resetData, user_id, verification_code });
               setStage(stage + 1);
-            } else {
-              setStage(1);
             }
+            setStage(1);
           }
         );
         break;

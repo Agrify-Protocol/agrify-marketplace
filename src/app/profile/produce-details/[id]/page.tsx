@@ -1,7 +1,7 @@
 "use client";
 
 import ProduceDetails from "@/components/ProfilePageComponents/ProduceDetails/page";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button, Flex, useToast } from "@chakra-ui/react";
 import Spinner from "@/components/Common/Spinner/Spinner";
 import { getProduceDetails } from "@/services/api/profile";
@@ -15,6 +15,15 @@ const Details = () => {
   const params = useParams();
   const { user } = useAuthContext();
   const toast = useToast();
+
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    setAccessToken(token);
+  }, []);
+
+  const isLoggedIn = useMemo(() => !!accessToken, [accessToken]);
 
   useEffect(() => {
     if (user) {
@@ -40,7 +49,7 @@ const Details = () => {
         </Flex>
       ) : (
         <ProduceDetails
-          user={user}
+          user={isLoggedIn}
           details={data}
           btns={
             <>
