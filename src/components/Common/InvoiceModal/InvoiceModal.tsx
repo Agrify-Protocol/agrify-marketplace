@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import BackButton from "../BackButton/BackButton";
 import { InvoiceModalProps } from "./types";
@@ -14,13 +14,16 @@ import { parseSingleInvoiceResponse } from "@/utils/parseSingleInvoiceResponse";
 const InvoiceModal = ({ closeModal, txDetail }: InvoiceModalProps) => {
   const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     setIsLoading(true);
-    getSingleInvoice(txDetail?.txID as string).then((response) => {
-      const data = parseSingleInvoiceResponse(response);
-      setInvoiceData(data);
-      setIsLoading(false);
+    getSingleInvoice(txDetail?.txID as string, toast).then((response) => {
+      if (response) {
+        const data = parseSingleInvoiceResponse(response);
+        setInvoiceData(data);
+        setIsLoading(false);
+      }
     });
   }, [txDetail]);
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ReportRow from "../ReportRow/ReportRow";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
@@ -14,11 +14,12 @@ const ReportsTable = () => {
   const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(true);
   const { reports, setReports } = useGlobalContext();
+  const toast = useToast();
 
   useEffect(() => {
     if (user) {
       setIsLoading(true);
-      getReports().then((response) => {
+      getReports(toast).then((response) => {
         if (response) {
           setReports(response);
           setIsLoading(false);

@@ -2,7 +2,7 @@
 
 import ProduceDetails from "@/components/ProfilePageComponents/ProduceDetails/page";
 import { useEffect, useState } from "react";
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, useToast } from "@chakra-ui/react";
 import Spinner from "@/components/Common/Spinner/Spinner";
 import { getProduceDetails } from "@/services/api/profile";
 import { useParams } from "next/navigation";
@@ -14,10 +14,11 @@ const Details = () => {
   const [data, setData] = useState<any>({});
   const params = useParams();
   const { user } = useAuthContext();
+  const toast = useToast();
 
   useEffect(() => {
     if (user) {
-      getProduceDetails(params.id).then((response) => {
+      getProduceDetails(params.id, toast).then((response) => {
         if (response) {
           setData(response);
           setIsLoading(false);

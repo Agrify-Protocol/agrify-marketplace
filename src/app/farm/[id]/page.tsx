@@ -2,7 +2,7 @@
 
 import FarmDetail from "@/components/FarmPageComponents/FarmDetail/FarmDetail";
 import Slider from "@/components/FarmPageComponents/Slider/Slider";
-import { Box, Grid } from "@chakra-ui/react";
+import { Box, Grid, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getFarm } from "@/services/api/farm";
 import { DetailedFarm } from "./types";
@@ -13,11 +13,14 @@ import BackButton from "@/components/Common/BackButton/BackButton";
 const FarmPage = ({ params }: { params: { id: string } }) => {
   const { user } = useAuthContext();
   const [farm, setFarm] = useState<DetailedFarm | null>(null);
+  const toast = useToast();
 
   useEffect(() => {
     if (user) {
-      getFarm(params.id).then((response) => {
-        setFarm(response);
+      getFarm(params.id, toast).then((response) => {
+        if (response) {
+          setFarm(response);
+        }
       });
     }
   }, [params.id, user]);

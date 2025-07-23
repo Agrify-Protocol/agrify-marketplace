@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Button } from "@chakra-ui/react";
+import { Box, Flex, Text, Button, useToast } from "@chakra-ui/react";
 import check from "../../assets/icon-park-solid_check-one.svg";
 import error from "../../assets/error.svg";
 import Image from "next/image";
@@ -22,18 +22,19 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   const [purchasedTonnes, setPurchasedTonnes] = useState(0);
   const [isRedirect, setIsRedirect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     if (!chosenProject) {
       if (trxref && reference) {
         setIsRedirect(true);
         setIsLoading(true);
-        getPurchasesByReference(trxref).then((response) => {
+        getPurchasesByReference(trxref, toast).then((response) => {
           if (response) {
             const tx = response[0];
             setPurchasedTonnes(tx.tonnes);
-            getSingleProject(tx.projectId).then((response) => {
-              setChosenProject(response);
+            getSingleProject(tx.projectId, toast).then((response) => {
+              if (response) setChosenProject(response);
             });
           }
         });

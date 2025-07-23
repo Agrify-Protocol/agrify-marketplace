@@ -7,7 +7,7 @@ import { getOrders } from "@/services/api/profile";
 import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
 import getStatusProps from "@/utils/getStatusProps";
 import { readableDate } from "@/utils/parseData";
-import { Flex, Grid, Box, Text } from "@chakra-ui/react";
+import { Flex, Grid, Box, Text, useToast } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -15,16 +15,18 @@ const ProduceBoughtTable = () => {
   const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<any>([]);
+  const toast = useToast();
 
   useEffect(() => {
     if (user) {
       setIsLoading(true);
-      getOrders()
+      getOrders(toast)
         .then((response) => {
           if (response) {
             setData(response?.orders ?? []);
             setIsLoading(false);
           }
+          setData([]);
         })
         .catch(() => setData([]));
     }

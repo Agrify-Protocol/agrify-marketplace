@@ -8,6 +8,7 @@ import {
   FormLabel,
   Input,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
 import { ReportModalProps } from "./types";
@@ -21,17 +22,20 @@ const ReportModal = ({ setShowModal }: ReportModalProps) => {
   const [reportName, setReportName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { setReports } = useGlobalContext();
+  const toast = useToast();
 
   const closeModal = () => {
     setIsLoading(true);
-    createReport({ reportName }).then(() => {
-      getReports().then((response) => {
-        if (response) {
-          setReports(response);
-          setIsLoading(false);
-          setShowModal(false);
-        }
-      });
+    createReport({ reportName }, toast).then((res) => {
+      if (res) {
+        getReports(toast).then((response) => {
+          if (response) {
+            setReports(response);
+            setIsLoading(false);
+            setShowModal(false);
+          }
+        });
+      }
     });
   };
 

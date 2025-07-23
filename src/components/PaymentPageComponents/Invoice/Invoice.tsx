@@ -52,17 +52,15 @@ const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
               ...invoice_data,
               amount: Number(removeCommas("")),
             };
-            createInvoice(createInvoicePayload as unknown as InvoicePayloadType)
-              .then((_result) => {
-                setIsLoading(false);
+            createInvoice(
+              createInvoicePayload as unknown as InvoicePayloadType,
+              toast
+            ).then((_result) => {
+              if (_result) {
                 router.push("/success");
-              })
-              .catch((err) => {
-                setIsLoading(false);
-                toast(
-                  new ToastData("Something went wrong", err.message, "error")
-                );
-              });
+              }
+              setIsLoading(false);
+            });
           }}
         >
           Confirm

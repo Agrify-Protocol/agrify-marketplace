@@ -7,17 +7,18 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { projectSections } from "@/context/ProjectsPageContext/constants";
 import { useProjectPageContext } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import { getSingleProject } from "@/services/api/projects";
-import { Box } from "@chakra-ui/react";
+import { Box, useToast } from "@chakra-ui/react";
 import { useEffect } from "react";
 
 const ProjectPageBody = () => {
   const { setProject, project, tabId, id } = useProjectPageContext();
   const { user } = useAuthContext();
+  const toast = useToast();
 
   useEffect(() => {
     if (user) {
-      getSingleProject(id as string).then((result) => {
-        setProject(result);
+      getSingleProject(id as string, toast).then((result) => {
+        if (result) setProject(result);
       });
     }
   }, [id, user]);

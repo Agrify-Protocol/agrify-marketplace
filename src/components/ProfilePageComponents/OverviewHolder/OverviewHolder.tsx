@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Grid } from "@chakra-ui/react";
+import { Flex, Grid, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { overviews } from "./constants";
 import OverviewBox from "../OverviewBox/OverviewBox";
@@ -13,11 +13,12 @@ const OverviewHolder = () => {
   const { user } = useAuthContext();
   const [overview, setOverview] = useState<OverviewType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const toast = useToast();
 
   useEffect(() => {
     if (user) {
       setIsLoading(true);
-      getOverview().then((response) => {
+      getOverview(toast).then((response) => {
         if (response) {
           setOverview(response.data);
           setIsLoading(false);

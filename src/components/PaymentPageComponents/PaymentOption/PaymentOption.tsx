@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { OptionProps } from "./types";
 
@@ -16,6 +16,7 @@ const PaymentOption = () => {
   const handleSelect = (optionNumber: number) => {
     setChosenOption(optionNumber);
   };
+  const toast = useToast();
 
   const handleSubmit = () => {
     switch (chosenOption) {
@@ -24,8 +25,10 @@ const PaymentOption = () => {
           projectId: chosenProject?._id as string,
           tonnes: 0, //+orderedAmount,
         };
-        payForCarbon(data).then((response) => {
-          window.open(response.data.authorization_url, "_self");
+        payForCarbon(data, toast).then((response) => {
+          if (response) {
+            window.open(response.data.authorization_url, "_self");
+          }
         });
         break;
       case 2:

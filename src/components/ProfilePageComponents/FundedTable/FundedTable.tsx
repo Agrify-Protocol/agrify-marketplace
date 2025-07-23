@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Flex, Grid, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, Text, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Transaction } from "@/components/ProjectPageComponents/Purchases/types";
 import { getAllPurchases } from "@/services/api/purchases";
@@ -10,14 +10,18 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 
 const FundedTable = () => {
   const { user } = useAuthContext();
+  const toast = useToast();
   const [transactions, setTransations] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (user) {
       setIsLoading(true);
-      getAllPurchases().then((response) => {
-        setTransations(response);
-        setIsLoading(false);
+      getAllPurchases(toast).then((response) => {
+        if (response) {
+          setTransations(response);
+          setIsLoading(false);
+        }
       });
     }
   }, [user]);

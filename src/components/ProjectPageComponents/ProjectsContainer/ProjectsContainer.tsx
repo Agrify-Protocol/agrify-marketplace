@@ -1,6 +1,6 @@
 "use client";
 
-import { Grid } from "@chakra-ui/react";
+import { Grid, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { projects } from "./constants";
 import Project from "../Project/Project";
@@ -11,11 +11,12 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 const ProjectsContainer = () => {
   const { user } = useAuthContext();
   const { allProjects, setAllProjects } = useGlobalContext();
+  const toast = useToast();
 
   useEffect(() => {
     if (user) {
-      getAllProjects(1).then((result) => {
-        setAllProjects(result);
+      getAllProjects(1, toast).then((result) => {
+        if (result) setAllProjects(result);
       });
     }
   }, [user]);

@@ -11,6 +11,7 @@ import {
   resetAuthCookies,
 } from "@/app/lib/actions";
 import { usePathname, useRouter } from "next/navigation";
+import { useToast } from "@chakra-ui/react";
 
 const AuthContext = createContext({} as AuthContextType);
 
@@ -30,6 +31,8 @@ export const AuthContextProvider = ({ children }: Props) => {
     "/projects",
     "/profile/produce-details/track",
   ];
+
+  const toast = useToast();
 
   useEffect(() => {
     const handleUser = async () => {
@@ -68,16 +71,12 @@ export const AuthContextProvider = ({ children }: Props) => {
     const fifteen_mins_in_millisecs = 900000;
     if (user && refreshToken) {
       const handleRefresh = () => {
-        refreshAccessToken({ refreshToken })
+        refreshAccessToken({ refreshToken }, toast)
           .then((result) => {
-            preserveSession(user, result.token, refreshToken);
-          })
-          .catch((err) => {
-            if (err.message) {
-              alert(err.message);
-              resetAuthCookies();
-              // router.push("/auth/login");
+            if (result) {
+              preserveSession(user, result.token, refreshToken);
             }
+            resetAuthCookies();
           })
           .finally(() => {
             setInterval(() => {

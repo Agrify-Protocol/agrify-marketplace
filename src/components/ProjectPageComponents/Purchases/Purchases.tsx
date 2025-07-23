@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Flex, Grid, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, Text, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Transaction, TransactionModalType } from "./types";
 import { useScreenFreeze } from "@/hooks/useScreenFreeze";
@@ -17,10 +17,11 @@ const Purchases = () => {
     useState<TransactionModalType | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     setIsLoading(true);
-    getPurchasesByProject(id as string).then((response) => {
+    getPurchasesByProject(id as string, toast).then((response) => {
       if (Array.isArray(response)) {
         setTransactions(response);
       } else setTransactions([]);

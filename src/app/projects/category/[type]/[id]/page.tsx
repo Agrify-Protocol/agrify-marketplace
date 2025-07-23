@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ProjectPageProvider } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import ProduceDetails from "@/components/ProfilePageComponents/ProduceDetails/page";
 import Link from "next/link";
-import { Button } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { useParams, useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
@@ -19,11 +19,14 @@ const ProjectPage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<any>([]);
+  const toast = useToast();
 
   useEffect(() => {
-    getListingsById(id as string).then((response) => {
-      setData(response);
-      setIsLoading(false);
+    getListingsById(id as string, toast).then((response) => {
+      if (response) {
+        setData(response);
+        setIsLoading(false);
+      }
     });
   }, [id, user]);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Flex, Grid, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, Text, useToast } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getListingsByCategories } from "@/services/api/projects";
@@ -20,15 +20,18 @@ const CategoryPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [categoryData, setCategoryData] = useState<any>([]);
   const [search, setSearch] = useState("");
+  const toast = useToast();
 
   useEffect(() => {
-    getListingsByCategories(type as string).then((response) => {
-      setCategoryData(response);
-      setIsLoading(false);
-      window.scroll({
-        top: 0,
-        behavior: "smooth",
-      });
+    getListingsByCategories(type as string, toast).then((response) => {
+      if (response) {
+        setCategoryData(response);
+        setIsLoading(false);
+        window.scroll({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
     });
   }, [type, user]);
 
