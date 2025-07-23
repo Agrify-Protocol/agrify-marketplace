@@ -17,6 +17,22 @@ const createInstance = (path = ""): AxiosInstance => {
     return config;
   });
 
+  instance.interceptors.response.use(
+    (response) => {
+      if (response.data?.error) {
+        throw new Error(response.data.error);
+      }
+      return response;
+    },
+    (error) => {
+      const message =
+        error?.response?.data?.error ||
+        error?.message ||
+        "Something went wrong";
+      return Promise.reject(new Error(message));
+    }
+  );
+
   return instance;
 };
 

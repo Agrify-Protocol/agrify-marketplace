@@ -22,16 +22,14 @@ const CategoryPage = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    if (user) {
-      getListingsByCategories(type as string).then((response) => {
-        setCategoryData(response);
-        setIsLoading(false);
-        window.scroll({
-          top: 0,
-          behavior: "smooth",
-        });
+    getListingsByCategories(type as string).then((response) => {
+      setCategoryData(response);
+      setIsLoading(false);
+      window.scroll({
+        top: 0,
+        behavior: "smooth",
       });
-    }
+    });
   }, [type, user]);
 
   return (
@@ -115,17 +113,6 @@ const CategoryPage = () => {
                     />
 
                     <Box position="relative" zIndex={2} p="27px" height="100%">
-                      <Text
-                        bg="#DAD7FE"
-                        rounded="6.19px"
-                        w="fit-content"
-                        px="10px"
-                        color="black"
-                        fontSize={{ base: "12px", sm: "13px", lg: "14px" }}
-                      >
-                        4+ SDG Impact
-                      </Text>
-
                       <Box
                         position="absolute"
                         bottom="0"

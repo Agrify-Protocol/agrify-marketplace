@@ -1,8 +1,6 @@
 "use client";
 
-import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { Box, Flex, Text } from "@chakra-ui/react";
-import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import Image from "next/image";
 import corn from "@/assets/corn.svg";
 import bg from "../../assets/hero-bg.png";
@@ -11,7 +9,6 @@ import Search from "@/components/Common/Search/Search";
 import { useState } from "react";
 
 export default function Home() {
-  const { fetchingUser } = useAuthContext();
   const [search, setSearch] = useState("");
 
   return (
@@ -75,7 +72,7 @@ export default function Home() {
         </Flex>
       </Box>
       <Search text="Trending Produce" search={search} setSearch={setSearch} />
-      {fetchingUser ? <PageLoader /> : <CategoryContainer search={search} />}
+      <CategoryContainer search={search} />
     </Box>
   );
 }

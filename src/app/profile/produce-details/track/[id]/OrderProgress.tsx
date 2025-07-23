@@ -7,35 +7,23 @@ import Image from "next/image";
 import { useMemo } from "react";
 import Accepted from "@/assets/track/Accepted";
 import Stroke from "@/assets/track/Stroke";
-import Shipped from "@/assets/track/Shipped";
 import Transit from "@/assets/track/Transit";
 import Delivered from "@/assets/track/Delivered";
-import Arrived from "@/assets/track/Arrived";
 
 const OrderProgress = ({ step }: { step: number }) => {
   const progress = useMemo(() => {
     return [
       { title: "Order Accepted", icon: <Accepted status={step >= 0} /> },
       {
-        title: "Order Packaged and Shipped",
-        icon: <Shipped status={step >= 1} />,
+        title: "Order in Transit",
+        icon: <Transit status={step >= 1} />,
       },
-      {
-        title: "In transit to destination country",
-        icon: <Transit status={step >= 2} />,
-      },
-      { title: "Order Arrived country", icon: <Arrived status={step >= 3} /> },
-      {
-        title: "In transit to delivery location",
-        icon: <Transit status={step >= 4} />,
-      },
-      { title: "Order Delivered", icon: <Delivered status={step >= 5} /> },
+      { title: "Order Delivered", icon: <Delivered status={step >= 2} /> },
     ];
   }, [step]);
 
   return (
     <Box w="50%" alignSelf="center">
-      {/* display="flex" alignItems="center" */}
       <Box maxW="300px" margin="10px auto">
         <BackButton />
         <Box>
@@ -90,7 +78,7 @@ const OrderProgress = ({ step }: { step: number }) => {
         bottom="0"
         left="0"
         right="0"
-        height={`${100 - step * 15}%`}
+        height={`${80 - step * 5}%`}
         bgGradient="linear(to-b, rgba(255,255,255,0), white)"
         pointerEvents="none"
         zIndex="1"

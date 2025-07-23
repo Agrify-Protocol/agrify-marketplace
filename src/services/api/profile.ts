@@ -1,46 +1,52 @@
+import { toastFn } from "@/utils/toastFn";
 import { profileInstance, xrpInstance } from "../axios/instances";
 
-export const getOverview = async () => {
+export const getOverview = async (toast: any) => {
   try {
     const request = await profileInstance.get("/overview");
     return request.data;
   } catch (error) {
-    return error;
+    toastFn(toast, error);
   }
 };
 
-export const getReports = async () => {
+export const getReports = async (toast: any) => {
   try {
     const request = await profileInstance.get("/reports");
     return request.data;
   } catch (error) {
-    return error;
+    toastFn(toast, error);
   }
 };
 
-export const createReport = async (data: { reportName: string }) => {
+export const createReport = async (
+  data: {
+    reportName: string;
+  },
+  toast: any
+) => {
   try {
     const request = await profileInstance.post("/reports/create", data);
     return request.data;
   } catch (error) {
-    return error;
+    toastFn(toast, error);
   }
 };
 
-export const getOrders = async () => {
+export const getOrders = async (toast: any) => {
   try {
     const request = await xrpInstance.get("/orders/placed");
     return request.data;
   } catch (error) {
-    return error;
+    toastFn(toast, error);
   }
 };
 
-export const getProduceDetails = async (id: string | string[]) => {
+export const getProduceDetails = async (id: string | string[], toast: any) => {
   try {
     const request = await xrpInstance.get(`orders/${id}`);
     return request.data;
   } catch (error) {
-    return error;
+    toastFn(toast, error);
   }
 };

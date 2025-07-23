@@ -1,5 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { ReportType } from "@/components/ProfilePageComponents/ReportsTable/types";
+import { UseToastOptions } from "@chakra-ui/react";
 
 export type GlobalContextProps = {
   children: ReactNode;
@@ -14,6 +15,7 @@ export type GlobalContextType = {
   setCategories: Dispatch<SetStateAction<any[]>>;
   reports: ReportType[];
   setReports: Dispatch<SetStateAction<ReportType[]>>;
+  toast: (options: UseToastOptions) => void;
 };
 
 export interface AllProjectsResponse {

@@ -10,7 +10,7 @@ import BackButton from "@/components/Common/BackButton/BackButton";
 import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
 import { usePathname } from "next/navigation";
 
-const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
+const ProduceDetails = ({ user, details, btns }: ProduceDetailsProps) => {
   const pathname = usePathname();
 
   const detailsByUrl = (path: string) => {
@@ -66,7 +66,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
       }'s Farm`,
       productName: details?.product?.name,
       price: `${details?.pricePerKg?.toLocaleString()}/kg`,
-      farmScore: details?.listing?.farm?.farmSuggestion?.FarmScore,
+      farmScore: details?.farm?.farmSuggestion?.FarmScore,
       subsection: {
         desc: details?.description,
         images: details?.images,
@@ -142,7 +142,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
           <Box>
             <Text
               color={"black"}
-              mb={{ base: "25px", lg: "40px" }}
+              mb={{ base: "0", lg: "40px" }}
               fontSize="14px"
             >
               Farm Score

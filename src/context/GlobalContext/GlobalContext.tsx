@@ -1,12 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import {
   AllProjectsResponse,
   GlobalContextProps,
   GlobalContextType,
 } from "./types";
 import { ReportType } from "@/components/ProfilePageComponents/ReportsTable/types";
+import { useToast } from "@chakra-ui/react";
 
 const GlobalContext = createContext({} as GlobalContextType);
 export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
@@ -20,6 +21,7 @@ export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
   const [categories, setCategories] = useState<any[]>([]);
 
   const [reports, setReports] = useState<ReportType[]>([]);
+  const toast = useToast();
 
   return (
     <GlobalContext.Provider
@@ -32,6 +34,7 @@ export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
         setCategories,
         reports,
         setReports,
+        toast,
       }}
     >
       {children}

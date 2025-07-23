@@ -18,17 +18,7 @@ const InputSteps = ({
         <Text fontSize="24px" fontWeight="450" color="black" mb="30px">
           Confirm Delivery
         </Text>
-        <Text mb="50px">
-          Enter the code sent over to you to confirm delivery of your package.
-        </Text>
-        <CustomInput
-          id="first_name"
-          value={code}
-          type="text"
-          placeholder="Enter Verification Code"
-          label="Enter Code"
-          changeFunc={(e) => setCode(e.target.value)}
-        />
+        <Text mb="26px">Confirm delivery of your package.</Text>
         <Button
           bgColor={code.length > 6 ? "#0CC14C" : "#EEEEEE"}
           color={code.length > 6 ? "white" : "#282828"}

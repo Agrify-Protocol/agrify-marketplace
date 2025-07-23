@@ -4,4 +4,5 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 export interface NavButtonsProps extends BoxProps {
   route: AppRouterInstance;
   pathName: string;
+  user: boolean;
 }

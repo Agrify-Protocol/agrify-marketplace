@@ -45,29 +45,24 @@ const Reset = () => {
     setIsLoading(true);
     switch (stage) {
       case 1:
-        getVerificationToken({ email: resetData.email })
-          .then((response) => {
+        getVerificationToken({ email: resetData.email }, toast).then(
+          (response) => {
             setIsLoading(false);
-            const data = response.link.split("=");
-            let verification_code = data[1];
-            verification_code = verification_code.substring(
-              0,
-              verification_code.length - 3
-            );
-            const user_id = data[2];
-            setResetData({ ...resetData, user_id, verification_code });
-            setStage(stage + 1);
-          })
-          .catch((err) => {
-            const errToast = new ToastData(
-              "Something went wrong!",
-              err.message,
-              "error"
-            );
-            setIsLoading(false);
-            toast(errToast);
-            setStage(1);
-          });
+            if (response) {
+              const data = response.link.split("=");
+              let verification_code = data[1];
+              verification_code = verification_code.substring(
+                0,
+                verification_code.length - 3
+              );
+              const user_id = data[2];
+              setResetData({ ...resetData, user_id, verification_code });
+              setStage(stage + 1);
+            } else {
+              setStage(1);
+            }
+          }
+        );
         break;
       case 2:
         setIsLoading(false);
@@ -75,20 +70,25 @@ const Reset = () => {
         break;
       case 3:
         if (compareStrings(resetData.new_password, resetData.new_password2)) {
-          resetPassword({
-            userId: resetData.user_id,
-            token: resetData.verification_code,
-            password: resetData.new_password,
-          }).then((response) => {
-            toast(
-              new ToastData(
-                response.message,
-                "Your password has been updated successfully!",
-                "success"
-              )
-            );
+          resetPassword(
+            {
+              userId: resetData.user_id,
+              token: resetData.verification_code,
+              password: resetData.new_password,
+            },
+            toast
+          ).then((response) => {
             setIsLoading(false);
-            router.push("/auth/login");
+            if (response) {
+              toast(
+                new ToastData(
+                  response.message,
+                  "Your password has been updated successfully!",
+                  "success"
+                )
+              );
+              router.push("/auth/login");
+            }
           });
         } else {
           toast(passwordToast);

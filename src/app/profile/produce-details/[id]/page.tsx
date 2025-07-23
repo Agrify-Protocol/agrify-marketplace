@@ -39,6 +39,7 @@ const Details = () => {
         </Flex>
       ) : (
         <ProduceDetails
+          user={user}
           details={data}
           btns={
             <>

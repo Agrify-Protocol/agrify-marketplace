@@ -22,6 +22,14 @@ export const AuthContextProvider = ({ children }: Props) => {
   const [fetchingUser, setFetchingUser] = useState(true);
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
+  const unauthenticatedRoutes = [
+    "/auth/reset-password",
+    "/auth/signup",
+    "/auth/login",
+    "/product-story",
+    "/projects",
+    "/profile/produce-details/track",
+  ];
 
   useEffect(() => {
     const handleUser = async () => {
@@ -29,20 +37,11 @@ export const AuthContextProvider = ({ children }: Props) => {
       setTimeout(() => {
         if (user) {
           setUser(user);
-          setFetchingUser(false);
-        } else if (
-          [
-            "/auth/reset-password",
-            "/auth/signup",
-            "/auth/login",
-            "/product-story",
-          ].includes(pathname)
-        ) {
-          return null;
-        } else {
-          setFetchingUser(false);
+        }
+        if (!unauthenticatedRoutes.includes(pathname) && !!user) {
           router.push("/auth/login");
         }
+        setFetchingUser(false);
       }, 3000);
     };
 
@@ -55,7 +54,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     getRefreshToken().then((token) => {
       setRefreshToken(token);
     });
-  }, []);
+  }, [user, pathname]);
 
   useEffect(() => {
     if (accessToken) {
@@ -77,7 +76,7 @@ export const AuthContextProvider = ({ children }: Props) => {
             if (err.message) {
               alert(err.message);
               resetAuthCookies();
-              router.push("/auth/login");
+              // router.push("/auth/login");
             }
           })
           .finally(() => {

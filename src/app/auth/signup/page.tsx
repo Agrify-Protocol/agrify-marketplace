@@ -9,7 +9,6 @@ import React, { useState } from "react";
 import AuthPageBottom from "@/components/AuthPageComponents/AuthPageBottom/AuthPageBottom";
 import { registerUser } from "@/services/api/auth";
 import { successToast } from "./constants";
-import { ToastData } from "@/utils/classes";
 import { useRouter } from "next/navigation";
 import { validateEmail, validateLength } from "@/utils/validationSchema";
 
@@ -50,18 +49,12 @@ const Signup = () => {
 
   const handleRegister = () => {
     setIsLoading(true);
-    registerUser(userData)
-      .then(() => {
-        toast(successToast);
-        router.push("/auth/login");
-      })
-      .catch((err) => {
-        const errorToast = new ToastData(
-          "Something went wrong!",
-          err?.message,
-          "error"
-        );
-        toast(errorToast);
+    registerUser(userData, toast)
+      .then((res) => {
+        if (res) {
+          toast(successToast);
+          router.push("/auth/login");
+        }
       })
       .finally(() => {
         setIsLoading(false);

@@ -5,26 +5,22 @@ import React, { useEffect, useState } from "react";
 import Category from "../Category/Category";
 import { getCategories } from "@/services/api/projects";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
-import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import EmptyText from "@/components/Common/EmptyText/EmptyText";
 
 const CategoryContainer = ({ search }: { search: string }) => {
-  const { user } = useAuthContext();
   const { categories, setCategories } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      setIsLoading(true);
-      getCategories(search).then((response) => {
-        if (response) {
-          setCategories(response?.products);
-          setIsLoading(false);
-        }
-      });
-    }
-  }, [user, search]);
+    setIsLoading(true);
+    getCategories(search).then((response) => {
+      if (response) {
+        setCategories(response?.products);
+        setIsLoading(false);
+      }
+    });
+  }, [search]);
 
   return (
     <>
