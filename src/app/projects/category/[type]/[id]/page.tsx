@@ -7,7 +7,6 @@ import Link from "next/link";
 import { Button, useToast } from "@chakra-ui/react";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { useParams, useRouter } from "next/navigation";
-import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { getListingsById } from "@/services/api/projects";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
@@ -87,7 +86,9 @@ const ProjectPage = () => {
                   </Link>
                 </>
               ) : (
-                <Link href="/auth/signin">
+                <Link
+                  href={`/auth/login?category=${data?.name}&id=${data?._id}`}
+                >
                   <Button
                     borderRadius="2rem"
                     px={{ base: "1.5rem", md: "2.5rem" }}

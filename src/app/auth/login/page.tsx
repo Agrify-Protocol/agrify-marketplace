@@ -11,6 +11,7 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { validateEmail, validateLength } from "@/utils/validationSchema";
 import { preserveSession } from "@/app/lib/actions";
 import { successToast } from "./constants";
+import { useSearchParams } from "next/navigation";
 
 const Login = () => {
   const toast = useToast();
@@ -18,6 +19,10 @@ const Login = () => {
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   const [isValid, setIsValid] = useState({ email: false, password: false });
   const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
+
+  const category = searchParams.get("category");
+  const id = searchParams.get("id");
 
   const updateDetails = (key: string, value: string) => {
     const validate = () => {
@@ -45,7 +50,11 @@ const Login = () => {
         setAccessToken(result.token);
         setRefreshToken(result.refreshToken);
         toast(successToast);
-        window.location.href = "/projects";
+        if (!!category && !!id) {
+          window.location.href = `/projects/category/${category}/${id}`;
+        } else {
+          window.location.href = "/projects";
+        }
       }
     } finally {
       setIsLoading(false);

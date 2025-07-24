@@ -42,8 +42,6 @@ const ProductStoryComp = () => {
     });
   }, [id]);
 
-  console.log("res", res);
-
   return (
     <Box bg="white">
       <Grid

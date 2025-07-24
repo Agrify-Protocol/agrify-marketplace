@@ -14,6 +14,7 @@ const OrderSummary = () => {
 
   useEffect(() => {
     if (!chosenProject) {
+      return;
       router.push("/projects");
     }
   }, [chosenProject]);

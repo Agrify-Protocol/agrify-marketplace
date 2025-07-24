@@ -8,7 +8,5 @@ export default function IndexPage() {
 
   useEffect(() => {
     router.push("/projects");
-  }, [router]);
-
-  return null;
+  }, []);
 }

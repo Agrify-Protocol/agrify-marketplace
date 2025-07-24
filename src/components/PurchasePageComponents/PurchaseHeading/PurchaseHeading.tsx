@@ -11,6 +11,7 @@ const PurchaseHeading = () => {
   const router = useRouter();
   useEffect(() => {
     if (!chosenProject) {
+      return;
       router.push("/projects");
     }
   }, [chosenProject]);

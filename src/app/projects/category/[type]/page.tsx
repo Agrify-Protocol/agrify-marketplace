@@ -142,7 +142,7 @@ const CategoryPage = () => {
                               fontWeight="medium"
                               textTransform="capitalize"
                             >
-                              {item?.name?.split("_").join(" ")}
+                              {item?.farm?.name ?? ""}
                             </Text>
                             <Flex alignItems="center" gap="4px">
                               <Image
@@ -152,7 +152,7 @@ const CategoryPage = () => {
                                 height={14}
                               />
                               <Text fontSize={{ base: "12px", lg: "14px" }}>
-                                Kaduna, Nigeria //REPLACE
+                                {`${item?.farm?.state}, ${item?.farm?.country}`}
                               </Text>
                             </Flex>
                           </Box>

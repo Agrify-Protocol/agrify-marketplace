@@ -31,8 +31,14 @@ export const AuthContextProvider = ({ children }: Props) => {
     "/profile/produce-details/track",
   ];
 
+  const isUnauthenticated = unauthenticatedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
   const toast = useToast();
   const isLoggedIn = useMemo(() => !!accessToken, [accessToken]);
+
+  const shouldReroute =
+    !(isUnauthenticated && !isLoggedIn) || !(isUnauthenticated && !!!user);
 
   useEffect(() => {
     const handleUser = async () => {
@@ -41,11 +47,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         if (user) {
           setUser(user);
         }
-        if (
-          !unauthenticatedRoutes.includes(pathname) &&
-          !!user &&
-          !isLoggedIn
-        ) {
+        if (shouldReroute) {
           router.push("/auth/login");
         }
         setFetchingUser(false);
