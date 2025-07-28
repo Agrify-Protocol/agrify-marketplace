@@ -1,54 +1,31 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import {
   AllProjectsResponse,
-  CategoryObject,
   GlobalContextProps,
   GlobalContextType,
 } from "./types";
-import { vat } from "@/constants";
-import { SingleProject } from "../ProjectsPageContext/types_2";
 import { ReportType } from "@/components/ProfilePageComponents/ReportsTable/types";
+import { useToast } from "@chakra-ui/react";
 
 const GlobalContext = createContext({} as GlobalContextType);
 export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
-  const [chosenProject, setChosenProject] = useState<SingleProject | null>(
-    null
-  );
-  const [orderedAmount, setOrderedAmount] = useState<number | string>(
-    chosenProject?.projectToken.minimumPurchaseTonnes ?? 0
-  );
-  const orderTotal = +orderedAmount * chosenProject?.projectToken.price! + vat;
-  const subTotal = (
-    +orderedAmount * chosenProject?.projectToken.price!
-  ).toLocaleString("en", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  const [chosenProject, setChosenProject] = useState<any>(null);
 
   // ====================THIS IS OUTDATED====================
   const [allProjects, setAllProjects] = useState<AllProjectsResponse | null>(
     null
   );
   //============================================================
-  const [categories, setCategories] = useState<CategoryObject[]>([]);
-
-  useEffect(() => {
-    if (chosenProject) {
-      setOrderedAmount(chosenProject?.projectToken.minimumPurchaseTonnes);
-    }
-  }, [chosenProject]);
+  const [categories, setCategories] = useState<any[]>([]);
 
   const [reports, setReports] = useState<ReportType[]>([]);
+  const toast = useToast();
 
   return (
     <GlobalContext.Provider
       value={{
-        orderedAmount,
-        setOrderedAmount,
-        orderTotal,
-        subTotal,
         allProjects,
         setAllProjects,
         chosenProject,
@@ -57,6 +34,7 @@ export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
         setCategories,
         reports,
         setReports,
+        toast,
       }}
     >
       {children}

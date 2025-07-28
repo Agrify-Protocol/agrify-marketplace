@@ -7,19 +7,22 @@ import AuthPageBottom from "@/components/AuthPageComponents/AuthPageBottom/AuthP
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
 import AuthPageSubmitButton from "@/components/AuthPageComponents/AuthPageSubmitButton/AuthPageSubmitButton";
 import { loginUser } from "@/services/api/auth";
-import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { validateEmail, validateLength } from "@/utils/validationSchema";
 import { preserveSession } from "@/app/lib/actions";
-import { errorToast, successToast } from "./constants";
+import { successToast } from "./constants";
+import { useSearchParams } from "next/navigation";
 
 const Login = () => {
   const toast = useToast();
-  const router = useRouter();
   const { setUser, setAccessToken, setRefreshToken } = useAuthContext();
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   const [isValid, setIsValid] = useState({ email: false, password: false });
   const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
+
+  const category = searchParams.get("category");
+  const id = searchParams.get("id");
 
   const updateDetails = (key: string, value: string) => {
     const validate = () => {
@@ -40,20 +43,23 @@ const Login = () => {
   const handleLogin = async () => {
     setIsLoading(true);
     try {
-      const result = await loginUser(loginDetails);
-      await preserveSession(result.user, result.token, result.refreshToken);
-      setUser(result.user);
-      setAccessToken(result.token);
-      setRefreshToken(result.refreshToken);
-      toast(successToast);
-      window.location.href = "/projects";
-    } catch (error) {
-      toast(errorToast);
+      const result = await loginUser(loginDetails, toast);
+      if (result) {
+        await preserveSession(result.user, result.token, result.refreshToken);
+        setUser(result.user);
+        setAccessToken(result.token);
+        setRefreshToken(result.refreshToken);
+        toast(successToast);
+        if (!!category && !!id) {
+          window.location.href = `/projects/category/${category}/${id}`;
+        } else {
+          window.location.href = "/projects";
+        }
+      }
     } finally {
       setIsLoading(false);
     }
   };
-  
 
   return (
     <Flex
@@ -73,43 +79,51 @@ const Login = () => {
           sub_heading="Enter you credentials to access your account"
         />
 
-        <FormControl>
-          <Flex
-            w={"100%"}
-            mt={{ base: "32px", lg: "2rem" }}
-            mb={"3rem"}
-            flexDir={"column"}
-            gap={"1rem"}
-          >
-            <CustomInput
-              id="email_input"
-              type="email"
-              placeholder="Enter email address"
-              isInvalid={!isValid.email}
-              value={loginDetails.email}
-              changeFunc={(e) => updateDetails("email", e.target.value)}
-              errorMsg="Email address must be valid"
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
+          }}
+          style={{ width: "100%" }}
+        >
+          <FormControl>
+            <Flex
+              mt={{ base: "32px", lg: "2rem" }}
+              mb={"3rem"}
+              flexDir={"column"}
+              gap={"1rem"}
+            >
+              <CustomInput
+                id="email_input"
+                type="email"
+                placeholder="Enter email address"
+                isInvalid={!isValid.email}
+                value={loginDetails.email}
+                changeFunc={(e) => updateDetails("email", e.target.value)}
+                errorMsg="Email address must be valid"
+              />
+              <CustomInput
+                id="password_input"
+                type="password"
+                placeholder="Password"
+                isInvalid={!isValid.password}
+                value={loginDetails.password}
+                changeFunc={(e) => updateDetails("password", e.target.value)}
+                errorMsg="Password must have minimum of 6 characters"
+              />
+            </Flex>
+            <AuthPageSubmitButton
+              text="Sign In"
+              isLoading={isLoading}
+              type="submit"
+              onClickFunc={() => null}
+              isDisabled={
+                Object.values(isValid).some((item) => !item) ||
+                Object.values(loginDetails).some((item) => item === "")
+              }
             />
-            <CustomInput
-              id="password_input"
-              type="password"
-              placeholder="Password"
-              isInvalid={!isValid.password}
-              value={loginDetails.password}
-              changeFunc={(e) => updateDetails("password", e.target.value)}
-              errorMsg="Password must have minimum of 6 characters"
-            />
-          </Flex>
-          <AuthPageSubmitButton
-            text="Sign In"
-            isLoading={isLoading}
-            onClickFunc={handleLogin}
-            isDisabled={
-              Object.values(isValid).some((item) => !item) ||
-              Object.values(loginDetails).some((item) => item === "")
-            }
-          />
-        </FormControl>
+          </FormControl>
+        </form>
 
         <AuthPageBottom
           line_1={{

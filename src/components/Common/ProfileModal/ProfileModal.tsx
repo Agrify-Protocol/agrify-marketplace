@@ -22,6 +22,7 @@ const ProfileModal = ({ setShowModal }: ProfileModalProps) => {
   const handleSignout = () => {
     resetAuthCookies().then(() => {
       setUser(null);
+      localStorage.removeItem("access_token");
       closeModal();
       router.push("/auth/login");
     });

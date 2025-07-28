@@ -1,25 +1,21 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
-import { SingleProjectResponse } from "../ProjectsPageContext/types";
-import { SingleProject } from "../ProjectsPageContext/types_2";
 import { ReportType } from "@/components/ProfilePageComponents/ReportsTable/types";
+import { UseToastOptions } from "@chakra-ui/react";
 
 export type GlobalContextProps = {
   children: ReactNode;
 };
 
 export type GlobalContextType = {
-  orderedAmount: string | number;
-  setOrderedAmount: Dispatch<SetStateAction<string | number>>;
-  orderTotal: number;
-  subTotal: string;
   allProjects: AllProjectsResponse | null;
   setAllProjects: Dispatch<SetStateAction<AllProjectsResponse | null>>;
-  chosenProject: SingleProject | null;
-  setChosenProject: Dispatch<SetStateAction<SingleProject | null>>;
-  categories: CategoryObject[];
-  setCategories: Dispatch<SetStateAction<CategoryObject[]>>;
+  chosenProject: any | null;
+  setChosenProject: Dispatch<SetStateAction<Object | null>>;
+  categories: any[];
+  setCategories: Dispatch<SetStateAction<any[]>>;
   reports: ReportType[];
   setReports: Dispatch<SetStateAction<ReportType[]>>;
+  toast: (options: UseToastOptions) => void;
 };
 
 export interface AllProjectsResponse {
@@ -42,11 +38,3 @@ export interface Tag {
   _id: string;
   icon: string;
 }
-
-export type CategoryObject = {
-  category: Category;
-  totalTonnes: number;
-  farms: number;
-};
-
-type Category = "cassava" | "tomato" | "rice" | "yam" | "maize" | "soybean";

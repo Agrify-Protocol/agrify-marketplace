@@ -2,7 +2,6 @@
 
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import React from "react";
-import CounterButton from "../CounterButton/CounterButton";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 
@@ -18,7 +17,7 @@ const PurchaseBody = () => {
       py={{ base: "20px", lg: "2.813rem" }}
       mt={"3rem"}
     >
-      <Box>
+      <Box borderBottom={"1px dashed"} borderColor={"gray_2"}>
         <Text
           fontWeight={500}
           fontSize={{ base: "24px", lg: "1.5rem" }}
@@ -38,49 +37,22 @@ const PurchaseBody = () => {
             fontWeight={500}
             color={"main_black_1"}
           >
-            ${chosenProject?.projectToken.price}/kg
+            ${chosenProject?.pricePerKg?.toLocaleString()}/kg
           </Text>
         </Flex>
 
-        <Flex alignItems={"center"} justifyContent={"space-between"}>
-          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>Amount</Text>
-          <CounterButton />
-        </Flex>
-      </Box>
-
-      <Box
-        mt={"2.5rem"}
-        py={"1.5rem"}
-        borderY={"1px dashed"}
-        borderColor={"gray_2"}
-      >
         <Flex
           alignItems={"center"}
           justifyContent={"space-between"}
           mb={"1rem"}
         >
-          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>
-          Available Stock
-          </Text>
+          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>Batch Size</Text>
           <Text
             fontSize={{ base: "14px", lg: "1.125rem" }}
-            fontWeight={450}
-            color={"rgba(1, 19, 8, 0.7)"}
+            fontWeight={500}
+            color={"main_black_1"}
           >
-            {`${chosenProject?.projectToken?.availableTonnes.toLocaleString()} kg`}
-          </Text>
-        </Flex>
-
-        <Flex alignItems={"center"} justifyContent={"space-between"}>
-          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>
-            Minimum Order
-          </Text>
-          <Text
-            fontSize={{ base: "14px", lg: "1.125rem" }}
-            fontWeight={450}
-            color={"rgba(1, 19, 8, 0.7)"}
-          >
-            {`${chosenProject?.projectToken.minimumPurchaseTonnes.toLocaleString()} kg`}
+            {chosenProject?.batchSize?.toLocaleString()}
           </Text>
         </Flex>
       </Box>
@@ -91,13 +63,13 @@ const PurchaseBody = () => {
           justifyContent={"space-between"}
           mb={"1rem"}
         >
-          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>Payment fee</Text>
+          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>Total Price</Text>
           <Text
             fontSize={{ base: "14px", lg: "1.125rem" }}
             fontWeight={450}
             color={"rgba(1, 19, 8, 0.7)"}
           >
-            $0
+            ${chosenProject?.totalPrice?.toLocaleString()}
           </Text>
         </Flex>
 

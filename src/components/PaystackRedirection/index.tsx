@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Button } from "@chakra-ui/react";
+import { Box, Flex, Text, Button, useToast } from "@chakra-ui/react";
 import check from "../../assets/icon-park-solid_check-one.svg";
 import error from "../../assets/error.svg";
 import Image from "next/image";
@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { PaystackRedirectionProps } from "./types";
 import PageLoader from "../Common/PageLoader/PageLoader";
 import BackButton from "../Common/BackButton/BackButton";
+import Link from "next/link";
 
 const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   const router = useRouter();
@@ -17,22 +18,23 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   const trxref = searchParams.get("trxref");
   const reference = searchParams.get("reference");
   const params = useParams();
-  const { chosenProject, setChosenProject, orderedAmount } = useGlobalContext();
+  const { chosenProject, setChosenProject } = useGlobalContext(); //orderedAmount
   const [purchasedTonnes, setPurchasedTonnes] = useState(0);
   const [isRedirect, setIsRedirect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     if (!chosenProject) {
       if (trxref && reference) {
         setIsRedirect(true);
         setIsLoading(true);
-        getPurchasesByReference(trxref).then((response) => {
+        getPurchasesByReference(trxref, toast).then((response) => {
           if (response) {
             const tx = response[0];
             setPurchasedTonnes(tx.tonnes);
-            getSingleProject(tx.projectId).then((response) => {
-              setChosenProject(response);
+            getSingleProject(tx.projectId, toast).then((response) => {
+              if (response) setChosenProject(response);
             });
           }
         });
@@ -42,7 +44,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   }, [params, trxref, reference]);
 
   const getTonnesString = (value: number) => {
-    return `${value} ton${value > 1 ? "nes" : ""} of C02`;
+    return `${value} kg of ITEM`;
   };
 
   return (
@@ -53,16 +55,17 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
       {isLoading ? (
         <PageLoader />
       ) : (
-        <>
+        <Box>
           <BackButton customFunction={() => router.push("/projects")} />
           <Box
             w={"100%"}
             bgColor={{ lg: "white" }}
-            mt={{ lg: "3.028rem" }}
+            mt="48px"
             borderRadius={"0.953rem"}
             border={{ lg: "0.95px solid rgba(169, 169, 169, 0.3)" }}
             py={{ base: "70px", lg: "5.238rem" }}
             textAlign={"center"}
+            bg="#FFFFFF"
           >
             <Flex
               w={"6.191rem"}
@@ -96,14 +99,10 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
             >
               {type === "success"
                 ? `You have successfully purchased ${getTonnesString(
-                    isRedirect
-                      ? +purchasedTonnes.toLocaleString()
-                      : +orderedAmount.toLocaleString()
+                    isRedirect ? +purchasedTonnes.toLocaleString() : 0 //+orderedAmount.toLocaleString()
                   )}`
                 : `Unfortunately, the purchase of ${getTonnesString(
-                    isRedirect
-                      ? +purchasedTonnes.toLocaleString()
-                      : +orderedAmount.toLocaleString()
+                    isRedirect ? +purchasedTonnes.toLocaleString() : 0 //+orderedAmount.toLocaleString()
                   )} could not be completed.`}
               {type === "error" ? (
                 <Text as="span" display="block">
@@ -158,32 +157,50 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               {chosenProject?.title}
             </Text>
 
-            <Button
-              w={"11.375rem"}
-              h={"2.688rem"}
-              border={
-                type === "success"
-                  ? "1px solid transparent"
-                  : "1px solid #282828"
-              }
-              color={type === "success" ? "white" : "main_black_1"}
-              bgColor={type === "success" ? "main_black_1" : "white"}
-              borderRadius={"2rem"}
-              _hover={{
-                bg: type === "success" ? "#404040" : "#f2f2f2",
-              }}
-              onClick={() =>
-                router.push(
-                  `/projects/category/${chosenProject?.category}/${
-                    chosenProject?._id
-                  }?id=${type === "success" ? "my purchases" : "overview"}`
-                )
-              }
-            >
-              {type === "success" ? "View Purchase" : "Back to Project"}
-            </Button>
+            <Flex flexDir="column" alignItems="center" gap="27px">
+              <Button
+                w="fit-content"
+                border={
+                  type === "success"
+                    ? "1px solid transparent"
+                    : "1px solid #282828"
+                }
+                color={type === "success" ? "white" : "main_black_1"}
+                bgColor={type === "success" ? "main_black_1" : "white"}
+                borderRadius={"2rem"}
+                _hover={{
+                  bg: type === "success" ? "#404040" : "#f2f2f2",
+                }}
+                onClick={() =>
+                  router.push(
+                    `/projects/category/${chosenProject?.category}/${
+                      chosenProject?._id
+                    }?id=${type === "success" ? "my purchases" : "overview"}`
+                  )
+                }
+              >
+                {type === "success" ? "View Purchase" : "Back to Project"}
+              </Button>
+              <Link href="#" target="_blank">
+                <Button
+                  bgColor="transparent"
+                  color="#282828"
+                  borderRadius={"2rem"}
+                  px={"2.5rem"}
+                  py="14px"
+                  fontWeight={400}
+                  mb="32px"
+                  border="1px solid #282828"
+                  _hover={{
+                    bg: "rgba(40, 40, 40, .1)",
+                  }}
+                >
+                  View on Block Explorer
+                </Button>
+              </Link>
+            </Flex>
           </Box>
-        </>
+        </Box>
       )}
     </Box>
   );

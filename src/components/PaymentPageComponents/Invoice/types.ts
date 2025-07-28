@@ -9,9 +9,6 @@ export type InvoiceData = {
   phoneNumber: string;
   projectId: string | undefined;
   projectName: string | undefined;
-  quantity: number;
-  amount: string;
-  totalAmount: number;
   invoiceNo: string;
   address: string | undefined;
   contactNo: string;

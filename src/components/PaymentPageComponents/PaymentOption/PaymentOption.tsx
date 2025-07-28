@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { OptionProps } from "./types";
 
@@ -10,22 +10,25 @@ import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { PaymentPayload } from "@/services/api/types";
 
 const PaymentOption = () => {
-  const { chosenProject, orderedAmount } = useGlobalContext();
+  const { chosenProject } = useGlobalContext(); // orderedAmount
   const { setPaymentStage } = usePaymentContext();
   const [chosenOption, setChosenOption] = useState(0);
   const handleSelect = (optionNumber: number) => {
     setChosenOption(optionNumber);
   };
+  const toast = useToast();
 
   const handleSubmit = () => {
     switch (chosenOption) {
       case 1:
         const data: PaymentPayload = {
           projectId: chosenProject?._id as string,
-          tonnes: +orderedAmount,
+          tonnes: 0, //+orderedAmount,
         };
-        payForCarbon(data).then((response) => {
-          window.open(response.data.authorization_url, "_self");
+        payForCarbon(data, toast).then((response) => {
+          if (response) {
+            window.open(response.data.authorization_url, "_self");
+          }
         });
         break;
       case 2:

@@ -1,21 +1,23 @@
 import { Box } from "@chakra-ui/react";
 import { NavButtonsProps } from "./types";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
 
-const NavButtons = ({ route, pathName, ...rest }: NavButtonsProps) => {
+const NavButtons = ({ route, pathName, user, ...rest }: NavButtonsProps) => {
+  const navMenu = [
+    {
+      title: "Marketplace",
+      link: "/projects",
+      base: ["/projects", "/farm", "/payment"],
+    },
+    {
+      title: "My Profile",
+      link: "/profile?id=overview",
+      base: ["/profile"],
+    },
+  ];
   return (
     <Box {...rest}>
-      {[
-        {
-          title: "Projects",
-          link: "/projects",
-          base: ["/projects", "/farm", "/payment"],
-        },
-        {
-          title: "My Profile",
-          link: "/profile?id=overview",
-          base: ["/profile"],
-        },
-      ].map((item) => (
+      {navMenu.slice(0, user ? navMenu.length : 1).map((item) => (
         <Box
           as="button"
           key={item.link}

@@ -1,7 +1,7 @@
 "use client";
 
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
-import { Button, FormControl } from "@chakra-ui/react";
+import { Button, FormControl, useToast } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 import { StoreFrontFormProps } from "./types";
 import useObjectCheck from "@/hooks/useObjectCheck";
@@ -33,6 +33,8 @@ const StoreFrontForm = ({ setStep }: StoreFrontFormProps) => {
   const isAmountValid = useMemo(() => {
     return validateNumberInput(data.amount);
   }, [data.amount]);
+
+  const toast = useToast();
 
   return (
     <FormControl
@@ -92,11 +94,15 @@ const StoreFrontForm = ({ setStep }: StoreFrontFormProps) => {
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          createPreorder(id as string, {
-            ...data,
-            amount: Number(data.amount),
-          }).then(() => {
-            setStep(2);
+          createPreorder(
+            id as string,
+            {
+              ...data,
+              amount: Number(data.amount),
+            },
+            toast
+          ).then((res) => {
+            if (res) setStep(2);
           });
         }}
       >

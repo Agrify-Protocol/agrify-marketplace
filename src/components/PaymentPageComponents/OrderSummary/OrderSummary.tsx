@@ -2,18 +2,19 @@
 
 import { vat } from "@/constants";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
+import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 const OrderSummary = () => {
-  const { orderedAmount, orderTotal, subTotal, chosenProject } =
-    useGlobalContext();
+  const { chosenProject } = useGlobalContext();
   const router = useRouter();
 
   useEffect(() => {
     if (!chosenProject) {
+      return;
       router.push("/projects");
     }
   }, [chosenProject]);
@@ -28,7 +29,7 @@ const OrderSummary = () => {
           color={"main_black_1"}
           mt={"0.5rem"}
         >
-          ${orderTotal.toLocaleString()}
+          ${chosenProject?.totalPrice?.toLocaleString()}
         </Text>
       </Box>
 
@@ -40,17 +41,17 @@ const OrderSummary = () => {
             maxW={"65%"}
             isTruncated
           >
-            {chosenProject?.title}
+            {getProductCategoryTitle(chosenProject?.name)}
           </Text>
           <Text color={"main_black_1"} fontWeight={500}>
-            ${orderTotal.toLocaleString()}
+            ${chosenProject?.totalPrice?.toLocaleString()}
           </Text>
         </Flex>
         <Text color={"main_black_1"} fontSize={"0.75rem"} fontWeight={500}>
           <Text as={"span"} color={"gray_1"}>
             Qty{" "}
           </Text>
-          {`${+orderedAmount} kg`}
+          {chosenProject?.batchSize?.toLocaleString()}
         </Text>
       </Box>
 
@@ -65,7 +66,7 @@ const OrderSummary = () => {
               Subtotal
             </Text>
             <Text fontWeight={500} color={"rgba(26, 31, 54, 1)"}>
-              ${subTotal}
+              ${chosenProject?.totalPrice?.toLocaleString()}
             </Text>
           </Flex>
           <Flex
@@ -88,7 +89,7 @@ const OrderSummary = () => {
               Total due
             </Text>
             <Text fontWeight={500} color={"rgba(26, 31, 54, 1)"}>
-              ${orderTotal.toLocaleString()}
+              ${(chosenProject?.totalPrice + vat)?.toLocaleString()}
             </Text>
           </Flex>
         </Box>

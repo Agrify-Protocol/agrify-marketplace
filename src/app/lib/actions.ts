@@ -45,7 +45,7 @@ export async function getUser() {
 
 export async function getAccessToken() {
   let accessToken = cookies().get("carbon_session_access_token")?.value;
-  return accessToken ? accessToken : "";
+  return accessToken ?? null;
 }
 
 export async function getRefreshToken() {

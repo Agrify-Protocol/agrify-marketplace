@@ -58,8 +58,8 @@ const Slider = ({ images }: SliderProps) => {
       />
 
       <Box
-        w={{ base: "100%", lg: "37.56rem" }}
-        h={{ base: "342px", lg: "37.56rem" }}
+        w={{ base: "100%", md: "50%", lg: "500px" }}
+        h={{ base: "342px", lg: "500px" }}
         borderRadius={"1.89rem"}
         position={"relative"}
         overflow={"hidden"}

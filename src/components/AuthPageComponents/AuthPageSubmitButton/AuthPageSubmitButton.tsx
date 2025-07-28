@@ -10,6 +10,7 @@ const AuthPageSubmitButton = ({
   text,
   onClickFunc,
   isDisabled,
+  type,
 }: AuthPageSubmitBtnProps) => {
   return (
     <Button
@@ -22,6 +23,7 @@ const AuthPageSubmitButton = ({
       color={!isDisabled ? "white" : "unset"}
       w={"100%"}
       mb={"2.404rem"}
+      type={type ?? "button"}
       fontFamily={Inter_Display.style.fontFamily}
       fontWeight={500}
       justifyContent={"space-between"}

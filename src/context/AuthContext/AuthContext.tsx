@@ -2,17 +2,15 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContextType, Props, User } from "./types";
-import { updateBearerToken } from "@/utils/updateBearerToken";
 import { refreshAccessToken } from "@/services/api/auth";
 import {
-  getAccessToken,
   getRefreshToken,
   getUser,
   preserveSession,
   resetAuthCookies,
 } from "@/app/lib/actions";
 import { usePathname, useRouter } from "next/navigation";
-import { xrpInstance } from "@/services/axios/instances";
+import { useToast } from "@chakra-ui/react";
 
 const AuthContext = createContext({} as AuthContextType);
 
@@ -24,6 +22,22 @@ export const AuthContextProvider = ({ children }: Props) => {
   const [fetchingUser, setFetchingUser] = useState(true);
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
+  const unauthenticatedRoutes = [
+    "/auth/reset-password",
+    "/auth/signup",
+    "/auth/login",
+    "/product-story",
+    "/projects",
+    "/profile/produce-details/track",
+  ];
+
+  const isUnauthenticated = unauthenticatedRoutes.some(
+    (route) =>
+      pathname === route ||
+      pathname.startsWith(route) ||
+      pathname.includes(route)
+  );
+  const toast = useToast();
 
   useEffect(() => {
     const handleUser = async () => {
@@ -31,23 +45,15 @@ export const AuthContextProvider = ({ children }: Props) => {
       setTimeout(() => {
         if (user) {
           setUser(user);
-          setFetchingUser(false);
-        } else if (
-          ["/auth/reset-password", "/auth/signup"].includes(pathname)
-        ) {
-          return null;
-        } else {
-          setFetchingUser(false);
+        }
+        if (!isUnauthenticated && !!user) {
           router.push("/auth/login");
         }
+        setFetchingUser(false);
       }, 3000);
     };
 
     handleUser();
-
-    getAccessToken().then((token) => {
-      setAccessToken(token);
-    });
 
     getRefreshToken().then((token) => {
       setRefreshToken(token);
@@ -56,33 +62,39 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (accessToken) {
-      updateBearerToken(accessToken);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("access_token", accessToken);
+      }
     }
   }, [accessToken]);
 
   useEffect(() => {
     const fifteen_mins_in_millisecs = 900000;
-    if (user && refreshToken) {
-      const handleRefresh = () => {
-        refreshAccessToken({ refreshToken })
+    const handleRefresh = () => {
+      if (user && refreshToken) {
+        refreshAccessToken({ refreshToken }, toast)
           .then((result) => {
-            preserveSession(user, result.token, refreshToken);
-          })
-          .catch((err) => {
-            if (err.message == "Invalid or Expired Refresh Token") {
-              resetAuthCookies();
-              router.push("/auth/login");
+            if (result) {
+              preserveSession(user, result.token, refreshToken);
+              setAccessToken(result.token);
             }
           })
-          .finally(() => {
-            setInterval(() => {
-              handleRefresh();
-            }, fifteen_mins_in_millisecs);
+          .catch(() => {
+            resetAuthCookies().then(() => {
+              setUser(null);
+              localStorage.removeItem("access_token");
+              resetAuthCookies();
+              router.push("/auth/login");
+            });
           });
-      };
+      }
+    };
 
-      handleRefresh();
-    }
+    const interval = setInterval(handleRefresh, fifteen_mins_in_millisecs);
+
+    handleRefresh();
+
+    return () => clearInterval(interval);
   }, [user, refreshToken]);
 
   return (

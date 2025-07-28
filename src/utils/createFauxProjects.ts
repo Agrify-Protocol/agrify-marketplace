@@ -1,8 +1,7 @@
 import { Project } from "@/context/GlobalContext/types";
-import { SingleProject } from "@/context/ProjectsPageContext/types_2";
 
-export const createFauxProjects = (project: SingleProject) => {
-  const fauxProjects = project?.images.map((image) => {
+export const createFauxProjects = (project: any) => {
+  const fauxProjects = project?.images.map((image: any) => {
     return {
       _id: image._id,
       title: "",

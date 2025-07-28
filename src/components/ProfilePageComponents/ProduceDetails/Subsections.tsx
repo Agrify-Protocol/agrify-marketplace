@@ -1,81 +1,104 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import getStatusProps from "@/utils/getStatusProps";
+import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
 
 const Subsections = ({ details }: { details: any }) => {
-  const detailsObj = [
-    { title: "Farmer", value: details?.project?.farms[0]?.farmer?.firstname },
-    { title: "Location", value: details?.project?.farms[0]?.address },
-    { title: "Cultivation Type", value: details?.project?.farms[0]?.cultivationType },
-    {
-      title: "Available Quantity",
-      value: details?.project?.farms[0]?.availableTonnes?.toLocaleString(),
-    },
-  ];
   return (
-    <Box display="flex" flexDir="column" gap="48px">
+    <Box display="flex" flexDir="column" gap={{ base: "32px", lg: "48px" }}>
+      {/* About Section */}
       <Box>
-        <Text fontSize="18px" color="#000000" mb="12px">
+        <Text fontSize={{ base: "16px", lg: "18px" }} color="#000000" mb="12px">
           About
         </Text>
-        <Text color="#0F0F0FB2">{details?.project?.farms[0]?.description}</Text>
+        <Text fontSize={{ base: "14px", lg: "16px" }} color="#0F0F0FB2">
+          {details?.desc}
+        </Text>
       </Box>
+
+      {/* Details Section */}
       <Box>
-        <Text fontSize="18px" color="#000000" mb="12px">
+        <Text fontSize={{ base: "16px", lg: "18px" }} color="#000000" mb="12px">
           Details
         </Text>
-        {detailsObj.map((item) => (
+        {details.items.map((item: { title: string; value: string }) => (
           <Box
             display="grid"
-            gridTemplateColumns="40% 60%"
+            gridTemplateColumns={{ base: "1fr", sm: "40% 60%" }}
             key={item.title}
+            alignItems="center"
             py="12px"
             mb="16px"
-            borderBottom={"1px solid rgba(0, 0, 0, 0.05)"}
+            borderBottom="1px solid rgba(0, 0, 0, 0.05)"
           >
-            <Text fontSize="14px" color="#565656">
+            <Text fontSize="14px" color="#565656" mb={{ base: "4px", sm: "0" }}>
               {item.title}
             </Text>
-            <Text color="#000000">{item.value}</Text>
+            <Text fontSize="14px" color="#000000">
+              {item.title === "Order Status" ? (
+                <Text
+                  textTransform={"capitalize"}
+                  bgColor={getStatusProps(item.value).bg}
+                  color={getStatusProps(item.value).text}
+                  w={"fit-content"}
+                  p={"0.5rem 1rem"}
+                  borderRadius={"1.89rem"}
+                  fontSize={"0.875rem"}
+                >
+                  {getProductCategoryTitle(item.value)}
+                </Text>
+              ) : (
+                item.value
+              )}
+            </Text>
           </Box>
         ))}
       </Box>
+
+      {/* Images Section */}
       <Box>
-        <Text fontSize="18px" color="#000000" mb="12px">
+        <Text fontSize={{ base: "16px", lg: "18px" }} color="#000000" mb="12px">
           Images
         </Text>
-        <Box display="flex" flexDir="column" gap="16px">
-          {details?.project?.farms[0]?.farmImages?.map((item: any, idx: number) => (
-           <Box
-           borderRadius="16px"
-           key={item._id}
-           maxW="425px"
-           maxH="320px"
-           overflow="hidden"
-           position="relative" 
-         >
-           <Image
-             src={item.image}
-             width="100"
-             height="100"
-             alt={`produce img ${idx + 1}`}
-             style={{
-               height: "100%",
-               width: "100%",
-               objectFit: "cover",
-             }}
-           />
-         
-           <Box
-             position="absolute"
-             top="0"
-             left="0"
-             width="100%"
-             height="100%"
-             bg="rgba(0, 0, 0, 0.4)"
-             zIndex="1"
-           />
-         </Box>
+        <Box
+          display="flex"
+          flexDir={{ base: "column", md: "row" }}
+          gap="16px"
+          flexWrap="wrap"
+        >
+          {details?.images?.map((item: any, idx: number) => (
+            <Box
+              borderRadius="16px"
+              key={`${item._id}-${idx}`}
+              w={{ base: "100%", sm: "100%", lg: "425px" }}
+              h={{ base: "250px", sm: "300px", lg: "320px" }}
+              overflow="hidden"
+              position="relative"
+              flexShrink={0}
+            >
+              <Image
+                src={item.image}
+                width={100}
+                height={100}
+                alt={`produce img ${idx + 1}`}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  objectFit: "cover",
+                }}
+              />
+
+              <Box
+                position="absolute"
+                top="0"
+                left="0"
+                width="100%"
+                height="100%"
+                bg="rgba(0, 0, 0, 0.4)"
+                zIndex="1"
+              />
+            </Box>
           ))}
         </Box>
       </Box>
