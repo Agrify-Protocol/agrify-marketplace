@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContextType, Props, User } from "./types";
 import { refreshAccessToken } from "@/services/api/auth";
 import {
@@ -31,14 +31,13 @@ export const AuthContextProvider = ({ children }: Props) => {
     "/profile/produce-details/track",
   ];
 
-  const isUnauthenticated = unauthenticatedRoutes.some((route) =>
-    pathname.startsWith(route)
+  const isUnauthenticated = unauthenticatedRoutes.some(
+    (route) =>
+      pathname === route ||
+      pathname.startsWith(route) ||
+      pathname.includes(route)
   );
   const toast = useToast();
-  const isLoggedIn = useMemo(() => !!accessToken, [accessToken]);
-
-  const shouldReroute =
-    !(isUnauthenticated && !isLoggedIn) || !(isUnauthenticated && !!!user);
 
   useEffect(() => {
     const handleUser = async () => {
@@ -47,7 +46,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         if (user) {
           setUser(user);
         }
-        if (shouldReroute) {
+        if (!isUnauthenticated && !!user) {
           router.push("/auth/login");
         }
         setFetchingUser(false);
@@ -71,29 +70,31 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const fifteen_mins_in_millisecs = 900000;
-    if (user && refreshToken) {
-      const handleRefresh = () => {
+    const handleRefresh = () => {
+      if (user && refreshToken) {
         refreshAccessToken({ refreshToken }, toast)
           .then((result) => {
             if (result) {
               preserveSession(user, result.token, refreshToken);
+              setAccessToken(result.token);
             }
           })
-          .catch((err) => {
-            if (err.message) {
+          .catch(() => {
+            resetAuthCookies().then(() => {
+              setUser(null);
+              localStorage.removeItem("access_token");
               resetAuthCookies();
               router.push("/auth/login");
-            }
-          })
-          .finally(() => {
-            setInterval(() => {
-              handleRefresh();
-            }, fifteen_mins_in_millisecs);
+            });
           });
-      };
+      }
+    };
 
-      handleRefresh();
-    }
+    const interval = setInterval(handleRefresh, fifteen_mins_in_millisecs);
+
+    handleRefresh();
+
+    return () => clearInterval(interval);
   }, [user, refreshToken]);
 
   return (

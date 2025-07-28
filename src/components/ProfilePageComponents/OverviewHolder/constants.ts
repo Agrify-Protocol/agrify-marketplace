@@ -1,6 +1,6 @@
 export const overviews = [
   {
-    title: "Total Purchase (kg)",
+    title: "Total Purchase",
     heading: "30,000kg",
     content:
       "This is your Project Design Documentation Hub, where you can create and share project details with collaborators and investors. Take a moment to review and input your information accurately, as some details may be non-editable.",

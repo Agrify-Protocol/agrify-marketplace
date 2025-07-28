@@ -10,7 +10,6 @@ import { compareStrings } from "@/utils/compareStrings";
 import { Box, Flex, FormControl, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
-import { passwordToast } from "../signup/constants";
 import { validateEmail, validateLength } from "@/utils/validationSchema";
 
 const Reset = () => {
@@ -49,17 +48,15 @@ const Reset = () => {
           (response) => {
             setIsLoading(false);
             if (response) {
-              const data = response.link.split("=");
-              let verification_code = data[1];
-              verification_code = verification_code.substring(
-                0,
-                verification_code.length - 3
-              );
-              const user_id = data[2];
-              setResetData({ ...resetData, user_id, verification_code });
+              const link = response.link.split("=");
+              const token = link[1]?.slice(0, -3); // Remove the last 3 characters
+              const user_id = link[2];
+              setResetData({ ...resetData, user_id, verification_code: token });
               setStage(stage + 1);
+            } else {
+              setStage(1);
+              throw new Error("Failed to get verification token");
             }
-            setStage(1);
           }
         );
         break;
@@ -89,9 +86,6 @@ const Reset = () => {
               router.push("/auth/login");
             }
           });
-        } else {
-          toast(passwordToast);
-          setIsLoading(false);
         }
         break;
     }
@@ -116,7 +110,7 @@ const Reset = () => {
               <CustomInput
                 id="email_address"
                 type="email"
-                placeholder="agrify@agrifyafrica.xyz"
+                placeholder="Enter email address"
                 changeFunc={(e) => handleChange("email", e.target.value)}
                 value={resetData.email}
                 label="Email Address"

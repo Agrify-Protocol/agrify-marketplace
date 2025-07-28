@@ -33,37 +33,32 @@ const ProduceBoughtTable = () => {
 
   return (
     <Box>
-      {data?.length >= 1 || isLoading ? (
-        <Grid
-          bgColor={"#F5F5F5"}
-          gridTemplateColumns={"2fr 1fr 1fr 1fr"}
-          borderRadius={"1.5rem"}
-          px={"1.25rem"}
-          py={"0.375rem"}
-          mb={"1.5rem"}
-          color={"rgba(0,0,0,0.4)"}
+      {isLoading ? (
+        <Flex
+          h={"fit-content"}
+          w={"100%"}
+          alignItems={"center"}
+          justifyContent={"center"}
         >
-          <Text>Name</Text>
-          <Text display={{ base: "none", lg: "block" }}>Status</Text>
-          <Text display={{ base: "none", lg: "block" }}>Size</Text>
-          <Text display={{ base: "none", lg: "block" }}>Date</Text>
-        </Grid>
-      ) : null}
-
-      <>
-        {isLoading ? (
-          <Flex
-            h={"fit-content"}
-            w={"100%"}
-            alignItems={"center"}
-            justifyContent={"center"}
+          <Spinner />
+        </Flex>
+      ) : data?.length < 1 ? (
+        <>
+          <Grid
+            bgColor={"#F5F5F5"}
+            gridTemplateColumns={"2fr 1fr 1fr 1fr"}
+            borderRadius={"1.5rem"}
+            px={"1.25rem"}
+            py={"0.375rem"}
+            mb={"1.5rem"}
+            color={"rgba(0,0,0,0.4)"}
           >
-            <Spinner />
-          </Flex>
-        ) : !data ? (
-          <Text textAlign={"center"}>No produce bought in this project</Text>
-        ) : (
-          <>
+            <Text>Name</Text>
+            <Text display={{ base: "none", lg: "block" }}>Status</Text>
+            <Text display={{ base: "none", lg: "block" }}>Size</Text>
+            <Text display={{ base: "none", lg: "block" }}>Date</Text>
+          </Grid>
+          <Box>
             {data?.map((order: any, idx: number) => {
               return (
                 <Link
@@ -113,9 +108,11 @@ const ProduceBoughtTable = () => {
                 </Link>
               );
             })}
-          </>
-        )}
-      </>
+          </Box>
+        </>
+      ) : (
+        <Text textAlign={"center"}>No produce bought in this project</Text>
+      )}
     </Box>
   );
 };

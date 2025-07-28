@@ -19,7 +19,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
         images: details?.listing?.farm?.farmImages,
         farmName: details?.listing?.farm?.name,
         productName: details?.listing?.product?.name,
-        price: `${details?.listing?.totalPrice?.toLocaleString()}/batch`,
+        price: `${details?.listing?.totalPrice?.toLocaleString()}`,
         farmScore: details?.listing?.farm?.farmSuggestion?.FarmScore,
         subsection: {
           desc: "",
@@ -65,7 +65,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
         details?.farmer?.lastname ?? ""
       }'s Farm`,
       productName: details?.product?.name,
-      price: `${details?.pricePerKg?.toLocaleString()}/kg`,
+      price: `${details?.pricePerKg?.toLocaleString()}`,
       farmScore: details?.farm?.farmSuggestion?.FarmScore,
       subsection: {
         desc: details?.description,

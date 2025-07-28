@@ -27,40 +27,36 @@ const OverviewHolder = () => {
     }
   }, [user]);
 
-  return (
+  return isLoading ? (
+    <Flex
+      h={"fit-content"}
+      w={"100%"}
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
+      <Spinner />
+    </Flex>
+  ) : (
     <Grid
       gridTemplateColumns={{ lg: "repeat(2, 1fr)" }}
       gap={{ base: "13px", lg: "5.956rem" }}
       rowGap={{ base: "13px", lg: "2.888rem" }}
     >
-      {isLoading && !overview ? (
-        <Flex
-          h={"fit-content"}
-          minW={{ lg: "calc(100vw - (2.75rem * 2))" }}
-          alignItems={"center"}
-          justifyContent={"center"}
-        >
-          <Spinner />
-        </Flex>
-      ) : (
-        <>
-          <OverviewBox
-            title={overviews[0].title}
-            heading={`${overview?.totalTonnes}`}
-            content={overviews[0].content}
-          />
-          <OverviewBox
-            title={overviews[1].title}
-            heading={`${overview?.totalProjectsFunded}`}
-            content={overviews[1].content}
-          />
-          <OverviewBox
-            title={overviews[2].title}
-            heading={`${overview?.totalAmount}`}
-            content={overviews[2].content}
-          />
-        </>
-      )}
+      <OverviewBox
+        title={overviews[0].title}
+        heading={`${overview?.totalTonnes}`}
+        content={overviews[0].content}
+      />
+      <OverviewBox
+        title={overviews[1].title}
+        heading={`${overview?.totalProjectsFunded}`}
+        content={overviews[1].content}
+      />
+      <OverviewBox
+        title={overviews[2].title}
+        heading={`${overview?.totalAmount}`}
+        content={overviews[2].content}
+      />
     </Grid>
   );
 };

@@ -25,23 +25,9 @@ const FundedTable = () => {
       });
     }
   }, [user]);
+
   return (
     <Box>
-      <Grid
-        bgColor={"#F5F5F5"}
-        gridTemplateColumns={"2fr 1fr 1fr 1fr"}
-        borderRadius={"1.5rem"}
-        px={"1.25rem"}
-        py={"0.375rem"}
-        mb={"1.5rem"}
-        color={"rgba(0,0,0,0.4)"}
-      >
-        <Text>Name</Text>
-        <Text display={{ base: "none", lg: "block" }}>Payment</Text>
-        <Text display={{ base: "none", lg: "block" }}>Location</Text>
-        <Text display={{ base: "none", lg: "block" }}>Start Date</Text>
-      </Grid>
-
       <>
         {isLoading ? (
           <Flex
@@ -53,17 +39,37 @@ const FundedTable = () => {
             <Spinner />
           </Flex>
         ) : transactions?.length < 1 ? (
-          <Text textAlign={"center"} color={"black"}>
-            No purchases found for this project
+          <Text textAlign={"center"}>
+            No project funded found for this project
           </Text>
         ) : (
           <>
             {transactions?.map((transaction) => {
               return (
-                <FourColumnTableRow
-                  key={transaction._id}
-                  transaction={transaction}
-                />
+                <>
+                  <Grid
+                    bgColor={"#F5F5F5"}
+                    gridTemplateColumns={"2fr 1fr 1fr 1fr"}
+                    borderRadius={"1.5rem"}
+                    px={"1.25rem"}
+                    py={"0.375rem"}
+                    mb={"1.5rem"}
+                    color={"rgba(0,0,0,0.4)"}
+                  >
+                    <Text>Name</Text>
+                    <Text display={{ base: "none", lg: "block" }}>Payment</Text>
+                    <Text display={{ base: "none", lg: "block" }}>
+                      Location
+                    </Text>
+                    <Text display={{ base: "none", lg: "block" }}>
+                      Start Date
+                    </Text>
+                  </Grid>
+                  <FourColumnTableRow
+                    key={transaction._id}
+                    transaction={transaction}
+                  />
+                </>
               );
             })}
           </>

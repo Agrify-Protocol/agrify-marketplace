@@ -44,11 +44,9 @@ const CategoryPage = () => {
       <BackButton />
       <Box>
         <Box mt="30px" mb="40px">
-          <Search
-            text={`${getProductCategoryTitle(type as string)} Market`}
-            search={search}
-            setSearch={setSearch}
-          />
+          <Text fontSize={{ base: "18px", sm: "20px" }} color="black">
+            {`${getProductCategoryTitle(type as string)} Market`}
+          </Text>
         </Box>
 
         {isLoading ? (

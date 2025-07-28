@@ -33,7 +33,7 @@ const ReportsTable = () => {
       {isLoading ? (
         <Flex
           h={"fit-content"}
-          minW={"calc(100vw - (2.75rem * 2))"}
+          w={"100%"}
           alignItems={"center"}
           justifyContent={"center"}
         >
