@@ -8,11 +8,10 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import BackButton from "@/components/Common/BackButton/BackButton";
 import EmptyText from "@/components/Common/EmptyText/EmptyText";
-import Search from "@/components/Common/Search/Search";
 import location from "../../../../assets/location.svg";
 import Link from "next/link";
 import Image from "next/image";
-import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 
 const CategoryPage = () => {
   const { type } = useParams();
@@ -45,7 +44,7 @@ const CategoryPage = () => {
       <Box>
         <Box mt="30px" mb="40px">
           <Text fontSize={{ base: "18px", sm: "20px" }} color="black">
-            {`${getProductCategoryTitle(type as string)} Market`}
+            {`${formatSnakeCaseTitle(type as string)} Market`}
           </Text>
         </Box>
 

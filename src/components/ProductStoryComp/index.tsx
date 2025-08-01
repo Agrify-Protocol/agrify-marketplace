@@ -17,7 +17,7 @@ import { useState, useEffect, useMemo } from "react";
 import bg from "../../assets/passport-bg.png";
 import arrow from "../../assets/arrow.svg";
 import PageLoader from "../Common/PageLoader/PageLoader";
-import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 
 const ProductStoryComp = () => {
   const { id } = useParams();
@@ -125,7 +125,7 @@ const ProductStoryComp = () => {
                     fontSize={{ base: "16px", md: "18px" }}
                     mb="4px"
                   >
-                    {getProductCategoryTitle(res?.listing?.name)}
+                    {formatSnakeCaseTitle(res?.listing?.name)}
                   </Text>
                   <Text
                     fontWeight="500"

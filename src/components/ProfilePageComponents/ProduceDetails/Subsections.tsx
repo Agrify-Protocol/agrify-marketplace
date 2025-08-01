@@ -1,8 +1,6 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import getStatusProps from "@/utils/getStatusProps";
-import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
 
 const Subsections = ({ details }: { details: any }) => {
   return (
@@ -36,21 +34,7 @@ const Subsections = ({ details }: { details: any }) => {
               {item.title}
             </Text>
             <Text fontSize="14px" color="#000000">
-              {item.title === "Order Status" ? (
-                <Text
-                  textTransform={"capitalize"}
-                  bgColor={getStatusProps(item.value).bg}
-                  color={getStatusProps(item.value).text}
-                  w={"fit-content"}
-                  p={"0.5rem 1rem"}
-                  borderRadius={"1.89rem"}
-                  fontSize={"0.875rem"}
-                >
-                  {getProductCategoryTitle(item.value)}
-                </Text>
-              ) : (
-                item.value
-              )}
+              {item.value}
             </Text>
           </Box>
         ))}

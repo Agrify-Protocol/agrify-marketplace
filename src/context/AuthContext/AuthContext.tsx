@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { AuthContextType, Props, User } from "./types";
 import { refreshAccessToken } from "@/services/api/auth";
 import {
@@ -31,13 +31,17 @@ export const AuthContextProvider = ({ children }: Props) => {
     "/profile/produce-details/track",
   ];
 
-  const isUnauthenticated = unauthenticatedRoutes.some(
-    (route) =>
-      pathname === route ||
-      pathname.startsWith(route) ||
-      pathname.includes(route)
-  );
   const toast = useToast();
+
+  const isUnauthenticated = useMemo(() => {
+    return unauthenticatedRoutes.some(
+      (route) =>
+        pathname === route ||
+        pathname.startsWith(route) ||
+        pathname.includes(route) ||
+        pathname === "/"
+    );
+  }, [pathname]);
 
   useEffect(() => {
     const handleUser = async () => {
@@ -46,11 +50,11 @@ export const AuthContextProvider = ({ children }: Props) => {
         if (user) {
           setUser(user);
         }
-        if (!isUnauthenticated && !!user) {
+        if (!isUnauthenticated && !!user === false) {
           router.push("/auth/login");
         }
         setFetchingUser(false);
-      }, 3000);
+      }, 1000);
     };
 
     handleUser();
@@ -58,7 +62,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     getRefreshToken().then((token) => {
       setRefreshToken(token);
     });
-  }, []);
+  }, [pathname, isUnauthenticated]);
 
   useEffect(() => {
     if (accessToken) {

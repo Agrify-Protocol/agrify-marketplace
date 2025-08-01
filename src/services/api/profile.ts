@@ -50,3 +50,12 @@ export const getProduceDetails = async (id: string | string[], toast: any) => {
     toastFn(toast, error);
   }
 };
+
+export const completeOrder = async (id: string, toast: any) => {
+  try {
+    const request = await xrpInstance.post(`/orders/${id}/fulfil`);
+    return request.data;
+  } catch (error) {
+    toastFn(toast, error);
+  }
+};

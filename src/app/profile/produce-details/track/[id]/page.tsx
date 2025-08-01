@@ -7,40 +7,62 @@ import {
   ModalContent,
   ModalOverlay,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import OrderProgress from "./OrderProgress";
-import InputSteps from "./InputSteps";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import check from "../../../../../assets/icon-park-solid_check-one.svg";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import { getProduceDetails } from "@/services/api/profile";
+import PageLoader from "@/components/Common/PageLoader/PageLoader";
+import CompleteOrder from "./CompleteOrder";
 
 const TrackOrder = () => {
-  const [step, setStep] = useState(4);
+  const [reload, setReload] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<any>({});
+  const params = useParams();
+  const { user } = useAuthContext();
+  const toast = useToast();
+
   useEffect(() => {
-    if (step === 5) {
-      setIsOpen(true);
+    if (user) {
+      getProduceDetails(params.id, toast).then((response) => {
+        if (response) {
+          setData(response);
+          setIsLoading(false);
+        }
+      });
     }
-  }, [step]);
+  }, [user, reload]);
+
+  const status = [!!data?.acceptedAt, !!data?.shippedAt, !!data?.deliveredAt];
+
+  const step = useMemo(() => {
+    return status.findLastIndex((item) => item === true);
+  }, [data]);
 
   return (
     <>
       <Box display="flex" h="100vh">
-        <OrderProgress step={step} />
-        <InputSteps step={step} setStep={setStep} />
-        {step >= 2 && step < 5 ? (
-          <Button
-            position="absolute"
-            bottom={8}
-            right={8}
-            onClick={() => setStep((prev) => prev + 1)}
-          >
-            Next
-          </Button>
-        ) : null}
+        {isLoading ? (
+          <PageLoader />
+        ) : (
+          <>
+            <OrderProgress data={data} status={status} step={step} />
+            <CompleteOrder
+              step={step}
+              reload={reload}
+              setReload={setReload}
+              setIsOpen={setIsOpen}
+            />
+          </>
+        )}
       </Box>
       <Modal
         isOpen={isOpen}

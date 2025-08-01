@@ -2,7 +2,7 @@
 
 import { vat } from "@/constants";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
-import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -41,7 +41,7 @@ const OrderSummary = () => {
             maxW={"65%"}
             isTruncated
           >
-            {getProductCategoryTitle(chosenProject?.name)}
+            {formatSnakeCaseTitle(chosenProject?.name)}
           </Text>
           <Text color={"main_black_1"} fontWeight={500}>
             ${chosenProject?.totalPrice?.toLocaleString()}

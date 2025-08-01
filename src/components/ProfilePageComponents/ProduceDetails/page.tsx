@@ -7,8 +7,8 @@ import { ProduceDetailsProps } from "./types";
 import Slider from "@/components/FarmPageComponents/Slider/Slider";
 import Subsections from "./Subsections";
 import BackButton from "@/components/Common/BackButton/BackButton";
-import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
 import { usePathname } from "next/navigation";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 
 const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
   const pathname = usePathname();
@@ -50,10 +50,6 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
             {
               title: "Phone Number",
               value: details?.deliveryAddress?.phoneNumber,
-            },
-            {
-              title: "Order Status",
-              value: details?.deliveryStatus,
             },
           ],
         },
@@ -124,7 +120,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
             textTransform="capitalize"
             mb={{ base: "15px", lg: "25px" }}
           >
-            {getProductCategoryTitle(detailsByUrl(pathname).productName)}
+            {formatSnakeCaseTitle(detailsByUrl(pathname).productName)}
           </Text>
 
           <Text
