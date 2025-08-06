@@ -93,8 +93,10 @@ const TrackOrder = () => {
             overflow="hidden"
           >
             <Image
-              src={data?.listing?.farm?.farmImages[0]?.image}
-              alt="check icon"
+              src={data?.listing?.images[0]?.image}
+              alt={`${formatSnakeCaseTitle(
+                data?.listing?.product?.name
+              )} cover`}
               width={255}
               height={239}
               style={{
