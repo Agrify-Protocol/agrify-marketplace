@@ -3,15 +3,13 @@
 import { Box, Button, Flex, Select } from "@chakra-ui/react";
 import React from "react";
 import { SectionTabProps } from "./types";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const SectionTabs = ({
-  sections,
-  currentSection,
-  type,
-}: SectionTabProps) => {
+const SectionTabs = ({ sections, currentSection, type }: SectionTabProps) => {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currTab = searchParams.get("id") ?? sections[0];
 
   return (
     <Box marginTop={{ base: "40px", lg: 0 }}>
@@ -56,17 +54,13 @@ const SectionTabs = ({
         colorScheme="gray"
         bg="rgba(238, 238, 238, 1)"
         display={{ base: "block", lg: "none" }}
+        value={currTab}
         onChange={(e) =>
           router.push(`${pathname}?id=${e.target.value.toLocaleLowerCase()}`)
         }
       >
         {sections.map((item) => (
-          <option
-            value={item}
-            id={item}
-            key={item}
-            selected={currentSection === item.toLocaleLowerCase()}
-          >
+          <option value={item.toLocaleLowerCase()} id={item} key={item}>
             {item}
           </option>
         ))}

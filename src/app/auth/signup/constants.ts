@@ -2,7 +2,7 @@ import { ToastData } from "@/utils/classes";
 import { UseToastOptions } from "@chakra-ui/react";
 
 export const successToast: UseToastOptions = new ToastData(
-  "User account created!",
+  "Successful!",
   "Your account has been created successfully!",
   "success"
 );

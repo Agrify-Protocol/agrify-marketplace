@@ -152,7 +152,6 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
             >
               <Text
                 fontSize={{ base: "14px", lg: "18px" }}
-                // fontSize={{ base: "18px", lg: "24px" }}
                 color={"black"}
                 position={"absolute"}
                 left={0}
@@ -163,7 +162,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
                 {detailsByUrl(pathname).farmScore}
               </Text>
               <Image
-                style={{ position: "absolute", bottom: "0" }}
+                style={{ position: "absolute", bottom: "10px" }}
                 src={seal}
                 alt="seal icon"
               />

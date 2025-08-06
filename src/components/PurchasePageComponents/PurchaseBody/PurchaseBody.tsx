@@ -1,13 +1,19 @@
 "use client";
 
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 
 const PurchaseBody = () => {
   const router = useRouter();
   const { chosenProject } = useGlobalContext();
+
+  useEffect(() => {
+    if (!chosenProject) {
+      router.push("/projects");
+    }
+  }, [chosenProject]);
 
   return (
     <Box

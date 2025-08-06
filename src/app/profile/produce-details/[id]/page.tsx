@@ -75,7 +75,7 @@ const Details = () => {
                 </Button>
               </Link>
 
-              {data?.deliveryStatus !== "completed" && (
+              {data?.deliveryStatus !== "completed" ? (
                 <Link href={`/profile/produce-details/track/${data?.orderId}`}>
                   <Button
                     bgColor="transparent"
@@ -94,6 +94,29 @@ const Details = () => {
                     Track Order
                   </Button>
                 </Link>
+              ) : (
+                <>
+                  {data?.txHash ? (
+                    <Link href={data?.txHash} target="_blank">
+                      <Button
+                        bgColor="transparent"
+                        width="100%"
+                        color="#282828"
+                        borderRadius={"2rem"}
+                        px={"2.5rem"}
+                        py="14px"
+                        fontWeight={400}
+                        mb="32px"
+                        border="1px solid #282828"
+                        _hover={{
+                          bg: "rgba(40, 40, 40, .1)",
+                        }}
+                      >
+                        View on Block Explorer
+                      </Button>
+                    </Link>
+                  ) : null}
+                </>
               )}
             </>
           }

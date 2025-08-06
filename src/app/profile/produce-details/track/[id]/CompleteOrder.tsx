@@ -6,11 +6,13 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 
 const CompleteOrder = ({
+  status,
   step,
   reload,
   setReload,
   setIsOpen,
 }: {
+  status: boolean[];
   step: number;
   reload: boolean;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
@@ -41,18 +43,18 @@ const CompleteOrder = ({
         </Text>
         <Text mb="26px">Confirm delivery of your package.</Text>
         <Button
-          bgColor={step === 1 ? "#0CC14C" : "#EEEEEE"}
-          color={step === 1 ? "white" : "#282828"}
+          bgColor={step === status.length - 1 ? "#0CC14C" : "#EEEEEE"}
+          color={step === status.length - 1 ? "white" : "#282828"}
           borderRadius="24px"
           mt="48px"
           py="20px"
           width="100%"
           fontWeight={500}
           _hover={{
-            bg: step === 1 && "#0ba842",
+            bg: step === status.length - 1 && "#0ba842",
           }}
           onClick={handleCompleteOrder}
-          isDisabled={step !== 1}
+          isDisabled={step !== status.length - 1}
           rightIcon={
             isLoading ? (
               <Box animation={spinAnimation}>
@@ -70,7 +72,7 @@ const CompleteOrder = ({
           Complete Order
         </Button>
       </Box>
-      {step !== 1 && (
+      {step !== status.length - 1 && (
         <Box
           position="absolute"
           top="0"

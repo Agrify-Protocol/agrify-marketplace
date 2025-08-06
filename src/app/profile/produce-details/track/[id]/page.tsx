@@ -18,6 +18,7 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { getProduceDetails } from "@/services/api/profile";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import CompleteOrder from "./CompleteOrder";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 
 const TrackOrder = () => {
   const [reload, setReload] = useState(false);
@@ -56,6 +57,7 @@ const TrackOrder = () => {
           <>
             <OrderProgress data={data} status={status} step={step} />
             <CompleteOrder
+              status={status}
               step={step}
               reload={reload}
               setReload={setReload}
@@ -91,7 +93,7 @@ const TrackOrder = () => {
             overflow="hidden"
           >
             <Image
-              src="https://res.cloudinary.com/isaacoduh/image/upload/v1742657336/occfki5q560pxn5chkzc.jpg"
+              src={data?.listing?.farm?.farmImages[0]?.image}
               alt="check icon"
               width={255}
               height={239}
@@ -115,7 +117,7 @@ const TrackOrder = () => {
             <Text fontSize="24px" fontWeight="500">
               Delivery Completed:{" "}
               <Text as="span" color="black">
-                Cassava
+                {formatSnakeCaseTitle(data?.listing?.product?.name)}
               </Text>
             </Text>
           </Box>

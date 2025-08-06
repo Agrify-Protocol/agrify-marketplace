@@ -26,8 +26,9 @@ const createInstance = (path = ""): AxiosInstance => {
     },
     (error) => {
       const message =
-        error?.response?.data?.error ||
-        error?.message ||
+        error?.response?.data?.message ??
+        error?.response?.data?.error ??
+        error?.message ??
         "Something went wrong";
       return Promise.reject(new Error(message));
     }

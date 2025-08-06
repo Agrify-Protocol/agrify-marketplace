@@ -1,7 +1,7 @@
 export type CustomInputProps = {
   id: string;
   type: string;
-  value: string;
+  value: string | number;
   label?: string;
   subtext?: string;
   placeholder: string;
