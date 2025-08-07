@@ -57,6 +57,7 @@ const TrackOrder = () => {
           <>
             <OrderProgress data={data} status={status} step={step} />
             <CompleteOrder
+              data={data}
               status={status}
               step={step}
               reload={reload}

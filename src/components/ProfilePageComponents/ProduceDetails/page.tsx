@@ -83,7 +83,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
           },
           {
             title: "Batch Size",
-            value: details?.batchSize?.toLocaleString(),
+            value: `${details?.batchSize?.toLocaleString()}kg`,
           },
         ],
       },

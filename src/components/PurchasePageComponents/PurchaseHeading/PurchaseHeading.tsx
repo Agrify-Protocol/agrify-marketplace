@@ -12,7 +12,7 @@ const PurchaseHeading = () => {
   useEffect(() => {
     if (!chosenProject) {
       return;
-      router.push("/projects");
+      router.push("/marketplace");
     }
   }, [chosenProject]);
 

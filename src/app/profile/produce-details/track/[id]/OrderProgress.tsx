@@ -99,8 +99,8 @@ const OrderProgress = ({
         bottom="0"
         left="0"
         right="0"
-        height={step + 1 !== status.length ? `${80 - step * 5}%` : "0%"}
-        bgGradient="linear(to-b, rgba(255,255,255,0), white)"
+        height={step + 1 !== status.length ? `${45 - step * 10}%` : "0%"}
+        bgGradient="linear(to-b, rgba(247,247,247,3), white)"
         pointerEvents="none"
         zIndex="1"
       />

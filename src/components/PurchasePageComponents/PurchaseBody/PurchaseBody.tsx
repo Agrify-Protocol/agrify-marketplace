@@ -11,7 +11,7 @@ const PurchaseBody = () => {
 
   useEffect(() => {
     if (!chosenProject) {
-      router.push("/projects");
+      router.push("/marketplace");
     }
   }, [chosenProject]);
 

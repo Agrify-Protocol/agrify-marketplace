@@ -135,7 +135,7 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
 
   useEffect(() => {
     if (!chosenProject) {
-      router.push("/projects");
+      router.push("/marketplace");
     }
     setPayload((prev) => ({
       ...prev,

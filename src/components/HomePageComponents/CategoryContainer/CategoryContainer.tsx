@@ -29,12 +29,13 @@ const CategoryContainer = ({ search }: { search: string }) => {
       ) : categories?.length ? (
         <Grid
           mt="3.5rem"
-          gridGap="2rem"
           gridTemplateColumns={{
             base: "1fr",
             sm: "repeat(2, 1fr)",
-            md: "repeat(auto-fill, minmax(23.063rem, 1fr))",
+            lg: "repeat(3, 1fr)",
           }}
+          rowGap={10}
+          columnGap={{ base: 6, md: 6 }}
         >
           {categories?.map((category) => (
             <Category key={category?.productId} category={category} />

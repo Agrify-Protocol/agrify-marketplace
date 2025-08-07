@@ -30,7 +30,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     "/auth/signup",
     "/auth/login",
     "/product-story",
-    "/projects",
+    "/marketplace",
     // "/profile/produce-details/track",
   ];
 

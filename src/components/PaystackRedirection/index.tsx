@@ -47,7 +47,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
         <PageLoader />
       ) : (
         <Box>
-          <BackButton customFunction={() => router.push("/projects")} />
+          <BackButton customFunction={() => router.push("/marketplace")} />
           <Box
             w={"100%"}
             bgColor={{ lg: "white" }}
@@ -130,7 +130,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                 href={
                   type === "success"
                     ? "/profile?id=produce%20bought"
-                    : "/projects"
+                    : "/marketplace"
                 }
               >
                 <Button

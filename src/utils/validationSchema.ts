@@ -14,7 +14,7 @@ export function validateEmail(str: string) {
 
 export function validatePhoneNumber(str: string) {
   const regex = /^[0-9]+$/;
-  return regex.test(str) && str.length >= 6;
+  return regex.test(str) && str.length >= 7;
 }
 
 export function validateLength(str: string, length: number) {
