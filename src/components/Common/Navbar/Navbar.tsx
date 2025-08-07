@@ -16,7 +16,7 @@ import ProfileModal from "../ProfileModal/ProfileModal";
 const Navbar = () => {
   const pathName = usePathname();
   const route = useRouter();
-  const routesWithNav = ["/farm", "/profile", "/projects"];
+  const routesWithNav = ["/farm", "/profile", "/marketplace"];
   const isAuthPage = pathName.startsWith("/auth");
   const [showModal, setShowModal] = useState(false);
   const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -52,7 +52,7 @@ const Navbar = () => {
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-        <Link href={"/projects"}>
+        <Link href={"/marketplace"}>
           <Image src={logo} alt="" />
         </Link>
         <NavButtons

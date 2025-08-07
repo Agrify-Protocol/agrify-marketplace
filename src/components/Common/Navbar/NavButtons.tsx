@@ -1,13 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import { NavButtonsProps } from "./types";
-import { useAuthContext } from "@/context/AuthContext/AuthContext";
 
 const NavButtons = ({ route, pathName, user, ...rest }: NavButtonsProps) => {
   const navMenu = [
     {
       title: "Marketplace",
-      link: "/projects",
-      base: ["/projects", "/farm", "/payment"],
+      link: "/marketplace",
+      base: ["/marketplace", "/farm", "/payment"],
     },
     {
       title: "My Profile",

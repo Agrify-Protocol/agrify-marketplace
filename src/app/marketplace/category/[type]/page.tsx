@@ -8,18 +8,16 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import BackButton from "@/components/Common/BackButton/BackButton";
 import EmptyText from "@/components/Common/EmptyText/EmptyText";
-import Search from "@/components/Common/Search/Search";
 import location from "../../../../assets/location.svg";
 import Link from "next/link";
 import Image from "next/image";
-import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 
 const CategoryPage = () => {
   const { type } = useParams();
   const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(true);
   const [categoryData, setCategoryData] = useState<any>([]);
-  const [search, setSearch] = useState("");
   const toast = useToast();
 
   useEffect(() => {
@@ -45,7 +43,7 @@ const CategoryPage = () => {
       <Box>
         <Box mt="30px" mb="40px">
           <Text fontSize={{ base: "18px", sm: "20px" }} color="black">
-            {`${getProductCategoryTitle(type as string)} Market`}
+            {`${formatSnakeCaseTitle(type as string)} Market`}
           </Text>
         </Box>
 
@@ -59,31 +57,18 @@ const CategoryPage = () => {
               lg: "repeat(3, 1fr)",
             }}
             rowGap={10}
-            columnGap={{ base: 6, lg: 0 }}
+            columnGap={{ base: 6, md: 6 }}
           >
-            {categoryData?.activeProducts?.map((item: any, idx: number) => (
+            {categoryData?.activeProducts?.map((item: any) => (
               <Link
                 key={item?._id}
-                href={`/projects/category/${type}/${item?._id}`}
-                style={{
-                  textDecoration: "none",
-                }}
+                href={`/marketplace/category/${type}/${item?._id}`}
+                style={{ textDecoration: "none" }}
               >
-                <Box
-                  display="flex"
-                  justifySelf={{
-                    base: "stretch",
-                    lg:
-                      idx % 3 === 0
-                        ? "start"
-                        : idx % 3 === 1
-                        ? "center"
-                        : "end",
-                  }}
-                >
+                <Box display="flex" justifyContent="center">
                   <Box
-                    w={{ base: "100%", lg: "389.7px" }}
-                    maxW="100%"
+                    w="full"
+                    maxW="389.7px"
                     h="365.076px"
                     rounded="13.58px"
                     overflow="hidden"
@@ -155,11 +140,7 @@ const CategoryPage = () => {
                             </Flex>
                           </Box>
                           <Text
-                            fontSize={{
-                              base: "16px",
-                              sm: "18px",
-                              lg: "20px",
-                            }}
+                            fontSize={{ base: "16px", sm: "18px", lg: "20px" }}
                             color="white"
                             fontWeight="medium"
                           >

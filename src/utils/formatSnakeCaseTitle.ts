@@ -1,4 +1,4 @@
-export const getProductCategoryTitle = (text: string) => {
+export const formatSnakeCaseTitle = (text: string) => {
   return text
     ? text
         ?.split("_")

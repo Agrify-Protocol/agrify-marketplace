@@ -51,9 +51,9 @@ const Login = () => {
         setRefreshToken(result.refreshToken);
         toast(successToast);
         if (!!category && !!id) {
-          window.location.href = `/projects/category/${category}/${id}`;
+          window.location.href = `/marketplace/category/${category}/${id}`;
         } else {
-          window.location.href = "/projects";
+          window.location.href = "/marketplace";
         }
       }
     } finally {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
-import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 import { Box, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
@@ -12,7 +12,7 @@ const PurchaseHeading = () => {
   useEffect(() => {
     if (!chosenProject) {
       return;
-      router.push("/projects");
+      router.push("/marketplace");
     }
   }, [chosenProject]);
 
@@ -30,7 +30,7 @@ const PurchaseHeading = () => {
         fontWeight={{ base: "500", lg: "400" }}
         color={"black"}
       >
-        {getProductCategoryTitle(chosenProject?.name)}
+        {formatSnakeCaseTitle(chosenProject?.name)}
       </Text>
       <Text fontSize={"1rem"} color={"secondary_foreground"} mb={"0.872rem"}>
         Secure your high-quality{" "}

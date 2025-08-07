@@ -1,4 +1,4 @@
-import { StateProjectData } from "@/app/projects/category/[type]/types";
+import { StateProjectData } from "@/app/marketplace/category/[type]/types";
 
 export type ProjectTableRowProps = {
   project: StateProjectData;

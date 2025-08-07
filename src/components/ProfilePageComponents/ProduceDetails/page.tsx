@@ -7,8 +7,8 @@ import { ProduceDetailsProps } from "./types";
 import Slider from "@/components/FarmPageComponents/Slider/Slider";
 import Subsections from "./Subsections";
 import BackButton from "@/components/Common/BackButton/BackButton";
-import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
 import { usePathname } from "next/navigation";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 
 const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
   const pathname = usePathname();
@@ -51,10 +51,6 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
               title: "Phone Number",
               value: details?.deliveryAddress?.phoneNumber,
             },
-            {
-              title: "Order Status",
-              value: details?.deliveryStatus,
-            },
           ],
         },
       };
@@ -87,7 +83,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
           },
           {
             title: "Batch Size",
-            value: details?.batchSize?.toLocaleString(),
+            value: `${details?.batchSize?.toLocaleString()}kg`,
           },
         ],
       },
@@ -124,7 +120,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
             textTransform="capitalize"
             mb={{ base: "15px", lg: "25px" }}
           >
-            {getProductCategoryTitle(detailsByUrl(pathname).productName)}
+            {formatSnakeCaseTitle(detailsByUrl(pathname).productName)}
           </Text>
 
           <Text
@@ -156,7 +152,6 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
             >
               <Text
                 fontSize={{ base: "14px", lg: "18px" }}
-                // fontSize={{ base: "18px", lg: "24px" }}
                 color={"black"}
                 position={"absolute"}
                 left={0}
@@ -167,7 +162,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
                 {detailsByUrl(pathname).farmScore}
               </Text>
               <Image
-                style={{ position: "absolute", bottom: "0" }}
+                style={{ position: "absolute", bottom: "10px" }}
                 src={seal}
                 alt="seal icon"
               />

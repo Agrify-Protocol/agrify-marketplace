@@ -78,8 +78,9 @@ const Reset = () => {
             if (response) {
               toast(
                 new ToastData(
-                  response.message,
-                  "Your password has been updated successfully!",
+                  "Successful!",
+                  response.message ??
+                    "Your password has been updated successfully!",
                   "success"
                 )
               );

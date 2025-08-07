@@ -1,51 +1,42 @@
 import { Box, Flex, Text, Button, useToast } from "@chakra-ui/react";
-import check from "../../assets/icon-park-solid_check-one.svg";
-import error from "../../assets/error.svg";
 import Image from "next/image";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
-import { getSingleProject } from "@/services/api/projects";
-import { getPurchasesByReference } from "@/services/api/purchases";
-import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, useMemo } from "react";
 import { PaystackRedirectionProps } from "./types";
 import PageLoader from "../Common/PageLoader/PageLoader";
 import BackButton from "../Common/BackButton/BackButton";
 import Link from "next/link";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import { getProduceDetails } from "@/services/api/profile";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
+import check from "../../assets/icon-park-solid_check-one.svg";
+import error from "../../assets/error.svg";
 
 const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
-  const trxref = searchParams.get("trxref");
-  const reference = searchParams.get("reference");
-  const params = useParams();
-  const { chosenProject, setChosenProject } = useGlobalContext(); //orderedAmount
-  const [purchasedTonnes, setPurchasedTonnes] = useState(0);
-  const [isRedirect, setIsRedirect] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const id = searchParams.get("id");
+  const { user } = useAuthContext();
   const toast = useToast();
+  const [data, setData] = useState<Record<string, any>>({});
 
   useEffect(() => {
-    if (!chosenProject) {
-      if (trxref && reference) {
-        setIsRedirect(true);
-        setIsLoading(true);
-        getPurchasesByReference(trxref, toast).then((response) => {
-          if (response) {
-            const tx = response[0];
-            setPurchasedTonnes(tx.tonnes);
-            getSingleProject(tx.projectId, toast).then((response) => {
-              if (response) setChosenProject(response);
-            });
-          }
-        });
+    if (user) {
+      getProduceDetails(id as string, toast).then((response) => {
+        if (response) {
+          setData(response);
+        }
         setIsLoading(false);
-      }
+      });
     }
-  }, [params, trxref, reference]);
+  }, [user, id]);
 
-  const getTonnesString = (value: number) => {
-    return `${value} kg of ITEM`;
-  };
+  const produceString = useMemo(() => {
+    return `${data?.listing?.batchSize} batch(es) of ${formatSnakeCaseTitle(
+      data?.listing?.product?.name
+    )}`;
+  }, [data]);
 
   return (
     <Box
@@ -56,7 +47,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
         <PageLoader />
       ) : (
         <Box>
-          <BackButton customFunction={() => router.push("/projects")} />
+          <BackButton customFunction={() => router.push("/marketplace")} />
           <Box
             w={"100%"}
             bgColor={{ lg: "white" }}
@@ -85,34 +76,23 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               fontWeight={600}
               color={"#011308"}
             >
-              {!isRedirect
-                ? type === "success"
-                  ? "Invoice Generated!"
-                  : "Purchase Failed :("
-                : "Purchase Completed!"}
+              {`Purchase ${type === "success" ? "Completed" : "Failed"}!`}
             </Text>
             <Text
               fontSize={{ lg: "1.125rem" }}
+              maxW="458px"
+              mx="auto"
               fontWeight={450}
               mt={{ base: "21px", lg: "1.708rem" }}
               mb={{ base: "33px", lg: "2.661rem" }}
             >
               {type === "success"
-                ? `You have successfully purchased ${getTonnesString(
-                    isRedirect ? +purchasedTonnes.toLocaleString() : 0 //+orderedAmount.toLocaleString()
-                  )}`
-                : `Unfortunately, the purchase of ${getTonnesString(
-                    isRedirect ? +purchasedTonnes.toLocaleString() : 0 //+orderedAmount.toLocaleString()
-                  )} could not be completed.`}
-              {type === "error" ? (
-                <Text as="span" display="block">
-                  Please try again.
-                </Text>
-              ) : null}
+                ? `You have successfully purchased ${produceString}.`
+                : `Unfortunately, the purchase of ${produceString} could not be completed. Please try again.`}
             </Text>
             <Box
-              w={"15.952rem"}
-              maxH={"14.944rem"}
+              width={255.23}
+              height={239.1}
               overflow={"hidden"}
               mx={"auto"}
               borderRadius={"0.449rem"}
@@ -120,13 +100,12 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               mb={"3.288rem"}
             >
               <Image
-                src={
-                  chosenProject?.coverImage! ||
-                  chosenProject?.farms[0].farmImages[0].image!
-                }
-                alt=""
+                src={data?.listing?.farm?.farmImages[0]?.image}
                 width={255.23}
                 height={239.1}
+                alt={`${formatSnakeCaseTitle(
+                  data?.listing?.product?.name
+                )} cover image`}
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
               <Box
@@ -134,18 +113,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                 inset={0}
                 bgColor={"rgba(0,0,0,0.4)"}
                 p={"1.329rem 1.098rem"}
-              >
-                <Text
-                  bgColor={"agrify_lavender"}
-                  fontSize={"0.545rem"}
-                  p={"0.149rem 0.483rem"}
-                  w={"fit-content"}
-                  color={"black"}
-                  borderRadius={"0.425rem"}
-                >
-                  4+ SDG Impact
-                </Text>
-              </Box>
+              />
             </Box>
 
             <Text
@@ -154,50 +122,54 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               fontSize={{ base: "16px", lg: "1.5rem" }}
               mb={"2.648rem"}
             >
-              {chosenProject?.title}
+              {formatSnakeCaseTitle(data?.listing?.product?.name)}
             </Text>
 
             <Flex flexDir="column" alignItems="center" gap="27px">
-              <Button
-                w="fit-content"
-                border={
+              <Link
+                href={
                   type === "success"
-                    ? "1px solid transparent"
-                    : "1px solid #282828"
-                }
-                color={type === "success" ? "white" : "main_black_1"}
-                bgColor={type === "success" ? "main_black_1" : "white"}
-                borderRadius={"2rem"}
-                _hover={{
-                  bg: type === "success" ? "#404040" : "#f2f2f2",
-                }}
-                onClick={() =>
-                  router.push(
-                    `/projects/category/${chosenProject?.category}/${
-                      chosenProject?._id
-                    }?id=${type === "success" ? "my purchases" : "overview"}`
-                  )
+                    ? "/profile?id=produce%20bought"
+                    : "/marketplace"
                 }
               >
-                {type === "success" ? "View Purchase" : "Back to Project"}
-              </Button>
-              <Link href="#" target="_blank">
                 <Button
-                  bgColor="transparent"
-                  color="#282828"
+                  w="fit-content"
+                  border={
+                    type === "success"
+                      ? "1px solid transparent"
+                      : "1px solid #282828"
+                  }
+                  color={type === "success" ? "white" : "main_black_1"}
+                  bgColor={type === "success" ? "main_black_1" : "white"}
                   borderRadius={"2rem"}
-                  px={"2.5rem"}
-                  py="14px"
-                  fontWeight={400}
-                  mb="32px"
-                  border="1px solid #282828"
                   _hover={{
-                    bg: "rgba(40, 40, 40, .1)",
+                    bg: type === "success" ? "#404040" : "#f2f2f2",
                   }}
                 >
-                  View on Block Explorer
+                  {type === "success" ? "View Purchase" : "Back to Project"}
                 </Button>
               </Link>
+
+              {data?.txHash ? (
+                <Link href={data?.txHash} target="_blank">
+                  <Button
+                    bgColor="transparent"
+                    color="#282828"
+                    borderRadius={"2rem"}
+                    px={"2.5rem"}
+                    py="14px"
+                    fontWeight={400}
+                    mb="32px"
+                    border="1px solid #282828"
+                    _hover={{
+                      bg: "rgba(40, 40, 40, .1)",
+                    }}
+                  >
+                    View on Block Explorer
+                  </Button>
+                </Link>
+              ) : null}
             </Flex>
           </Box>
         </Box>

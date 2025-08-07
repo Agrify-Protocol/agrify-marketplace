@@ -7,7 +7,7 @@ export const errorToast = new ToastData(
 );
 
 export const successToast = new ToastData(
-  "Login successful!",
+  "Successful!",
   "You have logged in successfully.",
   "success"
 );

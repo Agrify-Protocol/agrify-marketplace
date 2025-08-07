@@ -34,7 +34,7 @@ const ErrorPage = () => {
           text="Go back home"
           isLoading={false}
           isDisabled={false}
-          onClickFunc={() => route.push("/projects")}
+          onClickFunc={() => route.push("/marketplace")}
         />
       </Box>
     </Box>

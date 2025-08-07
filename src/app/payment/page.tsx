@@ -1,10 +1,24 @@
+"use client";
+
 import BackButton from "@/components/Common/BackButton/BackButton";
+import DeliveryDetails from "@/components/PaymentPageComponents/DeliveryDetails/DeliveryDetails";
 import OrderSummary from "@/components/PaymentPageComponents/OrderSummary/OrderSummary";
-import RightSide from "@/components/PaymentPageComponents/RightSide/RightSide";
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { PaymentContextProvider } from "@/context/PaymentContext/PaymentContext";
 import { Box, Flex } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Payment = () => {
+  const router = useRouter();
+  const { chosenProject } = useGlobalContext();
+
+  useEffect(() => {
+    if (!chosenProject) {
+      router.push("/marketplace");
+    }
+  }, [chosenProject]);
+
   return (
     <PaymentContextProvider>
       <Flex
@@ -23,9 +37,16 @@ const Payment = () => {
           <Box mt={{ base: "39px", lg: 0 }}>
             <BackButton />
           </Box>
-          <OrderSummary />
+          <OrderSummary chosenProject={chosenProject} />
         </Box>
-        <RightSide />
+        <Box
+          flexBasis={"50%"}
+          minH={{ lg: "100vh" }}
+          bgColor={{ lg: "white" }}
+          alignContent="center"
+        >
+          <DeliveryDetails chosenProject={chosenProject} />
+        </Box>
       </Flex>
     </PaymentContextProvider>
   );

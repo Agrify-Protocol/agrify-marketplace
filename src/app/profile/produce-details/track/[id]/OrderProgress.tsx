@@ -9,18 +9,37 @@ import Accepted from "@/assets/track/Accepted";
 import Stroke from "@/assets/track/Stroke";
 import Transit from "@/assets/track/Transit";
 import Delivered from "@/assets/track/Delivered";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
+import { formatTimestampShort } from "@/utils/formatTimestampShort";
 
-const OrderProgress = ({ step }: { step: number }) => {
+const OrderProgress = ({
+  data,
+  status,
+  step,
+}: {
+  data: any;
+  status: boolean[];
+  step: number;
+}) => {
   const progress = useMemo(() => {
     return [
-      { title: "Order Accepted", icon: <Accepted status={step >= 0} /> },
       {
-        title: "Order in Transit",
-        icon: <Transit status={step >= 1} />,
+        key: "acceptedAt",
+        title: "Order Accepted",
+        icon: <Accepted status={!!data?.acceptedAt} />,
       },
-      { title: "Order Delivered", icon: <Delivered status={step >= 2} /> },
+      {
+        key: "shippedAt",
+        title: "Order in Transit",
+        icon: <Transit status={!!data?.shippedAt} />,
+      },
+      {
+        key: "deliveredAt",
+        title: "Order Delivered",
+        icon: <Delivered status={!!data?.deliveredAt} />,
+      },
     ];
-  }, [step]);
+  }, [data]);
 
   return (
     <Box w="50%" alignSelf="center">
@@ -37,7 +56,7 @@ const OrderProgress = ({ step }: { step: number }) => {
               style={{ height: "40px", width: "40px", objectFit: "cover" }}
             />
             <Text fontSize="24px" fontWeight="500" color="black">
-              {step === 5 ? "Order Delivered" : "In Transit"}
+              {formatSnakeCaseTitle(data?.deliveryStatus)}
             </Text>
           </Box>
         </Box>
@@ -48,24 +67,26 @@ const OrderProgress = ({ step }: { step: number }) => {
                 <Box>{item.icon}</Box>
                 {progress.length - 1 !== index ? (
                   <Box>
-                    <Stroke status={step >= index} />
+                    <Stroke status={!!data?.[item?.key]} />
                   </Box>
                 ) : null}
               </Box>
               <Box>
                 <Text
                   fontSize="18px"
-                  fontWeight={step >= index ? "500" : "400"}
-                  color={step >= index ? "black" : ""}
+                  fontWeight={!!data?.[item?.key] ? "500" : "400"}
+                  color={!!data?.[item?.key] ? "black" : ""}
                 >
                   {item.title}
                 </Text>
-                {step >= index ? (
+                {!!data?.[item?.key] ? (
                   <Text
-                    fontWeight={step >= index ? "500" : "400"}
+                    fontWeight={!!data?.[item?.key] ? "500" : "400"}
                     color="#A6A6A6"
                   >
-                    07:59:00
+                    {data?.[item?.key]
+                      ? formatTimestampShort(data?.[item?.key])
+                      : ""}
                   </Text>
                 ) : null}
               </Box>
@@ -78,8 +99,8 @@ const OrderProgress = ({ step }: { step: number }) => {
         bottom="0"
         left="0"
         right="0"
-        height={`${80 - step * 5}%`}
-        bgGradient="linear(to-b, rgba(255,255,255,0), white)"
+        height={step + 1 !== status.length ? `${45 - step * 10}%` : "0%"}
+        bgGradient="linear(to-b, rgba(247,247,247,3), white)"
         pointerEvents="none"
         zIndex="1"
       />

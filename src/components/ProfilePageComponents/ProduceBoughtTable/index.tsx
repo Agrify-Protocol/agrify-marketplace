@@ -4,7 +4,7 @@ import FourColumnTableRow from "@/components/Common/FourColumnTableRow/FourColum
 import Spinner from "@/components/Common/Spinner/Spinner";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { getOrders } from "@/services/api/profile";
-import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 import getStatusProps from "@/utils/getStatusProps";
 import { readableDate } from "@/utils/parseData";
 import { Flex, Grid, Box, Text, useToast } from "@chakra-ui/react";
@@ -42,7 +42,7 @@ const ProduceBoughtTable = () => {
         >
           <Spinner />
         </Flex>
-      ) : data?.length < 1 ? (
+      ) : data?.length >= 1 ? (
         <>
           <Grid
             bgColor={"#F5F5F5"}
@@ -74,8 +74,7 @@ const ProduceBoughtTable = () => {
                           pl={"1.25rem"}
                           textTransform="capitalize"
                         >
-                          {getProductCategoryTitle(order?.listing?.name) ??
-                            "N/A"}
+                          {formatSnakeCaseTitle(order?.listing?.name) ?? "N/A"}
                         </Text>
                         <Text
                           textTransform={"capitalize"}
@@ -87,7 +86,7 @@ const ProduceBoughtTable = () => {
                           fontSize={"0.875rem"}
                           display={{ base: "none", lg: "block" }}
                         >
-                          {getProductCategoryTitle(order?.deliveryStatus)}
+                          {formatSnakeCaseTitle(order?.deliveryStatus)}
                         </Text>
                         <Text
                           color={"black"}

@@ -1,24 +1,12 @@
 "use client";
 
 import { vat } from "@/constants";
-import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
-import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 
-const OrderSummary = () => {
-  const { chosenProject } = useGlobalContext();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!chosenProject) {
-      return;
-      router.push("/projects");
-    }
-  }, [chosenProject]);
-
+const OrderSummary = ({ chosenProject }: { chosenProject: any }) => {
   return (
     <Box>
       <Box mt={"1.438rem"}>
@@ -41,7 +29,7 @@ const OrderSummary = () => {
             maxW={"65%"}
             isTruncated
           >
-            {getProductCategoryTitle(chosenProject?.name)}
+            {formatSnakeCaseTitle(chosenProject?.name)}
           </Text>
           <Text color={"main_black_1"} fontWeight={500}>
             ${chosenProject?.totalPrice?.toLocaleString()}

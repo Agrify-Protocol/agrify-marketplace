@@ -9,7 +9,7 @@ import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { useParams, useRouter } from "next/navigation";
 import { getListingsById } from "@/services/api/projects";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
-import { getProductCategoryTitle } from "@/utils/getProductCategoryTitle";
+import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 
 const ProjectPage = () => {
   const { setChosenProject } = useGlobalContext();
@@ -65,7 +65,7 @@ const ProjectPage = () => {
                       router.push("/purchase");
                     }}
                   >
-                    Buy {getProductCategoryTitle(data?.product?.name)}
+                    Buy {formatSnakeCaseTitle(data?.product?.name)}
                   </Button>
                   <Link href={`/product-story/${data?._id}`} target="_blank">
                     <Button
