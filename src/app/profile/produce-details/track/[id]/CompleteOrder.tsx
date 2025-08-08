@@ -36,7 +36,7 @@ const CompleteOrder = ({
   };
 
   const isDisabled = useMemo(() => {
-    return step !== status.length - 1 || data?.deliveryStatus === "delivered";
+    return step !== status.length - 1 || data?.deliveryStatus === "completed";
   }, [step, status, data]);
 
   return (
