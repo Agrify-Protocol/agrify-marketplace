@@ -42,12 +42,24 @@ const OrderProgress = ({
   }, [data]);
 
   return (
-    <Box w="50%" alignSelf="center">
-      <Box maxW="300px" margin="10px auto">
+    <Box
+      // Full width on small/medium; keep 50% on lg
+      w={{ base: "100%", lg: "50%" }}
+      alignSelf={{ base: "stretch", lg: "center" }}
+      // Add safe padding on mobile
+      px={{ base: 4, md: 8, lg: 0 }}
+      pt={{ base: 4, md: 6, lg: 0 }}
+      bg={{ base: "white", lg: "transparent" }}
+      position="relative"
+    >
+      <Box
+        maxW={{ base: "600px", lg: "300px" }}
+        margin={{ base: "auto", lg: "10px auto" }}
+      >
         <BackButton />
         <Box>
           <Text mb={2} mt="23px">
-            Track Your Ordrer
+            Track Your Order
           </Text>
           <Box display="flex" alignItems="center" gap="8px">
             <Image
@@ -60,6 +72,7 @@ const OrderProgress = ({
             </Text>
           </Box>
         </Box>
+
         <Box mt="50px">
           {progress.map((item, index) => (
             <Box display="flex" gap="8px" key={item.title}>
@@ -94,12 +107,17 @@ const OrderProgress = ({
           ))}
         </Box>
       </Box>
+
+      {/* Keep the fade on lg; tone it down on mobile so it doesn't cover content */}
       <Box
         position="absolute"
         bottom="0"
         left="0"
         right="0"
-        height={step + 1 !== status.length ? `${80 - step * 5}%` : "0%"}
+        height={{
+          base: "0",
+          lg: step + 1 !== status.length ? `${80 - step * 5}%` : "0%",
+        }}
         bgGradient="linear(to-b, rgba(255,255,255,0), white)"
         pointerEvents="none"
         zIndex="1"

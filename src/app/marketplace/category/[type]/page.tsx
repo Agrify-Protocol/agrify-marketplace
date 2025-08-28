@@ -81,7 +81,7 @@ const CategoryPage = () => {
                       left="0"
                       right="0"
                       bottom="0"
-                      bgImage={`url(${item?.images[0]?.image})`}
+                      bgImage={`url(${item?.farm?.farmImages[0]?.image})`}
                       bgSize="cover"
                       bgPos="center"
                       transition="transform 0.5s ease"

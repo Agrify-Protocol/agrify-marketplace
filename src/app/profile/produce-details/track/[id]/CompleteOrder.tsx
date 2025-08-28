@@ -1,3 +1,5 @@
+"use client";
+
 import { spinAnimation } from "@/components/AuthPageComponents/AuthPageSubmitButton/helpers";
 import { completeOrder } from "@/services/api/profile";
 import { Box, Button, Text, useToast } from "@chakra-ui/react";
@@ -40,17 +42,27 @@ const CompleteOrder = ({
   }, [step, status, data]);
 
   return (
-    <Box w="50%" px="75px" pt="130px" background="white" pos="relative">
-      <Box>
-        <Text fontSize="24px" fontWeight="450" color="black" mb="30px">
+    <Box
+      w={{ base: "100%", lg: "50%" }}
+      h={{ lg: "100vh" }}
+      px={{ base: 4, md: 8, lg: "75px" }}
+      pt={{ base: 6, md: 10, lg: "130px" }}
+      pb={{ base: 6, lg: 0 }}
+      background="white"
+      pos="relative"
+    >
+      <Box maxW={{ base: "600px", lg: "auto" }} mx={{ base: "auto", lg: "0" }}>
+        <Text fontSize="24px" fontWeight="450" color="black" mb="16px">
           Confirm Delivery
         </Text>
-        <Text mb="26px">Confirm delivery of your package.</Text>
+        <Text mb={{ base: "18px", md: "26px" }}>
+          Confirm delivery of your package.
+        </Text>
         <Button
           bgColor={!isDisabled ? "#0CC14C" : "#EEEEEE"}
           color={!isDisabled ? "white" : "#282828"}
           borderRadius="24px"
-          mt="48px"
+          mt={{ base: "28px", md: "36px", lg: "48px" }}
           py="20px"
           width="100%"
           fontWeight={500}
@@ -76,6 +88,7 @@ const CompleteOrder = ({
           Complete Order
         </Button>
       </Box>
+
       {isDisabled && (
         <Box
           position="absolute"
@@ -85,6 +98,8 @@ const CompleteOrder = ({
           bottom="0"
           bg="rgba(255,255,255,0.8)"
           zIndex="10"
+          // Allow interaction on lg only (original behavior). On mobile, keep as is.
+          pointerEvents="none"
         />
       )}
     </Box>

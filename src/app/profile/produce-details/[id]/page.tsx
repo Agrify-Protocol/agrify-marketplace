@@ -12,6 +12,7 @@ import Link from "next/link";
 const Details = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<any>({});
+  const [txHash, setTxHash] = useState(null);
   const params = useParams();
   const { user } = useAuthContext();
   const toast = useToast();

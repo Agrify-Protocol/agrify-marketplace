@@ -40,17 +40,21 @@ const TrackOrder = () => {
         }
       });
     }
-  }, [user, reload]);
+  }, [user, reload, params.id, toast]);
 
   const status = [!!data?.acceptedAt, !!data?.shippedAt, !!data?.deliveredAt];
 
   const step = useMemo(() => {
     return status.findLastIndex((item) => item === true);
-  }, [data]);
+  }, [status]);
 
   return (
-    <>
-      <Box display="flex" h="100vh">
+    <Box minH="100vh" bg={{ base: "white", lg: "transparent" }}>
+      <Box
+        display="flex"
+        gap={{ base: 10, lg: 0 }}
+        flexDir={{ base: "column", lg: "row" }}
+      >
         {isLoading ? (
           <PageLoader />
         ) : (
@@ -67,6 +71,7 @@ const TrackOrder = () => {
           </>
         )}
       </Box>
+
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
@@ -75,7 +80,8 @@ const TrackOrder = () => {
       >
         <ModalOverlay />
         <ModalContent
-          minW="700px"
+          w={{ base: "90%", md: "600px", lg: "700px" }}
+          maxW="700px"
           display="flex"
           flexDir="column"
           alignItems="center"
@@ -87,8 +93,8 @@ const TrackOrder = () => {
             <Image src={check} alt="check icon" width="25" height="25" />
           </Box>
           <Box
-            width="255px"
-            height="239px"
+            width={{ base: "220px", md: "255px" }}
+            height={{ base: "206px", md: "239px" }}
             borderRadius="8.9px"
             position="relative"
             overflow="hidden"
@@ -116,8 +122,8 @@ const TrackOrder = () => {
               zIndex="1"
             />
           </Box>
-          <Box>
-            <Text fontSize="24px" fontWeight="500">
+          <Box px={{ base: 4, md: 0 }} textAlign="center">
+            <Text fontSize={{ base: "18px", md: "24px" }} fontWeight="500">
               Delivery Completed:{" "}
               <Text as="span" color="black">
                 {formatSnakeCaseTitle(data?.listing?.product?.name)}
@@ -125,13 +131,11 @@ const TrackOrder = () => {
             </Text>
           </Box>
           <Button
-            border={"1px solid transparent"}
+            border="1px solid transparent"
             color="white"
-            bgColor={"main_black_1"}
-            borderRadius={"2rem"}
-            _hover={{
-              bg: "#404040",
-            }}
+            bgColor="main_black_1"
+            borderRadius="2rem"
+            _hover={{ bg: "#404040" }}
             width="fit-content"
             onClick={() => {
               setIsOpen(false);
@@ -142,7 +146,7 @@ const TrackOrder = () => {
           </Button>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };
 

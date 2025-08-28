@@ -6,14 +6,20 @@ const Subsections = ({ details }: { details: any }) => {
   return (
     <Box display="flex" flexDir="column" gap={{ base: "32px", lg: "48px" }}>
       {/* About Section */}
-      <Box>
-        <Text fontSize={{ base: "16px", lg: "18px" }} color="#000000" mb="12px">
-          About
-        </Text>
-        <Text fontSize={{ base: "14px", lg: "16px" }} color="#0F0F0FB2">
-          {details?.desc}
-        </Text>
-      </Box>
+      {details?.desc ? (
+        <Box>
+          <Text
+            fontSize={{ base: "16px", lg: "18px" }}
+            color="#000000"
+            mb="12px"
+          >
+            About
+          </Text>
+          <Text fontSize={{ base: "14px", lg: "16px" }} color="#0F0F0FB2">
+            {details?.desc}
+          </Text>
+        </Box>
+      ) : null}
 
       {/* Details Section */}
       <Box>

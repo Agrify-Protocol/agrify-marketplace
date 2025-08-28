@@ -54,7 +54,7 @@ const ProjectPage = () => {
                     py={{ base: "12px", md: "14px" }}
                     fontSize={{ base: "14px", md: "16px" }}
                     fontWeight={400}
-                    mb={{ base: "24px", md: "32px" }}
+                    mb={{ base: "24px", md: "10px" }}
                     mt={{ base: "24px", md: "32px" }}
                     width="100%"
                     bg="agrify_green"
