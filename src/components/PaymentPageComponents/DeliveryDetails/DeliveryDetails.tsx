@@ -1,4 +1,3 @@
-import CustomInput from "@/components/Common/CustomInput/CustomInput";
 import {
   Box,
   Button,
@@ -13,6 +12,7 @@ import { useRouter } from "next/navigation";
 import countries from "./countries.json";
 import { createOrder } from "@/services/api/profile";
 import { validateLength, validatePhoneNumber } from "@/utils/validationSchema";
+import CustomInput from "@/components/Common/CustomInput/CustomInput";
 
 const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
   const router = useRouter();
@@ -32,7 +32,7 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
     state: "",
     postalCode: "",
     phoneNumber: "",
-    fee: "",
+    fee: 0,
     VAT: 1.46,
     expireAfter: 5, //5 days,
   });
@@ -140,7 +140,6 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
     setPayload((prev) => ({
       ...prev,
       listingID: chosenProject?._id || "",
-      fee: chosenProject?.totalPrice || 0,
     }));
   }, [chosenProject]);
 
