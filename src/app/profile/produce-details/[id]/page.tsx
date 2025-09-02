@@ -31,11 +31,13 @@ const Details = () => {
       getProduceDetails(params.id, toast).then((response) => {
         if (response) {
           setData(response);
-          setIsLoading(false);
         }
+        setIsLoading(false);
       });
     }
   }, [user]);
+
+  if (!data?.orderId) return;
 
   return (
     <>
@@ -65,8 +67,8 @@ const Details = () => {
                   px={"2.5rem"}
                   py="14px"
                   fontWeight={400}
-                  mt="32px"
-                  mb="32px"
+                  mb={{ base: "24px", md: "10px" }}
+                  mt={{ base: "24px", md: "32px" }}
                   _hover={{
                     bg: "white",
                   }}

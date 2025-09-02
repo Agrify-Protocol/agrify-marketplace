@@ -31,10 +31,12 @@ const ProjectPage = () => {
     getListingsById(id as string, toast).then((response) => {
       if (response) {
         setData(response);
-        setIsLoading(false);
       }
+      setIsLoading(false);
     });
   }, [id, isLoggedIn]);
+
+  if (!data?._id) return;
 
   return (
     <ProjectPageProvider>
