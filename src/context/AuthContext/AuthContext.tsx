@@ -52,7 +52,7 @@ export const AuthContextProvider = ({ children }: Props) => {
           setUser(user);
         }
         if (!isUnauthenticated && !!user === false) {
-          toastFn(toast, "Unauthorized access. Please log in.");
+          toastFn(toast, "Unauthorized access. Please sign in.");
           router.push("/auth/login");
         }
         setFetchingUser(false);
@@ -95,7 +95,7 @@ export const AuthContextProvider = ({ children }: Props) => {
             }
           })
           .catch(() => {
-            toastFn(toast, "Session expired. Please log in again.");
+            toastFn(toast, "Session expired. Please sign in again.");
             handleLogout();
           });
       }
