@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 
 const Category = ({ category }: { key: number | string; category: any }) => {
   return (
-    <Link href={`/marketplace/category/${category?.name}`}>
+    // href={`/marketplace/category/${category?.name}`}
+    <Link href={`/marketplace/sourcing-tool?id=${category?.name}`}>
       <Box
         display="flex"
         justifyContent="center"
