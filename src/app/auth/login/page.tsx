@@ -12,6 +12,7 @@ import { validateEmail, validateLength } from "@/utils/validationSchema";
 import { preserveSession } from "@/app/lib/actions";
 import { successToast } from "./constants";
 import { useSearchParams } from "next/navigation";
+import { createProductRequest } from "@/services/api/projects";
 
 const Login = () => {
   const toast = useToast();
@@ -55,8 +56,14 @@ const Login = () => {
           window.location.href = `/marketplace/category/${category}/${id}`;
         } else if (!!sourcing_tool) {
           const form = localStorage.getItem("sourcing_tool_form");
-          console.log("form", JSON.parse(form as string));
-          window.location.href = "/marketplace/sourcing-tool/success";
+          const res = await createProductRequest(
+            JSON.parse(form as string),
+            toast
+          );
+          if (res?.message) {
+            window.location.href = "/marketplace/sourcing-tool/success";
+            localStorage.removeItem("sourcing_tool_form");
+          }
         } else {
           window.location.href = "/marketplace";
         }
