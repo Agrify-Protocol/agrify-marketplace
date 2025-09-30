@@ -118,7 +118,7 @@ const OrderProgress = ({
           base: "0",
           lg: step + 1 !== status.length ? `${80 - step * 5}%` : "0%",
         }}
-        bgGradient="linear(to-b, rgba(255,255,255,0), white)"
+        // bgGradient="linear(to-b, rgba(255, 255, 255, 0), white)"
         pointerEvents="none"
         zIndex="1"
       />

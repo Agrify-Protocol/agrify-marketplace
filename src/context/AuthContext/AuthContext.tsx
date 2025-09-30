@@ -53,7 +53,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         }
         if (!isUnauthenticated && !!user === false) {
           toastFn(toast, "Unauthorized access. Please sign in.");
-          router.push("/auth/login");
+          // router.push("/auth/login");
         }
         setFetchingUser(false);
       }, 1000);

@@ -12,6 +12,7 @@ import { validateEmail, validateLength } from "@/utils/validationSchema";
 import { preserveSession } from "@/app/lib/actions";
 import { successToast } from "./constants";
 import { useSearchParams } from "next/navigation";
+import { createProductRequest } from "@/services/api/projects";
 
 const Login = () => {
   const toast = useToast();
@@ -22,6 +23,7 @@ const Login = () => {
   const searchParams = useSearchParams();
 
   const category = searchParams.get("category");
+  const sourcing_tool = searchParams.get("sourcing-tool");
   const id = searchParams.get("id");
 
   const updateDetails = (key: string, value: string) => {
@@ -52,6 +54,16 @@ const Login = () => {
         toast(successToast);
         if (!!category && !!id) {
           window.location.href = `/marketplace/category/${category}/${id}`;
+        } else if (!!sourcing_tool) {
+          const form = localStorage.getItem("sourcing_tool_form");
+          const res = await createProductRequest(
+            JSON.parse(form as string),
+            toast
+          );
+          if (res?.message) {
+            window.location.href = "/marketplace/sourcing-tool/success";
+            localStorage.removeItem("sourcing_tool_form");
+          }
         } else {
           window.location.href = "/marketplace";
         }
@@ -75,7 +87,11 @@ const Login = () => {
         minH={"25.384rem"}
       >
         <AuthPageHeading
-          main_heading="Sign Into your account"
+          main_heading={
+            sourcing_tool
+              ? "Sign in to submit request"
+              : "Sign into your account"
+          }
           sub_heading="Enter you credentials to access your account"
         />
 

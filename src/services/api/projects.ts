@@ -60,3 +60,15 @@ export const getProductStory = async (id: string | string[], toast: any) => {
     toastFn(toast, error);
   }
 };
+
+export const createProductRequest = async (
+  body: Record<string, any>,
+  toast: any
+) => {
+  try {
+    const request = await defaultInstance.post("/produce-requests", body);
+    return request.data;
+  } catch (error: any) {
+    toastFn(toast, error);
+  }
+};

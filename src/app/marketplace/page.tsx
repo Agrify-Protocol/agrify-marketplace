@@ -71,7 +71,17 @@ export default function Home() {
           </Text>
         </Flex>
       </Box>
-      <Search text="Trending Produce" search={search} setSearch={setSearch} />
+      <Box width="258px">
+        <Text
+          textAlign="center"
+          fontSize={{ base: "18px", sm: "20px" }}
+          mb={{ base: "32px", sm: "40px", md: "47px" }}
+          color="black"
+        >
+          All Produce
+        </Text>
+      </Box>
+      {/* <Search text="Trending Produce" search={search} setSearch={setSearch} /> */}
       <CategoryContainer search={search} />
     </Box>
   );
