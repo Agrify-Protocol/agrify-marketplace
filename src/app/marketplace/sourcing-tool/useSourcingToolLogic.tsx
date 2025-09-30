@@ -134,7 +134,7 @@ const useSourcingToolLogic = (id: string | null) => {
     setIsModalOpen,
     selectedCountry,
     setAccessToken,
-    FIELDS,
+    fields: FIELDS,
     isDisabled,
     OPTIONS,
     handleCreateProductRequest,

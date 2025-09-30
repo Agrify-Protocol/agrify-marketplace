@@ -27,7 +27,7 @@ const SourcingTool = () => {
     setIsModalOpen,
     selectedCountry,
     setAccessToken,
-    FIELDS,
+    fields,
     isDisabled,
     handleCreateProductRequest,
     isLoading,
@@ -100,14 +100,14 @@ const SourcingTool = () => {
               placeholder={`Enter ${details.label.toLowerCase()}`}
               id={id}
               focusBorderColor="gray_2"
-              h={"3.5rem"}
+              h={{ base: "3rem", md: "3.5rem" }}
               borderColor="gray_2"
               borderRadius={"1rem"}
               bg={"white"}
               value={form[id]}
               onChange={handleChangeInput}
               color={"#0f0f0fb3"}
-              fontSize="0.875rem"
+              fontSize={{ base: "0.8rem", md: "0.875rem" }}
             >
               {details.options.map((option: string) => (
                 <option key={option} id={option} value={option}>
@@ -120,7 +120,11 @@ const SourcingTool = () => {
       case "tel":
         return (
           <Box key={id}>
-            <FormLabel fontWeight={400} fontSize="15px" mb="8px">
+            <FormLabel
+              fontWeight={400}
+              fontSize={{ base: "14px", md: "15px" }}
+              mb="8px"
+            >
               {details.label}
             </FormLabel>
             <Box
@@ -133,7 +137,7 @@ const SourcingTool = () => {
                   ? "red"
                   : "#0f0f0f26"
               }`}
-              h={"3.5rem"}
+              h={{ base: "3rem", md: "3.5rem" }}
               bg={"white"}
               transition="all 0.1s ease-in-out"
               padding={2}
@@ -142,7 +146,7 @@ const SourcingTool = () => {
                 type="button"
                 onClick={() => setIsModalOpen(true)}
                 style={{
-                  fontSize: "24px",
+                  fontSize: "20px",
                   outline: "none",
                   display: "flex",
                   alignItems: "center",
@@ -152,7 +156,9 @@ const SourcingTool = () => {
                 }}
               >
                 {selectedCountry.flag}
-                <Text fontSize="14px">{`${selectedCountry.idd.root}${selectedCountry.idd.suffixes}`}</Text>
+                <Text fontSize={{ base: "12px", md: "14px" }}>
+                  {`${selectedCountry.idd.root}${selectedCountry.idd.suffixes}`}
+                </Text>
               </button>
               <input
                 id={id}
@@ -181,25 +187,29 @@ const SourcingTool = () => {
   }, []);
 
   return (
-    <Box width="558px" margin="72px auto">
+    <Box
+      width={{ base: "100%", md: "558px" }}
+      px={{ base: "16px", md: "0" }}
+      margin={{ base: "32px auto", md: "72px auto" }}
+    >
       <Text
         as="h1"
         fontWeight="450"
-        fontSize="32px"
+        fontSize={{ base: "24px", md: "32px" }}
         textAlign="center"
-        mb="40px"
+        mb={{ base: "24px", md: "40px" }}
       >
         What produce are you interested in?
       </Text>
-      <Flex flexDir="column" gap="24px">
-        {Object.entries(FIELDS).map(([id, details]) =>
+      <Flex flexDir="column" gap={{ base: "16px", md: "24px" }}>
+        {Object.entries(fields).map(([id, details]) =>
           displayInputByType(id, details.type, details)
         )}
       </Flex>
       <Button
         w={"100%"}
-        h={"3.5rem"}
-        borderRadius={"1.5rem"}
+        h={{ base: "3rem", md: "3.5rem" }}
+        borderRadius={{ base: "1rem", md: "1.5rem" }}
         bgColor={isDisabled ? "gray_3" : "agrify_green"}
         fontWeight={500}
         color="white"
@@ -211,7 +221,7 @@ const SourcingTool = () => {
         _hover={{
           bg: isDisabled ? "gray_3" : "#0ba842",
         }}
-        mt="40px"
+        mt={{ base: "24px", md: "40px" }}
       >
         Request
       </Button>
