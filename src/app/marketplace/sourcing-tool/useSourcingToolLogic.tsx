@@ -30,10 +30,11 @@ const useSourcingToolLogic = (id: string | null) => {
     },
     deliveryLocation: {
       label: "Delivery Location",
-      type: "text",
+      type: "select",
+      options: countryList.map((item) => item.name.common),
     },
     annualBudget: {
-      label: "Annual produce purchase spend",
+      label: "Annual produce purchase budget",
       type: "select",
       options: [
         "Less than $10,000",
