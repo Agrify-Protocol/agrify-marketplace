@@ -1,9 +1,13 @@
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import countryList from "@/components/CountryModal/countryList.json";
 import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
-import { validateNumberInput } from "@/utils/validationSchema";
+import {
+  validateEmail,
+  validateNameInput,
+  validateNumberInput,
+} from "@/utils/validationSchema";
 import { createProductRequest } from "@/services/api/projects";
 import "./index.css";
 
@@ -24,9 +28,17 @@ const useSourcingToolLogic = (id: string | null) => {
       label: "Size (in tons)",
       type: "text",
     },
+    fullname: {
+      label: "Full Name",
+      type: "text",
+    },
     phoneNumber: {
       label: "Phone Number",
       type: "tel",
+    },
+    email: {
+      label: "Email",
+      type: "email",
     },
     deliveryLocation: {
       label: "Delivery Location",
@@ -76,17 +88,26 @@ const useSourcingToolLogic = (id: string | null) => {
 
   const [validatedInfo, setValidatedInfo] = useState<Record<string, any>>({});
 
-  const [accessToken, setAccessToken] = useState<string | null>(null);
   const router = useRouter();
-
-  const isLoggedIn = useMemo(() => !!accessToken, [accessToken]);
 
   const handleChangeInput = (e: any) => {
     const { id, value } = e.target;
-    if (["sizeTons", "phoneNumber"].includes(id)) {
+    const getValidateFn = (value: string) => {
+      switch (true) {
+        case ["sizeTons", "phoneNumber"].includes(id):
+          return validateNumberInput(value);
+        case id === "email":
+          return validateEmail(value);
+        case id === "name":
+          return validateNameInput(value);
+        default:
+          break;
+      }
+    };
+    if (["sizeTons", "phoneNumber", "email", "name"].includes(id)) {
       setValidatedInfo((prev) => ({
         ...prev,
-        [id]: validateNumberInput(value),
+        [id]: getValidateFn(value),
       }));
     }
     setForm((prev) => ({ ...prev, [id]: value }));
@@ -103,30 +124,35 @@ const useSourcingToolLogic = (id: string | null) => {
     Object.values(validatedInfo).some((item) => item === false);
 
   const handleCreateProductRequest = async () => {
-    const {
-      idd: { root, suffixes },
-    } = selectedCountry;
-    const modifiedObj = {
-      ...form,
-      phoneNumber: `${root}${[...suffixes]}${form.phoneNumber}`,
-      preferences: OPTIONS.reduce<Record<string, boolean>>((acc, key) => {
-        acc[key] = form.preferences.includes(key);
-        return acc;
-      }, {}),
-    };
-    if (!!isLoggedIn) {
+    try {
       setIsLoading(true);
+
+      const {
+        idd: { root, suffixes },
+      } = selectedCountry;
+
+      const modifiedObj = {
+        ...form,
+        phoneNumber: `${root}${suffixes.join("")}${form.phoneNumber}`,
+        preferences: OPTIONS.reduce<Record<string, boolean>>((acc, key) => {
+          acc[key] = form.preferences.includes(key);
+          return acc;
+        }, {}),
+      };
+
       const res = await createProductRequest(modifiedObj, toast);
+
       if (res?.message) {
-        setIsLoading(false);
-        router.push("/marketplace/sourcing-tool/success");
         localStorage.removeItem("sourcing_tool_form");
+        router.push("/marketplace/sourcing-tool/success");
       }
-    } else {
-      localStorage.setItem("sourcing_tool_form", JSON.stringify(modifiedObj));
-      router.push(`/auth/login?sourcing-tool=${id}`);
+    } catch (error) {
+      console.error("Error creating product request:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return {
     form,
     handleChangeInput,
@@ -134,7 +160,6 @@ const useSourcingToolLogic = (id: string | null) => {
     setForm,
     setIsModalOpen,
     selectedCountry,
-    setAccessToken,
     fields: FIELDS,
     isDisabled,
     OPTIONS,
