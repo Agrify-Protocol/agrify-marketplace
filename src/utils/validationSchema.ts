@@ -1,6 +1,6 @@
 export function validateNameInput(str: string) {
   const regex = /^[a-zA-Z'\- ]+$/;
-  return str.length <= 4 || !regex.test(str);
+  return regex.test(str) && str.length >= 4;
 }
 
 export function validateTextInput(str: string) {

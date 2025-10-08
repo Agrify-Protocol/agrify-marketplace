@@ -1,7 +1,6 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
 import CountryModal from "@/components/CountryModal";
 import {
@@ -26,7 +25,6 @@ const SourcingTool = () => {
     setForm,
     setIsModalOpen,
     selectedCountry,
-    setAccessToken,
     fields,
     isDisabled,
     handleCreateProductRequest,
@@ -35,6 +33,20 @@ const SourcingTool = () => {
     setSelectedCountry,
   } = useSourcingToolLogic(id);
 
+  const getInputErrorMessage = (id: string) => {
+    const isValid = validatedInfo[id] === false && form[id] !== "";
+    switch (true) {
+      case isValid && ["sizeTons", "phoneNumber"].includes(id):
+        return "Input must be a number";
+      case isValid && id === "email":
+        return "Email must be valid";
+      case isValid && id === "name":
+        return "Name must be valid";
+      default:
+        return "";
+    }
+  };
+
   const displayInputByType = (
     id: string,
     type: string,
@@ -42,6 +54,7 @@ const SourcingTool = () => {
   ) => {
     switch (type) {
       case "text":
+      case "email":
         return (
           <CustomInput
             key={id}
@@ -52,11 +65,7 @@ const SourcingTool = () => {
             value={form[id]}
             changeFunc={handleChangeInput}
             isInvalid={validatedInfo[id] === false && form[id] !== ""}
-            errorMsg={
-              validatedInfo[id] === false && form[id] !== ""
-                ? "Input must be a number"
-                : ""
-            }
+            errorMsg={getInputErrorMessage(id)}
           />
         );
       case "radio":
@@ -169,22 +178,15 @@ const SourcingTool = () => {
                 onChange={handleChangeInput}
               />
             </Box>
-            {validatedInfo[id] === false && form[id] !== "" ? (
-              <Text color="red" fontSize="12px">
-                Input must be a number
-              </Text>
-            ) : null}
+            <Text color="red" fontSize="12px">
+              {getInputErrorMessage(id)}
+            </Text>
           </Box>
         );
       default:
         break;
     }
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    setAccessToken(token);
-  }, []);
 
   return (
     <Box
