@@ -53,7 +53,7 @@ const Login = () => {
         setRefreshToken(result.refreshToken);
         toast(successToast);
         if (!!category && !!id) {
-          window.location.href = `/marketplace/category/${category}/${id}`;
+          window.location.href = `/home/category/${category}/${id}`;
         } else if (!!sourcing_tool) {
           const form = localStorage.getItem("sourcing_tool_form");
           const res = await createProductRequest(
@@ -61,11 +61,11 @@ const Login = () => {
             toast
           );
           if (res?.message) {
-            window.location.href = "/marketplace/sourcing-tool/success";
+            window.location.href = "/home/sourcing-tool/success";
             localStorage.removeItem("sourcing_tool_form");
           }
         } else {
-          window.location.href = "/marketplace";
+          window.location.href = "/home";
         }
       }
     } finally {

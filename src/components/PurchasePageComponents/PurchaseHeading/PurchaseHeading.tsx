@@ -6,13 +6,13 @@ import { Box, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
-const PurchaseHeading = () => {
+const PurchaseHeading = ({ caption }: { caption?: string }) => {
   const { chosenProject } = useGlobalContext();
   const router = useRouter();
   useEffect(() => {
     if (!chosenProject) {
       return;
-      router.push("/marketplace");
+      router.push("/home");
     }
   }, [chosenProject]);
 
@@ -32,11 +32,11 @@ const PurchaseHeading = () => {
       >
         {formatSnakeCaseTitle(chosenProject?.name)}
       </Text>
-      <Text fontSize={"1rem"} color={"secondary_foreground"} mb={"0.872rem"}>
-        Secure your high-quality{" "}
-        {chosenProject?.name?.toLowerCase()?.split("_").join(" ")} directly from
-        local farmers.
-      </Text>
+      {caption && (
+        <Text fontSize={"1rem"} color={"secondary_foreground"} mb={"0.872rem"}>
+          {caption}
+        </Text>
+      )}
     </Box>
   );
 };

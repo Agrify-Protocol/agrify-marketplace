@@ -62,7 +62,7 @@ const CategoryPage = () => {
             {categoryData?.activeProducts?.map((item: any) => (
               <Link
                 key={item?._id}
-                href={`/marketplace/category/${type}/${item?._id}`}
+                href={`/home/category/${type}/${item?._id}`}
                 style={{ textDecoration: "none" }}
               >
                 <Box display="flex" justifyContent="center">

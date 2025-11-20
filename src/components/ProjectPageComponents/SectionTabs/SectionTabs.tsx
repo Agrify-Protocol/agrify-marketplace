@@ -34,6 +34,7 @@ const SectionTabs = ({ sections, currentSection, type }: SectionTabProps) => {
                 borderRadius={"1.905rem"}
                 color={isCurrent ? "main_black_1" : "gray_1"}
                 bg={isCurrent ? "gray_3" : "transparent"}
+                _hover={{ bg: isCurrent ? "gray_3" : "transparent" }}
                 onClick={() =>
                   router.push(
                     type === "my profile"

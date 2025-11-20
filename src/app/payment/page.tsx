@@ -15,7 +15,7 @@ const Payment = () => {
 
   useEffect(() => {
     if (!chosenProject) {
-      router.push("/marketplace");
+      router.push("/home");
     }
   }, [chosenProject]);
 

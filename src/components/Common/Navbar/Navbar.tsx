@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Flex } from "@chakra-ui/react";
+import { Avatar, Box, Flex } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
 import logo from "../../../assets/agrify_logo.svg";
 import profile_pic from "../../../assets/agrify_pfp.svg";
@@ -17,7 +17,7 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 const Navbar = () => {
   const pathName = usePathname();
   const route = useRouter();
-  const routesWithNav = ["/farm", "/profile", "/marketplace"];
+  const routesWithNav = ["/farm", "/profile", "/home"];
   const isAuthPage = pathName.startsWith("/auth");
   const [showModal, setShowModal] = useState(false);
   const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -57,7 +57,7 @@ const Navbar = () => {
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-        <Link href={"/marketplace"}>
+        <Link href={"/home"}>
           <Image src={logo} alt="" />
         </Link>
         <NavButtons
@@ -77,11 +77,7 @@ const Navbar = () => {
                 setShowModal(!showModal);
               }}
             >
-              <Image
-                className="profile_modal"
-                src={profile_pic}
-                alt="profile pic"
-              />
+              <Avatar name={`${user?.firstname} ${user?.lastname}`} size="sm" />
               <ChevronDown className="profile_modal" />
             </Flex>
             {showModal && <ProfileModal setShowModal={setShowModal} />}

@@ -35,9 +35,7 @@ const ProjectTableRow = ({
       transition={"all 0.25s ease-in-out"}
       _hover={{ borderColor: "#0CC14C" }}
       onClick={() =>
-        router.push(
-          `/marketplace/category/${type}/${project.projectID}?id=overview`
-        )
+        router.push(`/home/category/${type}/${project.projectID}?id=overview`)
       }
     >
       <Box>

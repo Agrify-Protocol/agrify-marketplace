@@ -17,7 +17,7 @@ const Success = () => {
           Thank you! We have received your order. We will get back to you within
           72 hours with all you need to get started.
         </Text>
-        <Link href="/marketplace">
+        <Link href="/home">
           <Button
             mt={{ base: "24px", md: "40px" }}
             width="100%"

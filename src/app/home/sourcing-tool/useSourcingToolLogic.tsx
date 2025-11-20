@@ -144,7 +144,7 @@ const useSourcingToolLogic = (id: string | null) => {
 
       if (res?.message) {
         localStorage.removeItem("sourcing_tool_form");
-        router.push("/marketplace/sourcing-tool/success");
+        router.push("/home/sourcing-tool/success");
       }
     } catch (error) {
       console.error("Error creating product request:", error);

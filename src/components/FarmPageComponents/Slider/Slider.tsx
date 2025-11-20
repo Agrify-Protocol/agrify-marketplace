@@ -49,6 +49,7 @@ const Slider = ({ images }: SliderProps) => {
       gap={{ base: "32px", lg: "3.375rem" }}
       alignItems={"center"}
       flexDir={{ base: "column", lg: "row" }}
+      justifyContent={"center"}
     >
       <NavigateBtn
         onClick={handlePrevious}

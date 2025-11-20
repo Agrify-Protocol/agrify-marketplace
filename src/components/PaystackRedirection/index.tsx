@@ -47,7 +47,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
         <PageLoader />
       ) : (
         <Box>
-          <BackButton customFunction={() => router.push("/marketplace")} />
+          <BackButton customFunction={() => router.push("/home")} />
           {data?.listing && (
             <Box
               w={"100%"}
@@ -131,7 +131,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                   href={
                     type === "success"
                       ? `/profile/produce-details/${data?.orderId}`
-                      : "/marketplace"
+                      : "/home"
                   }
                 >
                   <Button
