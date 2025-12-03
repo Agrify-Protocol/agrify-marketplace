@@ -1,11 +1,13 @@
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 
 const Counter = ({
+  minValue,
   value,
   valueSetterFn,
   unit,
   total,
 }: {
+  minValue?: number;
   value: number;
   valueSetterFn: React.Dispatch<React.SetStateAction<number>>;
   unit: string;
@@ -23,11 +25,13 @@ const Counter = ({
       <Button
         fontSize="24px"
         bgColor="transparent"
-        disabled={value <= 1}
-        cursor={value <= 1 ? "not-allowed" : "pointer"}
+        disabled={value <= (minValue || 1)}
+        cursor={value <= (minValue || 1) ? "not-allowed" : "pointer"}
         px="14px"
         rounded="0px"
-        onClick={() => valueSetterFn((prev) => (prev > 1 ? prev - 1 : prev))}
+        onClick={() =>
+          valueSetterFn((prev) => (prev > (minValue || 1) ? prev - 1 : prev))
+        }
       >
         -
       </Button>

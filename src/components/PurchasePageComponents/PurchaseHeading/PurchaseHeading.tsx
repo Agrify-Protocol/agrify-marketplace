@@ -6,7 +6,13 @@ import { Box, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
-const PurchaseHeading = ({ caption }: { caption?: string }) => {
+const PurchaseHeading = ({
+  name,
+  caption,
+}: {
+  name?: string;
+  caption?: string;
+}) => {
   const { chosenProject } = useGlobalContext();
   const router = useRouter();
   useEffect(() => {
@@ -30,7 +36,7 @@ const PurchaseHeading = ({ caption }: { caption?: string }) => {
         fontWeight={{ base: "500", lg: "400" }}
         color={"black"}
       >
-        {formatSnakeCaseTitle(chosenProject?.name)}
+        {name ?? formatSnakeCaseTitle(chosenProject?.name)}
       </Text>
       {caption && (
         <Text fontSize={"1rem"} color={"secondary_foreground"} mb={"0.872rem"}>

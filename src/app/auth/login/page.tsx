@@ -24,6 +24,8 @@ const Login = () => {
 
   const category = searchParams.get("category");
   const sourcing_tool = searchParams.get("sourcing-tool");
+  const redirect = searchParams.get("redirect");
+
   const id = searchParams.get("id");
 
   const updateDetails = (key: string, value: string) => {
@@ -64,6 +66,8 @@ const Login = () => {
             window.location.href = "/home/sourcing-tool/success";
             localStorage.removeItem("sourcing_tool_form");
           }
+        } else if (redirect) {
+          window.location.href = `/home/climate-arts/${id}/purchase`;
         } else {
           window.location.href = "/home";
         }

@@ -3,7 +3,7 @@
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-import carbonCreditbg from "@/assets/hero-bg.png";
+import carbonCreditbg from "@/assets/carbon-credit-bg.png";
 import organicProducebg from "@/assets/hero-bg.png";
 import corn from "@/assets/corn.svg";
 import coin from "@/assets/green-coin.svg";
@@ -14,12 +14,12 @@ export default function Home() {
   const { user } = useAuthContext();
   const actions = [
     {
-      id: "carbon-credits",
-      title: "Buy Carbon Credits",
+      id: "climate-arts",
+      title: "Buy Climate Arts",
       icon: coin,
       bg: carbonCreditbg,
       description:
-        "Offset your emissions with tokenised carbon credits representing one tonne of carbon captured in soil",
+        "Offset your emissions with tokenised climates art representing one tonne of carbon captured in soil",
     },
     {
       id: "organic-produce",
@@ -46,7 +46,7 @@ export default function Home() {
           purchasing sustainably grown produce{" "}
         </Text>
       </Box>
-      <Flex gap="50px">
+      <Flex gap="50px" flexDir={{ base: "column", md: "row" }}>
         {actions.map((action) => (
           <ContainerWithDarkenedBg key={action.id} bg={action.bg} opacity={0.7}>
             <Flex

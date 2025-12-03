@@ -23,7 +23,9 @@ const ContainerWithDarkenedBg = ({
         left="0"
         width="100%"
         height="100%"
-        bgImage={`linear-gradient(rgba(0,0,0,${opacity}), rgba(0,0,0,${opacity})), url(${bg.src})`}
+        bgImage={`linear-gradient(rgba(0,0,0,${opacity}), rgba(0,0,0,${opacity})), url(${
+          bg?.src ?? bg
+        })`}
         bgSize="cover"
         bgPos="center"
         zIndex="0"

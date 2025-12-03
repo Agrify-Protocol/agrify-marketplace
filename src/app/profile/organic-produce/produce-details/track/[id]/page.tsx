@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import OrderProgress from "./OrderProgress";
 import { useEffect, useMemo, useState } from "react";
-import check from "../../../../../assets/icon-park-solid_check-one.svg";
+import check from "@/assets/icon-park-solid_check-one.svg";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";

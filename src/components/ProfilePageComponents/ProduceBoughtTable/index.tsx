@@ -63,7 +63,7 @@ const ProduceBoughtTable = () => {
               return (
                 <Link
                   key={`${order?.orderId}-${idx}`}
-                  href={`/profile/produce-details/${order?.orderId}`}
+                  href={`/profile/organic-produce/produce-details/${order?.orderId}`}
                 >
                   <FourColumnTableRow
                     talbeBody={

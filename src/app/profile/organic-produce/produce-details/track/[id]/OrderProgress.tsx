@@ -2,7 +2,7 @@
 
 import BackButton from "@/components/Common/BackButton/BackButton";
 import { Box, Text } from "@chakra-ui/react";
-import bus from "../../../../../assets/bus.svg";
+import bus from "@/assets/bus.svg";
 import Image from "next/image";
 import { useMemo } from "react";
 import Accepted from "@/assets/track/Accepted";

@@ -72,3 +72,22 @@ export const createProductRequest = async (
     toastFn(toast, error);
   }
 };
+
+//carbon credits
+export const getCarbonCredits = async (toast: any) => {
+  try {
+    const request = await defaultInstance.get("/carbon-credits/marketplace");
+    return request.data;
+  } catch (error: any) {
+    toastFn(toast, error);
+  }
+};
+
+export const getCarbonCreditById = async (toast: any, id: string) => {
+  try {
+    const request = await defaultInstance.get(`/carbon-credits/${id}`);
+    return request.data;
+  } catch (error: any) {
+    toastFn(toast, error);
+  }
+};

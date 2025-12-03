@@ -91,9 +91,7 @@ const CarbonCreditPurchaseDetails = () => {
               >
                 {Object.entries({
                   Location: "Port Harcourt , Nigeria",
-                  "Crediting Period": "01 Dec 2023 - 31 Jan 2029",
-                  Price: "$255.00/tC02e",
-                  "Available Tonnes": "500 tCO2e",
+                  "Project Details": "Agrify x Releaf Biochar",
                   Type: <Text color="#B274C9">Pre-Credits</Text>,
                 }).map(([key, value]) => (
                   <Box key={key}>
@@ -144,7 +142,7 @@ const CarbonCreditPurchaseDetails = () => {
               <Image src={link} alt="link icon" />
             </Flex>
           </Flex>
-          <Flex justifyContent="space-between" gap="6px">
+          {/* <Flex justifyContent="space-between" gap="6px">
             <BoxWithClickableBtn
               btnTitle="View Project Reports"
               btnFn={() => null}
@@ -157,7 +155,7 @@ const CarbonCreditPurchaseDetails = () => {
             >
               <Box bg="gray" width="100%" height="100%" />
             </BoxWithClickableBtn>
-          </Flex>
+          </Flex> */}
         </Box>
       </Box>
       <Modal

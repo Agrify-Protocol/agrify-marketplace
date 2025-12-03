@@ -2,10 +2,11 @@
 
 import Counter from "@/components/Counter";
 import PurchaseComp from "@/components/PurchasePageComponents";
-import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
-import { Text, Flex, Button, Divider } from "@chakra-ui/react";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import { purchaseCarbonCredits } from "@/services/api/profile";
+import { Text, Flex, Button, Divider, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SectionItem = ({
   label,
@@ -38,13 +39,48 @@ const SectionItem = ({
 };
 
 const CarbonCreditPurchase = () => {
-  const { chosenProject } = useGlobalContext();
+  const details = localStorage.getItem("selected_carbon_credit")
+    ? JSON.parse(localStorage.getItem("selected_carbon_credit") || "{}")
+    : null;
+
+  const [quantity, setQuantity] = useState(details?.minimumPurchase || 1);
+  const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuthContext();
+  const toast = useToast();
   const router = useRouter();
 
-  const [quantity, setQuantity] = useState(1);
+  const handlePurchaseCarbonCredit = () => {
+    setIsLoading(true);
+    purchaseCarbonCredits(
+      details.id,
+      { tonnes: quantity, buyerWalletAddress: user?.wallet?.accountID },
+      toast
+    ).then((res) => {
+      if (res) {
+        toast({
+          title: "Successful!",
+          description: "Redirecting to payment... Please don’t refresh.",
+          status: "success",
+          position: "top-right",
+          duration: null,
+          isClosable: false,
+        });
+
+        router.push("/profile?id=carbon%20credits");
+        localStorage.removeItem("selected_carbon_credit");
+      }
+      setIsLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    if (!details) {
+      router.push("/home/climate-arts");
+    }
+  }, []);
 
   return (
-    <PurchaseComp>
+    <PurchaseComp name={details?.projectName}>
       <Text
         fontWeight={500}
         fontSize={{ base: "24px", lg: "1.5rem" }}
@@ -55,21 +91,25 @@ const CarbonCreditPurchase = () => {
       </Text>
 
       {Object.entries({
-        Price: "$0",
-        Amount: (
-          <Counter
-            value={quantity}
-            valueSetterFn={setQuantity}
-            unit="tc02e"
-            total={20}
-          />
-        ),
+        Price: `$${details?.pricePerTonne?.toLocaleString()}`,
+        // Amount: (
+        //   <Counter
+        //     minValue={details?.minimumPurchase}
+        //     value={quantity}
+        //     valueSetterFn={setQuantity}
+        //     unit="tc02e"
+        //     total={details?.availableTonnes}
+        //   />
+        // ),
       }).map(([label, value]) => (
         <SectionItem key={label} label={label} value={value} />
       ))}
 
       <Divider borderBottom={"1px dashed"} borderColor={"gray_2"} my="24px" />
-      <SectionItem label="Available Tonnes" value="63 tonnes" />
+      <SectionItem
+        label="Tonnes to be retired"
+        value={`${details?.availableTonnes?.toLocaleString()} tCO₂e`}
+      />
       <Divider borderBottom={"1px dashed"} borderColor={"gray_2"} my="24px" />
 
       {Object.entries({ "Payment fee": "$0", VAT: "$1.46" }).map(
@@ -90,7 +130,8 @@ const CarbonCreditPurchase = () => {
           bg: "#0ba842",
         }}
         fontSize={{ base: "14px", lg: "18px" }}
-        onClick={() => console.log("Continue Purchase")}
+        isLoading={isLoading}
+        onClick={handlePurchaseCarbonCredit}
       >
         Continue Purchase
       </Button>

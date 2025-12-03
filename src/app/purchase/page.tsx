@@ -1,5 +1,6 @@
-import PurchaseComp from "@/components/PurchasePageComponents";
+"use client";
 
+import PurchaseComp from "@/components/PurchasePageComponents";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { Box, Text, Flex, Button } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";

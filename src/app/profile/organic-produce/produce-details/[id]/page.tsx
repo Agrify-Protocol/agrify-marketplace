@@ -79,7 +79,9 @@ const Details = () => {
               </Link>
 
               {data?.deliveryStatus !== "completed" ? (
-                <Link href={`/profile/produce-details/track/${data?.orderId}`}>
+                <Link
+                  href={`/profile/organic-produce/produce-details/track/${data?.orderId}`}
+                >
                   <Button
                     bgColor="transparent"
                     color="#282828"

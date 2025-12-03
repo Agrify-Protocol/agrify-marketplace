@@ -130,7 +130,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                 <Link
                   href={
                     type === "success"
-                      ? `/profile/produce-details/${data?.orderId}`
+                      ? `/profile/organic-produce/produce-details/${data?.orderId}`
                       : "/home"
                   }
                 >

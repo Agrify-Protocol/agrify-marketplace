@@ -1,13 +1,14 @@
 import { Box } from "@chakra-ui/react";
 import BackButton from "../Common/BackButton/BackButton";
-import PurchaseBody from "./PurchaseBody/PurchaseBody";
 import PurchaseHeading from "./PurchaseHeading/PurchaseHeading";
 
 const PurchaseComp = ({
   caption,
+  name,
   children,
 }: {
   caption?: string;
+  name?: string;
   children: React.ReactNode;
 }) => {
   return (
@@ -21,8 +22,16 @@ const PurchaseComp = ({
         mx={"auto"}
         w={{ lg: "38.648rem" }}
       >
-        <PurchaseHeading caption={caption} />
-        <PurchaseBody>{children}</PurchaseBody>
+        <PurchaseHeading name={name} caption={caption} />
+        <Box
+          bgColor={"white"}
+          borderRadius={"1rem"}
+          px={{ base: "20px", lg: "2rem" }}
+          py={{ base: "20px", lg: "2.813rem" }}
+          mt={"3rem"}
+        >
+          {children}
+        </Box>
       </Box>
     </Box>
   );
