@@ -56,7 +56,7 @@ const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
               toast
             ).then((_result) => {
               if (_result) {
-                router.push("/success");
+                router.push("/redirect");
               }
               setIsLoading(false);
             });

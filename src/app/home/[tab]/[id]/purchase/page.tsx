@@ -1,11 +1,12 @@
 "use client";
 
-import Counter from "@/components/Counter";
+import Button from "@/components/Common/Button";
 import PurchaseComp from "@/components/PurchasePageComponents";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { purchaseCarbonCredits } from "@/services/api/profile";
-import { Text, Flex, Button, Divider, useToast } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { Text, Flex, Divider, useToast, Box } from "@chakra-ui/react";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const SectionItem = ({
@@ -39,21 +40,26 @@ const SectionItem = ({
 };
 
 const CarbonCreditPurchase = () => {
-  const details = localStorage.getItem("selected_carbon_credit")
-    ? JSON.parse(localStorage.getItem("selected_carbon_credit") || "{}")
-    : null;
-
+  const { chosenProject: details } = useGlobalContext();
   const [quantity, setQuantity] = useState(details?.minimumPurchase || 1);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<"card" | "crypto" | null>(null);
   const { user } = useAuthContext();
   const toast = useToast();
   const router = useRouter();
+  const pathname = usePathname();
 
-  const handlePurchaseCarbonCredit = () => {
-    setIsLoading(true);
+  const handlePurchaseCarbonCredit = (paymentMethod: "card" | "crypto") => {
+    setIsLoading(paymentMethod);
     purchaseCarbonCredits(
       details.id,
-      { tonnes: quantity, buyerWalletAddress: user?.wallet?.accountID },
+      {
+        tonnes: details.availableTonnes,
+        buyerWalletAddress: user?.wallet?.accountID,
+        paymentMethod,
+        price: details.pricePerTonne,
+        fee: 0,
+        VAT: 1.46,
+      },
       toast
     ).then((res) => {
       if (res) {
@@ -66,10 +72,9 @@ const CarbonCreditPurchase = () => {
           isClosable: false,
         });
 
-        router.push("/profile?id=carbon%20credits");
-        localStorage.removeItem("selected_carbon_credit");
+        router.push(res?.paymentURL);
       }
-      setIsLoading(false);
+      setIsLoading(null);
     });
   };
 
@@ -92,15 +97,6 @@ const CarbonCreditPurchase = () => {
 
       {Object.entries({
         Price: `$${details?.pricePerTonne?.toLocaleString()}`,
-        // Amount: (
-        //   <Counter
-        //     minValue={details?.minimumPurchase}
-        //     value={quantity}
-        //     valueSetterFn={setQuantity}
-        //     unit="tc02e"
-        //     total={details?.availableTonnes}
-        //   />
-        // ),
       }).map(([label, value]) => (
         <SectionItem key={label} label={label} value={value} />
       ))}
@@ -117,24 +113,26 @@ const CarbonCreditPurchase = () => {
           <SectionItem key={label} label={label} value={value} />
         )
       )}
-
-      <Button
-        w={"100%"}
-        h={"3.5rem"}
-        mt={"3rem"}
-        bgColor={"agrify_green"}
-        fontWeight={500}
-        color={"white"}
-        borderRadius={"2.119rem"}
-        _hover={{
-          bg: "#0ba842",
-        }}
-        fontSize={{ base: "14px", lg: "18px" }}
-        isLoading={isLoading}
-        onClick={handlePurchaseCarbonCredit}
-      >
-        Continue Purchase
-      </Button>
+      <Flex gap={"1rem"} mt={"3rem"}>
+        <Button
+          border="2px solid #0CC14C"
+          bg="transparent"
+          color="#0CC14C"
+          _hover={{ bg: "#e7fdef" }}
+          isLoading={isLoading === "card"}
+          isDisabled={isLoading !== null}
+          onClick={() => handlePurchaseCarbonCredit("card")}
+        >
+          Pay with Card
+        </Button>
+        <Button
+          isLoading={isLoading === "crypto"}
+          isDisabled={isLoading !== null}
+          onClick={() => handlePurchaseCarbonCredit("crypto")}
+        >
+          Pay with Crypto
+        </Button>
+      </Flex>
     </PurchaseComp>
   );
 };

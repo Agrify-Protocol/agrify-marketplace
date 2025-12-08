@@ -8,7 +8,7 @@ import Link from "next/link";
 const Category = ({ category }: { key: number | string; category: any }) => {
   return (
     // href={`/home/sourcing-tool?id=${category?.name}`}
-    <Link href={`/home/category/${category?.name}`}>
+    <Link href={`/home/organic-produce/category/${category?.name}`}>
       <Box
         display="flex"
         justifyContent="center"

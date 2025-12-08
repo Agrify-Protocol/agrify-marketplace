@@ -53,12 +53,12 @@ const Profile = () => {
     <Box>
       <Box width="fit-content" mx="auto" textAlign="center" mt="64px" mb="40px">
         <Avatar
-          name={`${user?.firstname} ${user?.lastname}`}
+          name={`${user?.firstname ?? ""} ${user?.lastname ?? ""}`}
           mb="21px"
           size="lg"
         />
         <Text fontSize="27px" color="black" fontWeight={450}>
-          {`${user?.firstname} ${user?.lastname}`}
+          {`${user?.firstname ?? ""} ${user?.lastname ?? ""}`}
         </Text>
         {/* <Text>Joined 14th March 2025</Text> */}
         <Text>Here’s order history</Text>
@@ -79,7 +79,11 @@ const Profile = () => {
                   <Tr
                     cursor="pointer"
                     _hover={{ bg: "#F5F5F566" }}
-                    onClick={() => router.push(`/profile/climate-arts/id123`)}
+                    onClick={() =>
+                      router.push(
+                        `/profile/climate-arts/6933a5483aceb8bc3d8eaf31`
+                      )
+                    }
                   >
                     <Td>inches</Td>
                     <Td>millimetres (mm)</Td>
@@ -117,7 +121,6 @@ const Profile = () => {
                         p={"0.5rem 1rem"}
                         borderRadius={"1.89rem"}
                         fontSize={"0.875rem"}
-                        display={{ base: "none", lg: "block" }}
                       >
                         {formatSnakeCaseTitle(order?.deliveryStatus)}
                       </Text>

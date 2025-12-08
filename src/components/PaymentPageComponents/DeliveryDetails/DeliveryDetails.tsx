@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { Inter_Display } from "@/fonts";
 import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import countries from "./countries.json";
 import { createOrder } from "@/services/api/profile";
 import { validateLength, validatePhoneNumber } from "@/utils/validationSchema";
@@ -114,23 +114,28 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
     }
   };
 
+  const searchParams = useSearchParams();
+  const method = searchParams.get("method");
+
   const handleCreateOrder = () => {
     setIsLoading(true);
-    createOrder(payload, toast).then((res) => {
-      if (res) {
-        toast({
-          title: "Successful!",
-          description: "Redirecting to payment... Please don’t refresh.",
-          status: "success",
-          position: "top-right",
-          duration: null,
-          isClosable: false,
-        });
+    createOrder({ ...payload, paymentMethod: method as string }, toast).then(
+      (res) => {
+        if (res) {
+          toast({
+            title: "Successful!",
+            description: "Redirecting to payment... Please don’t refresh.",
+            status: "success",
+            position: "top-right",
+            duration: null,
+            isClosable: false,
+          });
 
-        router.push(res?.paymentURL);
+          router.push(res?.paymentURL);
+        }
+        setIsLoading(false);
       }
-      setIsLoading(false);
-    });
+    );
   };
 
   useEffect(() => {

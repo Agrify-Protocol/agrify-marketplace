@@ -11,32 +11,48 @@ import { getProduceDetails } from "@/services/api/profile";
 import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 import check from "../../assets/icon-park-solid_check-one.svg";
 import error from "../../assets/error.svg";
+import { getCarbonCreditById } from "@/services/api/projects";
 
 const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+  const tab = searchParams.get("tab");
   const { user } = useAuthContext();
   const toast = useToast();
   const [data, setData] = useState<Record<string, any>>({});
 
   useEffect(() => {
     if (user) {
-      getProduceDetails(id as string, toast).then((response) => {
-        if (response) {
-          setData(response);
-        }
-        setIsLoading(false);
-      });
+      setIsLoading(true);
+      if (tab === "organic produce") {
+        getProduceDetails(id as string, toast).then((response) => {
+          if (response) {
+            setData(response);
+          }
+        });
+      }
+      if (tab === "climate arts") {
+        getCarbonCreditById(toast, id as string).then((response) => {
+          if (response) {
+            setData(response);
+          }
+        });
+      }
+      setIsLoading(false);
     }
-  }, [user, id]);
+  }, [user, id, tab]);
 
   const produceString = useMemo(() => {
-    return `${data?.listing?.batchSize} kg of ${formatSnakeCaseTitle(
-      data?.listing?.product?.name
-    )}`;
+    return data?.listing
+      ? `${data?.listing?.batchSize} kg of ${formatSnakeCaseTitle(
+          data?.listing?.product?.name
+        )}`
+      : "climate art";
   }, [data]);
+
+  console.log("data", data);
 
   return (
     <Box
@@ -48,7 +64,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
       ) : (
         <Box>
           <BackButton customFunction={() => router.push("/home")} />
-          {data?.listing && (
+          {(data?.listing || data?.data) && (
             <Box
               w={"100%"}
               bgColor={{ lg: "white" }}
@@ -69,7 +85,10 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                 borderRadius={"0.476rem"}
                 mb={{ lg: "2.444rem" }}
               >
-                <Image src={type === "success" ? check : error} alt="" />
+                <Image
+                  src={type === "success" ? check : error}
+                  alt="check icon type"
+                />
               </Flex>
 
               <Text
@@ -101,11 +120,14 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                 mb={"3.288rem"}
               >
                 <Image
-                  src={data?.listing?.farm?.farmImages[0]?.image}
+                  src={
+                    data?.listing?.farm?.farmImages[0]?.image ??
+                    data?.data?.images[0]?.url
+                  }
                   width={255.23}
                   height={239.1}
                   alt={`${formatSnakeCaseTitle(
-                    data?.listing?.product?.name
+                    data?.listing?.product?.name ?? data?.data?.projectName
                   )} cover image`}
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
@@ -123,14 +145,18 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                 fontSize={{ base: "16px", lg: "1.5rem" }}
                 mb={"2.648rem"}
               >
-                {formatSnakeCaseTitle(data?.listing?.product?.name)}
+                {formatSnakeCaseTitle(
+                  data?.listing?.product?.name ?? data?.data?.projectName
+                )}
               </Text>
 
               <Flex flexDir="column" alignItems="center" gap="27px">
                 <Link
                   href={
                     type === "success"
-                      ? `/profile/organic-produce/produce-details/${data?.orderId}`
+                      ? data?.orderId
+                        ? `/profile/organic-produce/produce-details/${data?.orderId}`
+                        : `/profile/climate-arts/${data?.data?.id}`
                       : "/home"
                   }
                 >
@@ -152,25 +178,32 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                   </Button>
                 </Link>
 
-                {data?.txHash ? (
-                  <Link href={data?.txHash} target="_blank">
-                    <Button
-                      bgColor="transparent"
-                      color="#282828"
-                      borderRadius={"2rem"}
-                      px={"2.5rem"}
-                      py="14px"
-                      fontWeight={400}
-                      mb="32px"
-                      border="1px solid #282828"
-                      _hover={{
-                        bg: "rgba(40, 40, 40, .1)",
-                      }}
-                    >
-                      View on Block Explorer
-                    </Button>
-                  </Link>
-                ) : null}
+                {type === "success" && (
+                  <>
+                    {data?.txHash || data?.data?.chainLink ? (
+                      <Link
+                        href={data?.txHash ?? data?.data?.chainLink}
+                        target="_blank"
+                      >
+                        <Button
+                          bgColor="transparent"
+                          color="#282828"
+                          borderRadius={"2rem"}
+                          px={"2.5rem"}
+                          py="14px"
+                          fontWeight={400}
+                          mb="32px"
+                          border="1px solid #282828"
+                          _hover={{
+                            bg: "rgba(40, 40, 40, .1)",
+                          }}
+                        >
+                          View on Block Explorer
+                        </Button>
+                      </Link>
+                    ) : null}
+                  </>
+                )}
               </Flex>
             </Box>
           )}

@@ -1,8 +1,9 @@
 "use client";
 
+import Button from "@/components/Common/Button";
 import PurchaseComp from "@/components/PurchasePageComponents";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
-import { Box, Text, Flex, Button } from "@chakra-ui/react";
+import { Box, Text, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -87,22 +88,20 @@ const Purchase = () => {
         </Flex>
       </Box>
 
-      <Button
-        w={"100%"}
-        h={"3.5rem"}
-        mt={"3rem"}
-        bgColor={"agrify_green"}
-        fontWeight={500}
-        color={"white"}
-        borderRadius={"2.119rem"}
-        _hover={{
-          bg: "#0ba842",
-        }}
-        fontSize={{ base: "14px", lg: "1.125rem" }}
-        onClick={() => router.push("/payment")}
-      >
-        Continue Purchase
-      </Button>
+      <Flex gap={"1rem"} mt={"3rem"}>
+        <Button
+          border="2px solid #0CC14C"
+          bg="transparent"
+          color="#0CC14C"
+          _hover={{ bg: "#e7fdef" }}
+          onClick={() => router.push("/payment?method=card")}
+        >
+          Pay with Card
+        </Button>
+        <Button onClick={() => router.push("/payment?method=crypto")}>
+          Pay with Crypto
+        </Button>
+      </Flex>
     </PurchaseComp>
   );
 };

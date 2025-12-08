@@ -55,7 +55,7 @@ const Login = () => {
         setRefreshToken(result.refreshToken);
         toast(successToast);
         if (!!category && !!id) {
-          window.location.href = `/home/category/${category}/${id}`;
+          window.location.href = `/home/organic-produce/category/${category}/${id}`;
         } else if (!!sourcing_tool) {
           const form = localStorage.getItem("sourcing_tool_form");
           const res = await createProductRequest(

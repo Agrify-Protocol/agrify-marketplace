@@ -28,7 +28,7 @@ const ProductStoryComp = () => {
   const buttons = useMemo(() => {
     return {
       "View on Marketplace": res
-        ? `/home/category/${res?.listing?.name}/${res?.listing?._id}`
+        ? `/home/organic-produce/category/${res?.listing?.name}/${res?.listing?._id}`
         : "#",
       "View On Chain": res?.chainLink ?? "#",
     };

@@ -19,6 +19,8 @@ const Payment = () => {
     }
   }, [chosenProject]);
 
+  console.log("chosenProject", chosenProject);
+
   return (
     <PaymentContextProvider>
       <Flex

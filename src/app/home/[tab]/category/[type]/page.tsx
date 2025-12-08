@@ -8,7 +8,7 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import BackButton from "@/components/Common/BackButton/BackButton";
 import EmptyText from "@/components/Common/EmptyText/EmptyText";
-import location from "../../../../assets/location.svg";
+import location from "@/assets/location.svg";
 import Link from "next/link";
 import Image from "next/image";
 import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
@@ -62,7 +62,7 @@ const CategoryPage = () => {
             {categoryData?.activeProducts?.map((item: any) => (
               <Link
                 key={item?._id}
-                href={`/home/category/${type}/${item?._id}`}
+                href={`/home/organic-produce/category/${type}/${item?._id}`}
                 style={{ textDecoration: "none" }}
               >
                 <Box display="flex" justifyContent="center">

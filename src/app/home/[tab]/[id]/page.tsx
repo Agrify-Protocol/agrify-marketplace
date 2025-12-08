@@ -12,6 +12,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getCarbonCreditById } from "@/services/api/projects";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import Pill from "@/components/CarbonCredits/Pill";
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 
 const SingleCarbonCredit = () => {
   const { id } = useParams();
@@ -38,6 +39,8 @@ const SingleCarbonCredit = () => {
   }, []);
 
   const isLoggedIn = useMemo(() => !!accessToken, [accessToken]);
+
+  const { setChosenProject } = useGlobalContext();
 
   return (
     <Box
@@ -111,10 +114,7 @@ const SingleCarbonCredit = () => {
                 _hover={{ bg: "#0ba842" }}
                 color="white"
                 onClick={() => {
-                  localStorage.setItem(
-                    "selected_carbon_credit",
-                    JSON.stringify(details)
-                  );
+                  setChosenProject(details);
                   router.push(
                     isLoggedIn
                       ? `/home/climate-arts/${details?.id}/purchase`

@@ -90,10 +90,7 @@ export const getCarbonCreditPurchaseHistory = async (toast: any) => {
 
 export const purchaseCarbonCredits = async (
   id: string,
-  data: {
-    tonnes: number | string;
-    buyerWalletAddress: string;
-  },
+  data: Record<string, any>,
   toast: any
 ) => {
   try {
