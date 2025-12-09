@@ -11,6 +11,8 @@ import { registerUser } from "@/services/api/auth";
 import { successToast } from "./constants";
 import { useRouter } from "next/navigation";
 import { validateEmail, validateLength } from "@/utils/validationSchema";
+import { preserveSession } from "@/app/lib/actions";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
 
 const Signup = () => {
   const router = useRouter();
@@ -30,6 +32,7 @@ const Signup = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const detailsFilled = useObjectCheck(userData);
+  const { setUser, setAccessToken, setRefreshToken } = useAuthContext();
 
   const handleChange = (key: string, value: string) => {
     const validate = () => {
@@ -47,18 +50,25 @@ const Signup = () => {
     setIsValid((prev) => ({ ...prev, [key]: validate() }));
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     setIsLoading(true);
-    registerUser(userData, toast)
-      .then((res) => {
-        if (res) {
-          toast(successToast);
-          router.push("/auth/login");
+    try {
+      const res = await registerUser(userData, toast);
+      if (res) {
+        await preserveSession(res.user, res.token, res.refreshToken);
+        setUser(res.user);
+        setAccessToken(res.token);
+        setRefreshToken(res.refreshToken);
+        toast(successToast);
+        if (res?.user?.kycStatus === "none") {
+          router.push("/kyc");
+        } else {
+          router.push("/home");
         }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

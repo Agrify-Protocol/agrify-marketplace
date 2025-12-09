@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useToast } from "@chakra-ui/react";
 import Image from "next/image";
 import logo from "../../../public/icons/logo-black.svg";
 import { useState } from "react";
@@ -13,6 +13,9 @@ import {
   PreviewItem,
 } from "@/components/Common/DocumentUpload";
 import Button from "@/components/Common/Button";
+import { uploadKyc } from "@/services/api/auth";
+import { useRouter } from "next/navigation";
+import { setUser } from "../lib/actions";
 
 const KYC = () => {
   const [details, setDetails] = useState({
@@ -26,6 +29,8 @@ const KYC = () => {
   const [loading, setLoading] = useState(false);
   const [businessProof, setBusinessProof] = useState<File[]>([]);
   const [previews, setPreviews] = useState<PreviewItem[]>([]);
+  const router = useRouter();
+  const toast = useToast();
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -34,6 +39,29 @@ const KYC = () => {
   ) => {
     const { id, value } = e.target;
     setDetails((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleUploadKyc = async () => {
+    setLoading(true);
+    try {
+      const res = await uploadKyc(
+        { ...details, businessProof: businessProof[0] },
+        toast
+      );
+
+      if (res) {
+        await setUser(res.user);
+        toast({
+          title: "Successful!",
+          description: res?.message ?? "KYC uploaded successfully",
+          status: "success",
+          position: "top-right",
+        });
+        router.push("/kyc/completed");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -126,15 +154,18 @@ const KYC = () => {
             setFiles={setBusinessProof}
             previews={previews}
             setPreviews={setPreviews}
+            singleUpload
           />
 
           <Button
             mt="32px"
-            // disabled={
-            //   Object.values(details).some((value) => value === "") || loading
-            // }
+            disabled={
+              Object.values(details).some((value) => value === "") ||
+              businessProof.length === 0 ||
+              loading
+            }
             isLoading={loading}
-            onClick={() => console.log({ ...details, businessProof })}
+            onClick={handleUploadKyc}
           >
             Continue
           </Button>

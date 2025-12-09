@@ -29,50 +29,66 @@ const Profile = () => {
   useEffect(() => {
     if (user) {
       setIsLoading(true);
+
       getOrders(toast)
         .then((response) => {
-          if (response) {
-            setOrganicProduceList(response?.orders ?? []);
-            setIsLoading(false);
-          }
+          if (response) setOrganicProduceList(response?.orders ?? []);
         })
         .catch(() => setOrganicProduceList([]));
 
       getCarbonCreditPurchaseHistory(toast)
         .then((response) => {
-          if (response) {
-            setCarbonCreditList(response?.orders ?? []);
-            setIsLoading(false);
-          }
+          if (response) setCarbonCreditList(response?.orders ?? []);
         })
         .catch(() => setCarbonCreditList([]));
+
+      setIsLoading(false);
     }
-  }, [user]);
+  }, [user, toast]);
 
   return (
-    <Box>
-      <Box width="fit-content" mx="auto" textAlign="center" mt="64px" mb="40px">
+    <Box w="100%" pb={{ base: "4rem", lg: "6rem" }}>
+      {/* Header */}
+      <Box
+        width="fit-content"
+        mx="auto"
+        textAlign="center"
+        mt={{ base: "48px", md: "64px" }}
+        mb={{ base: "32px", md: "40px" }}
+        px={{ base: "16px", md: 0 }}
+      >
         <Avatar
           name={`${user?.firstname ?? ""} ${user?.lastname ?? ""}`}
           mb="21px"
-          size="lg"
+          size={{ base: "md", md: "lg" }}
         />
-        <Text fontSize="27px" color="black" fontWeight={450}>
+
+        <Text
+          fontSize={{ base: "22px", md: "27px" }}
+          color="black"
+          fontWeight={450}
+        >
           {`${user?.firstname ?? ""} ${user?.lastname ?? ""}`}
         </Text>
-        {/* <Text>Joined 14th March 2025</Text> */}
-        <Text>Here’s order history</Text>
+
+        <Text fontSize={{ base: "14px", md: "15px" }}>
+          Here’s order history
+        </Text>
       </Box>
-      <Box px="40px">
+
+      {/* Main Content */}
+      <Box px={{ base: "20px", md: "32px", lg: "40px" }}>
         <SectionTabs
           sections={["Organic Produce", "Climate Arts"]}
           currentSection={tabId}
           type="my profile"
         />
+
         {isLoading ? (
           <PageLoader />
         ) : (
           <>
+            {/* Climate Arts */}
             {tabId === "climate arts" ? (
               carbonCreditList?.length > 0 ? (
                 <Table thead={["Name", "Type", "Amount", "Date"]}>
@@ -93,10 +109,10 @@ const Profile = () => {
                 </Table>
               ) : (
                 <Box width="100%" textAlign="center" mt="64px">
-                  <p>No climate arts orders found.</p>
+                  <Text>No climate arts orders found.</Text>
                 </Box>
               )
-            ) : organicProduceList?.length > 0 ? (
+            ) : /* Organic Produce */ organicProduceList?.length > 0 ? (
               <Table thead={["Name", "Status", "Size", "Date"]}>
                 {organicProduceList?.map((order: any, idx: number) => (
                   <Tr
@@ -109,30 +125,33 @@ const Profile = () => {
                       )
                     }
                   >
-                    <Td>
+                    <Td fontSize={{ base: "14px", md: "15px" }}>
                       {formatSnakeCaseTitle(order?.listing?.name) ?? "N/A"}
                     </Td>
+
                     <Td>
                       <Text
-                        textTransform={"capitalize"}
+                        textTransform="capitalize"
                         bgColor={getStatusProps(order?.deliveryStatus).bg}
                         color={getStatusProps(order?.deliveryStatus).text}
-                        w={"fit-content"}
-                        p={"0.5rem 1rem"}
-                        borderRadius={"1.89rem"}
-                        fontSize={"0.875rem"}
+                        w="fit-content"
+                        p="0.5rem 1rem"
+                        borderRadius="1.89rem"
+                        fontSize="0.875rem"
                       >
                         {formatSnakeCaseTitle(order?.deliveryStatus)}
                       </Text>
                     </Td>
+
                     <Td>{order?.listing?.batchSize?.toLocaleString()}</Td>
+
                     <Td>{readableDate(String(order?.createdAt))}</Td>
                   </Tr>
                 ))}
               </Table>
             ) : (
               <Box width="100%" textAlign="center" mt="64px">
-                <p>No organic produce orders found.</p>
+                <Text>No organic produce orders found.</Text>
               </Box>
             )}
           </>

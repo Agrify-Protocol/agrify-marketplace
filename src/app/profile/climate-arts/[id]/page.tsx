@@ -75,7 +75,6 @@ const CarbonCreditPurchaseDetails = () => {
     });
   }, [params.id]);
 
-  console.log("params", data);
   return (
     <>
       <Box mt="76px" mb="40px" mx="40px">

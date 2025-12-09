@@ -55,6 +55,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
         },
       };
     }
+
     return {
       images: details?.images,
       farmName: details?.farm?.name,
@@ -97,9 +98,11 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
 
       <Flex
         direction={{ base: "column", lg: "row" }}
-        px={{ base: "14px", lg: 0 }}
         gap={{ base: 4, sm: 5, md: 6, lg: 0 }}
+        px={{ base: "14px", lg: 0 }}
+        mt={{ base: 4, lg: 0 }}
       >
+        {/* Left Section - Slider */}
         <Box flexShrink={0} w={{ base: "100%", lg: "auto" }}>
           <Box
             w="100%"
@@ -110,13 +113,13 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
           </Box>
         </Box>
 
+        {/* Right Section */}
         <Flex
           maxH={{ base: "none", lg: "75vh" }}
           pl={{ base: 0, lg: "1rem" }}
           px={{ base: 0, md: "8px", lg: 0 }}
           pr={{ base: 0, lg: "32px" }}
           pb={{ base: 4, md: 6, lg: 10 }}
-          border={{ base: "1px solid transparent", lg: "none" }}
           flexDir="column"
           maxW={{ base: "100%", md: "640px", lg: "500px" }}
           mx={{ base: 0, md: "auto" }}
@@ -124,6 +127,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
           overflowY={{ base: "visible", lg: "scroll" }}
           mt={{ base: 4, md: 5, lg: 0 }}
         >
+          {/* Farm Name */}
           <Text
             fontSize={{ base: "13px", sm: "14px", md: "16px", lg: "18px" }}
             color="black"
@@ -132,6 +136,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
             {detailsByUrl(pathname).farmName}
           </Text>
 
+          {/* Product Name */}
           <Text
             fontSize={{ base: "22px", sm: "24px", md: "28px", lg: "32px" }}
             color="black"
@@ -143,6 +148,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
             {formatSnakeCaseTitle(detailsByUrl(pathname).productName)}
           </Text>
 
+          {/* Price */}
           <Text
             fontSize={{ base: "16px", md: "18px", lg: "24px" }}
             color="black"
@@ -155,6 +161,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
             <br />${detailsByUrl(pathname).price}
           </Text>
 
+          {/* Farm Score */}
           <Box>
             <Text
               color="black"
@@ -189,6 +196,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
             </Box>
           </Box>
 
+          {/* Buttons */}
           <Flex
             py={{ base: "0.5rem", md: "0.75rem" }}
             flexDir="column"
@@ -198,6 +206,7 @@ const ProduceDetails = ({ details, btns }: ProduceDetailsProps) => {
             {btns}
           </Flex>
 
+          {/* Subsections */}
           <Subsections details={detailsByUrl(pathname).subsection} />
         </Flex>
       </Flex>

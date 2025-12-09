@@ -52,8 +52,6 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
       : "climate art";
   }, [data]);
 
-  console.log("data", data);
-
   return (
     <Box
       my={{ base: "24px", lg: "4rem" }}

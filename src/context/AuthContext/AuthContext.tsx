@@ -74,8 +74,6 @@ export const AuthContextProvider = ({ children }: Props) => {
     }
   }, [accessToken]);
 
-  console.log("user", user);
-
   const fifteenMinutes = 15 * 60 * 1000;
 
   const handleLogout = () => {

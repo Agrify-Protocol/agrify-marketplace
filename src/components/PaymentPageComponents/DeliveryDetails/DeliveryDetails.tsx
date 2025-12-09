@@ -34,8 +34,9 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
     phoneNumber: "",
     fee: 0,
     VAT: 1.46,
-    expireAfter: 5, //5 days,
+    expireAfter: 5,
   });
+
   const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState<Record<string, boolean>>({
     address: false,
@@ -48,7 +49,7 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
       requiredFields.every((field) => payload[field] !== "") &&
       Object.values(isValid).every((value) => value === true)
     );
-  }, [payload]);
+  }, [payload, isValid]);
 
   const state = useMemo(() => {
     return countries.filter((country) => country.name === payload.country)[0]
@@ -100,7 +101,6 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { id, value } = e.target;
-
     setPayload((prev) => ({ ...prev, [id]: value }));
 
     if (["address", "postalCode", "phoneNumber"].includes(id)) {
@@ -130,7 +130,6 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
             duration: null,
             isClosable: false,
           });
-
           router.push(res?.paymentURL);
         }
         setIsLoading(false);
@@ -146,33 +145,31 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
       ...prev,
       listingID: chosenProject?._id || "",
     }));
-  }, [chosenProject]);
+  }, [chosenProject, router]);
 
   const getInputErrorMsg = (input: Record<string, any>) => {
     if (!minLengths[input.id]) return "";
-    if (input.id === "phoneNumber") {
-      return "Phone number must be valid";
-    } else {
-      return `${input.label} must be at least ${
-        minLengths[input.id]
-      } characters long`;
-    }
+    if (input.id === "phoneNumber") return "Phone number must be valid";
+    return `${input.label} must be at least ${
+      minLengths[input.id]
+    } characters long`;
   };
 
   return (
     <Box
-      px="75px"
       mb={{ base: "2rem", lg: 0 }}
-      pl={{ base: "1.5rem", md: "2rem" }}
-      pr={{ base: "1.5rem", md: "2rem" }}
+      px={{ base: "1.5rem", md: "2rem", lg: "3rem" }}
+      pt={{ base: "1rem", md: 0 }}
     >
       <Text fontSize="24px" color="black">
         Enter Delivery Details
       </Text>
+
       <FormControl mt="32px" display="flex" flexDir="column" gap="16px">
         {form.map((input) =>
           input.type === "input" ? (
             <CustomInput
+              key={input.id}
               type="text"
               label={input.label}
               value={payload[input.id]}
@@ -181,7 +178,6 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
               placeholder={input.placeHolder}
               errorMsg={getInputErrorMsg(input)}
               id={input.id}
-              key={input.id}
             />
           ) : (
             <Box key={input.id}>
@@ -196,17 +192,17 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
               <Select
                 placeholder="Select option"
                 focusBorderColor="gray_2"
-                h={"3.5rem"}
+                h="3.5rem"
                 borderColor="gray_2"
-                borderRadius={"1rem"}
-                bg={"white"}
+                borderRadius="1rem"
+                bg="white"
                 id={input.id}
                 value={payload[input.id]}
                 onChange={handleChange}
                 _placeholder={{ color: "gray_1", fontSize: "0.875rem" }}
               >
                 {input.options?.map((item) => (
-                  <option value={item.name} key={item.name}>
+                  <option key={item.name} value={item.name}>
                     {item.name}
                   </option>
                 ))}
@@ -215,21 +211,20 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
           )
         )}
       </FormControl>
+
       <Button
-        w={"100%"}
-        h={"3.5rem"}
-        borderRadius={"1.5rem"}
+        w="100%"
+        h="3.5rem"
+        borderRadius="1.5rem"
         bgColor={isFormValid ? "agrify_green" : "gray_3"}
         fontWeight={500}
         color={isFormValid ? "white" : "unset"}
-        transition={"all 0.25s ease-in-out"}
+        transition="all 0.25s ease-in-out"
         onClick={handleCreateOrder}
         isLoading={isLoading}
-        disabled={isFormValid}
+        disabled={!isFormValid}
         cursor={isFormValid ? "pointer" : "not-allowed"}
-        _hover={{
-          bg: isFormValid ? "#0ba842" : "gray_3",
-        }}
+        _hover={{ bg: isFormValid ? "#0ba842" : "gray_3" }}
         mt="48px"
       >
         Continue

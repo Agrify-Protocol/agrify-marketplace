@@ -6,18 +6,20 @@ import { Box, Button, Flex, Text, useToast } from "@chakra-ui/react";
 import Image from "next/image";
 import link from "@/assets/link.svg";
 import Link from "next/link";
-import ContainerWithDarkenedBg from "@/components/ContainerWithDarkenedBg";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { getCarbonCreditById } from "@/services/api/projects";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import Pill from "@/components/CarbonCredits/Pill";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import { Info } from "lucide-react";
+import { KYCRedirect } from "../category/[type]/[id]/page";
 
 const SingleCarbonCredit = () => {
   const { id } = useParams();
+  const { user } = useAuthContext();
   const router = useRouter();
-
   const [isLoading, setIsLoading] = useState(true);
   const [details, setDetails] = useState<Record<string, any>>({});
   const toast = useToast();
@@ -29,7 +31,7 @@ const SingleCarbonCredit = () => {
       }
       setIsLoading(false);
     });
-  }, []);
+  }, [id, toast]);
 
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
@@ -72,7 +74,6 @@ const SingleCarbonCredit = () => {
             px={{ base: 0, md: "8px", lg: 0 }}
             pr={{ base: 0, lg: "32px" }}
             pb={{ base: 4, md: 6, lg: 10 }}
-            border={{ base: "1px solid transparent", lg: "none" }}
             flexDir="column"
             w={{ base: "100%", md: "640px", lg: "500px" }}
             mx={{ base: 0, md: "auto" }}
@@ -82,20 +83,30 @@ const SingleCarbonCredit = () => {
           >
             <Text
               fontWeight={500}
-              fontSize="32px"
+              fontSize={{ base: "24px", md: "28px", lg: "32px" }}
               color="black"
               wordBreak="break-word"
             >
               {details?.projectName}
             </Text>
-            <Flex gap="48px" mt="40px" mb="32px">
+
+            <Flex
+              gap={{ base: "24px", md: "32px", lg: "48px" }}
+              mt={{ base: "24px", md: "32px", lg: "40px" }}
+              mb={{ base: "24px", md: "28px", lg: "32px" }}
+              wrap={{ base: "wrap", lg: "nowrap" }}
+            >
               {Object.entries({
                 Pricing: `$${details?.pricePerTonne?.toLocaleString()}`,
                 "Tonnes to be retired": `${details?.availableTonnes?.toLocaleString()} tc02e`,
               }).map(([key, value]) => (
                 <Box key={key}>
                   <Text fontSize="14px">{key}</Text>
-                  <Text color="black" fontWeight={500} fontSize={24}>
+                  <Text
+                    color="black"
+                    fontWeight={500}
+                    fontSize={{ base: 20, md: 22, lg: 24 }}
+                  >
                     {value}
                   </Text>
                 </Box>
@@ -103,27 +114,34 @@ const SingleCarbonCredit = () => {
             </Flex>
 
             <Flex direction="column" gap="48px">
-              <Button
-                borderRadius="2rem"
-                px={{ base: "1.5rem", md: "2.5rem" }}
-                py={{ base: "12px", md: "14px" }}
-                fontSize={{ base: "14px", md: "16px" }}
-                fontWeight={400}
-                width="100%"
-                bg="agrify_green"
-                _hover={{ bg: "#0ba842" }}
-                color="white"
-                onClick={() => {
-                  setChosenProject(details);
-                  router.push(
-                    isLoggedIn
-                      ? `/home/climate-arts/${details?.id}/purchase`
-                      : `/auth/login?redirect=carbon-credits&id=${details?.id}`
-                  );
-                }}
-              >
-                {isLoggedIn ? "Buy Climate Art" : "Sign In to Buy Climate Art"}
-              </Button>
+              <Box>
+                <Button
+                  borderRadius="2rem"
+                  px={{ base: "1.5rem", md: "2.5rem" }}
+                  py={{ base: "12px", md: "14px" }}
+                  fontSize={{ base: "14px", md: "16px" }}
+                  fontWeight={400}
+                  width="100%"
+                  bg="agrify_green"
+                  _hover={{ bg: "#0ba842" }}
+                  color="white"
+                  isDisabled={user?.kycStatus !== "approved"}
+                  onClick={() => {
+                    setChosenProject(details);
+                    router.push(
+                      isLoggedIn
+                        ? `/home/climate-arts/${details?.id}/purchase`
+                        : `/auth/login?redirect=carbon-credits&id=${details?.id}`
+                    );
+                  }}
+                  mb={user?.kycStatus !== "approved" ? 2 : 0}
+                >
+                  {isLoggedIn
+                    ? "Buy Climate Art"
+                    : "Sign In to Buy Climate Art"}
+                </Button>
+                {user?.kycStatus && <KYCRedirect status={user?.kycStatus} />}
+              </Box>
 
               {/* about */}
               <Box>
@@ -141,17 +159,13 @@ const SingleCarbonCredit = () => {
                 <Text fontWeight={500} fontSize="20px" mb="16px" color="black">
                   Highlights
                 </Text>
+
                 {Object.entries({
                   "Project Developer": details?.projectDeveloper,
                   Type: <Pill status={details?.type} />,
                   Status: <Pill status={details?.status} />,
                   "Project Id": details?.projectId,
-                  // Verification: details?.verificationBody,
                   Methodology: (
-                    // <Link
-                    //   href={details?.verificationBodyWebsite ?? ""}
-                    //   target="_blank"
-                    // >
                     <Text
                       as="span"
                       display="flex"
@@ -159,13 +173,7 @@ const SingleCarbonCredit = () => {
                       gap="4px"
                     >
                       {details?.methodology ?? "-"}
-                      {/* <Image
-                        src={link}
-                        alt="link icon"
-                        style={{ display: "inline" }}
-                      /> */}
                     </Text>
-                    // </Link>
                   ),
                 }).map(([key, value]) => (
                   <Box
@@ -175,7 +183,7 @@ const SingleCarbonCredit = () => {
                     alignItems="center"
                     py="12px"
                     mb="16px"
-                    fontSize="14px"
+                    fontSize={{ base: "13px", md: "14px" }}
                     borderBottom="1px solid rgba(0, 0, 0, 0.05)"
                   >
                     <Text color="#565656" mb={{ base: "4px", sm: "0" }}>
@@ -197,6 +205,7 @@ const SingleCarbonCredit = () => {
                 </Text>
                 <Box width="100%" height="188px" bgColor="gray" />
               </Box> */}
+
               {/* benefits */}
               <Box>
                 <Text fontWeight={500} fontSize="20px" mb="16px" color="black">
@@ -215,10 +224,18 @@ const SingleCarbonCredit = () => {
                         />
                       </Box>
                       <Box>
-                        <Text color="black" fontSize="18px">
+                        <Text
+                          color="black"
+                          fontSize={{ base: "16px", md: "18px" }}
+                        >
                           {cb?.title}
                         </Text>
-                        <Text color="black">{cb?.description}</Text>
+                        <Text
+                          color="black"
+                          fontSize={{ base: "14px", md: "16px" }}
+                        >
+                          {cb?.description}
+                        </Text>
                       </Box>
                     </Flex>
                   ))}
