@@ -47,7 +47,15 @@ const KYCRedirect = ({
         <Text color={getTextColor()}>Your KYC is under review.</Text>
       )}
       {status === "rejected" && (
-        <Text color={getTextColor()}>Your KYC was rejected.</Text>
+        <Text color={getTextColor()}>
+          Your KYC was rejected.{" "}
+          <Link
+            href="/kyc"
+            style={{ fontWeight: 500, textDecoration: "underline" }}
+          >
+            Complete KYC
+          </Link>
+        </Text>
       )}
     </Text>
   );
