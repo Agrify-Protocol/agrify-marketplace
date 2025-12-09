@@ -13,8 +13,7 @@ import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import Pill from "@/components/CarbonCredits/Pill";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
-import { Info } from "lucide-react";
-import { KYCRedirect } from "../category/[type]/[id]/page";
+import KYCRedirect from "@/components/KYC/Redirect";
 
 const SingleCarbonCredit = () => {
   const { id } = useParams();
