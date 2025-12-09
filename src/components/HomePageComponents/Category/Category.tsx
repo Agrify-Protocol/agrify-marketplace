@@ -7,18 +7,16 @@ import Link from "next/link";
 
 const Category = ({ category }: { key: number | string; category: any }) => {
   return (
-    // href={`/marketplace/category/${category?.name}`}
-    <Link href={`/marketplace/sourcing-tool?id=${category?.name}`}>
+    // href={`/home/sourcing-tool?id=${category?.name}`}
+    <Link href={`/home/organic-produce/category/${category?.name}`}>
       <Box
         display="flex"
         justifyContent="center"
         w="full"
         maxW="389.7px"
-        h="365.076px"
         rounded="13.58px"
         overflow="hidden"
         position="relative"
-        minH={{ base: "320px", sm: "360px", md: "400px", lg: "425px" }}
         bgColor="white"
         borderRadius="15.04px"
         flexDirection="column"
@@ -26,7 +24,7 @@ const Category = ({ category }: { key: number | string; category: any }) => {
         gap={{ base: "24px", md: "30px", lg: "36px" }}
         cursor="pointer"
         px="1rem"
-        py="2rem"
+        py="25px"
         boxShadow="0px 3.23px 2.58px rgba(0, 0, 0, 0.028),
              0px 8.17px 6.53px rgba(0, 0, 0, 0.04),
              0px 16.66px 13.33px rgba(0, 0, 0, 0.05)"
@@ -57,6 +55,7 @@ const Category = ({ category }: { key: number | string; category: any }) => {
           <Box
             maxW={{ base: "160px", sm: "200px", md: "220px", lg: "188px" }}
             maxH={{ base: "160px", sm: "200px", md: "220px", lg: "188px" }}
+            mb="40px"
           >
             <Image
               src={category?.coverImage}

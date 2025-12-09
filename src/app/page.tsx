@@ -7,6 +7,6 @@ export default function IndexPage() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/marketplace");
+    router.push("/home");
   }, []);
 }

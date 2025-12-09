@@ -1,5 +1,9 @@
 import { toastFn } from "@/utils/toastFn";
-import { profileInstance, xrpInstance } from "../axios/instances";
+import {
+  defaultInstance,
+  profileInstance,
+  xrpInstance,
+} from "../axios/instances";
 
 export const getOverview = async (toast: any) => {
   try {
@@ -66,6 +70,34 @@ export const createOrder = async (
 ) => {
   try {
     const request = await xrpInstance.post("/orders", data);
+    return request.data;
+  } catch (error) {
+    toastFn(toast, error);
+  }
+};
+
+//carbon creits
+export const getCarbonCreditPurchaseHistory = async (toast: any) => {
+  try {
+    const request = await defaultInstance.get(
+      `/carbon-credits/purchases/history`
+    );
+    return request.data;
+  } catch (error) {
+    toastFn(toast, error);
+  }
+};
+
+export const purchaseCarbonCredits = async (
+  id: string,
+  data: Record<string, any>,
+  toast: any
+) => {
+  try {
+    const request = await defaultInstance.post(
+      `carbon-credits/${id}/purchase`,
+      data
+    );
     return request.data;
   } catch (error) {
     toastFn(toast, error);

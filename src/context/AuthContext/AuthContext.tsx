@@ -30,8 +30,8 @@ export const AuthContextProvider = ({ children }: Props) => {
     "/auth/signup",
     "/auth/login",
     "/product-story",
-    "/marketplace",
-    // "/profile/produce-details/track",
+    "/home",
+    // "/profile/organic-produce/produce-details/track",
   ];
 
   const isUnauthenticated = useMemo(() => {

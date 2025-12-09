@@ -26,7 +26,7 @@ const Subsections = ({ details }: { details: any }) => {
         <Text fontSize={{ base: "16px", lg: "18px" }} color="#000000" mb="12px">
           Details
         </Text>
-        {details.items.map((item: { title: string; value: string }) => (
+        {details?.items?.map((item: { title: string; value: string }) => (
           <Box
             display="grid"
             gridTemplateColumns={{ base: "1fr", sm: "40% 60%" }}

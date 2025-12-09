@@ -10,7 +10,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Agrify Marketplace",
-  description: "Agrify Marketplace focuses on regenerative farming and carbon offsetting.",
+  description:
+    "Agrify Marketplace focuses on regenerative farming and carbon offsetting.",
 };
 
 export default function RootLayout({

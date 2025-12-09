@@ -52,3 +52,12 @@ export async function getRefreshToken() {
   let refreshToken = cookies().get("carbon_session_refresh_token")?.value;
   return refreshToken ? refreshToken : "";
 }
+
+export async function setUser(user: Record<string, any>) {
+  cookies().set("carbon_session_user", JSON.stringify(user), {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 60 * 60 * 24 * 7, // one week
+    // path: "/auth/login",
+  });
+}

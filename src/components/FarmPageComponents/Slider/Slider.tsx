@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import left from "../../../assets/arrow_left.svg";
 import right from "../../../assets/arrow_right.svg";
 import Image from "next/image";
@@ -49,10 +49,11 @@ const Slider = ({ images }: SliderProps) => {
       gap={{ base: "32px", lg: "3.375rem" }}
       alignItems={"center"}
       flexDir={{ base: "column", lg: "row" }}
+      justifyContent={"center"}
     >
       <NavigateBtn
         onClick={handlePrevious}
-        isDisabled={currentIndex === 0}
+        isDisabled={currentIndex === 0 || images?.length <= 0}
         src={left}
         display={{ base: "none", lg: "block" }}
       />
@@ -72,19 +73,34 @@ const Slider = ({ images }: SliderProps) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Image
-              src={images ? images[currentIndex]?.image : ""}
-              alt=""
-              fill
-              style={{ height: "100%", width: "100%", objectFit: "cover" }}
-            />
+            {images?.length > 0 ? (
+              <Image
+                src={
+                  images
+                    ? images[currentIndex]?.image ?? images[currentIndex]
+                    : ""
+                }
+                alt=""
+                fill
+                style={{ height: "100%", width: "100%", objectFit: "cover" }}
+              />
+            ) : (
+              <Flex
+                alignItems="center"
+                h={{ base: "342px", lg: "500px" }}
+                justifyContent="center"
+                bg="gray_3"
+              >
+                <Text>No images available</Text>
+              </Flex>
+            )}
           </motion.div>
         </AnimatePresence>
       </Box>
 
       <NavigateBtn
         onClick={handleNext}
-        isDisabled={currentIndex === images?.length - 1}
+        isDisabled={currentIndex === images?.length - 1 || images?.length <= 0}
         src={right}
         display={{ base: "none", lg: "block" }}
       />

@@ -52,3 +52,19 @@ export const refreshAccessToken = async (
     toastFn(toast, error);
   }
 };
+
+export const uploadKyc = async (
+  details: Record<string, unknown>,
+  toast: any
+) => {
+  try {
+    const request = await authInstance.post("/kyc", details, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return request.data;
+  } catch (error: any) {
+    toastFn(toast, error);
+  }
+};
