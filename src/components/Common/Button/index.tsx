@@ -3,18 +3,25 @@ import React from "react";
 
 const Button = ({
   children,
+  disabled,
   ...props
 }: { children: React.ReactNode } & ButtonProps) => {
   return (
     <ChakraButton
       w={"100%"}
-      bgColor={"agrify_green"}
+      bgColor={disabled ? "white" : "agrify_green"}
       fontWeight={500}
-      color={"white"}
+      color={disabled ? "black" : "white"}
       borderRadius={"2.119rem"}
-      _hover={{
-        bg: "#0ba842",
-      }}
+      _hover={
+        disabled
+          ? {}
+          : {
+              bg: "#0ba842",
+            }
+      }
+      disabled={disabled}
+      cursor={disabled ? "not-allowed" : "pointer"}
       fontSize={{ base: "14px", lg: "16px" }}
       {...props}
     >
