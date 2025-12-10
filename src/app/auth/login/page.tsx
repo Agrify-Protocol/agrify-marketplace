@@ -11,7 +11,7 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { validateEmail, validateLength } from "@/utils/validationSchema";
 import { preserveSession } from "@/app/lib/actions";
 import { successToast } from "./constants";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createProductRequest } from "@/services/api/projects";
 
 const Login = () => {
@@ -21,7 +21,7 @@ const Login = () => {
   const [isValid, setIsValid] = useState({ email: false, password: false });
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
-
+  const router = useRouter();
   const category = searchParams.get("category");
   const sourcing_tool = searchParams.get("sourcing-tool");
   const redirect = searchParams.get("redirect");
@@ -54,22 +54,21 @@ const Login = () => {
         setAccessToken(result.token);
         setRefreshToken(result.refreshToken);
         toast(successToast);
-        if (!!category && !!id) {
-          window.location.href = `/home/organic-produce/category/${category}/${id}`;
-        } else if (!!sourcing_tool) {
+
+        if (category && id) {
+          router.push(`/home/organic-produce/category/${category}/${id}`);
+        } else if (sourcing_tool) {
           const form = localStorage.getItem("sourcing_tool_form");
-          const res = await createProductRequest(
-            JSON.parse(form as string),
-            toast
-          );
+          const res = await createProductRequest(JSON.parse(form!), toast);
+
           if (res?.message) {
-            window.location.href = "/home/sourcing-tool/success";
             localStorage.removeItem("sourcing_tool_form");
+            router.push("/home/sourcing-tool/success");
           }
         } else if (redirect) {
-          window.location.href = `/home/climate-arts/${id}/purchase`;
+          router.push(`/home/climate-arts/${id}`);
         } else {
-          window.location.href = "/home";
+          router.push("/home");
         }
       }
     } finally {

@@ -20,18 +20,9 @@ const Navbar = () => {
   const routesWithNav = ["/farm", "/profile", "/home"];
   const isAuthPage = pathName.startsWith("/auth");
   const [showModal, setShowModal] = useState(false);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const { user } = useAuthContext();
+  const { user, accessToken } = useAuthContext();
 
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    setAccessToken(token);
-  }, []);
-
-  const isLoggedIn = useMemo(
-    () => !!user && !!accessToken,
-    [accessToken, user]
-  );
+  const isLoggedIn = !!user && !!accessToken;
 
   return (
     <Box

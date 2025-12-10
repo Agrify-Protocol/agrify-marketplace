@@ -103,14 +103,14 @@ const Purchase = () => {
           bg="transparent"
           color="#0CC14C"
           _hover={{ bg: "#e7fdef" }}
-          width={{ base: "100%", sm: "auto" }}
+          // width={{ base: "100%", sm: "auto" }}
           onClick={() => router.push("/payment?method=card")}
         >
           Pay with Card
         </Button>
 
         <Button
-          width={{ base: "100%", sm: "auto" }}
+          // width={{ base: "100%", sm: "auto" }}
           onClick={() => router.push("/payment?method=crypto")}
         >
           Pay with Crypto

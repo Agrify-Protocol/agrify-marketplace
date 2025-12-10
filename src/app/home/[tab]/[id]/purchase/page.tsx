@@ -1,12 +1,13 @@
 "use client";
 
 import Button from "@/components/Common/Button";
+import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import PurchaseComp from "@/components/PurchasePageComponents";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { purchaseCarbonCredits } from "@/services/api/profile";
-import { Text, Flex, Divider, useToast, Box } from "@chakra-ui/react";
-import { usePathname, useRouter } from "next/navigation";
+import { Text, Flex, Divider, useToast } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const SectionItem = ({
@@ -42,13 +43,19 @@ const SectionItem = ({
 };
 
 const CarbonCreditPurchase = () => {
-  const { chosenProject: details } = useGlobalContext();
-  const [quantity, setQuantity] = useState(details?.minimumPurchase || 1);
+  const { chosenProject } = useGlobalContext();
   const [isLoading, setIsLoading] = useState<"card" | "crypto" | null>(null);
   const { user } = useAuthContext();
   const toast = useToast();
   const router = useRouter();
-  const pathname = usePathname();
+
+  const storedDetails =
+    typeof window !== "undefined"
+      ? localStorage.getItem("selected_climate_art")
+      : null;
+
+  const details =
+    chosenProject || (storedDetails ? JSON.parse(storedDetails) : null);
 
   const handlePurchaseCarbonCredit = (paymentMethod: "card" | "crypto") => {
     setIsLoading(paymentMethod);
@@ -84,9 +91,25 @@ const CarbonCreditPurchase = () => {
     if (!details) {
       router.push("/home/climate-arts");
     }
+
+    if (user) {
+      if (user.kycStatus !== "approved") {
+        toast({
+          title: "KYC Verification Required",
+          description: "Please complete KYC verification to proceed.",
+          status: "warning",
+          position: "top-right",
+          duration: 5000,
+          isClosable: true,
+        });
+        router.push("/home/climate-arts");
+      }
+    }
   }, [details, router]);
 
-  return (
+  return !details ? (
+    <PageLoader />
+  ) : (
     <PurchaseComp name={details?.projectName}>
       <Text
         fontWeight={500}
@@ -128,7 +151,7 @@ const CarbonCreditPurchase = () => {
           bg="transparent"
           color="#0CC14C"
           _hover={{ bg: "#e7fdef" }}
-          width={{ base: "100%", sm: "auto" }}
+          // width={{ base: "100%", lg: "auto" }}
           isLoading={isLoading === "card"}
           isDisabled={isLoading !== null}
           onClick={() => handlePurchaseCarbonCredit("card")}
@@ -137,7 +160,7 @@ const CarbonCreditPurchase = () => {
         </Button>
 
         <Button
-          width={{ base: "100%", sm: "auto" }}
+          // width={{ base: "100%", lg: "auto" }}
           isLoading={isLoading === "crypto"}
           isDisabled={isLoading !== null}
           onClick={() => handlePurchaseCarbonCredit("crypto")}

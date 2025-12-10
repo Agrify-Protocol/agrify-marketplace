@@ -40,6 +40,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
           }
         });
       }
+      localStorage.removeItem("selected_climate_art");
       setIsLoading(false);
     }
   }, [user, id, tab]);

@@ -14,15 +14,8 @@ const Details = () => {
   const [data, setData] = useState<any>({});
   const [txHash, setTxHash] = useState(null);
   const params = useParams();
-  const { user } = useAuthContext();
+  const { user, accessToken } = useAuthContext();
   const toast = useToast();
-
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    setAccessToken(token);
-  }, []);
 
   const isLoggedIn = useMemo(() => !!accessToken, [accessToken]);
 

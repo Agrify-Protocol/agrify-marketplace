@@ -17,7 +17,7 @@ import KYCRedirect from "@/components/KYC/Redirect";
 
 const SingleCarbonCredit = () => {
   const { id } = useParams();
-  const { user } = useAuthContext();
+  const { user, accessToken } = useAuthContext();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [details, setDetails] = useState<Record<string, any>>({});
@@ -32,14 +32,7 @@ const SingleCarbonCredit = () => {
     });
   }, [id, toast]);
 
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    setAccessToken(token);
-  }, []);
-
-  const isLoggedIn = useMemo(() => !!accessToken, [accessToken]);
+  const isLoggedIn = !!accessToken;
 
   const { setChosenProject } = useGlobalContext();
 
@@ -124,13 +117,17 @@ const SingleCarbonCredit = () => {
                   bg="agrify_green"
                   _hover={{ bg: "#0ba842" }}
                   color="white"
-                  isDisabled={user?.kycStatus !== "approved"}
+                  isDisabled={isLoggedIn && user?.kycStatus !== "approved"}
                   onClick={() => {
                     setChosenProject(details);
+                    localStorage.setItem(
+                      "selected_climate_art",
+                      JSON.stringify(details)
+                    );
                     router.push(
                       isLoggedIn
                         ? `/home/climate-arts/${details?.id}/purchase`
-                        : `/auth/login?redirect=carbon-credits&id=${details?.id}`
+                        : `/auth/login?redirect=climate-arts&id=${details?.id}`
                     );
                   }}
                   mb={user?.kycStatus !== "approved" ? 2 : 0}
@@ -139,7 +136,9 @@ const SingleCarbonCredit = () => {
                     ? "Buy Climate Art"
                     : "Sign In to Buy Climate Art"}
                 </Button>
-                {user?.kycStatus && <KYCRedirect status={user?.kycStatus} />}
+                {isLoggedIn && user?.kycStatus && (
+                  <KYCRedirect status={user?.kycStatus} />
+                )}
               </Box>
 
               {/* about */}
