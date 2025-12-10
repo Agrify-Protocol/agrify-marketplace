@@ -28,16 +28,12 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
       setIsLoading(true);
       if (tab === "organic produce") {
         getProduceDetails(id as string, toast).then((response) => {
-          if (response) {
-            setData(response);
-          }
+          if (response) setData(response);
         });
       }
       if (tab === "climate arts") {
         getCarbonCreditById(toast, id as string).then((response) => {
-          if (response) {
-            setData(response);
-          }
+          if (response) setData(response);
         });
       }
       localStorage.removeItem("selected_climate_art");
@@ -55,101 +51,101 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
 
   return (
     <Box
-      my={{ base: "24px", lg: "4rem" }}
-      px={{ base: "36px", lg: "2.625rem" }}
+      mt={{ base: "16px", sm: "32px", lg: "4rem" }}
+      mb={{ base: "16px", lg: "2rem" }}
+      px={{ base: "18px", sm: "24px", lg: "2.625rem" }}
     >
       {isLoading ? (
         <PageLoader />
       ) : (
         <Box>
           <BackButton customFunction={() => router.push("/home")} />
+
           {(data?.listing || data?.data) && (
             <Box
               w={"100%"}
-              bgColor={{ lg: "white" }}
-              mt="48px"
-              borderRadius={"0.953rem"}
-              border={{ lg: "0.95px solid rgba(169, 169, 169, 0.3)" }}
-              py={{ base: "70px", lg: "5.238rem" }}
-              textAlign={"center"}
-              bg="#FFFFFF"
+              bg="white"
+              mt={{ base: "32px", lg: "48px" }}
+              borderRadius="12px"
+              border={{ lg: "1px solid rgba(169, 169, 169, 0.3)" }}
+              py={{ base: "40px", sm: "50px", lg: "70px" }}
+              textAlign="center"
             >
               <Flex
-                w={"6.191rem"}
-                h={"6.191rem"}
-                bgColor={"#F5F6F8"}
-                alignItems={"center"}
-                justifyContent={"center"}
-                mx={"auto"}
-                borderRadius={"0.476rem"}
-                mb={{ lg: "2.444rem" }}
+                w={{ base: "70px", sm: "90px" }}
+                h={{ base: "70px", sm: "90px" }}
+                bg="#F5F6F8"
+                alignItems="center"
+                justifyContent="center"
+                mx="auto"
+                borderRadius="10px"
+                mb={{ base: "20px", lg: "32px" }}
               >
                 <Image
                   src={type === "success" ? check : error}
-                  alt="check icon type"
+                  alt="Status icon"
                 />
               </Flex>
 
               <Text
-                fontSize={{ base: "18px", lg: "1.5rem" }}
+                fontSize={{ base: "20px", sm: "22px", lg: "1.5rem" }}
                 fontWeight={600}
-                color={"#011308"}
+                color="#011308"
               >
-                {`Purchase ${type === "success" ? "Completed" : "Failed"}!`}
+                Purchase {type === "success" ? "Completed" : "Failed"}!
               </Text>
+
               <Text
-                fontSize={{ lg: "1.125rem" }}
-                maxW="458px"
+                fontSize={{ base: "15px", sm: "16px", lg: "18px" }}
+                maxW="480px"
                 mx="auto"
-                fontWeight={450}
-                mt={{ base: "21px", lg: "1.708rem" }}
-                mb={{ base: "33px", lg: "2.661rem" }}
+                fontWeight={400}
+                mt={{ base: "16px", lg: "20px" }}
+                mb={{ base: "24px", lg: "32px" }}
+                px={{ base: "8px", sm: "0" }}
               >
                 {type === "success"
                   ? `You have successfully purchased ${produceString}.`
                   : `Unfortunately, the purchase of ${produceString} could not be completed. Please try again.`}
               </Text>
+
               <Box
-                width={255.23}
-                height={239.1}
-                overflow={"hidden"}
-                mx={"auto"}
-                borderRadius={"0.449rem"}
-                position={"relative"}
-                mb={"3.288rem"}
+                width="100%"
+                maxW="280px"
+                height="auto"
+                mx="auto"
+                overflow="hidden"
+                borderRadius="10px"
+                mb={{ base: "28px", lg: "40px" }}
               >
                 <Image
                   src={
                     data?.listing?.farm?.farmImages[0]?.image ??
-                    data?.data?.images[0]?.url
+                    data?.data?.images?.[0]?.url
                   }
-                  width={255.23}
-                  height={239.1}
-                  alt={`${formatSnakeCaseTitle(
-                    data?.listing?.product?.name ?? data?.data?.projectName
-                  )} cover image`}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-                <Box
-                  position={"absolute"}
-                  inset={0}
-                  bgColor={"rgba(0,0,0,0.4)"}
-                  p={"1.329rem 1.098rem"}
+                  width={280}
+                  height={240}
+                  alt="Cover image"
+                  style={{
+                    width: "100%",
+                    height: "180px",
+                    objectFit: "cover",
+                  }}
                 />
               </Box>
 
               <Text
-                fontWeight={450}
-                color={"black"}
-                fontSize={{ base: "16px", lg: "1.5rem" }}
-                mb={"2.648rem"}
+                fontWeight={500}
+                color="black"
+                fontSize={{ base: "16px", sm: "18px", lg: "1.5rem" }}
+                mb={{ base: "20px", lg: "32px" }}
               >
                 {formatSnakeCaseTitle(
                   data?.listing?.product?.name ?? data?.data?.projectName
                 )}
               </Text>
 
-              <Flex flexDir="column" alignItems="center" gap="27px">
+              <Flex flexDir="column" alignItems="center" gap="20px">
                 <Link
                   href={
                     type === "success"
@@ -161,48 +157,48 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                 >
                   <Button
                     w="fit-content"
+                    px={{ base: "24px", sm: "36px" }}
+                    py="12px"
+                    borderRadius="2rem"
+                    fontSize={{ base: "14px", sm: "16px" }}
+                    bg={type === "success" ? "main_black_1" : "white"}
+                    color={type === "success" ? "white" : "main_black_1"}
                     border={
                       type === "success"
                         ? "1px solid transparent"
                         : "1px solid #282828"
                     }
-                    color={type === "success" ? "white" : "main_black_1"}
-                    bgColor={type === "success" ? "main_black_1" : "white"}
-                    borderRadius={"2rem"}
                     _hover={{
-                      bg: type === "success" ? "#404040" : "#f2f2f2",
+                      bg: type === "success" ? "#404040" : "#f7f7f7",
                     }}
                   >
-                    {type === "success" ? "View Purchase" : "Back to Project"}
+                    {type === "success" ? "View Purchase" : "Back to Projects"}
                   </Button>
                 </Link>
 
-                {type === "success" && (
-                  <>
-                    {data?.txHash || data?.data?.chainLink ? (
-                      <Link
-                        href={data?.txHash ?? data?.data?.chainLink}
-                        target="_blank"
+                {type === "success" &&
+                  (data?.txHash || data?.data?.chainLink) && (
+                    <Link
+                      href={data?.txHash ?? data?.data?.chainLink}
+                      target="_blank"
+                    >
+                      <Button
+                        bg="transparent"
+                        color="#282828"
+                        borderRadius="2rem"
+                        px={{ base: "20px", sm: "32px" }}
+                        py="12px"
+                        fontWeight={400}
+                        fontSize={{ base: "14px", sm: "16px" }}
+                        border="1px solid #282828"
+                        _hover={{
+                          bg: "rgba(40, 40, 40, 0.1)",
+                        }}
                       >
-                        <Button
-                          bgColor="transparent"
-                          color="#282828"
-                          borderRadius={"2rem"}
-                          px={"2.5rem"}
-                          py="14px"
-                          fontWeight={400}
-                          mb="32px"
-                          border="1px solid #282828"
-                          _hover={{
-                            bg: "rgba(40, 40, 40, .1)",
-                          }}
-                        >
-                          View on Block Explorer
-                        </Button>
-                      </Link>
-                    ) : null}
-                  </>
-                )}
+                        View on Block Explorer
+                      </Button>
+                    </Link>
+                  )}
               </Flex>
             </Box>
           )}
