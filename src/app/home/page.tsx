@@ -46,48 +46,50 @@ export default function Home() {
           purchasing sustainably grown produce{" "}
         </Text>
       </Box>
-      <Flex gap="50px" flexDir={{ base: "column", md: "row" }}>
+      <Flex gap="50px" flexDir={{ base: "column", md: "row" }} align="stretch">
         {actions.map((action) => (
-          <ContainerWithDarkenedBg key={action.id} bg={action.bg} opacity={0.7}>
-            <Flex
-              height="100%"
-              flexDir="column"
-              alignItems="center"
-              justifyContent="center"
-              textAlign="center"
-              px={{ base: "3", sm: "4" }}
-            >
-              <Image
-                src={action.icon}
-                alt={`${action.title} icon`}
-                style={{ marginBottom: "10px" }}
-                width={40}
-                height={40}
-              />
-              <Text
-                color="white"
-                fontSize={{ base: "20px", sm: "24px", md: "32px" }}
-                fontWeight="600"
-                mb="12px"
+          <Box key={action.id} width="50%" height="auto" display="flex">
+            <ContainerWithDarkenedBg bg={action.bg} opacity={0.7}>
+              <Flex
+                height="100%"
+                flexDir="column"
+                alignItems="center"
+                justifyContent="center"
+                textAlign="center"
+                px={{ base: "3", sm: "4" }}
               >
-                {action.title}
-              </Text>
-              <Text
-                color="white"
-                fontSize={{ base: "14px", sm: "15px", md: "16px" }}
-                maxW={{ base: "100%", sm: "90%", md: "70%" }}
-                mx="auto"
-                mb="35px"
-              >
-                {action.description}
-              </Text>
-              <Link href={`/home/${action.id}`}>
-                <Button rounded="32px" fontWeight="400" px="40px" py="12px">
-                  Explore
-                </Button>
-              </Link>
-            </Flex>
-          </ContainerWithDarkenedBg>
+                <Image
+                  src={action.icon}
+                  alt={`${action.title} icon`}
+                  style={{ marginBottom: "10px" }}
+                  width={40}
+                  height={40}
+                />
+                <Text
+                  color="white"
+                  fontSize={{ base: "20px", sm: "24px", md: "32px" }}
+                  fontWeight="600"
+                  mb="12px"
+                >
+                  {action.title}
+                </Text>
+                <Text
+                  color="white"
+                  fontSize={{ base: "14px", sm: "15px", md: "16px" }}
+                  maxW={{ base: "100%", sm: "90%", md: "70%" }}
+                  mx="auto"
+                  mb="35px"
+                >
+                  {action.description}
+                </Text>
+                <Link href={`/home/${action.id}`}>
+                  <Button rounded="32px" fontWeight="400" px="40px" py="12px">
+                    Explore
+                  </Button>
+                </Link>
+              </Flex>
+            </ContainerWithDarkenedBg>
+          </Box>
         ))}
       </Flex>
     </Box>

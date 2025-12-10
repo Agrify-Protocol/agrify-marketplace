@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { ProjectPageProvider } from "@/context/ProjectsPageContext/ProjectsPageContext";
 import ProduceDetails from "@/components/ProfilePageComponents/ProduceDetails/page";
 import Link from "next/link";
-import { Box, Button, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, useToast } from "@chakra-ui/react";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { useParams, useRouter } from "next/navigation";
 import { getListingsById } from "@/services/api/projects";
@@ -19,16 +19,10 @@ const ProjectPage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<any>([]);
-  const { user } = useAuthContext();
+  const { user, accessToken } = useAuthContext();
   const toast = useToast();
-  const [accessToken, setAccessToken] = useState<string | null>(null);
 
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    setAccessToken(token);
-  }, []);
-
-  const isLoggedIn = useMemo(() => !!accessToken, [accessToken]);
+  const isLoggedIn = !!accessToken;
 
   useEffect(() => {
     getListingsById(id as string, toast).then((response) => {

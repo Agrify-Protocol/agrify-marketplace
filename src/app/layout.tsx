@@ -20,20 +20,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <GlobalContextProvider>
-      <AuthContextProvider>
-        <html lang="en">
-          <head>
-            <link rel="icon" href="/icons/logo.svg" type="image/svg+xml" />
-          </head>
-          <body className={`${Suisse.className} ${inter.className}`}>
+    <html lang="en">
+      <head>
+        <link rel="icon" href="/icons/logo.svg" type="image/svg+xml" />
+      </head>
+      <body className={`${Suisse.className} ${inter.className}`}>
+        <GlobalContextProvider>
+          <AuthContextProvider>
             <Providers>
               <Navbar />
               {children}
             </Providers>
-          </body>
-        </html>
-      </AuthContextProvider>
-    </GlobalContextProvider>
+          </AuthContextProvider>
+        </GlobalContextProvider>
+      </body>
+    </html>
   );
 }
