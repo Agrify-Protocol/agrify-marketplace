@@ -48,7 +48,12 @@ export default function Home() {
       </Box>
       <Flex gap="50px" flexDir={{ base: "column", md: "row" }} align="stretch">
         {actions.map((action) => (
-          <Box key={action.id} width="50%" height="auto" display="flex">
+          <Box
+            key={action.id}
+            width={{ base: "100%", md: "50%" }}
+            height="auto"
+            display="flex"
+          >
             <ContainerWithDarkenedBg bg={action.bg} opacity={0.7}>
               <Flex
                 height="100%"
