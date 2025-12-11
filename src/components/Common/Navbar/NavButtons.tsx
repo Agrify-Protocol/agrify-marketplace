@@ -17,7 +17,7 @@ const NavButtons = ({ route, pathName, user, ...rest }: NavButtonsProps) => {
       link: "/home",
       base: ["/home", "/farm", "/payment"],
       children: [
-        { title: "Climate Arts", link: "/home/climate-arts" },
+        // { title: "Climate Arts", link: "/home/climate-arts" },
         { title: "Organic Produce", link: "/home/organic-produce" },
       ],
     },
