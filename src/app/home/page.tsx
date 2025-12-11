@@ -13,14 +13,14 @@ import { useAuthContext } from "@/context/AuthContext/AuthContext";
 export default function Home() {
   const { user } = useAuthContext();
   const actions = [
-    {
-      id: "climate-arts",
-      title: "Buy Climate Arts",
-      icon: coin,
-      bg: carbonCreditbg,
-      description:
-        "Offset your emissions with tokenised climates art representing one tonne of carbon captured in soil",
-    },
+    // {
+    //   id: "climate-arts",
+    //   title: "Buy Climate Arts",
+    //   icon: coin,
+    //   bg: carbonCreditbg,
+    //   description:
+    //     "Offset your emissions with tokenised climates art representing one tonne of carbon captured in soil",
+    // },
     {
       id: "organic-produce",
       title: "Buy Organic Produce",

@@ -79,7 +79,8 @@ const Profile = () => {
       {/* Main Content */}
       <Box px={{ base: "20px", md: "32px", lg: "40px" }}>
         <SectionTabs
-          sections={["Organic Produce", "Climate Arts"]}
+          sections={["Organic Produce"]}
+          // sections={["Organic Produce", "Climate Arts"]}
           currentSection={tabId}
           type="my profile"
         />
