@@ -120,7 +120,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               >
                 <Image
                   src={
-                    data?.listing?.farm?.farmImages[0]?.image ??
+                    data?.listing?.images?.[0]?.image ??
                     data?.data?.images?.[0]?.url
                   }
                   width={280}
