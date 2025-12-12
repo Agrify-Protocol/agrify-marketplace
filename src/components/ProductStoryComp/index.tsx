@@ -109,10 +109,8 @@ const ProductStoryComp = () => {
         overflowY="auto"
         display="flex"
         justifyContent="center"
-        // Center the card on small screens so the background shows around it
         alignItems={{ base: "flex-start", md: "flex-start" }}
         py={{ base: "36px", md: "68px", lg: "80px" }}
-        // Remove horizontal padding on base so card width controls side gutters
         px={{ base: 0, md: "22px", lg: 0 }}
         zIndex={1}
       >
@@ -120,17 +118,15 @@ const ProductStoryComp = () => {
           <PageLoader />
         ) : res?.listing ? (
           <Box
-            // Narrower than viewport on small screens so background is visible
             width={{ base: "90%", sm: "85%", md: "457px" }}
             maxW="457px"
             rounded="16px"
             bg="white"
             overflow="hidden"
           >
-            {/* Cover Image */}
             <Box height="169px" overflow="hidden">
               <Image
-                src={res?.listing?.product?.coverImage}
+                src={res?.listing?.images?.[0]?.image}
                 alt="produce cover img"
                 width={1000}
                 height={1000}
@@ -158,12 +154,10 @@ const ProductStoryComp = () => {
                     fontSize={{ base: "11px", md: "12px" }}
                   >
                     By{" "}
-                    <Link href="#">
-                      <Text as="span" color="agrify_green">
-                        @
-                        {`${res?.listing?.farmer?.firstname} ${res?.listing?.farmer?.lastname}`}
-                      </Text>
-                    </Link>
+                    <Text as="span" color="agrify_green">
+                      @
+                      {`${res?.listing?.farmer?.firstname} ${res?.listing?.farmer?.lastname}`}
+                    </Text>
                   </Text>
                 </Box>
 
