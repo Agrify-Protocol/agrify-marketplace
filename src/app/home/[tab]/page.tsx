@@ -83,7 +83,7 @@ const HomeTab = () => {
                   >
                     <ContainerWithDarkenedBg
                       bg={item?.images?.[0]?.url}
-                      opacity={0.7}
+                      opacity={0.2}
                     >
                       <Flex
                         flexDirection="column"

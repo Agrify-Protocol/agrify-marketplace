@@ -79,8 +79,7 @@ const Profile = () => {
       {/* Main Content */}
       <Box px={{ base: "20px", md: "32px", lg: "40px" }}>
         <SectionTabs
-          sections={["Organic Produce"]}
-          // sections={["Organic Produce", "Climate Arts"]}
+          sections={["Organic Produce", "Climate Arts"]}
           currentSection={tabId}
           type="my profile"
         />
@@ -144,7 +143,9 @@ const Profile = () => {
                       </Text>
                     </Td>
 
-                    <Td>{order?.listing?.batchSize?.toLocaleString()}</Td>
+                    <Td>
+                      {order?.listing?.batchSize?.toLocaleString() ?? "N/A"}
+                    </Td>
 
                     <Td>{readableDate(String(order?.createdAt))}</Td>
                   </Tr>
