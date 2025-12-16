@@ -36,8 +36,8 @@ const BoxWithClickableBtn = ({
   return (
     <Box
       position="relative"
-      width="590.8975219726562px"
-      height="608.4241333007812px"
+      width={{ base: "100%", md: "590.8975219726562px" }}
+      height={{ base: "320px", md: "608.4241333007812px" }}
       overflow="hidden"
       rounded="15.24px"
     >
@@ -77,28 +77,48 @@ const CarbonCreditPurchaseDetails = () => {
 
   return (
     <>
-      <Box mt="76px" mb="40px" mx="40px">
+      <Box
+        mt={{ base: "32px", md: "76px" }}
+        mb="40px"
+        mx={{ base: "16px", md: "40px" }}
+      >
         {loading ? (
           <PageLoader />
         ) : (
           <>
             <BackButton />
-            <Box bg="white" rounded="15.24px" p="60px" mt="24px">
-              <Flex gap="54px">
+
+            <Box
+              bg="white"
+              rounded="15.24px"
+              p={{ base: "24px", md: "60px" }}
+              mt="24px"
+            >
+              <Flex
+                gap={{ base: "24px", md: "54px" }}
+                flexDir={{ base: "column", md: "row" }}
+              >
                 <ContainerWithDarkenedBg
                   bg={data?.images[0]?.url}
                   opacity={0.2}
                 >
                   <Box
-                    width="533.3333129882812px"
-                    height="612.3809814453125px"
+                    width={{ base: "100%", md: "533.3333129882812px" }}
+                    height={{ base: "240px", md: "612.3809814453125px" }}
                   />
                 </ContainerWithDarkenedBg>
-                <Box maxW="647.512451171875px">
-                  <Text fontSize="32px" fontWeight={500} color="black">
+
+                <Box maxW={{ base: "100%", md: "647.512451171875px" }}>
+                  <Text
+                    fontSize={{ base: "24px", md: "32px" }}
+                    fontWeight={500}
+                    color="black"
+                  >
                     {data?.projectName}
                   </Text>
+
                   <Divider my="40px" />
+
                   <Box>
                     <Text color="black" fontSize="14px" mb="12px">
                       Project Description
@@ -107,10 +127,15 @@ const CarbonCreditPurchaseDetails = () => {
                       {data?.projectDescription}
                     </Text>
                   </Box>
+
                   <Divider my="40px" />
+
                   <Grid
-                    gridTemplateColumns="repeat(2, 1fr)"
-                    columnGap="100px"
+                    gridTemplateColumns={{
+                      base: "1fr",
+                      md: "repeat(2, 1fr)",
+                    }}
+                    columnGap={{ base: "0", md: "100px" }}
                     rowGap="20px"
                   >
                     {Object.entries({
@@ -131,29 +156,27 @@ const CarbonCreditPurchaseDetails = () => {
                         )}
                       </Box>
                     ))}
+
                     <Box>
-                      {Object.entries({
-                        "View XRP Ledger": data?.chainLink,
-                      }).map(([key, value]) => (
-                        <Link
-                          href={value}
-                          key={key}
-                          style={{ display: "flex", gap: "6px" }}
-                        >
-                          <Text color="black" textDecor="underline">
-                            {key}
-                          </Text>
-                          <Image src={link} alt="link icon" />
-                        </Link>
-                      ))}
+                      <Link
+                        href={data?.chainLink}
+                        style={{ display: "flex", gap: "6px" }}
+                      >
+                        <Text color="black" textDecor="underline">
+                          View XRP Ledger
+                        </Text>
+                        <Image src={link} alt="link icon" />
+                      </Link>
                     </Box>
                   </Grid>
                 </Box>
               </Flex>
+
               <Flex mt="50px" mb="76px" flexDir="column" gap="16px">
-                <Text fontWeight={450} fontSize={"18px"} color={"black"}>
+                <Text fontWeight={450} fontSize="18px" color="black">
                   Additional Resources
                 </Text>
+
                 {data?.additionalResources?.map(
                   (resource: Record<string, any>) => (
                     <Link
@@ -162,11 +185,11 @@ const CarbonCreditPurchaseDetails = () => {
                       target="_blank"
                     >
                       <Flex
-                        color={"black"}
+                        color="black"
                         alignItems="center"
                         justifyContent="space-between"
                         gap="6px"
-                        width="500px"
+                        width={{ base: "100%", md: "500px" }}
                       >
                         <Text as="span">{resource?.name}</Text>
                         <Image src={link} alt="link icon" />
@@ -175,29 +198,37 @@ const CarbonCreditPurchaseDetails = () => {
                   )
                 )}
               </Flex>
-              {/* <Flex justifyContent="space-between" gap="6px">
-            <BoxWithClickableBtn
-              btnTitle="View Project Reports"
-              btnFn={() => null}
-            >
-              <Box bg="gray" width="100%" height="100%" />
-            </BoxWithClickableBtn>
-            <BoxWithClickableBtn
-              btnTitle="View Project Photos"
-              btnFn={() => setIsOpen(true)}
-            >
-              <Box bg="gray" width="100%" height="100%" />
-            </BoxWithClickableBtn>
-          </Flex> */}
+              {/*
+<Flex
+  justifyContent="space-between"
+  gap={{ base: "16px", md: "6px" }}
+  flexDir={{ base: "column", md: "row" }}
+>
+  <BoxWithClickableBtn
+    btnTitle="View Project Reports"
+    btnFn={() => null}
+  >
+    <Box bg="gray" width="100%" height="100%" />
+  </BoxWithClickableBtn>
+
+  <BoxWithClickableBtn
+    btnTitle="View Project Photos"
+    btnFn={() => setIsOpen(true)}
+  >
+    <Box bg="gray" width="100%" height="100%" />
+  </BoxWithClickableBtn>
+</Flex>
+*/}
             </Box>
           </>
         )}
       </Box>
+
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         isCentered
-        size="3xl"
+        size={{ base: "full", md: "3xl" }}
       >
         <ModalOverlay />
         <ModalContent bgColor="transparent" shadow="none">
