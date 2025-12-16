@@ -87,7 +87,7 @@ const CarbonCreditPurchaseDetails = () => {
               <Flex gap="54px">
                 <ContainerWithDarkenedBg
                   bg={data?.images[0]?.url}
-                  opacity={0.7}
+                  opacity={0.2}
                 >
                   <Box
                     width="533.3333129882812px"
