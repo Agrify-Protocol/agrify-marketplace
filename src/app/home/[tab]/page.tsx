@@ -42,7 +42,7 @@ const HomeTab = () => {
         fontSize={{ base: "24px", md: "28px", lg: "32px" }}
         mb={{ base: "24px", md: "32px", lg: "40px" }}
       >
-        Buy {tab === "organic-produce" ? "Organic Produce" : "Climate Arts"}
+        Buy {tab === "organic-produce" ? "Organic Produce" : "Climate Art"}
       </Text>
 
       <Box>
@@ -51,12 +51,12 @@ const HomeTab = () => {
           mb={{ base: "20px", md: "28px", lg: "32px" }}
           fontSize={{ base: "16px", md: "18px" }}
         >
-          Trending Produce
+          Trending {tab === "organic-produce" ? "Produce" : "Art"}
         </Text>
 
         {tab === "organic-produce" && <CategoryContainer search="" />}
 
-        {tab === "climate-arts" &&
+        {tab === "climate-art" &&
           (isLoading ? (
             <PageLoader />
           ) : (
@@ -78,7 +78,7 @@ const HomeTab = () => {
                 {produce?.map((item: Record<string, any>) => (
                   <Link
                     key={item?.id}
-                    href={`/home/climate-arts/${item?.id}`}
+                    href={`/home/climate-art/${item?.id}`}
                     style={{ width: "100%" }}
                   >
                     <ContainerWithDarkenedBg

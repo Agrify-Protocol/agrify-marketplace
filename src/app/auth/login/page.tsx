@@ -66,7 +66,7 @@ const Login = () => {
             router.push("/home/sourcing-tool/success");
           }
         } else if (redirect) {
-          router.push(`/home/climate-arts/${id}`);
+          router.push(`/home/climate-art/${id}`);
         } else {
           router.push("/home");
         }

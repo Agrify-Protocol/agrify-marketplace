@@ -31,7 +31,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
           if (response) setData(response);
         });
       }
-      if (tab === "climate arts") {
+      if (tab === "Climate Art") {
         getCarbonCreditById(toast, id as string).then((response) => {
           if (response) setData(response);
         });
@@ -44,7 +44,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   const produceString = useMemo(() => {
     return data?.listing
       ? `${data?.listing?.batchSize} kg of ${formatSnakeCaseTitle(
-          data?.listing?.product?.name
+          data?.listing?.product?.name,
         )}`
       : "climate art";
   }, [data]);
@@ -141,7 +141,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                 mb={{ base: "20px", lg: "32px" }}
               >
                 {formatSnakeCaseTitle(
-                  data?.listing?.product?.name ?? data?.data?.projectName
+                  data?.listing?.product?.name ?? data?.data?.projectName,
                 )}
               </Text>
 
@@ -151,7 +151,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                     type === "success"
                       ? data?.orderId
                         ? `/profile/organic-produce/produce-details/${data?.orderId}`
-                        : `/profile/climate-arts/${data?.data?.id}`
+                        : `/profile/climate-art/${data?.data?.id}`
                       : "/home"
                   }
                 >

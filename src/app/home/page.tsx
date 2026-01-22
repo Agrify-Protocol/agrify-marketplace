@@ -14,20 +14,20 @@ export default function Home() {
   const { user } = useAuthContext();
   const actions = [
     {
-      id: "climate-arts",
-      title: "Buy Climate Arts",
+      id: "climate-art",
+      title: "Buy Climate Art",
       icon: coin,
       bg: carbonCreditbg,
       description:
-        "Offset your emissions with tokenised climates art representing one tonne of carbon captured in soil",
+        "Offset your emissions with tokenised climate art representing tonnes of carbon captured from regenertative agriculture.",
     },
     {
       id: "organic-produce",
-      title: "Buy Organic Produce",
+      title: "Buy Traceable Produce",
       icon: corn,
       bg: organicProducebg,
       description:
-        "Buy sustainably farmed produce that from heathy soils that promote biodiversity and climate change resilience ",
+        "Buy sustainbly grown produce that can be traced right to the farmer and the farming practices used while growing.",
     },
   ];
 
@@ -35,8 +35,12 @@ export default function Home() {
     <Box
       px={{ base: "20px", sm: "25px", md: "35px", lg: "2.625rem" }}
       py={{ base: "32px", sm: "39px", md: "50px", lg: "6.963rem" }}
+      height="85dvh"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
     >
-      <Box mb="70px">
+      {/* <Box mb="70px">
         <Text fontWeight={500} fontSize="32px" color="black" mb={4}>
           Hello{user && `, ${user.firstname}`}
         </Text>
@@ -45,7 +49,7 @@ export default function Home() {
           offsetting your emissions through green coins or insetting by
           purchasing sustainably grown produce{" "}
         </Text>
-      </Box>
+      </Box> */}
       <Flex gap="50px" flexDir={{ base: "column", md: "row" }} align="stretch">
         {actions.map((action) => (
           <Box
