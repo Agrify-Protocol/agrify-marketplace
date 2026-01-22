@@ -69,7 +69,7 @@ const CarbonCreditPurchase = () => {
         fee: 0,
         VAT: 1.46,
       },
-      toast
+      toast,
     ).then((res) => {
       if (res) {
         toast({
@@ -89,7 +89,7 @@ const CarbonCreditPurchase = () => {
 
   useEffect(() => {
     if (!details) {
-      router.push("/home/climate-arts");
+      router.push("/home/climate-art");
     }
 
     if (user) {
@@ -102,7 +102,7 @@ const CarbonCreditPurchase = () => {
           duration: 5000,
           isClosable: true,
         });
-        router.push("/home/climate-arts");
+        router.push("/home/climate-art");
       }
     }
   }, [details, router]);
@@ -138,7 +138,7 @@ const CarbonCreditPurchase = () => {
       {Object.entries({ "Payment fee": "$0", VAT: "$1.46" }).map(
         ([label, value]) => (
           <SectionItem key={label} label={label} value={value} />
-        )
+        ),
       )}
 
       <Flex

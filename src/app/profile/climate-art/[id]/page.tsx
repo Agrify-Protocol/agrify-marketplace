@@ -195,7 +195,7 @@ const CarbonCreditPurchaseDetails = () => {
                         <Image src={link} alt="link icon" />
                       </Flex>
                     </Link>
-                  )
+                  ),
                 )}
               </Flex>
               {/*

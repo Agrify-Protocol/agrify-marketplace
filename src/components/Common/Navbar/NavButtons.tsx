@@ -17,7 +17,7 @@ const NavButtons = ({ route, pathName, user, ...rest }: NavButtonsProps) => {
       link: "/home",
       base: ["/home", "/farm", "/payment"],
       children: [
-        { title: "Climate Arts", link: "/home/climate-arts" },
+        { title: "Climate Art", link: "/home/climate-art" },
         { title: "Organic Produce", link: "/home/organic-produce" },
       ],
     },
@@ -31,8 +31,8 @@ const NavButtons = ({ route, pathName, user, ...rest }: NavButtonsProps) => {
   const getMenuTitle = () => {
     if (pathName.includes("/home")) {
       switch (true) {
-        case pathName.includes("climate-arts"):
-          return "Climate Arts";
+        case pathName.includes("climate-art"):
+          return "Climate Art";
         case pathName.includes("organic-produce") ||
           pathName.includes("category"):
           return "Organic Produce";
@@ -109,7 +109,7 @@ const NavButtons = ({ route, pathName, user, ...rest }: NavButtonsProps) => {
           >
             {item.title}
           </Box>
-        )
+        ),
       )}
     </Box>
   );

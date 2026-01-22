@@ -26,6 +26,8 @@ const Profile = () => {
   const [carbonCreditList, setCarbonCreditList] = useState<any>([]);
   const toast = useToast();
 
+  console.log("tabId:", tabId);
+
   useEffect(() => {
     if (user) {
       setIsLoading(true);
@@ -79,7 +81,7 @@ const Profile = () => {
       {/* Main Content */}
       <Box px={{ base: "20px", md: "32px", lg: "40px" }}>
         <SectionTabs
-          sections={["Organic Produce", "Climate Arts"]}
+          sections={["Organic Produce", "Climate Art"]}
           currentSection={tabId}
           type="my profile"
         />
@@ -88,8 +90,8 @@ const Profile = () => {
           <PageLoader />
         ) : (
           <>
-            {/* Climate Arts */}
-            {tabId === "climate arts" ? (
+            {/* Climate Art */}
+            {tabId === "climate art" ? (
               carbonCreditList?.length > 0 ? (
                 <Table thead={["Name", "Type", "Amount", "Date"]}>
                   <Tr
@@ -97,7 +99,7 @@ const Profile = () => {
                     _hover={{ bg: "#F5F5F566" }}
                     onClick={() =>
                       router.push(
-                        `/profile/climate-arts/6933a5483aceb8bc3d8eaf31`
+                        `/profile/climate-art/6933a5483aceb8bc3d8eaf31`,
                       )
                     }
                   >
@@ -109,7 +111,7 @@ const Profile = () => {
                 </Table>
               ) : (
                 <Box width="100%" textAlign="center" mt="64px">
-                  <Text>No climate arts orders found.</Text>
+                  <Text>No art orders found.</Text>
                 </Box>
               )
             ) : /* Organic Produce */ organicProduceList?.length > 0 ? (
@@ -121,7 +123,7 @@ const Profile = () => {
                     key={`${order?.orderId}-${idx}`}
                     onClick={() =>
                       router.push(
-                        `/profile/organic-produce/produce-details/${order?.orderId}`
+                        `/profile/organic-produce/produce-details/${order?.orderId}`,
                       )
                     }
                   >

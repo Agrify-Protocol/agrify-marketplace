@@ -122,12 +122,12 @@ const SingleCarbonCredit = () => {
                     setChosenProject(details);
                     localStorage.setItem(
                       "selected_climate_art",
-                      JSON.stringify(details)
+                      JSON.stringify(details),
                     );
                     router.push(
                       isLoggedIn
-                        ? `/home/climate-arts/${details?.id}/purchase`
-                        : `/auth/login?redirect=climate-arts&id=${details?.id}`
+                        ? `/home/climate-art/${details?.id}/purchase`
+                        : `/auth/login?redirect=climate-art&id=${details?.id}`,
                     );
                   }}
                   mb={user?.kycStatus !== "approved" ? 2 : 0}
@@ -293,7 +293,7 @@ const SingleCarbonCredit = () => {
                             />
                           </Text>
                         </Link>
-                      )
+                      ),
                     )}
                   </Flex>
                 </Box>
