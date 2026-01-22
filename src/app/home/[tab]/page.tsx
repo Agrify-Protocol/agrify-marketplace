@@ -51,7 +51,7 @@ const HomeTab = () => {
           mb={{ base: "20px", md: "28px", lg: "32px" }}
           fontSize={{ base: "16px", md: "18px" }}
         >
-          Trending {tab === "organic-produce" ? "Organic Produce" : "Art"}
+          Trending {tab === "organic-produce" ? "Produce" : "Art"}
         </Text>
 
         {tab === "organic-produce" && <CategoryContainer search="" />}
