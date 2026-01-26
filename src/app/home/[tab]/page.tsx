@@ -42,7 +42,7 @@ const HomeTab = () => {
         fontSize={{ base: "24px", md: "28px", lg: "32px" }}
         mb={{ base: "24px", md: "32px", lg: "40px" }}
       >
-        Buy {tab === "organic-produce" ? "Organic Produce" : "Climate Art"}
+        Buy {tab === "traceable-produce" ? "Traceable Produce" : "Climate Art"}
       </Text>
 
       <Box>
@@ -52,11 +52,11 @@ const HomeTab = () => {
           alignContent="center"
         >
           <Text color="black" fontSize={{ base: "16px", md: "18px" }}>
-            Trending {tab === "organic-produce" ? "Produce" : "Art"}
+            Trending {tab === "traceable-produce" ? "Produce" : "Art"}
           </Text>
           <Link
             href={
-              tab === "organic-produce"
+              tab === "traceable-produce"
                 ? "https://farmer.agrifyafrica.xyz/"
                 : "https://agrify-developer-tools.hostless.site/"
             }
@@ -76,12 +76,12 @@ const HomeTab = () => {
                 borderColor: "gray.400",
               }}
             >
-              List {tab === "organic-produce" ? "produce" : "artwork"}
+              List {tab === "traceable-produce" ? "produce" : "artwork"}
             </Button>
           </Link>
         </Flex>
 
-        {tab === "organic-produce" && <CategoryContainer search="" />}
+        {tab === "traceable-produce" && <CategoryContainer search="" />}
 
         {tab === "climate-art" &&
           (isLoading ? (

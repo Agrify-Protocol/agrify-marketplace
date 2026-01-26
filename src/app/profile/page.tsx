@@ -81,7 +81,7 @@ const Profile = () => {
       {/* Main Content */}
       <Box px={{ base: "20px", md: "32px", lg: "40px" }}>
         <SectionTabs
-          sections={["Organic Produce", "Climate Art"]}
+          sections={["Traceable Produce", "Climate Art"]}
           currentSection={tabId}
           type="my profile"
         />
@@ -114,7 +114,7 @@ const Profile = () => {
                   <Text>No art orders found.</Text>
                 </Box>
               )
-            ) : /* Organic Produce */ organicProduceList?.length > 0 ? (
+            ) : /* Traceable Produce */ organicProduceList?.length > 0 ? (
               <Table thead={["Name", "Status", "Size", "Date"]}>
                 {organicProduceList?.map((order: any, idx: number) => (
                   <Tr
@@ -123,7 +123,7 @@ const Profile = () => {
                     key={`${order?.orderId}-${idx}`}
                     onClick={() =>
                       router.push(
-                        `/profile/organic-produce/produce-details/${order?.orderId}`,
+                        `/profile/traceable-produce/produce-details/${order?.orderId}`,
                       )
                     }
                   >
@@ -155,7 +155,7 @@ const Profile = () => {
               </Table>
             ) : (
               <Box width="100%" textAlign="center" mt="64px">
-                <Text>No organic produce orders found.</Text>
+                <Text>No traceable produce orders found.</Text>
               </Box>
             )}
           </>

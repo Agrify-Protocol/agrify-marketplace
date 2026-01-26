@@ -22,7 +22,7 @@ export default function Home() {
         "Offset your emissions with tokenised climate art representing tonnes of carbon captured from regenertative agriculture.",
     },
     {
-      id: "organic-produce",
+      id: "traceable-produce",
       title: "Buy Traceable Produce",
       icon: corn,
       bg: organicProducebg,

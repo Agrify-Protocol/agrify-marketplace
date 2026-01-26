@@ -31,7 +31,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     "/auth/login",
     "/product-story",
     "/home",
-    // "/profile/organic-produce/produce-details/track",
+    // "/profile/traceable-produce/produce-details/track",
   ];
 
   const isUnauthenticated = useMemo(() => {
@@ -40,7 +40,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         pathname === route ||
         pathname.startsWith(route) ||
         pathname.includes(route) ||
-        pathname === "/"
+        pathname === "/",
     );
   }, [pathname]);
 
@@ -119,7 +119,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     const activityEvents = ["mousemove", "keydown", "scroll", "click"];
 
     activityEvents.forEach((event) =>
-      window.addEventListener(event, resetInactivityTimer)
+      window.addEventListener(event, resetInactivityTimer),
     );
 
     resetInactivityTimer();
@@ -127,7 +127,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     return () => {
       clearTimeout(inactivityTimeout);
       activityEvents.forEach((event) =>
-        window.removeEventListener(event, resetInactivityTimer)
+        window.removeEventListener(event, resetInactivityTimer),
       );
     };
   }, []);
