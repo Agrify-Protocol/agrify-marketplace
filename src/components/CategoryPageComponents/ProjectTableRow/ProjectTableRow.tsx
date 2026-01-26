@@ -36,7 +36,7 @@ const ProjectTableRow = ({
       _hover={{ borderColor: "#0CC14C" }}
       onClick={() =>
         router.push(
-          `/home/organic-produce/category/${type}/${project.projectID}?id=overview`
+          `/home/traceable-produce/category/${type}/${project.projectID}?id=overview`,
         )
       }
     >

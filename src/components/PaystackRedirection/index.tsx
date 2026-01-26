@@ -26,7 +26,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   useEffect(() => {
     if (user) {
       setIsLoading(true);
-      if (tab === "organic produce") {
+      if (tab === "traceable produce") {
         getProduceDetails(id as string, toast).then((response) => {
           if (response) setData(response);
         });
@@ -150,7 +150,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
                   href={
                     type === "success"
                       ? data?.orderId
-                        ? `/profile/organic-produce/produce-details/${data?.orderId}`
+                        ? `/profile/traceable-produce/produce-details/${data?.orderId}`
                         : `/profile/climate-art/${data?.data?.id}`
                       : "/home"
                   }

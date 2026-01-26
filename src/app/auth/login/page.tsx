@@ -56,7 +56,7 @@ const Login = () => {
         toast(successToast);
 
         if (category && id) {
-          router.push(`/home/organic-produce/category/${category}/${id}`);
+          router.push(`/home/traceable-produce/category/${category}/${id}`);
         } else if (sourcing_tool) {
           const form = localStorage.getItem("sourcing_tool_form");
           const res = await createProductRequest(JSON.parse(form!), toast);

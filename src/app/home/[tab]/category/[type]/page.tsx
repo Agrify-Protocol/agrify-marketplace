@@ -62,7 +62,7 @@ const CategoryPage = () => {
             {categoryData?.activeProducts?.map((item: any) => (
               <Link
                 key={item?._id}
-                href={`/home/organic-produce/category/${type}/${item?._id}`}
+                href={`/home/traceable-produce/category/${type}/${item?._id}`}
                 style={{ textDecoration: "none" }}
               >
                 <Box display="flex" justifyContent="center">

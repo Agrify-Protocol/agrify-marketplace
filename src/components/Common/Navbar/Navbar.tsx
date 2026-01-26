@@ -1,9 +1,9 @@
 "use client";
 
 import { Avatar, Box, Flex } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import logo from "../../../assets/agrify_logo.svg";
-import profile_pic from "../../../assets/agrify_pfp.svg";
+// import profile_pic from "../../../assets/agrify_pfp.svg";
 import unautheticated_pic from "../../../assets/profile.svg";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
@@ -48,7 +48,7 @@ const Navbar = () => {
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-        <Link href={"/home"}>
+        <Link href={"https://www.agrifyafrica.xyz/"} target="_blank">
           <Image src={logo} alt="" />
         </Link>
         <NavButtons
@@ -57,40 +57,40 @@ const Navbar = () => {
           pathName={pathName}
           display={{ base: isLoggedIn ? "none" : "block", lg: "block" }}
         />
-        {isLoggedIn ? (
-          <>
-            <Flex
-              gap={"0.5rem"}
+        <Flex
+          gap={"0.5rem"}
+          alignItems={"center"}
+          cursor={"pointer"}
+          className="profile_modal"
+          onClick={() => {
+            setShowModal(!showModal);
+          }}
+        >
+          {isLoggedIn ? (
+            <Avatar name={`${user?.firstname} ${user?.lastname}`} size="sm" />
+          ) : (
+            <Box
+              width="40px"
+              height="40px"
+              bg="gray_3"
+              justifySelf="start"
+              rounded="100%"
+              display="flex"
               alignItems={"center"}
-              cursor={"pointer"}
-              className="profile_modal"
-              onClick={() => {
-                setShowModal(!showModal);
-              }}
+              justifyContent="center"
+              flexShrink={0}
+              flexGrow={0}
             >
-              <Avatar name={`${user?.firstname} ${user?.lastname}`} size="sm" />
-              <ChevronDown className="profile_modal" />
-            </Flex>
-            {showModal && <ProfileModal setShowModal={setShowModal} />}
-          </>
-        ) : (
-          <Box
-            width="40px"
-            height="40px"
-            bg="gray_3"
-            justifySelf="start"
-            rounded="100%"
-            display="flex"
-            alignItems={"center"}
-            justifyContent="center"
-            flexShrink={0}
-            flexGrow={0}
-          >
-            <Image
-              src={unautheticated_pic}
-              alt="unauthenticated user profile picture"
-            />
-          </Box>
+              <Image
+                src={unautheticated_pic}
+                alt="unauthenticated user profile picture"
+              />
+            </Box>
+          )}
+          <ChevronDown className="profile_modal" />
+        </Flex>
+        {showModal && (
+          <ProfileModal setShowModal={setShowModal} isLoggedIn={isLoggedIn} />
         )}
       </Box>
       <NavButtons

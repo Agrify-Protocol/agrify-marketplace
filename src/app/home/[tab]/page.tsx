@@ -2,7 +2,7 @@
 
 import ContainerWithDarkenedBg from "@/components/ContainerWithDarkenedBg";
 import CategoryContainer from "@/components/HomePageComponents/CategoryContainer/CategoryContainer";
-import { Box, Flex, Grid, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Text, useToast } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -42,19 +42,46 @@ const HomeTab = () => {
         fontSize={{ base: "24px", md: "28px", lg: "32px" }}
         mb={{ base: "24px", md: "32px", lg: "40px" }}
       >
-        Buy {tab === "organic-produce" ? "Organic Produce" : "Climate Art"}
+        Buy {tab === "traceable-produce" ? "Traceable Produce" : "Climate Art"}
       </Text>
 
       <Box>
-        <Text
-          color="black"
+        <Flex
           mb={{ base: "20px", md: "28px", lg: "32px" }}
-          fontSize={{ base: "16px", md: "18px" }}
+          justify="space-between"
+          alignItems="center"
         >
-          Trending {tab === "organic-produce" ? "Produce" : "Art"}
-        </Text>
+          <Text color="black" fontSize={{ base: "16px", md: "18px" }}>
+            Trending {tab === "traceable-produce" ? "Produce" : "Art"}
+          </Text>
+          <Link
+            href={
+              tab === "traceable-produce"
+                ? "https://farmer.agrifyafrica.xyz/"
+                : "https://agrify-developer-tools.hostless.site/"
+            }
+            target="_blank"
+          >
+            <Button
+              variant="outline"
+              borderColor="gray.300"
+              color="gray.700"
+              fontSize={{ base: "14px", md: "16px" }}
+              fontWeight={400}
+              px={{ base: "1.5rem", md: "2.5rem" }}
+              py={{ base: "12px", md: "14px" }}
+              borderRadius="2rem"
+              _hover={{
+                bg: "gray.50",
+                borderColor: "gray.400",
+              }}
+            >
+              List {tab === "traceable-produce" ? "produce" : "artwork"}
+            </Button>
+          </Link>
+        </Flex>
 
-        {tab === "organic-produce" && <CategoryContainer search="" />}
+        {tab === "traceable-produce" && <CategoryContainer search="" />}
 
         {tab === "climate-art" &&
           (isLoading ? (
