@@ -2,7 +2,7 @@
 
 import ContainerWithDarkenedBg from "@/components/ContainerWithDarkenedBg";
 import CategoryContainer from "@/components/HomePageComponents/CategoryContainer/CategoryContainer";
-import { Box, Flex, Grid, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Text, useToast } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -46,13 +46,40 @@ const HomeTab = () => {
       </Text>
 
       <Box>
-        <Text
-          color="black"
+        <Flex
           mb={{ base: "20px", md: "28px", lg: "32px" }}
-          fontSize={{ base: "16px", md: "18px" }}
+          justify="space-between"
+          alignContent="center"
         >
-          Trending {tab === "organic-produce" ? "Produce" : "Art"}
-        </Text>
+          <Text color="black" fontSize={{ base: "16px", md: "18px" }}>
+            Trending {tab === "organic-produce" ? "Produce" : "Art"}
+          </Text>
+          <Link
+            href={
+              tab === "organic-produce"
+                ? "https://farmer.agrifyafrica.xyz/"
+                : "https://agrify-developer-tools.hostless.site/"
+            }
+            target="_blank"
+          >
+            <Button
+              variant="outline"
+              borderColor="gray.300"
+              color="gray.700"
+              fontSize={{ base: "14px", md: "16px" }}
+              fontWeight={400}
+              px={{ base: "1.5rem", md: "2.5rem" }}
+              py={{ base: "12px", md: "14px" }}
+              borderRadius="2rem"
+              _hover={{
+                bg: "gray.50",
+                borderColor: "gray.400",
+              }}
+            >
+              List {tab === "organic-produce" ? "produce" : "artwork"}
+            </Button>
+          </Link>
+        </Flex>
 
         {tab === "organic-produce" && <CategoryContainer search="" />}
 
