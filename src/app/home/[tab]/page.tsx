@@ -49,7 +49,7 @@ const HomeTab = () => {
         <Flex
           mb={{ base: "20px", md: "28px", lg: "32px" }}
           justify="space-between"
-          alignContent="center"
+          alignItems="center"
         >
           <Text color="black" fontSize={{ base: "16px", md: "18px" }}>
             Trending {tab === "traceable-produce" ? "Produce" : "Art"}
