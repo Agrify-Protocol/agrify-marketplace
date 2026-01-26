@@ -11,7 +11,7 @@ import { resetAuthCookies } from "@/app/lib/actions";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 
 const ProfileModal = ({ setShowModal, isLoggedIn }: ProfileModalProps) => {
-  const { setUser, user } = useAuthContext();
+  const { setUser, user, setAccessToken } = useAuthContext();
   const router = useRouter();
   const modalRef = useRef(null);
 
@@ -22,6 +22,7 @@ const ProfileModal = ({ setShowModal, isLoggedIn }: ProfileModalProps) => {
   const handleSignout = () => {
     resetAuthCookies().then(() => {
       setUser(null);
+      setAccessToken("");
       localStorage.removeItem("access_token");
       closeModal();
       router.push("/auth/login");
