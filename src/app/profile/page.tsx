@@ -26,8 +26,6 @@ const Profile = () => {
   const [carbonCreditList, setCarbonCreditList] = useState<any>([]);
   const toast = useToast();
 
-  console.log("tabId:", tabId);
-
   useEffect(() => {
     if (user) {
       setIsLoading(true);

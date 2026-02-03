@@ -27,7 +27,7 @@ export const createReport = async (
   data: {
     reportName: string;
   },
-  toast: any
+  toast: any,
 ) => {
   try {
     const request = await profileInstance.post("/reports/create", data);
@@ -55,6 +55,18 @@ export const getProduceDetails = async (id: string | string[], toast: any) => {
   }
 };
 
+export const getCarboncreditById = async (
+  id: string | string[],
+  toast: any,
+) => {
+  try {
+    const request = await defaultInstance.get(`/carbon-credits/${id}`);
+    return request.data;
+  } catch (error) {
+    toastFn(toast, error);
+  }
+};
+
 export const completeOrder = async (id: string, toast: any) => {
   try {
     const request = await xrpInstance.post(`/orders/${id}/fulfil`);
@@ -66,7 +78,7 @@ export const completeOrder = async (id: string, toast: any) => {
 
 export const createOrder = async (
   data: Record<string, string | number>,
-  toast: any
+  toast: any,
 ) => {
   try {
     const request = await xrpInstance.post("/orders", data);
@@ -80,7 +92,7 @@ export const createOrder = async (
 export const getCarbonCreditPurchaseHistory = async (toast: any) => {
   try {
     const request = await defaultInstance.get(
-      `/carbon-credits/purchases/history`
+      `/carbon-credits/purchases/history`,
     );
     return request.data;
   } catch (error) {
@@ -91,12 +103,12 @@ export const getCarbonCreditPurchaseHistory = async (toast: any) => {
 export const purchaseCarbonCredits = async (
   id: string,
   data: Record<string, any>,
-  toast: any
+  toast: any,
 ) => {
   try {
     const request = await defaultInstance.post(
       `carbon-credits/${id}/purchase`,
-      data
+      data,
     );
     return request.data;
   } catch (error) {
