@@ -1,4 +1,3 @@
 export interface PaystackRedirectionProps {
-    type: "success" | "error";
-  }
-  
+  type: "success" | "error" | "pending";
+}
