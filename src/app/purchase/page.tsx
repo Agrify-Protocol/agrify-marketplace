@@ -98,21 +98,26 @@ const Purchase = () => {
         mt={{ base: "2rem", lg: "3rem" }}
         direction={{ base: "column", sm: "row" }}
       >
-        <Button
-          border="2px solid #0CC14C"
-          bg="transparent"
-          color="#0CC14C"
-          _hover={{ bg: "#e7fdef" }}
-          // width={{ base: "100%", sm: "auto" }}
-          onClick={() => router.push("/payment?method=card")}
-        >
-          Pay with Card
-        </Button>
+        <Box flex={1}>
+          <Button
+            width="100%"
+            border="2px solid"
+            borderColor="gray.300"
+            bg="gray.50"
+            color="gray.400"
+            cursor="not-allowed"
+            _hover={{ bg: "gray.50" }}
+            isDisabled
+          >
+            Pay with Card
+          </Button>
 
-        <Button
-          // width={{ base: "100%", sm: "auto" }}
-          onClick={() => router.push("/payment?method=crypto")}
-        >
+          <Text mt="4px" fontSize="xs" color="gray.400" textAlign="center">
+            Coming soon
+          </Text>
+        </Box>
+
+        <Button flex={1} onClick={() => router.push("/payment?method=crypto")}>
           Pay with Crypto
         </Button>
       </Flex>
