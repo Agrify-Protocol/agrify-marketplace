@@ -6,7 +6,7 @@ import PurchaseComp from "@/components/PurchasePageComponents";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { purchaseCarbonCredits } from "@/services/api/profile";
-import { Text, Flex, Divider, useToast } from "@chakra-ui/react";
+import { Text, Flex, Divider, useToast, Box } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -146,21 +146,27 @@ const CarbonCreditPurchase = () => {
         mt={{ base: "2rem", lg: "3rem" }}
         direction={{ base: "column", sm: "row" }}
       >
-        <Button
-          border="2px solid #0CC14C"
-          bg="transparent"
-          color="#0CC14C"
-          _hover={{ bg: "#e7fdef" }}
-          // width={{ base: "100%", lg: "auto" }}
-          isLoading={isLoading === "card"}
-          isDisabled={isLoading !== null}
-          onClick={() => handlePurchaseCarbonCredit("card")}
-        >
-          Pay with Card
-        </Button>
+        <Box flex={1}>
+          <Button
+            width="100%"
+            border="2px solid"
+            borderColor="gray.300"
+            bg="gray.50"
+            color="gray.400"
+            cursor="not-allowed"
+            _hover={{ bg: "gray.50" }}
+            isDisabled
+          >
+            Pay with Card
+          </Button>
+
+          <Text mt="4px" fontSize="xs" color="gray.400" textAlign="center">
+            Coming soon
+          </Text>
+        </Box>
 
         <Button
-          // width={{ base: "100%", lg: "auto" }}
+          flex={1}
           isLoading={isLoading === "crypto"}
           isDisabled={isLoading !== null}
           onClick={() => handlePurchaseCarbonCredit("crypto")}
