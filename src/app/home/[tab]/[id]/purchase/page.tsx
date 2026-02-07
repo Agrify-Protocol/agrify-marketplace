@@ -2,45 +2,19 @@
 
 import Button from "@/components/Common/Button";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
+import SectionItem from "@/components/PaymentPageComponents/OrderSummary/SectionItem";
 import PurchaseComp from "@/components/PurchasePageComponents";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
-import { purchaseCarbonCredits } from "@/services/api/profile";
+import {
+  convertUsdToXrpRate,
+  purchaseCarbonCredits,
+} from "@/services/api/profile";
 import { Text, Flex, Divider, useToast, Box } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-const SectionItem = ({
-  label,
-  value,
-}: {
-  label: string;
-  value: string | number | React.ReactNode;
-}) => {
-  return (
-    <Flex
-      key={label}
-      alignItems="center"
-      justifyContent="space-between"
-      mb={{ base: "0.75rem", lg: "1rem" }}
-      flexWrap="wrap"
-      gap={{ base: "4px", sm: 0 }}
-    >
-      <Text fontSize={{ base: "14px", lg: "1.125rem" }}>{label}</Text>
-      {["string", "number"].includes(typeof value) ? (
-        <Text
-          fontSize={{ base: "14px", lg: "1.125rem" }}
-          fontWeight={450}
-          color="rgba(1, 19, 8, 0.7)"
-        >
-          {value}
-        </Text>
-      ) : (
-        value
-      )}
-    </Flex>
-  );
-};
 
 const CarbonCreditPurchase = () => {
   const { chosenProject } = useGlobalContext();
@@ -48,11 +22,15 @@ const CarbonCreditPurchase = () => {
   const { user } = useAuthContext();
   const toast = useToast();
   const router = useRouter();
+  const [totalInXrp, setTotalinXrp] = useState(null);
+  const [storedDetails, setStoredDetails] = useState<string | null>(null);
 
-  const storedDetails =
-    typeof window !== "undefined"
-      ? localStorage.getItem("selected_climate_art")
-      : null;
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("selected_climate_art");
+      setStoredDetails(stored);
+    }
+  }, []);
 
   const details =
     chosenProject || (storedDetails ? JSON.parse(storedDetails) : null);
@@ -90,22 +68,32 @@ const CarbonCreditPurchase = () => {
   useEffect(() => {
     if (!details) {
       router.push("/home/climate-art");
+      return;
     }
 
-    if (user) {
-      if (user.kycStatus !== "approved") {
-        toast({
-          title: "KYC Verification Required",
-          description: "Please complete KYC verification to proceed.",
-          status: "warning",
-          position: "top-right",
-          duration: 5000,
-          isClosable: true,
-        });
-        router.push("/home/climate-art");
-      }
+    if (!user) {
+      return;
     }
-  }, [details, router]);
+
+    if (user.kycStatus !== "approved") {
+      toast({
+        title: "KYC Verification Required",
+        description: "Please complete KYC verification to proceed.",
+        status: "warning",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
+      router.push("/home/climate-art");
+    } else {
+      const pricePerTonne = details.pricePerTonne ?? 0;
+      convertUsdToXrpRate(pricePerTonne + 1.46, toast).then((res) => {
+        if (res) {
+          setTotalinXrp(res?.price);
+        }
+      });
+    }
+  }, [details, user, router, toast]);
 
   return !details ? (
     <PageLoader />
@@ -121,17 +109,11 @@ const CarbonCreditPurchase = () => {
       </Text>
 
       {Object.entries({
-        Price: `$${details?.pricePerTonne?.toLocaleString()}`,
+        Price: `${(details?.pricePerTonne ?? 0).toLocaleString()}`,
+        "Tonnes to be retired": `${(details?.availableTonnes ?? 0).toLocaleString()} tCO₂e`,
       }).map(([label, value]) => (
         <SectionItem key={label} label={label} value={value} />
       ))}
-
-      <Divider borderBottom="1px dashed" borderColor="gray_2" my="24px" />
-
-      <SectionItem
-        label="Tonnes to be retired"
-        value={`${details?.availableTonnes?.toLocaleString()} tCO₂e`}
-      />
 
       <Divider borderBottom="1px dashed" borderColor="gray_2" my="24px" />
 
@@ -140,6 +122,29 @@ const CarbonCreditPurchase = () => {
           <SectionItem key={label} label={label} value={value} />
         ),
       )}
+
+      <Divider borderBottom="1px dashed" borderColor="gray_2" my="24px" />
+
+      <SectionItem
+        label="Total (USD)"
+        value={`${((details?.pricePerTonne ?? 0) + 1.46).toLocaleString()}`}
+      />
+
+      <SectionItem
+        label="Equivalent in XRP"
+        value={
+          totalInXrp ? (
+            [totalInXrp as number]?.toLocaleString()
+          ) : (
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            >
+              <LoaderCircle size={20} color="#0CC14C" />
+            </motion.div>
+          )
+        }
+      />
 
       <Flex
         gap={{ base: "0.75rem", lg: "1rem" }}
@@ -165,14 +170,15 @@ const CarbonCreditPurchase = () => {
           </Text>
         </Box>
 
-        <Button
-          flex={1}
-          isLoading={isLoading === "crypto"}
-          isDisabled={isLoading !== null}
-          onClick={() => handlePurchaseCarbonCredit("crypto")}
-        >
-          Pay with Crypto
-        </Button>
+        <Box flex={1}>
+          <Button
+            isLoading={isLoading === "crypto"}
+            isDisabled={isLoading !== null || !totalInXrp}
+            onClick={() => handlePurchaseCarbonCredit("crypto")}
+          >
+            Pay with Crypto
+          </Button>
+        </Box>
       </Flex>
     </PurchaseComp>
   );

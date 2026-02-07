@@ -18,7 +18,7 @@ const PurchaseComp = ({
       </Box>
 
       <Box
-        my={{ base: "32px", lg: "7.688rem" }}
+        my={{ base: "32px", lg: "40px" }}
         mx={"auto"}
         w={{ lg: "38.648rem" }}
       >

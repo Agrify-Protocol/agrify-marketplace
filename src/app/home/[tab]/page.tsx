@@ -127,7 +127,7 @@ const HomeTab = () => {
                           color="black"
                           mt="-10px"
                         >
-                          {item?.coBenefits?.length}+ SDG Impact
+                          {item?.coBenefits?.length} SDG Impact
                         </Text>
 
                         <Text

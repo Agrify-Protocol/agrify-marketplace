@@ -1,5 +1,6 @@
 "use client";
 
+import Pill from "@/components/CarbonCredits/Pill";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import Table from "@/components/Common/Table";
 import SectionTabs from "@/components/ProjectPageComponents/SectionTabs/SectionTabs";
@@ -20,31 +21,35 @@ const Profile = () => {
   const tabId = searchParams.get("id");
   const router = useRouter();
   const { user } = useAuthContext();
-
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [organicProduceList, setOrganicProduceList] = useState<any>([]);
   const [carbonCreditList, setCarbonCreditList] = useState<any>([]);
   const toast = useToast();
 
   useEffect(() => {
-    if (user) {
-      setIsLoading(true);
+    if (!user) return;
 
-      getOrders(toast)
-        .then((response) => {
-          if (response) setOrganicProduceList(response?.orders ?? []);
-        })
-        .catch(() => setOrganicProduceList([]));
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
 
-      getCarbonCreditPurchaseHistory(toast)
-        .then((response) => {
-          if (response) setCarbonCreditList(response?.orders ?? []);
-        })
-        .catch(() => setCarbonCreditList([]));
+        const [ordersResponse, carbonResponse] = await Promise.all([
+          getOrders(toast),
+          getCarbonCreditPurchaseHistory(toast),
+        ]);
 
-      setIsLoading(false);
-    }
-  }, [user, toast]);
+        setOrganicProduceList(ordersResponse?.orders ?? []);
+        setCarbonCreditList(carbonResponse?.data ?? []);
+      } catch {
+        setOrganicProduceList([]);
+        setCarbonCreditList([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [user]);
 
   return (
     <Box w="100%" pb={{ base: "4rem", lg: "6rem" }}>
@@ -86,35 +91,46 @@ const Profile = () => {
 
         {isLoading ? (
           <PageLoader />
+        ) : [tabId === "climate art" ? carbonCreditList : organicProduceList]
+            ?.length <= 0 ? (
+          <Box width="100%" textAlign="center" mt="64px">
+            <Text>
+              {tabId === "climate art"
+                ? "No art orders found."
+                : "No traceable produce orders found."}
+            </Text>
+          </Box>
         ) : (
-          <>
-            {/* Climate Art */}
-            {tabId === "climate art" ? (
-              carbonCreditList?.length > 0 ? (
-                <Table thead={["Name", "Type", "Amount", "Date"]}>
-                  <Tr
-                    cursor="pointer"
-                    _hover={{ bg: "#F5F5F566" }}
-                    onClick={() =>
-                      router.push(
-                        `/profile/climate-art/6933a5483aceb8bc3d8eaf31`,
-                      )
-                    }
-                  >
-                    <Td>inches</Td>
-                    <Td>millimetres (mm)</Td>
-                    <Td>millimetres (mm)</Td>
-                    <Td isNumeric>25.4</Td>
-                  </Tr>
-                </Table>
-              ) : (
-                <Box width="100%" textAlign="center" mt="64px">
-                  <Text>No art orders found.</Text>
-                </Box>
-              )
-            ) : /* Traceable Produce */ organicProduceList?.length > 0 ? (
-              <Table thead={["Name", "Status", "Size", "Date"]}>
-                {organicProduceList?.map((order: any, idx: number) => (
+          <Table
+            thead={
+              tabId === "climate art"
+                ? ["Name", "Type", "Amount", "Date"]
+                : ["Name", "Status", "Size", "Date"]
+            }
+          >
+            {tabId === "climate art"
+              ? carbonCreditList?.map(
+                  (item: Record<string, string | null | number>) => (
+                    <Tr
+                      key={item.id}
+                      cursor="pointer"
+                      _hover={{ bg: "#F5F5F566" }}
+                      onClick={() =>
+                        router.push(`/profile/climate-art/${item.id}`)
+                      }
+                    >
+                      <Td>{item.projectName}</Td>
+                      <Td>
+                        <Pill status={item.type as string} />
+                      </Td>
+                      <Td isNumeric>
+                        {item.purchasedTonnes?.toLocaleString()}
+                      </Td>
+                      <Td>{readableDate(String(item.purchasedAt))}</Td>
+                    </Tr>
+                  ),
+                )
+              : organicProduceList?.map((order: any, idx: number) => (
                   <Tr
                     cursor="pointer"
                     _hover={{ bg: "#F5F5F566" }}
@@ -150,13 +166,7 @@ const Profile = () => {
                     <Td>{readableDate(String(order?.createdAt))}</Td>
                   </Tr>
                 ))}
-              </Table>
-            ) : (
-              <Box width="100%" textAlign="center" mt="64px">
-                <Text>No traceable produce orders found.</Text>
-              </Box>
-            )}
-          </>
+          </Table>
         )}
       </Box>
     </Box>
