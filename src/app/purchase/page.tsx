@@ -3,13 +3,33 @@
 import Button from "@/components/Common/Button";
 import PurchaseComp from "@/components/PurchasePageComponents";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
-import { Box, Text, Flex } from "@chakra-ui/react";
+import { Box, Text, Flex, Divider, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { convertUsdToXrpRate } from "@/services/api/profile";
+import { motion } from "framer-motion";
+import { LoaderCircle } from "lucide-react";
+import SectionItem from "@/components/PaymentPageComponents/OrderSummary/SectionItem";
 
 const Purchase = () => {
   const { chosenProject } = useGlobalContext();
   const router = useRouter();
+  const [totalInXrp, setTotalinXrp] = useState(null);
+  const toast = useToast();
+
+  useEffect(() => {
+    if (!chosenProject) {
+      router.push("/home/traceable-produce");
+    } else {
+      convertUsdToXrpRate(chosenProject?.totalPrice + 1.46, toast).then(
+        (res) => {
+          if (res) {
+            setTotalinXrp(res?.price);
+          }
+        },
+      );
+    }
+  });
 
   return (
     <PurchaseComp
@@ -20,78 +40,48 @@ const Purchase = () => {
           .join(" ")} directly from
         local farmers.`}
     >
-      <Box
-        borderBottom="1px dashed"
-        borderColor="gray_2"
-        pb={{ base: "1.5rem", lg: "2rem" }}
+      <Text
+        fontWeight={500}
+        fontSize={{ base: "24px", lg: "1.5rem" }}
+        color="main_black_1"
+        mb={{ base: "1.5rem", lg: "2.5rem" }}
       >
-        <Text
-          fontWeight={500}
-          fontSize={{ base: "24px", lg: "1.5rem" }}
-          color="main_black_1"
-          mb={{ base: "1.5rem", lg: "2.5rem" }}
-        >
-          Order Details
-        </Text>
+        Order Details
+      </Text>
 
-        <Flex
-          alignItems="center"
-          justifyContent="space-between"
-          mb={{ base: "0.75rem", lg: "1rem" }}
-        >
-          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>Price</Text>
-          <Text
-            fontSize={{ base: "14px", lg: "1.125rem" }}
-            fontWeight={500}
-            color="main_black_1"
-          >
-            ${chosenProject?.pricePerKg?.toLocaleString()}/kg
-          </Text>
-        </Flex>
+      {Object.entries({
+        Price: `$${chosenProject?.pricePerKg?.toLocaleString()}/kg`,
+        "Batch Size": chosenProject?.batchSize?.toLocaleString(),
+      }).map(([label, value]) => (
+        <SectionItem key={label} label={label} value={value} />
+      ))}
 
-        <Flex
-          alignItems="center"
-          justifyContent="space-between"
-          mb={{ base: "0.75rem", lg: "1rem" }}
-        >
-          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>Batch Size</Text>
-          <Text
-            fontSize={{ base: "14px", lg: "1.125rem" }}
-            fontWeight={500}
-            color="main_black_1"
-          >
-            {chosenProject?.batchSize?.toLocaleString()}
-          </Text>
-        </Flex>
-      </Box>
+      <Divider borderBottom="1px dashed" borderColor="gray_2" my="24px" />
 
-      <Box mt={{ base: "2rem", lg: "2.5rem" }}>
-        <Flex
-          alignItems="center"
-          justifyContent="space-between"
-          mb={{ base: "0.75rem", lg: "1rem" }}
-        >
-          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>Total Price</Text>
-          <Text
-            fontSize={{ base: "14px", lg: "1.125rem" }}
-            fontWeight={450}
-            color="rgba(1, 19, 8, 0.7)"
-          >
-            ${chosenProject?.totalPrice?.toLocaleString()}
-          </Text>
-        </Flex>
+      <SectionItem label="VAT" value="$1.46" />
 
-        <Flex alignItems="center" justifyContent="space-between">
-          <Text fontSize={{ base: "14px", lg: "1.125rem" }}>VAT</Text>
-          <Text
-            fontSize={{ base: "14px", lg: "1.125rem" }}
-            fontWeight={450}
-            color="rgba(1, 19, 8, 0.7)"
-          >
-            $1.46
-          </Text>
-        </Flex>
-      </Box>
+      <Divider borderBottom="1px dashed" borderColor="gray_2" my="24px" />
+
+      <SectionItem
+        label="Total (USD)"
+        value={`$${(chosenProject?.totalPrice + 1.46).toLocaleString()}`}
+      />
+
+      <SectionItem
+        label="Equivalent in XRP"
+        value={
+          totalInXrp ? (
+            [totalInXrp as number]?.toLocaleString()
+          ) : (
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            >
+              <LoaderCircle size={20} color="#0CC14C" />
+            </motion.div>
+          )
+        }
+      />
 
       <Flex
         gap={{ base: "0.75rem", lg: "1rem" }}
@@ -117,9 +107,14 @@ const Purchase = () => {
           </Text>
         </Box>
 
-        <Button flex={1} onClick={() => router.push("/payment?method=crypto")}>
-          Pay with Crypto
-        </Button>
+        <Box flex={1}>
+          <Button
+            onClick={() => router.push("/payment?method=crypto")}
+            isDisabled={!totalInXrp}
+          >
+            Pay with Crypto
+          </Button>
+        </Box>
       </Flex>
     </PurchaseComp>
   );

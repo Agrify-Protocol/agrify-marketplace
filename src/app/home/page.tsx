@@ -35,9 +35,9 @@ export default function Home() {
     <Box
       px={{ base: "20px", sm: "25px", md: "35px", lg: "2.625rem" }}
       py={{ base: "32px", sm: "39px", md: "50px", lg: "6.963rem" }}
-      height="85dvh"
+      minH={{ base: "auto", md: "85dvh" }}
       display="flex"
-      alignItems="center"
+      alignItems={{ base: "flex-start", md: "center" }}
       justifyContent="center"
     >
       {/* <Box mb="70px">

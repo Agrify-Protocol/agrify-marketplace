@@ -88,6 +88,15 @@ export const createOrder = async (
   }
 };
 
+export const convertUsdToXrpRate = async (usd: number | string, toast: any) => {
+  try {
+    const request = await xrpInstance.post("/getUSDtoXRPRate", { usd });
+    return request.data;
+  } catch (error) {
+    toastFn(toast, error);
+  }
+};
+
 //carbon creits
 export const getCarbonCreditPurchaseHistory = async (toast: any) => {
   try {
