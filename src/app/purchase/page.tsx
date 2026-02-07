@@ -21,15 +21,14 @@ const Purchase = () => {
     if (!chosenProject) {
       router.push("/home/traceable-produce");
     } else {
-      convertUsdToXrpRate(chosenProject?.totalPrice + 1.46, toast).then(
-        (res) => {
-          if (res) {
-            setTotalinXrp(res?.price);
-          }
-        },
-      );
+      const totalPrice = chosenProject?.totalPrice ?? 0;
+      convertUsdToXrpRate(totalPrice + 1.46, toast).then((res) => {
+        if (res) {
+          setTotalinXrp(res?.price);
+        }
+      });
     }
-  });
+  }, [chosenProject, router, toast]);
 
   return (
     <PurchaseComp
@@ -50,8 +49,8 @@ const Purchase = () => {
       </Text>
 
       {Object.entries({
-        Price: `$${chosenProject?.pricePerKg?.toLocaleString()}/kg`,
-        "Batch Size": chosenProject?.batchSize?.toLocaleString(),
+        Price: `${(chosenProject?.pricePerKg ?? 0).toLocaleString()}/kg`,
+        "Batch Size": (chosenProject?.batchSize ?? 0).toLocaleString(),
       }).map(([label, value]) => (
         <SectionItem key={label} label={label} value={value} />
       ))}
@@ -64,7 +63,7 @@ const Purchase = () => {
 
       <SectionItem
         label="Total (USD)"
-        value={`$${(chosenProject?.totalPrice + 1.46).toLocaleString()}`}
+        value={`${((chosenProject?.totalPrice ?? 0) + 1.46).toLocaleString()}`}
       />
 
       <SectionItem

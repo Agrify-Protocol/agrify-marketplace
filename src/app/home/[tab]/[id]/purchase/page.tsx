@@ -23,11 +23,14 @@ const CarbonCreditPurchase = () => {
   const toast = useToast();
   const router = useRouter();
   const [totalInXrp, setTotalinXrp] = useState(null);
+  const [storedDetails, setStoredDetails] = useState<string | null>(null);
 
-  const storedDetails =
-    typeof window !== "undefined"
-      ? localStorage.getItem("selected_climate_art")
-      : null;
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("selected_climate_art");
+      setStoredDetails(stored);
+    }
+  }, []);
 
   const details =
     chosenProject || (storedDetails ? JSON.parse(storedDetails) : null);
@@ -65,28 +68,32 @@ const CarbonCreditPurchase = () => {
   useEffect(() => {
     if (!details) {
       router.push("/home/climate-art");
+      return;
     }
 
-    if (user) {
-      if (user.kycStatus !== "approved") {
-        toast({
-          title: "KYC Verification Required",
-          description: "Please complete KYC verification to proceed.",
-          status: "warning",
-          position: "top-right",
-          duration: 5000,
-          isClosable: true,
-        });
-        router.push("/home/climate-art");
-      } else {
-        convertUsdToXrpRate(details.pricePerTonne + 1.46, toast).then((res) => {
-          if (res) {
-            setTotalinXrp(res?.price);
-          }
-        });
-      }
+    if (!user) {
+      return;
     }
-  }, [details, router]);
+
+    if (user.kycStatus !== "approved") {
+      toast({
+        title: "KYC Verification Required",
+        description: "Please complete KYC verification to proceed.",
+        status: "warning",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
+      router.push("/home/climate-art");
+    } else {
+      const pricePerTonne = details.pricePerTonne ?? 0;
+      convertUsdToXrpRate(pricePerTonne + 1.46, toast).then((res) => {
+        if (res) {
+          setTotalinXrp(res?.price);
+        }
+      });
+    }
+  }, [details, user, router, toast]);
 
   return !details ? (
     <PageLoader />
@@ -102,8 +109,8 @@ const CarbonCreditPurchase = () => {
       </Text>
 
       {Object.entries({
-        Price: `$${details?.pricePerTonne?.toLocaleString()}`,
-        "Tonnes to be retired": `${details?.availableTonnes?.toLocaleString()} tCO₂e`,
+        Price: `${(details?.pricePerTonne ?? 0).toLocaleString()}`,
+        "Tonnes to be retired": `${(details?.availableTonnes ?? 0).toLocaleString()} tCO₂e`,
       }).map(([label, value]) => (
         <SectionItem key={label} label={label} value={value} />
       ))}
@@ -120,7 +127,7 @@ const CarbonCreditPurchase = () => {
 
       <SectionItem
         label="Total (USD)"
-        value={`$${(details.pricePerTonne + 1.46).toLocaleString()}`}
+        value={`${((details?.pricePerTonne ?? 0) + 1.46).toLocaleString()}`}
       />
 
       <SectionItem
