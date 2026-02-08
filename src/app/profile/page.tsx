@@ -14,7 +14,7 @@ import getStatusProps from "@/utils/getStatusProps";
 import { readableDate } from "@/utils/parseData";
 import { Avatar, Box, Td, Text, Tr, useToast } from "@chakra-ui/react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const Profile = () => {
   const searchParams = useSearchParams();
@@ -91,7 +91,7 @@ const Profile = () => {
 
         {isLoading ? (
           <PageLoader />
-        ) : [tabId === "climate art" ? carbonCreditList : organicProduceList]
+        ) : (tabId === "climate art" ? carbonCreditList : organicProduceList)
             ?.length <= 0 ? (
           <Box width="100%" textAlign="center" mt="64px">
             <Text>
