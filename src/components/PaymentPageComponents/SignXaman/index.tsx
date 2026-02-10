@@ -1,15 +1,16 @@
 import { Box, Text, Button, Flex, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface SignXamanProps {
-  harsh: string;
+  hash: string;
 }
 
-const SignXaman: React.FC<SignXamanProps> = ({ harsh }) => {
+const SignXaman: React.FC<SignXamanProps> = ({ hash }) => {
   const router = useRouter();
   const handleXamanRedirect = () => {
-    if (harsh) {
-      router.push(`https://xaman.app/sign/${harsh}`);
+    if (hash) {
+      router.push(`https://xaman.app/sign/${hash}`);
     }
   };
 
@@ -63,7 +64,7 @@ const SignXaman: React.FC<SignXamanProps> = ({ harsh }) => {
             blockchain.
           </Text>
 
-          {harsh && (
+          {hash && (
             <Box
               bg="gray_3"
               p="16px"
@@ -89,10 +90,30 @@ const SignXaman: React.FC<SignXamanProps> = ({ harsh }) => {
                 color="main_black"
                 wordBreak="break-all"
               >
-                {truncateHash(harsh)}
+                {truncateHash(hash)}
               </Text>
             </Box>
           )}
+
+          <Box
+            bg="#F0F7FF"
+            p="14px"
+            borderRadius="10px"
+            border="1px solid"
+            borderColor="#B8D4FE"
+            mb="4px"
+          >
+            <Text
+              fontSize="13px"
+              fontWeight="500"
+              color="#1E3A8A"
+              textAlign="center"
+              lineHeight="1.5"
+            >
+              Please complete this signature with the same wallet used for
+              payment to ensure the tokens are delivered to the correct address.
+            </Text>
+          </Box>
 
           <VStack spacing="12px" pt="8px">
             <Button

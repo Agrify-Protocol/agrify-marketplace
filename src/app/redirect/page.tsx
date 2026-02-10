@@ -13,14 +13,14 @@ const Confirmation = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const tab = searchParams.get("tab")?.replace("%", " "); //climate art, traceable produce, sign
-  const harsh = searchParams.get("harsh");
+  const hash = searchParams.get("hash");
   const toast = useToast();
   const { user } = useAuthContext();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<Record<string, any>>({});
   const isNotSignTab = useMemo(() => {
     return (
-      ["traceable produce", "climate art"].includes(tab as string) || !harsh
+      ["traceable produce", "climate art"].includes(tab as string) || !hash
     );
   }, [tab]);
 
@@ -60,7 +60,7 @@ const Confirmation = () => {
   return loading ? (
     <PageLoader />
   ) : !isNotSignTab ? (
-    <SignXaman harsh={harsh || ""} />
+    <SignXaman hash={hash || ""} />
   ) : (
     <PaystackRedirection
       type={getRedirectType(data?.data?.status || data?.status)}
