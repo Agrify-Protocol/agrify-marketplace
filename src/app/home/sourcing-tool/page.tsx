@@ -50,7 +50,7 @@ const SourcingTool = () => {
   const displayInputByType = (
     id: string,
     type: string,
-    details: Record<string, any>
+    details: Record<string, any>,
   ) => {
     switch (type) {
       case "text":
@@ -128,7 +128,7 @@ const SourcingTool = () => {
         );
       case "tel":
         return (
-          <Box key={id}>
+          <Box key={id} width="100%">
             <FormLabel
               fontWeight={400}
               fontSize={{ base: "14px", md: "15px" }}
@@ -150,6 +150,7 @@ const SourcingTool = () => {
               bg={"white"}
               transition="all 0.1s ease-in-out"
               padding={2}
+              width="100%"
             >
               <button
                 type="button"
@@ -162,6 +163,7 @@ const SourcingTool = () => {
                   backgroundColor: "white",
                   borderRadius: "16px",
                   cursor: "pointer",
+                  flexShrink: 0,
                 }}
               >
                 {selectedCountry.flag}
@@ -176,6 +178,7 @@ const SourcingTool = () => {
                 placeholder={`Enter ${details.label.toLowerCase()}`}
                 className="tel-input"
                 onChange={handleChangeInput}
+                style={{ flex: 1, minWidth: 0 }}
               />
             </Box>
             <Text color="red" fontSize="12px">
@@ -192,12 +195,14 @@ const SourcingTool = () => {
     <Box
       width={{ base: "100%", md: "558px" }}
       px={{ base: "16px", md: "0" }}
-      margin={{ base: "32px auto", md: "72px auto" }}
+      margin={{ base: "32px auto", md: "50px auto" }}
+      // margin={{ base: "32px auto", md: "72px auto" }}
     >
       <Text
         as="h1"
         fontWeight="450"
-        fontSize={{ base: "24px", md: "32px" }}
+        /* fontSize={{ base: "24px", md: "32px" }} - commented out for better sizing */
+        fontSize={{ base: "20px", md: "28px" }}
         textAlign="center"
         mb={{ base: "24px", md: "40px" }}
       >
@@ -205,7 +210,7 @@ const SourcingTool = () => {
       </Text>
       <Flex flexDir="column" gap={{ base: "16px", md: "24px" }}>
         {Object.entries(fields).map(([id, details]) =>
-          displayInputByType(id, details.type, details)
+          displayInputByType(id, details.type, details),
         )}
       </Flex>
       <Button
