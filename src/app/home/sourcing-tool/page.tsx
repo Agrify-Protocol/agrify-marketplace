@@ -15,9 +15,9 @@ import {
 import "./index.css";
 import useSourcingToolLogic from "./useSourcingToolLogic";
 
-const SourcingTool = () => {
+const SourcingTool = ({ type }: { type: string }) => {
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const id = type || searchParams.get("id");
   const {
     form,
     handleChangeInput,
@@ -192,55 +192,62 @@ const SourcingTool = () => {
   };
 
   return (
-    <Box
-      width={{ base: "100%", md: "558px" }}
-      px={{ base: "16px", md: "0" }}
-      margin={{ base: "32px auto", md: "50px auto" }}
-      // margin={{ base: "32px auto", md: "72px auto" }}
-    >
-      <Text
-        as="h1"
-        fontWeight="450"
-        /* fontSize={{ base: "24px", md: "32px" }} - commented out for better sizing */
-        fontSize={{ base: "20px", md: "28px" }}
-        textAlign="center"
-        mb={{ base: "24px", md: "40px" }}
-      >
-        What produce are you interested in?
+    <>
+      <Text color="gray.600" maxW="800px">
+        Tell us what produce you need and your preferred quantity or
+        specifications. We’ll help you source quality, traceable products from
+        our network of farmers.
       </Text>
-      <Flex flexDir="column" gap={{ base: "16px", md: "24px" }}>
-        {Object.entries(fields).map(([id, details]) =>
-          displayInputByType(id, details.type, details),
-        )}
-      </Flex>
-      <Button
-        w={"100%"}
-        h={{ base: "3rem", md: "3.5rem" }}
-        borderRadius={{ base: "1rem", md: "1.5rem" }}
-        bgColor={isDisabled ? "gray_3" : "agrify_green"}
-        fontWeight={500}
-        color="white"
-        transition={"all 0.25s ease-in-out"}
-        onClick={handleCreateProductRequest}
-        isLoading={isLoading}
-        disabled={isDisabled}
-        cursor={isDisabled ? "not-allowed" : "pointer"}
-        _hover={{
-          bg: isDisabled ? "gray_3" : "#0ba842",
-        }}
-        mt={{ base: "24px", md: "40px" }}
+      <Box
+        width={{ base: "100%", md: "558px" }}
+        px={{ base: "16px", md: "0" }}
+        margin={{ base: "32px auto", md: "50px auto" }}
+        // margin={{ base: "32px auto", md: "72px auto" }}
       >
-        Request
-      </Button>
-      <CountryModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        selectedCountry={selectedCountry}
-        setSelectedCountry={setSelectedCountry}
-        title="Select a country"
-        name="country_code"
-      />
-    </Box>
+        <Text
+          as="h1"
+          fontWeight="450"
+          /* fontSize={{ base: "24px", md: "32px" }} - commented out for better sizing */
+          fontSize={{ base: "20px", md: "28px" }}
+          textAlign="center"
+          mb={{ base: "24px", md: "40px" }}
+        >
+          What produce are you interested in?
+        </Text>
+        <Flex flexDir="column" gap={{ base: "16px", md: "24px" }}>
+          {Object.entries(fields).map(([id, details]) =>
+            displayInputByType(id, details.type, details),
+          )}
+        </Flex>
+        <Button
+          w={"100%"}
+          h={{ base: "3rem", md: "3.5rem" }}
+          borderRadius={{ base: "1rem", md: "1.5rem" }}
+          bgColor={isDisabled ? "gray_3" : "agrify_green"}
+          fontWeight={500}
+          color="white"
+          transition={"all 0.25s ease-in-out"}
+          onClick={handleCreateProductRequest}
+          isLoading={isLoading}
+          disabled={isDisabled}
+          cursor={isDisabled ? "not-allowed" : "pointer"}
+          _hover={{
+            bg: isDisabled ? "gray_3" : "#0ba842",
+          }}
+          mt={{ base: "24px", md: "40px" }}
+        >
+          Request
+        </Button>
+        <CountryModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          selectedCountry={selectedCountry}
+          setSelectedCountry={setSelectedCountry}
+          title="Select a country"
+          name="country_code"
+        />
+      </Box>
+    </>
   );
 };
 
