@@ -7,7 +7,7 @@ import Image from "next/image";
 import link from "@/assets/link.svg";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { getCarbonCreditById } from "@/services/api/projects";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import Pill from "@/components/CarbonCredits/Pill";

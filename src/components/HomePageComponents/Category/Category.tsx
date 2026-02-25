@@ -54,7 +54,7 @@ const Category = ({ category }: { key: number | string; category: any }) => {
           </Box>
           <Box
             maxW={{ base: "160px", sm: "200px", md: "220px", lg: "188px" }}
-            maxH={{ base: "160px", sm: "200px", md: "220px", lg: "188px" }}
+            h={{ base: "160px", sm: "200px", md: "220px", lg: "188px" }}
             mb="40px"
           >
             <Image

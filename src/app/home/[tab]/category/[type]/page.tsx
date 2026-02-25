@@ -12,6 +12,7 @@ import location from "@/assets/location.svg";
 import Link from "next/link";
 import Image from "next/image";
 import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
+import SourcingTool from "@/app/home/sourcing-tool/page";
 
 const CategoryPage = () => {
   const { type } = useParams();
@@ -40,14 +41,15 @@ const CategoryPage = () => {
       px={{ base: "24px", lg: "2.625rem" }}
     >
       <BackButton />
-      <Box>
-        <Box mt="30px" mb="40px">
-          <Text fontSize={{ base: "18px", sm: "20px" }} color="black">
-            {`${formatSnakeCaseTitle(type as string)} Market`}
-          </Text>
-        </Box>
 
-        {isLoading ? (
+      <Box mt="30px">
+        {/* mb="40px"  */}
+        <Text fontSize={{ base: "18px", sm: "24px" }} mb="15px" color="black">
+          {`${formatSnakeCaseTitle(type as string)} Market`}
+        </Text>
+        <SourcingTool type={type as string} />
+
+        {/* {isLoading ? (
           <PageLoader />
         ) : categoryData?.activeProducts?.length ? (
           <Grid
@@ -156,7 +158,7 @@ const CategoryPage = () => {
           </Grid>
         ) : (
           <EmptyText />
-        )}
+        )} */}
       </Box>
     </Box>
   );
