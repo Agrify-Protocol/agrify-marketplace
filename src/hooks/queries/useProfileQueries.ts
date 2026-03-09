@@ -24,14 +24,15 @@ async function fetchCarbonCreditHistory(): Promise<{
   return res.data;
 }
 
-export function useOrders() {
-  return useQuery({ queryKey: ["orders"], queryFn: fetchOrders });
+export function useOrders(enabled = true) {
+  return useQuery({ queryKey: ["orders"], queryFn: fetchOrders, enabled });
 }
 
-export function useCarbonCreditHistory() {
+export function useCarbonCreditHistory(enabled = true) {
   return useQuery({
     queryKey: ["carbonCreditHistory"],
     queryFn: fetchCarbonCreditHistory,
+    enabled,
   });
 }
 
@@ -40,8 +41,8 @@ async function fetchAllPurchases(): Promise<Transaction[]> {
   return res.data;
 }
 
-export function useAllPurchases() {
-  return useQuery({ queryKey: ["allPurchases"], queryFn: fetchAllPurchases });
+export function useAllPurchases(enabled = true) {
+  return useQuery({ queryKey: ["allPurchases"], queryFn: fetchAllPurchases, enabled });
 }
 
 async function fetchReports(): Promise<Report[]> {
@@ -49,6 +50,6 @@ async function fetchReports(): Promise<Report[]> {
   return res.data;
 }
 
-export function useReports() {
-  return useQuery({ queryKey: ["reports"], queryFn: fetchReports });
+export function useReports(enabled = true) {
+  return useQuery({ queryKey: ["reports"], queryFn: fetchReports, enabled });
 }

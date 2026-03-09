@@ -34,6 +34,7 @@ const CarbonCreditPurchase = () => {
   const details = chosenProject ?? fetchedData?.data;
 
   const handlePurchaseCarbonCredit = (paymentMethod: "card" | "crypto") => {
+    if (!details) return;
     setIsLoading(paymentMethod);
     purchaseCarbonCredits(
       details.id,
@@ -94,7 +95,7 @@ const CarbonCreditPurchase = () => {
         }
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [details, user, router, toast, isFetching, chosenProject]);
 
   return !details || isFetching ? (

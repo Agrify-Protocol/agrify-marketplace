@@ -29,6 +29,8 @@ export type CarbonCredit = {
   coBenefits: CoBenefit[];
   images: CarbonCreditImage[];
   additionalResources: AdditionalResource[];
+  location?: string;
+  chainLink?: string;
 };
 
 export type Category = {
@@ -48,7 +50,9 @@ export type Order = {
   orderId: string;
   listing: OrderListing;
   deliveryStatus: string;
+  status?: string;
   createdAt: string;
+  txHash?: string;
 };
 
 export type CarbonCreditHistoryItem = {
@@ -63,6 +67,23 @@ export type Report = {
   _id: string;
   reportName: string;
   createdAt: string;
+};
+
+export type ProductStoryListing = {
+  _id: string;
+  name: string;
+  images: { image: string; _id: string }[];
+  farmer: {
+    firstname: string;
+    lastname: string;
+  };
+};
+
+export type ProductStoryResponse = {
+  listing: ProductStoryListing;
+  narrative: string;
+  practices: string[];
+  chainLink?: string;
 };
 
 // ── Auth & API payload types ───────────────────────────────────────────────

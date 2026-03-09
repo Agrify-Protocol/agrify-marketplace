@@ -1,5 +1,6 @@
-import { defaultInstance, xrpInstance } from "@/services/axios/instances";
+import { defaultInstance, farmInstance, xrpInstance } from "@/services/axios/instances";
 import { CarbonCredit, Order } from "@/services/api/types";
+import { DetailedFarm } from "@/app/farm/[id]/types";
 import { useQuery } from "@tanstack/react-query";
 
 async function fetchProduceDetails(id: string): Promise<Order> {
@@ -32,6 +33,19 @@ export function useCarbonCreditForRedirect(
   return useQuery({
     queryKey: ["carbonCreditRedirect", id],
     queryFn: () => fetchCarbonCreditForRedirect(id!),
+    enabled: !!id && enabled,
+  });
+}
+
+async function fetchFarm(id: string): Promise<DetailedFarm> {
+  const res = await farmInstance.get(`/${id}`);
+  return res.data;
+}
+
+export function useFarm(id: string | undefined, enabled = true) {
+  return useQuery({
+    queryKey: ["farm", id],
+    queryFn: () => fetchFarm(id!),
     enabled: !!id && enabled,
   });
 }

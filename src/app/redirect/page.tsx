@@ -35,9 +35,7 @@ const Confirmation = () => {
   } = useCarbonCreditForRedirect(isClimateArt ? id : null, !!user);
 
   const loading = isTraceable ? produceLoading : isClimateArt ? carbonLoading : false;
-  const data = isTraceable ? produceData : isClimateArt ? carbonData : {};
-
-  const getRedirectType = (status: string) => {
+  const getRedirectType = (status: string | undefined) => {
     switch (status) {
       case "paid":
       case "purchased":
@@ -49,13 +47,19 @@ const Confirmation = () => {
     }
   };
 
+  const redirectStatus = isTraceable
+    ? produceData?.status
+    : isClimateArt
+      ? carbonData?.data?.status
+      : undefined;
+
   if (loading) return <PageLoader />;
 
   if (!isNotSignTab) return <SignXaman hash={hash || ""} />;
 
   return (
     <PaystackRedirection
-      type={getRedirectType(data?.data?.status || data?.status)}
+      type={getRedirectType(redirectStatus)}
     />
   );
 };

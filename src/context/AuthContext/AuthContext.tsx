@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { AuthContextType, Props, User } from "./types";
 import { refreshAccessToken } from "@/services/api/auth";
 import {
@@ -24,6 +31,10 @@ const unauthenticatedRoutes = [
   // "/profile/traceable-produce/produce-details/track",
 ];
 
+// Sub-paths that are always protected, even if they're nested under a public prefix.
+// e.g. /home/climate-art/{id}/purchase is protected despite starting with /home.
+const protectedSubpaths = ["/purchase", "/payment", "/redirect"];
+
 export const AuthContextProvider = ({ children }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -39,11 +50,12 @@ export const AuthContextProvider = ({ children }: Props) => {
   const lastPublicPath = useRef<string>("/home");
 
   const isUnauthenticated = useMemo(() => {
+    // Protected sub-paths take priority over public prefixes.
+    if (protectedSubpaths.some((sub) => pathname.includes(sub))) return false;
     return unauthenticatedRoutes.some(
       (route) =>
         pathname === route ||
         pathname.startsWith(route) ||
-        pathname.includes(route) ||
         pathname === "/",
     );
   }, [pathname]);
@@ -81,7 +93,7 @@ export const AuthContextProvider = ({ children }: Props) => {
       toastFn(toast, "Unauthorized access. Please sign in.");
       router.push(lastPublicPath.current);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchingUser, isUnauthenticated]);
 
   useEffect(() => {

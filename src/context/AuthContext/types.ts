@@ -24,7 +24,7 @@ export type User = {
   firstname: string;
   lastname: string;
   email: string;
-  kycStatus: string;
+  kycStatus: "none" | "pending" | "approved" | "rejected";
   wallet: {
     accountID: string;
   } | null;

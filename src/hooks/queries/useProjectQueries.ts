@@ -5,6 +5,7 @@ import {
 } from "@/services/axios/instances";
 import { Project } from "@/context/GlobalContext/types";
 import { Transaction } from "@/components/ProjectPageComponents/Purchases/types";
+import { ProductStoryResponse } from "@/services/api/types";
 import { useQuery } from "@tanstack/react-query";
 
 async function fetchAllProjects(
@@ -29,7 +30,7 @@ async function fetchPurchasesByProject(id: string): Promise<Transaction[]> {
   return res.data;
 }
 
-async function fetchProductStory(id: string): Promise<Record<string, unknown>> {
+async function fetchProductStory(id: string): Promise<ProductStoryResponse> {
   const res = await defaultInstance.get(`/product-passport/${id}`);
   return res.data;
 }

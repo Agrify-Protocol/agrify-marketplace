@@ -26,7 +26,7 @@ const SingleCarbonCredit = () => {
     refetch,
   } = useCarbonCreditById(id as string);
 
-  const details = data?.data ?? {};
+  const details = data?.data;
   const isLoggedIn = !!accessToken;
 
   const { setChosenProject } = useGlobalContext();

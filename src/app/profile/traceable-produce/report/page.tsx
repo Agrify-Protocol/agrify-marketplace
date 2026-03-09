@@ -10,6 +10,7 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
 
 const styles = StyleSheet.create({
   page: {
@@ -39,25 +40,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const details =
-  typeof window !== "undefined" ? localStorage.getItem("pdf_details") : null;
-const parsedDetails = details ? JSON.parse(details) : {};
-
-const parsedDetailsObj = [
-  {
-    title: "ID",
-    value: parsedDetails?.id,
-  },
-  {
-    title: "NAME",
-    value: parsedDetails?.name,
-  },
-  {
-    title: "CREATED AT",
-    value: `${parsedDetails?.creation_date} at ${parsedDetails?.creation_time}`,
-  },
-];
-
 const ViewGeneratedReport = () => {
   const PDFViewer = dynamic(
     () => import("@react-pdf/renderer").then((module) => module.PDFViewer),
@@ -65,6 +47,28 @@ const ViewGeneratedReport = () => {
       ssr: false,
     }
   );
+
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id") ?? "";
+  const name = searchParams.get("name") ?? "";
+  const creation_date = searchParams.get("date") ?? "";
+  const creation_time = searchParams.get("time") ?? "";
+
+  const parsedDetailsObj = [
+    {
+      title: "ID",
+      value: id,
+    },
+    {
+      title: "NAME",
+      value: name,
+    },
+    {
+      title: "CREATED AT",
+      value: `${creation_date} at ${creation_time}`,
+    },
+  ];
+
   return (
     <PDFViewer style={styles.viewer}>
       <Document title="Report Details">

@@ -19,26 +19,26 @@ const Profile = () => {
   const searchParams = useSearchParams();
   const tabId = searchParams.get("id");
   const router = useRouter();
-  const { user } = useAuthContext();
+  const { user, fetchingUser } = useAuthContext();
 
   const {
     data: ordersData,
     isLoading: ordersLoading,
     isError: ordersError,
     refetch: refetchOrders,
-  } = useOrders();
+  } = useOrders(!!user);
 
   const {
     data: carbonData,
     isLoading: carbonLoading,
     isError: carbonError,
     refetch: refetchCarbon,
-  } = useCarbonCreditHistory();
+  } = useCarbonCreditHistory(!!user);
 
   const organicProduceList = ordersData?.orders ?? [];
   const carbonCreditList = carbonData?.data ?? [];
 
-  const isLoading = ordersLoading || carbonLoading;
+  const isLoading = fetchingUser || ordersLoading || carbonLoading;
   const isError = ordersError || carbonError;
 
   const activeList =

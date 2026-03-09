@@ -35,6 +35,8 @@ const CategoryPage = () => {
       .finally(() => setIsLoading(false));
   }, [type, user]);
 
+  console.log("type", type);
+
   return (
     <Box
       my={{ base: "40px", lg: "3.215rem" }}

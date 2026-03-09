@@ -35,15 +35,26 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
     useCarbonCreditForRedirect(isClimateArt ? id : null, !!user);
 
   const isLoading = isTraceable ? produceLoading : isClimateArt ? carbonLoading : false;
-  const data = isTraceable ? produceData : isClimateArt ? carbonData : {};
+  const carbonCredit = carbonData?.data;
 
   const produceString = useMemo(() => {
-    return data?.listing
-      ? `${data?.listing?.batchSize} kg of ${formatSnakeCaseTitle(
-          data?.listing?.product?.name,
-        )}`
-      : "climate art";
-  }, [data]);
+    if (produceData?.listing) {
+      return `${produceData.listing.batchSize} kg of ${formatSnakeCaseTitle(
+        produceData.listing.product?.name,
+      )}`;
+    }
+    return "climate art";
+  }, [produceData]);
+
+  const orderImage =
+    produceData?.listing?.images?.[0]?.image ?? carbonCredit?.images?.[0]?.url;
+
+  const successHref = produceData?.orderId
+    ? `/profile/traceable-produce/produce-details/${produceData.orderId}`
+    : `/profile/climate-art/${carbonCredit?.id}`;
+
+  const actionHref =
+    type === "success" ? successHref : type === "pending" ? `/profile?id=${tab}` : "/home";
 
   if (isLoading) return <PageLoader />;
 
@@ -55,7 +66,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
     >
       <BackButton customFunction={() => router.push("/home")} />
 
-      {(data?.listing || data?.data) && (
+      {(produceData?.listing || carbonCredit) && (
         <Box
           w="100%"
           bg="white"
@@ -123,8 +134,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
           </Text>
 
           {/* ORDER IMAGE */}
-          {(data?.listing?.images?.[0]?.image ??
-          data?.data?.images?.[0]?.url) ? (
+          {orderImage ? (
             <Box
               width="100%"
               maxW="280px"
@@ -134,10 +144,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               mb={{ base: "28px", lg: "40px" }}
             >
               <Image
-                src={
-                  data?.listing?.images?.[0]?.image ??
-                  data?.data?.images?.[0]?.url
-                }
+                src={orderImage}
                 width={280}
                 height={240}
                 alt="Order image"
@@ -167,17 +174,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
 
           {/* ACTION BUTTON */}
           <Flex flexDir="column" alignItems="center" gap="20px">
-            <Link
-              href={
-                type === "success"
-                  ? data?.orderId
-                    ? `/profile/traceable-produce/produce-details/${data?.orderId}`
-                    : `/profile/climate-art/${data?.data?.id}`
-                  : type === "pending"
-                    ? `/profile?id=${tab}`
-                    : "/home"
-              }
-            >
+            <Link href={actionHref}>
               <Button
                 w="fit-content"
                 px={{ base: "24px", sm: "36px" }}
