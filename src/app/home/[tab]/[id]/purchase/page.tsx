@@ -13,8 +13,9 @@ import {
 import { Text, Flex, Divider, useToast, Box } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { LoaderCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useCarbonCreditById } from "@/hooks/queries/useHomeQueries";
 
 const CarbonCreditPurchase = () => {
   const { chosenProject } = useGlobalContext();
@@ -22,18 +23,15 @@ const CarbonCreditPurchase = () => {
   const { user } = useAuthContext();
   const toast = useToast();
   const router = useRouter();
+  const { id } = useParams();
   const [totalInXrp, setTotalinXrp] = useState(null);
-  const [storedDetails, setStoredDetails] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("selected_climate_art");
-      setStoredDetails(stored);
-    }
-  }, []);
+  // Re-fetch project data if context was lost (e.g. page refresh)
+  const { data: fetchedData, isLoading: isFetching } = useCarbonCreditById(
+    !chosenProject ? (id as string) : undefined,
+  );
 
-  const details =
-    chosenProject || (storedDetails ? JSON.parse(storedDetails) : null);
+  const details = chosenProject ?? fetchedData?.data;
 
   const handlePurchaseCarbonCredit = (paymentMethod: "card" | "crypto") => {
     setIsLoading(paymentMethod);
@@ -52,7 +50,7 @@ const CarbonCreditPurchase = () => {
       if (res) {
         toast({
           title: "Successful!",
-          description: "Redirecting to payment... Please don’t refresh.",
+          description: "Redirecting to payment... Please don't refresh.",
           status: "success",
           position: "top-right",
           duration: null,
@@ -66,6 +64,9 @@ const CarbonCreditPurchase = () => {
   };
 
   useEffect(() => {
+    // Wait for fetch to complete before deciding to redirect
+    if (!chosenProject && isFetching) return;
+
     if (!details) {
       router.push("/home/climate-art");
       return;
@@ -93,9 +94,10 @@ const CarbonCreditPurchase = () => {
         }
       });
     }
-  }, [details, user, router, toast]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [details, user, router, toast, isFetching, chosenProject]);
 
-  return !details ? (
+  return !details || isFetching ? (
     <PageLoader />
   ) : (
     <PurchaseComp name={details?.projectName}>

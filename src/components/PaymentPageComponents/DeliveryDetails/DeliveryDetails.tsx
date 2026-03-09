@@ -7,12 +7,13 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Inter_Display } from "@/fonts";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import countries from "./countries.json";
 import { createOrder } from "@/services/api/profile";
 import { validateLength, validatePhoneNumber } from "@/utils/validationSchema";
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
+import { useMutation } from "@tanstack/react-query";
 
 const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
   const router = useRouter();
@@ -37,7 +38,6 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
     expireAfter: 5,
   });
 
-  const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState<Record<string, boolean>>({
     address: false,
     postalCode: false,
@@ -98,7 +98,7 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { id, value } = e.target;
     setPayload((prev) => ({ ...prev, [id]: value }));
@@ -117,25 +117,23 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
   const searchParams = useSearchParams();
   const method = searchParams.get("method");
 
-  const handleCreateOrder = () => {
-    setIsLoading(true);
-    createOrder({ ...payload, paymentMethod: method as string }, toast).then(
-      (res) => {
-        if (res) {
-          toast({
-            title: "Successful!",
-            description: "Redirecting to payment... Please don’t refresh.",
-            status: "success",
-            position: "top-right",
-            duration: null,
-            isClosable: false,
-          });
-          router.push(res?.paymentURL);
-        }
-        setIsLoading(false);
+  const { mutate, isPending: isLoading } = useMutation({
+    mutationFn: (data: Record<string, string | number>) =>
+      createOrder({ ...data, paymentMethod: method as string }, toast),
+    onSuccess: (res) => {
+      if (res) {
+        toast({
+          title: "Successful!",
+          description: "Redirecting to payment... Please don't refresh.",
+          status: "success",
+          position: "top-right",
+          duration: null,
+          isClosable: false,
+        });
+        router.push(res?.paymentURL);
       }
-    );
-  };
+    },
+  });
 
   useEffect(() => {
     if (!chosenProject) {
@@ -208,7 +206,7 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
                 ))}
               </Select>
             </Box>
-          )
+          ),
         )}
       </FormControl>
 
@@ -220,7 +218,7 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
         fontWeight={500}
         color={isFormValid ? "white" : "unset"}
         transition="all 0.25s ease-in-out"
-        onClick={handleCreateOrder}
+        onClick={() => mutate(payload)}
         isLoading={isLoading}
         disabled={!isFormValid}
         cursor={isFormValid ? "pointer" : "not-allowed"}

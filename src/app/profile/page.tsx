@@ -6,50 +6,43 @@ import Table from "@/components/Common/Table";
 import SectionTabs from "@/components/ProjectPageComponents/SectionTabs/SectionTabs";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import {
-  getCarbonCreditPurchaseHistory,
-  getOrders,
-} from "@/services/api/profile";
+  useCarbonCreditHistory,
+  useOrders,
+} from "@/hooks/queries/useProfileQueries";
 import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 import getStatusProps from "@/utils/getStatusProps";
 import { readableDate } from "@/utils/parseData";
-import { Avatar, Box, Td, Text, Tr, useToast } from "@chakra-ui/react";
+import { Avatar, Box, Button, Td, Text, Tr } from "@chakra-ui/react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
 
 const Profile = () => {
   const searchParams = useSearchParams();
   const tabId = searchParams.get("id");
   const router = useRouter();
   const { user } = useAuthContext();
-  const [isLoading, setIsLoading] = useState(false);
-  const [organicProduceList, setOrganicProduceList] = useState<any>([]);
-  const [carbonCreditList, setCarbonCreditList] = useState<any>([]);
-  const toast = useToast();
 
-  useEffect(() => {
-    if (!user) return;
+  const {
+    data: ordersData,
+    isLoading: ordersLoading,
+    isError: ordersError,
+    refetch: refetchOrders,
+  } = useOrders();
 
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
+  const {
+    data: carbonData,
+    isLoading: carbonLoading,
+    isError: carbonError,
+    refetch: refetchCarbon,
+  } = useCarbonCreditHistory();
 
-        const [ordersResponse, carbonResponse] = await Promise.all([
-          getOrders(toast),
-          getCarbonCreditPurchaseHistory(toast),
-        ]);
+  const organicProduceList = ordersData?.orders ?? [];
+  const carbonCreditList = carbonData?.data ?? [];
 
-        setOrganicProduceList(ordersResponse?.orders ?? []);
-        setCarbonCreditList(carbonResponse?.data ?? []);
-      } catch {
-        setOrganicProduceList([]);
-        setCarbonCreditList([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const isLoading = ordersLoading || carbonLoading;
+  const isError = ordersError || carbonError;
 
-    fetchData();
-  }, [user]);
+  const activeList =
+    tabId === "climate art" ? carbonCreditList : organicProduceList;
 
   return (
     <Box w="100%" pb={{ base: "4rem", lg: "6rem" }}>
@@ -77,7 +70,7 @@ const Profile = () => {
         </Text>
 
         <Text fontSize={{ base: "14px", md: "15px" }}>
-          Here’s order history
+          {"Here's order history"}
         </Text>
       </Box>
 
@@ -91,8 +84,23 @@ const Profile = () => {
 
         {isLoading ? (
           <PageLoader />
-        ) : (tabId === "climate art" ? carbonCreditList : organicProduceList)
-            ?.length <= 0 ? (
+        ) : isError ? (
+          <Box width="100%" textAlign="center" mt="64px">
+            <Text mb="16px" color="red.500">
+              Failed to load your order history. Please try again.
+            </Text>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                refetchOrders();
+                refetchCarbon();
+              }}
+            >
+              Retry
+            </Button>
+          </Box>
+        ) : activeList.length === 0 ? (
           <Box width="100%" textAlign="center" mt="64px">
             <Text>
               {tabId === "climate art"

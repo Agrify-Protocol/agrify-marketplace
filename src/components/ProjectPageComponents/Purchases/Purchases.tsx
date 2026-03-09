@@ -1,33 +1,25 @@
 "use client";
 
-import { Box, Flex, Grid, Text, useToast } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { Box, Button, Flex, Grid, Text } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { Transaction, TransactionModalType } from "./types";
 import { useScreenFreeze } from "@/hooks/useScreenFreeze";
-import { getPurchasesByProject } from "@/services/api/purchases";
 import { useParams } from "next/navigation";
 import Spinner from "@/components/Common/Spinner/Spinner";
 import FourColumnTableRow from "@/components/Common/FourColumnTableRow/FourColumnTableRow";
 import ReceiptModal from "@/components/Common/ReceiptModal/ReceiptModal";
 import InvoiceModal from "@/components/Common/InvoiceModal/InvoiceModal";
+import { usePurchasesByProject } from "@/hooks/queries/useProjectQueries";
 
 const Purchases = () => {
   const { id } = useParams();
   const [showTransaction, setShowTransaction] =
     useState<TransactionModalType | null>(null);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const toast = useToast();
 
-  useEffect(() => {
-    setIsLoading(true);
-    getPurchasesByProject(id as string, toast).then((response) => {
-      if (Array.isArray(response)) {
-        setTransactions(response);
-      } else setTransactions([]);
-      setIsLoading(false);
-    });
-  }, []);
+  const { data, isLoading, isError, refetch } = usePurchasesByProject(
+    id as string,
+  );
+  const transactions: Transaction[] = Array.isArray(data) ? data : [];
 
   const updateTxDetails = (data: TransactionModalType) => {
     setShowTransaction(data);
@@ -56,7 +48,6 @@ const Purchases = () => {
         mb={"1.5rem"}
         color={"rgba(0,0,0,0.4)"}
         gap={{ base: "50px", lg: "0px" }}
-        // overflow={{ base: "scroll" }}
       >
         {["Payment Type", "Status", "Kg", "Date"].map((item) => (
           <Text
@@ -84,7 +75,18 @@ const Purchases = () => {
           </Flex>
         )}
 
-        {!isLoading && transactions?.length < 1 && (
+        {isError && (
+          <Box textAlign="center" mt="16px">
+            <Text mb="12px" color="red.500">
+              Failed to load purchases. Please try again.
+            </Text>
+            <Button variant="outline" size="sm" onClick={() => refetch()}>
+              Retry
+            </Button>
+          </Box>
+        )}
+
+        {!isLoading && !isError && transactions.length === 0 && (
           <Text textAlign={"center"} color={"black"}>
             No purchases found for this project
           </Text>

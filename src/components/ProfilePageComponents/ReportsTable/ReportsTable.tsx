@@ -1,32 +1,16 @@
 "use client";
 
-import { Box, Flex, Text, useToast } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import React from "react";
 import ReportRow from "../ReportRow/ReportRow";
-import { useAuthContext } from "@/context/AuthContext/AuthContext";
-import { getReports } from "@/services/api/profile";
 import { getReportTime } from "@/utils/reportTime";
 import { readableDate } from "@/utils/parseData";
-import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import Spinner from "@/components/Common/Spinner/Spinner";
+import { useReports } from "@/hooks/queries/useProfileQueries";
 
 const ReportsTable = () => {
-  const { user } = useAuthContext();
-  const [isLoading, setIsLoading] = useState(true);
-  const { reports, setReports } = useGlobalContext();
-  const toast = useToast();
-
-  useEffect(() => {
-    if (user) {
-      setIsLoading(true);
-      getReports(toast).then((response) => {
-        if (response) {
-          setReports(response);
-          setIsLoading(false);
-        }
-      });
-    }
-  }, [user]);
+  const { data: reports, isLoading, isError, refetch } = useReports();
+  const reportList = reports ?? [];
 
   return (
     <Box>
@@ -39,7 +23,16 @@ const ReportsTable = () => {
         >
           <Spinner />
         </Flex>
-      ) : reports.length < 1 ? (
+      ) : isError ? (
+        <Box textAlign="center" mt="32px">
+          <Text mb="16px" color="red.500">
+            Failed to load reports. Please try again.
+          </Text>
+          <Button variant="outline" size="sm" onClick={() => refetch()}>
+            Retry
+          </Button>
+        </Box>
+      ) : reportList.length < 1 ? (
         <Text textAlign={"center"}>No reports found</Text>
       ) : (
         <>
@@ -55,17 +48,15 @@ const ReportsTable = () => {
             <Text>Name</Text>
           </Box>
           <Box display="flex" flexDirection="column" gap={5}>
-            {reports.map((report) => {
-              return (
-                <ReportRow
-                  key={report._id}
-                  id={report._id}
-                  name={report.reportName}
-                  creation_time={getReportTime(report.createdAt.toString())}
-                  creation_date={readableDate(report.createdAt.toString())}
-                />
-              );
-            })}
+            {reportList.map((report: any) => (
+              <ReportRow
+                key={report._id}
+                id={report._id}
+                name={report.reportName}
+                creation_time={getReportTime(report.createdAt.toString())}
+                creation_date={readableDate(report.createdAt.toString())}
+              />
+            ))}
           </Box>
         </>
       )}

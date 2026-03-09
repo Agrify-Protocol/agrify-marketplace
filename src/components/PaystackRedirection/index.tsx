@@ -1,51 +1,41 @@
-import { Box, Flex, Text, Button, useToast } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { PaystackRedirectionProps } from "./types";
 import PageLoader from "../Common/PageLoader/PageLoader";
 import BackButton from "../Common/BackButton/BackButton";
 import Link from "next/link";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
-import { getProduceDetails } from "@/services/api/profile";
 import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
 import check from "../../assets/icon-park-solid_check-one.svg";
 import error from "../../assets/error.svg";
-import { getCarbonCreditById } from "@/services/api/projects";
+import {
+  useCarbonCreditForRedirect,
+  useProduceDetails,
+} from "@/hooks/queries/useOrderQueries";
 
 const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const toast = useToast();
   const { user } = useAuthContext();
 
   const id = searchParams.get("id");
   const tab = searchParams.get("tab");
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<Record<string, any>>({});
+  const isTraceable = tab === "traceable produce";
+  const isClimateArt = tab === "climate art";
 
-  useEffect(() => {
-    if (!user || !id) return;
+  const { data: produceData, isLoading: produceLoading } = useProduceDetails(
+    isTraceable ? id : null,
+    !!user,
+  );
 
-    setIsLoading(true);
+  const { data: carbonData, isLoading: carbonLoading } =
+    useCarbonCreditForRedirect(isClimateArt ? id : null, !!user);
 
-    if (tab === "traceable produce") {
-      getProduceDetails(id, toast).then((response) => {
-        if (response) setData(response);
-        setIsLoading(false);
-      });
-    }
-
-    if (tab === "climate art") {
-      getCarbonCreditById(toast, id).then((response) => {
-        if (response) setData(response);
-        setIsLoading(false);
-      });
-    }
-
-    localStorage.removeItem("selected_climate_art");
-  }, [user, id, tab, toast]);
+  const isLoading = isTraceable ? produceLoading : isClimateArt ? carbonLoading : false;
+  const data = isTraceable ? produceData : isClimateArt ? carbonData : {};
 
   const produceString = useMemo(() => {
     return data?.listing
@@ -132,7 +122,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               `Your payment is currently being processed. You can track the order status from your orders page. The status will update automatically once payment is confirmed.`}
           </Text>
 
-          {/* ORDER IMAGE (RESTORED) */}
+          {/* ORDER IMAGE */}
           {(data?.listing?.images?.[0]?.image ??
           data?.data?.images?.[0]?.url) ? (
             <Box
@@ -174,6 +164,7 @@ const PaystackRedirection = ({ type }: PaystackRedirectionProps) => {
               <Text>No images available</Text>
             </Flex>
           )}
+
           {/* ACTION BUTTON */}
           <Flex flexDir="column" alignItems="center" gap="20px">
             <Link

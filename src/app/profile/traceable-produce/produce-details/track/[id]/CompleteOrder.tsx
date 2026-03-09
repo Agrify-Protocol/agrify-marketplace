@@ -5,7 +5,8 @@ import { completeOrder } from "@/services/api/profile";
 import { Box, Button, Text, useToast } from "@chakra-ui/react";
 import { LoaderCircle } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useMutation } from "@tanstack/react-query";
 
 const CompleteOrder = ({
   data,
@@ -22,20 +23,18 @@ const CompleteOrder = ({
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const toast = useToast();
 
-  const handleCompleteOrder = () => {
-    setIsLoading(true);
-    completeOrder(params.id as string, toast).then((res) => {
+  const { mutate, isPending } = useMutation({
+    mutationFn: (id: string) => completeOrder(id, toast),
+    onSuccess: (res) => {
       if (res) {
         setIsOpen(true);
         setReload(!reload);
       }
-      setIsLoading(false);
-    });
-  };
+    },
+  });
 
   const isDisabled = useMemo(() => {
     return step !== status.length - 1 || data?.deliveryStatus === "completed";
@@ -69,10 +68,10 @@ const CompleteOrder = ({
           _hover={{
             bg: !isDisabled && "#0ba842",
           }}
-          onClick={handleCompleteOrder}
+          onClick={() => mutate(params.id as string)}
           isDisabled={isDisabled}
           rightIcon={
-            isLoading ? (
+            isPending ? (
               <Box animation={spinAnimation}>
                 <LoaderCircle
                   opacity={0.4}
@@ -98,7 +97,6 @@ const CompleteOrder = ({
           bottom="0"
           bg="rgba(255,255,255,0.8)"
           zIndex="10"
-          // Allow interaction on lg only (original behavior). On mobile, keep as is.
           pointerEvents="none"
         />
       )}

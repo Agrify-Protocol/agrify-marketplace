@@ -19,4 +19,16 @@ export type LoginResponse = {
   refreshToken: string;
 };
 
-export type User = Record<string, any>;
+export type User = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  kycStatus: string;
+  wallet: {
+    accountID: string;
+  } | null;
+  isAdmin?: boolean;
+  isBuyer?: boolean;
+  isEmailVerified?: boolean;
+};

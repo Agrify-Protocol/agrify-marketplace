@@ -2,36 +2,31 @@
 
 import BackButton from "@/components/Common/BackButton/BackButton";
 import Slider from "@/components/FarmPageComponents/Slider/Slider";
-import { Box, Button, Flex, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import link from "@/assets/link.svg";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getCarbonCreditById } from "@/services/api/projects";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import Pill from "@/components/CarbonCredits/Pill";
 import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import KYCRedirect from "@/components/KYC/Redirect";
+import { useCarbonCreditById } from "@/hooks/queries/useHomeQueries";
 
 const SingleCarbonCredit = () => {
   const { id } = useParams();
   const { user, accessToken } = useAuthContext();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
-  const [details, setDetails] = useState<Record<string, any>>({});
-  const toast = useToast();
 
-  useEffect(() => {
-    getCarbonCreditById(toast, id as string).then((response) => {
-      if (response) {
-        setDetails(response?.data);
-      }
-      setIsLoading(false);
-    });
-  }, [id, toast]);
+  const {
+    data,
+    isLoading,
+    isError,
+    refetch,
+  } = useCarbonCreditById(id as string);
 
+  const details = data?.data ?? {};
   const isLoggedIn = !!accessToken;
 
   const { setChosenProject } = useGlobalContext();
@@ -44,6 +39,22 @@ const SingleCarbonCredit = () => {
       <BackButton />
       {isLoading ? (
         <PageLoader />
+      ) : isError ? (
+        <Box textAlign="center" mt="64px">
+          <Text mb="16px" color="red.500">
+            Failed to load project details. Please try again.
+          </Text>
+          <Button variant="outline" size="sm" onClick={() => refetch()}>
+            Retry
+          </Button>
+        </Box>
+      ) : !details?.projectName ? (
+        <Box textAlign="center" mt="64px">
+          <Text mb="16px">Project not found.</Text>
+          <Button variant="outline" size="sm" onClick={() => router.back()}>
+            Go Back
+          </Button>
+        </Box>
       ) : (
         <Flex
           direction={{ base: "column", lg: "row" }}
@@ -120,10 +131,6 @@ const SingleCarbonCredit = () => {
                   isDisabled={isLoggedIn && user?.kycStatus !== "approved"}
                   onClick={() => {
                     setChosenProject(details);
-                    localStorage.setItem(
-                      "selected_climate_art",
-                      JSON.stringify(details),
-                    );
                     router.push(
                       isLoggedIn
                         ? `/home/climate-art/${details?.id}/purchase`
@@ -196,14 +203,6 @@ const SingleCarbonCredit = () => {
                 ))}
               </Box>
 
-              {/* map */}
-              {/* <Box>
-                <Text fontWeight={500} fontSize="20px" mb="16px" color="black">
-                  Map
-                </Text>
-                <Box width="100%" height="188px" bgColor="gray" />
-              </Box> */}
-
               {/* benefits */}
               <Box>
                 <Text fontWeight={500} fontSize="20px" mb="16px" color="black">
@@ -239,26 +238,6 @@ const SingleCarbonCredit = () => {
                   ))}
                 </Flex>
               </Box>
-
-              {/* images */}
-              {/* <Box>
-                <Text fontWeight={500} fontSize="20px" mb="16px" color="black">
-                  Images
-                </Text>
-                <Flex flexDirection="column" gap="16px">
-                  {details?.images?.map((image: Record<string, any>) => (
-                    <ContainerWithDarkenedBg
-                      bg={{
-                        src: image?.url,
-                      }}
-                      key={image?._id}
-                      opacity={0.4}
-                    >
-                      <Box height="320px" />
-                    </ContainerWithDarkenedBg>
-                  ))}
-                </Flex>
-              </Box> */}
 
               {/* additional resources */}
               {details?.additionalResources?.length > 0 && (

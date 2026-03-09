@@ -11,6 +11,7 @@ import { Box, Flex, FormControl, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import { validateEmail, validateLength } from "@/utils/validationSchema";
+import { useMutation } from "@tanstack/react-query";
 
 const Reset = () => {
   const router = useRouter();
@@ -38,55 +39,61 @@ const Reset = () => {
 
   const detailsAreFilled = useObjectCheck(resetData);
   const verificationCodeAvailable = resetData.verification_code != "";
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = () => {
-    setIsLoading(true);
+  const { mutateAsync: requestToken, isPending: requestingToken } = useMutation(
+    {
+      mutationFn: (email: string) =>
+        getVerificationToken({ email }, toast),
+    },
+  );
+
+  const { mutateAsync: doResetPassword, isPending: resettingPassword } =
+    useMutation({
+      mutationFn: (data: {
+        userId: string;
+        token: string;
+        password: string;
+      }) => resetPassword(data, toast),
+    });
+
+  const isPending = requestingToken || resettingPassword;
+
+  const handleSubmit = async () => {
     switch (stage) {
-      case 1:
-        getVerificationToken({ email: resetData.email }, toast).then(
-          (response) => {
-            setIsLoading(false);
-            if (response) {
-              const link = response.link.split("=");
-              const token = link[1]?.slice(0, -3); // Remove the last 3 characters
-              const user_id = link[2];
-              setResetData({ ...resetData, user_id, verification_code: token });
-              setStage(stage + 1);
-            } else {
-              setStage(1);
-              throw new Error("Failed to get verification token");
-            }
-          }
-        );
+      case 1: {
+        const response = await requestToken(resetData.email);
+        if (response) {
+          const link = response.link.split("=");
+          const token = link[1]?.slice(0, -3);
+          const user_id = link[2];
+          setResetData({ ...resetData, user_id, verification_code: token });
+          setStage(stage + 1);
+        } else {
+          setStage(1);
+        }
         break;
+      }
       case 2:
-        setIsLoading(false);
         setStage(stage + 1);
         break;
       case 3:
         if (compareStrings(resetData.new_password, resetData.new_password2)) {
-          resetPassword(
-            {
-              userId: resetData.user_id,
-              token: resetData.verification_code,
-              password: resetData.new_password,
-            },
-            toast
-          ).then((response) => {
-            setIsLoading(false);
-            if (response) {
-              toast(
-                new ToastData(
-                  "Successful!",
-                  response.message ??
-                    "Your password has been updated successfully!",
-                  "success"
-                )
-              );
-              router.push("/auth/login");
-            }
+          const response = await doResetPassword({
+            userId: resetData.user_id,
+            token: resetData.verification_code,
+            password: resetData.new_password,
           });
+          if (response) {
+            toast(
+              new ToastData(
+                "Successful!",
+                response.message ??
+                  "Your password has been updated successfully!",
+                "success",
+              ),
+            );
+            router.push("/auth/login");
+          }
         }
         break;
     }
@@ -176,7 +183,7 @@ const Reset = () => {
             detailsFilled={
               stage == 1 ? verificationCodeAvailable : detailsAreFilled
             }
-            isLoading={isLoading}
+            isLoading={isPending}
             onClickFunc={handleSubmit}
           />
         </FormControl>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Button, useToast } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import InvoiceHeader from "../InvoiceHeader/InvoiceHeader";
 import InvoiceBody from "../InvoiceBody/InvoiceBody";
 import InvoiceFooter from "../InvoiceFooter/InvoiceFooter";
@@ -11,11 +11,20 @@ import { useRouter } from "next/navigation";
 import { createInvoice } from "@/services/api/invoice";
 import { removeCommas } from "@/utils/removeCommas";
 import { InvoicePayloadType } from "@/services/api/types";
+import { useMutation } from "@tanstack/react-query";
 
 const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
   const toast = useToast();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+
+  const { mutate, isPending: isLoading } = useMutation({
+    mutationFn: (data: InvoicePayloadType) => createInvoice(data, toast),
+    onSuccess: (_result) => {
+      if (_result) {
+        router.push("/redirect");
+      }
+    },
+  });
 
   return (
     <Box>
@@ -45,21 +54,12 @@ const Invoice = ({ invoice_data, isCompleted }: InvoiceProps) => {
           }}
           isLoading={isLoading}
           onClick={(e) => {
-            setIsLoading(true);
             e.stopPropagation();
             const createInvoicePayload = {
               ...invoice_data,
               amount: Number(removeCommas("")),
             };
-            createInvoice(
-              createInvoicePayload as unknown as InvoicePayloadType,
-              toast
-            ).then((_result) => {
-              if (_result) {
-                router.push("/redirect");
-              }
-              setIsLoading(false);
-            });
+            mutate(createInvoicePayload as unknown as InvoicePayloadType);
           }}
         >
           Confirm

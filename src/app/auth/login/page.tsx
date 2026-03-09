@@ -1,25 +1,28 @@
 "use client";
 
 import { Flex, FormControl, useToast } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import AuthPageHeading from "@/components/AuthPageComponents/AuthPageHeading/AuthPageHeading";
 import AuthPageBottom from "@/components/AuthPageComponents/AuthPageBottom/AuthPageBottom";
 import CustomInput from "@/components/Common/CustomInput/CustomInput";
 import AuthPageSubmitButton from "@/components/AuthPageComponents/AuthPageSubmitButton/AuthPageSubmitButton";
 import { loginUser } from "@/services/api/auth";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { validateEmail, validateLength } from "@/utils/validationSchema";
 import { preserveSession } from "@/app/lib/actions";
 import { successToast } from "./constants";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createProductRequest } from "@/services/api/projects";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 
 const Login = () => {
   const toast = useToast();
   const { setUser, setAccessToken, setRefreshToken } = useAuthContext();
+  const { pendingSourcingForm, setPendingSourcingForm } = useGlobalContext();
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   const [isValid, setIsValid] = useState({ email: false, password: false });
-  const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
   const category = searchParams.get("category");
@@ -44,35 +47,33 @@ const Login = () => {
     setLoginDetails({ ...loginDetails, [key]: value });
   };
 
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (data: typeof loginDetails) => loginUser(data, toast),
+  });
+
   const handleLogin = async () => {
-    setIsLoading(true);
-    try {
-      const result = await loginUser(loginDetails, toast);
-      if (result) {
-        await preserveSession(result.user, result.token, result.refreshToken);
-        setUser(result.user);
-        setAccessToken(result.token);
-        setRefreshToken(result.refreshToken);
-        toast(successToast);
+    const result = await mutateAsync(loginDetails);
+    if (result) {
+      await preserveSession(result.user, result.token, result.refreshToken);
+      setUser(result.user);
+      setAccessToken(result.token);
+      setRefreshToken(result.refreshToken);
+      toast(successToast);
 
-        if (category && id) {
-          router.push(`/home/traceable-produce/category/${category}/${id}`);
-        } else if (sourcing_tool) {
-          const form = localStorage.getItem("sourcing_tool_form");
-          const res = await createProductRequest(JSON.parse(form!), toast);
+      if (category && id) {
+        router.push(`/home/traceable-produce/category/${category}/${id}`);
+      } else if (sourcing_tool && pendingSourcingForm) {
+        const res = await createProductRequest(pendingSourcingForm, toast);
 
-          if (res?.message) {
-            localStorage.removeItem("sourcing_tool_form");
-            router.push("/home/sourcing-tool/success");
-          }
-        } else if (redirect) {
-          router.push(`/home/climate-art/${id}`);
-        } else {
-          router.push("/home");
+        if (res?.message) {
+          setPendingSourcingForm(null);
+          router.push("/home/sourcing-tool/success");
         }
+      } else if (redirect) {
+        router.push(`/home/climate-art/${id}`);
+      } else {
+        router.push("/home");
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -133,7 +134,7 @@ const Login = () => {
             </Flex>
             <AuthPageSubmitButton
               text="Sign In"
-              isLoading={isLoading}
+              isLoading={isPending}
               type="submit"
               onClickFunc={() => null}
               isDisabled={

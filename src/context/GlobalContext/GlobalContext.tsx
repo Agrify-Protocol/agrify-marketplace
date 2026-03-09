@@ -1,40 +1,27 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-import {
-  AllProjectsResponse,
-  GlobalContextProps,
-  GlobalContextType,
-} from "./types";
-import { ReportType } from "@/components/ProfilePageComponents/ReportsTable/types";
+import { GlobalContextProps, GlobalContextType } from "./types";
 import { useToast } from "@chakra-ui/react";
 
 const GlobalContext = createContext({} as GlobalContextType);
+
 export const GlobalContextProvider = ({ children }: GlobalContextProps) => {
   const [chosenProject, setChosenProject] = useState<any>(null);
-
-  // ====================THIS IS OUTDATED====================
-  const [allProjects, setAllProjects] = useState<AllProjectsResponse | null>(
-    null
-  );
-  //============================================================
-  const [categories, setCategories] = useState<any[]>([]);
-
-  const [reports, setReports] = useState<ReportType[]>([]);
+  const [pendingSourcingForm, setPendingSourcingForm] = useState<Record<
+    string,
+    any
+  > | null>(null);
   const toast = useToast();
 
   return (
     <GlobalContext.Provider
       value={{
-        allProjects,
-        setAllProjects,
         chosenProject,
         setChosenProject,
-        categories,
-        setCategories,
-        reports,
-        setReports,
         toast,
+        pendingSourcingForm,
+        setPendingSourcingForm,
       }}
     >
       {children}

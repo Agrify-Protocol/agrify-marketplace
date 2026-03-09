@@ -53,7 +53,7 @@ export async function getRefreshToken() {
   return refreshToken ? refreshToken : "";
 }
 
-export async function setUser(user: Record<string, any>) {
+export async function setUser(user: User) {
   cookies().set("carbon_session_user", JSON.stringify(user), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

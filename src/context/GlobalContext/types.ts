@@ -1,40 +1,38 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
-import { ReportType } from "@/components/ProfilePageComponents/ReportsTable/types";
 import { UseToastOptions } from "@chakra-ui/react";
+import { CarbonCredit } from "@/services/api/types";
+
+export interface Project {
+  _id: string;
+  title: string;
+  coverImage: string;
+  tags: string[];
+}
 
 export type GlobalContextProps = {
   children: ReactNode;
 };
 
-export type GlobalContextType = {
-  allProjects: AllProjectsResponse | null;
-  setAllProjects: Dispatch<SetStateAction<AllProjectsResponse | null>>;
-  chosenProject: any | null;
-  setChosenProject: Dispatch<SetStateAction<Object | null>>;
-  categories: any[];
-  setCategories: Dispatch<SetStateAction<any[]>>;
-  reports: ReportType[];
-  setReports: Dispatch<SetStateAction<ReportType[]>>;
-  toast: (options: UseToastOptions) => void;
+export type SourcingForm = {
+  produceName: string;
+  sizeTons: string | number;
+  fullname: string;
+  phoneNumber: string;
+  email: string;
+  deliveryLocation: string;
+  annualBudget: string;
+  preferences: {
+    traceability: boolean;
+    regenerativePractices: boolean;
+    escrowSecured: boolean;
+    labTested: boolean;
+  };
 };
 
-export interface AllProjectsResponse {
-  projects: Project[];
-  total: number;
-  page: number;
-  totalPages: number;
-  nextPage: number;
-  prevPage: null;
-}
-
-export interface Project {
-  _id: string;
-  title: string;
-  tags: Tag[];
-  coverImage: string;
-}
-
-export interface Tag {
-  _id: string;
-  icon: string;
-}
+export type GlobalContextType = {
+  chosenProject: CarbonCredit | null;
+  setChosenProject: Dispatch<SetStateAction<CarbonCredit | null>>;
+  toast: (options: UseToastOptions) => void;
+  pendingSourcingForm: SourcingForm | null;
+  setPendingSourcingForm: Dispatch<SetStateAction<SourcingForm | null>>;
+};
