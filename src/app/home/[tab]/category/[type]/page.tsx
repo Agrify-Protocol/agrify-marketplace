@@ -12,7 +12,7 @@ import location from "@/assets/location.svg";
 import Link from "next/link";
 import Image from "next/image";
 import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
-import SourcingTool from "@/app/home/sourcing-tool/page";
+import SourcingToolForm from "@/components/SourcingToolForm/SourcingToolForm";
 
 const CategoryPage = () => {
   const { type } = useParams();
@@ -47,7 +47,7 @@ const CategoryPage = () => {
         <Text fontSize={{ base: "18px", sm: "24px" }} mb="15px" color="black">
           {`${formatSnakeCaseTitle(type as string)} Market`}
         </Text>
-        <SourcingTool type={type as string} />
+        <SourcingToolForm type={type as string} />
 
         {/* {isLoading ? (
           <PageLoader />

@@ -78,7 +78,7 @@ const useSourcingToolLogic = (id: string | null) => {
 
   const toast = useToast();
   const [selectedCountry, setSelectedCountry] = useState<Record<string, any>>(
-    countryList[0]
+    countryList[0],
   );
   const [form, setForm] = useState<Record<string, any>>({
     produceName: id ? formatSnakeCaseTitle(id) : "",
