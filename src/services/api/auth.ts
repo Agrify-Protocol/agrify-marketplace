@@ -22,7 +22,7 @@ export const registerUser = async (data: RegisterData, toast: any) => {
 
 export const getVerificationToken = async (
   data: { email: string },
-  toast: any
+  toast: any,
 ) => {
   try {
     const request = await authInstance.post("/requestResetPassword", data);
@@ -43,7 +43,7 @@ export const resetPassword = async (data: PasswordResetData, toast: any) => {
 
 export const refreshAccessToken = async (
   token: { refreshToken: string },
-  toast: any
+  toast: any,
 ) => {
   try {
     const request = await authInstance.post("/refreshToken", token);
@@ -55,7 +55,7 @@ export const refreshAccessToken = async (
 
 export const uploadKyc = async (
   details: Record<string, unknown>,
-  toast: any
+  toast: any,
 ) => {
   try {
     const request = await authInstance.post("/kyc", details, {

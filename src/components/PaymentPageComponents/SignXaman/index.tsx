@@ -9,7 +9,7 @@ interface SignXamanProps {
 const SignXaman: React.FC<SignXamanProps> = ({ hash }) => {
   const router = useRouter();
   const handleXamanRedirect = () => {
-    if (hash) {
+    if (hash && /^[a-fA-F0-9-]{8,}$/.test(hash)) {
       router.push(`https://xaman.app/sign/${hash}`);
     }
   };

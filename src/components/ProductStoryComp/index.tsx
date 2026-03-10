@@ -1,16 +1,8 @@
 "use client";
 
-import {
-  Flex,
-  Divider,
-  Box,
-  Grid,
-  Link,
-  Button,
-  Text,
-} from "@chakra-ui/react";
+import { Flex, Divider, Box, Grid, Link, Button, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import bg from "../../assets/passport-bg.png";
 import arrow from "../../assets/arrow.svg";
@@ -20,7 +12,6 @@ import { useProductStory } from "@/hooks/queries/useProjectQueries";
 
 const ProductStoryComp = () => {
   const { id } = useParams();
-  const router = useRouter();
   const { data: res, isLoading, isError, refetch } = useProductStory(id);
 
   const buttons = useMemo(() => {
@@ -112,24 +103,13 @@ const ProductStoryComp = () => {
             <Text mb="16px" color="red.500">
               Failed to load product story. Please try again.
             </Text>
-            <Button variant="outline" size="sm" onClick={() => refetch()}>
+            <Button bg="white" size="sm" onClick={() => refetch()}>
               Retry
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              ml="8px"
-              onClick={() => router.back()}
-            >
-              Go Back
             </Button>
           </Box>
         ) : !res?.listing ? (
           <Box textAlign="center" mt="32px">
             <Text mb="16px">Product story not found.</Text>
-            <Button variant="outline" size="sm" onClick={() => router.back()}>
-              Go Back
-            </Button>
           </Box>
         ) : (
           <Box

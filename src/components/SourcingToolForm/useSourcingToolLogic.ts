@@ -141,7 +141,7 @@ const useSourcingToolLogic = (id: string | null) => {
       ...form,
       phoneNumber: `${root}${suffixes.join("")}${form.phoneNumber}`,
       preferences: OPTIONS.reduce<Record<string, boolean>>((acc, key) => {
-        acc[key] = form.preferences.includes(key);
+        acc[key] = form.preferences?.includes(key);
         return acc;
       }, {}),
     };

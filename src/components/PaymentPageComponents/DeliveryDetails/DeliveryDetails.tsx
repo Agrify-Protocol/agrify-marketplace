@@ -121,16 +121,22 @@ const DeliveryDetails = ({ chosenProject }: { chosenProject: any }) => {
     mutationFn: (data: Record<string, string | number>) =>
       createOrder({ ...data, paymentMethod: method as string }, toast),
     onSuccess: (res) => {
-      if (res) {
-        toast({
-          title: "Successful!",
-          description: "Redirecting to payment... Please don't refresh.",
-          status: "success",
-          position: "top-right",
-          duration: null,
-          isClosable: false,
-        });
-        router.push(res?.paymentURL);
+      if (res?.paymentURL) {
+        try {
+          const parsed = new URL(res.paymentURL);
+          if (parsed.protocol !== "https:") throw new Error("Untrusted redirect");
+          toast({
+            title: "Successful!",
+            description: "Redirecting to payment... Please don't refresh.",
+            status: "success",
+            position: "top-right",
+            duration: null,
+            isClosable: false,
+          });
+          router.push(res.paymentURL);
+        } catch {
+          toast({ title: "Payment Error", description: "Invalid payment redirect. Please try again.", status: "error", position: "top-right", duration: 5000, isClosable: true });
+        }
       }
     },
   });

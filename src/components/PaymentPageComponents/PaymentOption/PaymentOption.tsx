@@ -27,7 +27,17 @@ const PaymentOption = () => {
         };
         payForCarbon(data, toast).then((response) => {
           if (response) {
-            window.open(response.data.authorization_url, "_self");
+            const url = response.data.authorization_url;
+            try {
+              const parsed = new URL(url);
+              const allowed = ["xumm.app", "paystack.co"];
+              if (parsed.protocol !== "https:" || !allowed.some((d) => parsed.hostname === d || parsed.hostname.endsWith("." + d))) {
+                throw new Error("Untrusted redirect");
+              }
+              window.open(url, "_self");
+            } catch {
+              toast({ title: "Payment Error", description: "Invalid payment redirect. Please try again.", status: "error", position: "top-right", duration: 5000, isClosable: true });
+            }
           }
         });
         break;
