@@ -5,6 +5,7 @@ import { Suisse } from "../fonts";
 import { GlobalContextProvider } from "@/context/GlobalContext/GlobalContext";
 import { AuthContextProvider } from "@/context/AuthContext/AuthContext";
 import Navbar from "@/components/Common/Navbar/Navbar";
+import { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,14 +26,16 @@ export default function RootLayout({
         <link rel="icon" href="/icons/logo.svg" type="image/svg+xml" />
       </head>
       <body className={`${Suisse.className} ${inter.className}`}>
-        <GlobalContextProvider>
-          <AuthContextProvider>
-            <Providers>
-              <Navbar />
-              {children}
-            </Providers>
-          </AuthContextProvider>
-        </GlobalContextProvider>
+        <ErrorBoundary>
+          <GlobalContextProvider>
+            <AuthContextProvider>
+              <Providers>
+                <Navbar />
+                {children}
+              </Providers>
+            </AuthContextProvider>
+          </GlobalContextProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );
