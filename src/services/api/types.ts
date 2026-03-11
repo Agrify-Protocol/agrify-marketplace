@@ -1,3 +1,93 @@
+// ── Shared domain types ────────────────────────────────────────────────────
+
+export type CoBenefit = {
+  sdgNumber: number;
+  title: string;
+  description: string;
+};
+
+export type CarbonCreditImage = {
+  url: string;
+};
+
+export type AdditionalResource = {
+  name: string;
+  link: string;
+};
+
+export type CarbonCredit = {
+  id: string;
+  projectName: string;
+  type: string;
+  projectDescription: string;
+  projectDeveloper: string;
+  projectId: string;
+  status: string;
+  methodology: string;
+  pricePerTonne: number;
+  availableTonnes: number;
+  coBenefits: CoBenefit[];
+  images: CarbonCreditImage[];
+  additionalResources: AdditionalResource[];
+  location?: string;
+  chainLink?: string;
+};
+
+export type Category = {
+  productId: string;
+  name: string;
+};
+
+export type OrderListing = {
+  _id: string;
+  name: string;
+  batchSize: number;
+  images: { image: string; _id: string }[];
+  product: { name: string };
+};
+
+export type Order = {
+  orderId: string;
+  listing: OrderListing;
+  deliveryStatus: string;
+  status?: string;
+  createdAt: string;
+  txHash?: string;
+};
+
+export type CarbonCreditHistoryItem = {
+  id: string;
+  projectName: string;
+  type: string;
+  purchasedTonnes: number;
+  purchasedAt: string;
+};
+
+export type Report = {
+  _id: string;
+  reportName: string;
+  createdAt: string;
+};
+
+export type ProductStoryListing = {
+  _id: string;
+  name: string;
+  images: { image: string; _id: string }[];
+  farmer: {
+    firstname: string;
+    lastname: string;
+  };
+};
+
+export type ProductStoryResponse = {
+  listing: ProductStoryListing;
+  narrative: string;
+  practices: string[];
+  chainLink?: string;
+};
+
+// ── Auth & API payload types ───────────────────────────────────────────────
+
 export type LoginData = { email: string; password: string };
 export type RegisterData = {
   firstname: string;

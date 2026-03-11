@@ -13,8 +13,9 @@ import {
 import { Text, Flex, Divider, useToast, Box } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { LoaderCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useCarbonCreditById } from "@/hooks/queries/useHomeQueries";
 
 const CarbonCreditPurchase = () => {
   const { chosenProject } = useGlobalContext();
@@ -22,20 +23,18 @@ const CarbonCreditPurchase = () => {
   const { user } = useAuthContext();
   const toast = useToast();
   const router = useRouter();
+  const { id } = useParams();
   const [totalInXrp, setTotalinXrp] = useState(null);
-  const [storedDetails, setStoredDetails] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("selected_climate_art");
-      setStoredDetails(stored);
-    }
-  }, []);
+  // Re-fetch project data if context was lost (e.g. page refresh)
+  const { data: fetchedData, isLoading: isFetching } = useCarbonCreditById(
+    !chosenProject ? (id as string) : undefined,
+  );
 
-  const details =
-    chosenProject || (storedDetails ? JSON.parse(storedDetails) : null);
+  const details = chosenProject ?? fetchedData?.data;
 
   const handlePurchaseCarbonCredit = (paymentMethod: "card" | "crypto") => {
+    if (!details) return;
     setIsLoading(paymentMethod);
     purchaseCarbonCredits(
       details.id,
@@ -49,23 +48,31 @@ const CarbonCreditPurchase = () => {
       },
       toast,
     ).then((res) => {
-      if (res) {
-        toast({
-          title: "Successful!",
-          description: "Redirecting to payment... Please don’t refresh.",
-          status: "success",
-          position: "top-right",
-          duration: null,
-          isClosable: false,
-        });
-
-        router.push(res?.paymentURL);
+      if (res?.paymentURL) {
+        try {
+          const parsed = new URL(res.paymentURL);
+          if (parsed.protocol !== "https:") throw new Error("Untrusted redirect");
+          toast({
+            title: "Successful!",
+            description: "Redirecting to payment... Please don't refresh.",
+            status: "success",
+            position: "top-right",
+            duration: null,
+            isClosable: false,
+          });
+          router.push(res.paymentURL);
+        } catch {
+          toast({ title: "Payment Error", description: "Invalid payment redirect. Please try again.", status: "error", position: "top-right", duration: 5000, isClosable: true });
+        }
       }
       setIsLoading(null);
     });
   };
 
   useEffect(() => {
+    // Wait for fetch to complete before deciding to redirect
+    if (!chosenProject && isFetching) return;
+
     if (!details) {
       router.push("/home/climate-art");
       return;
@@ -93,9 +100,10 @@ const CarbonCreditPurchase = () => {
         }
       });
     }
-  }, [details, user, router, toast]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [details, user, router, toast, isFetching, chosenProject]);
 
-  return !details ? (
+  return !details || isFetching ? (
     <PageLoader />
   ) : (
     <PurchaseComp name={details?.projectName}>

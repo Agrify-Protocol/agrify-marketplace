@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { validateEmail, validateLength } from "@/utils/validationSchema";
 import { preserveSession } from "@/app/lib/actions";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import { useMutation } from "@tanstack/react-query";
 
 const Signup = () => {
   const router = useRouter();
@@ -30,7 +31,6 @@ const Signup = () => {
     email: true,
     password: true,
   });
-  const [isLoading, setIsLoading] = useState(false);
   const detailsFilled = useObjectCheck(userData);
   const { setUser, setAccessToken, setRefreshToken } = useAuthContext();
 
@@ -50,24 +50,23 @@ const Signup = () => {
     setIsValid((prev) => ({ ...prev, [key]: validate() }));
   };
 
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (data: typeof userData) => registerUser(data, toast),
+  });
+
   const handleRegister = async () => {
-    setIsLoading(true);
-    try {
-      const res = await registerUser(userData, toast);
-      if (res) {
-        await preserveSession(res.user, res.token, res.refreshToken);
-        setUser(res.user);
-        setAccessToken(res.token);
-        setRefreshToken(res.refreshToken);
-        toast(successToast);
-        if (res?.user?.kycStatus === "none") {
-          router.push("/kyc");
-        } else {
-          router.push("/home");
-        }
+    const res = await mutateAsync(userData);
+    if (res) {
+      await preserveSession(res.user, res.token, res.refreshToken);
+      setUser(res.user);
+      setAccessToken(res.token);
+      setRefreshToken(res.refreshToken);
+      toast(successToast);
+      if (res?.user?.kycStatus === "none") {
+        router.push("/kyc");
+      } else {
+        router.push("/home");
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -145,7 +144,7 @@ const Signup = () => {
             }
             text="Sign Up"
             detailsFilled={detailsFilled}
-            isLoading={isLoading}
+            isLoading={isPending}
             onClickFunc={handleRegister}
           />
         </FormControl>

@@ -2,29 +2,22 @@
 
 import ContainerWithDarkenedBg from "@/components/ContainerWithDarkenedBg";
 import CategoryContainer from "@/components/HomePageComponents/CategoryContainer/CategoryContainer";
-import { Box, Button, Flex, Grid, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Text } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import BackButton from "@/components/Common/BackButton/BackButton";
-import { getCarbonCredits } from "@/services/api/projects";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
+import { useCarbonCredits } from "@/hooks/queries/useHomeQueries";
 
 const HomeTab = () => {
   const { tab } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
-  const [produce, setProduce] = useState<Record<string, any>>({});
-  const toast = useToast();
+  const { data, isLoading, isError, refetch } = useCarbonCredits();
+  const produce: Record<string, any>[] = data?.data ?? [];
 
   useEffect(() => {
     window.scroll({ top: 0, behavior: "smooth" });
-    getCarbonCredits(toast).then((response) => {
-      if (response) {
-        setProduce(response?.data);
-      }
-      setIsLoading(false);
-    });
-  }, [toast]);
+  }, []);
 
   return (
     <Box
@@ -92,6 +85,31 @@ const HomeTab = () => {
         {tab === "climate-art" &&
           (isLoading ? (
             <PageLoader />
+          ) : isError ? (
+            <Box
+              bg="white"
+              px={{ base: "20px", md: "28px", lg: "32px" }}
+              py={{ base: "28px", md: "36px", lg: "40px" }}
+              rounded="32px"
+              textAlign="center"
+            >
+              <Text mb="16px" color="red.500">
+                Failed to load climate art. Please try again.
+              </Text>
+              <Button variant="outline" size="sm" onClick={() => refetch()}>
+                Retry
+              </Button>
+            </Box>
+          ) : produce.length === 0 ? (
+            <Box
+              bg="white"
+              px={{ base: "20px", md: "28px", lg: "32px" }}
+              py={{ base: "28px", md: "36px", lg: "40px" }}
+              rounded="32px"
+              textAlign="center"
+            >
+              <Text>No climate art available at the moment.</Text>
+            </Box>
           ) : (
             <Box
               bg="white"

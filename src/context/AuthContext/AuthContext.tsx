@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { AuthContextType, Props, User } from "./types";
 import { refreshAccessToken } from "@/services/api/auth";
 import {
@@ -15,6 +22,19 @@ import { toastFn } from "@/utils/toastFn";
 
 const AuthContext = createContext({} as AuthContextType);
 
+const unauthenticatedRoutes = [
+  "/auth/reset-password",
+  "/auth/signup",
+  "/auth/login",
+  "/product-story",
+  "/home",
+  // "/profile/traceable-produce/produce-details/track",
+];
+
+// Sub-paths that are always protected, even if they're nested under a public prefix.
+// e.g. /home/climate-art/{id}/purchase is protected despite starting with /home.
+const protectedSubpaths = ["/purchase", "/payment", "/redirect"];
+
 export const AuthContextProvider = ({ children }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -25,38 +45,36 @@ export const AuthContextProvider = ({ children }: Props) => {
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
 
-  const unauthenticatedRoutes = [
-    "/auth/reset-password",
-    "/auth/signup",
-    "/auth/login",
-    "/product-story",
-    "/home",
-    // "/profile/traceable-produce/produce-details/track",
-  ];
+  // Tracks the last public page so unauthenticated users are returned there
+  // when they attempt to access a protected route.
+  const lastPublicPath = useRef<string>("/home");
 
   const isUnauthenticated = useMemo(() => {
+    // Protected sub-paths take priority over public prefixes.
+    if (protectedSubpaths.some((sub) => pathname.includes(sub))) return false;
     return unauthenticatedRoutes.some(
       (route) =>
         pathname === route ||
         pathname.startsWith(route) ||
-        pathname.includes(route) ||
         pathname === "/",
     );
   }, [pathname]);
 
+  // Keep lastPublicPath current whenever the user is on a public route.
+  useEffect(() => {
+    if (isUnauthenticated) {
+      lastPublicPath.current = pathname;
+    }
+  }, [isUnauthenticated, pathname]);
+
+  // Resolve user once on mount — must not re-run on route changes.
   useEffect(() => {
     const handleUser = async () => {
-      const user = await getUser();
-      setTimeout(() => {
-        if (user) {
-          setUser(user);
-        }
-        if (!isUnauthenticated && !!user === false) {
-          toastFn(toast, "Unauthorized access. Please sign in.");
-          // router.push("/auth/login");
-        }
-        setFetchingUser(false);
-      }, 1000);
+      const resolvedUser = await getUser();
+      if (resolvedUser) {
+        setUser(resolvedUser);
+      }
+      setFetchingUser(false);
     };
 
     handleUser();
@@ -64,7 +82,19 @@ export const AuthContextProvider = ({ children }: Props) => {
     getRefreshToken().then((token) => {
       setRefreshToken(token);
     });
-  }, [pathname, isUnauthenticated]);
+  }, []);
+
+  // Guard: once user state is resolved, redirect unauthenticated visitors
+  // away from protected routes back to the last public page they were on.
+  // `user` is intentionally excluded from deps — logout is handled by
+  // handleLogout directly, and including it here would race with that redirect.
+  useEffect(() => {
+    if (!fetchingUser && !isUnauthenticated && !user) {
+      toastFn(toast, "Unauthorized access. Please sign in.");
+      router.push(lastPublicPath.current);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchingUser, isUnauthenticated]);
 
   useEffect(() => {
     if (accessToken) {

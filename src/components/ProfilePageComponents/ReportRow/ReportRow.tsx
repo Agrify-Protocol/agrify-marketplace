@@ -38,11 +38,8 @@ const ReportRow = ({
         <Text fontSize={"0.875rem"}>Creation Date</Text>
       </Box>
       <Link
-        href={`/profile/report?id=${id}`}
+        href={`/profile/report?id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}&date=${encodeURIComponent(creation_date)}&time=${encodeURIComponent(creation_time)}`}
         target="_blank"
-        onClick={() =>
-          localStorage.setItem("pdf_details", JSON.stringify(details))
-        }
       >
         <Button
           bgColor={"transparent"}

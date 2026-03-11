@@ -9,6 +9,7 @@ import corn from "@/assets/corn.svg";
 import coin from "@/assets/green-coin.svg";
 import ContainerWithDarkenedBg from "@/components/ContainerWithDarkenedBg";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import ErrorBoundary from "@/components/ErrorBoundary/ErrorBoundary";
 
 export default function Home() {
   const { user } = useAuthContext();
@@ -40,6 +41,7 @@ export default function Home() {
       alignItems={{ base: "flex-start", md: "center" }}
       justifyContent="center"
     >
+      <ErrorBoundary>x</ErrorBoundary>
       {/* <Box mb="70px">
         <Text fontWeight={500} fontSize="32px" color="black" mb={4}>
           Hello{user && `, ${user.firstname}`}

@@ -14,29 +14,27 @@ import React, { useRef, useState } from "react";
 import { ReportModalProps } from "./types";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { Inter_Display } from "@/fonts";
-import { createReport, getReports } from "@/services/api/profile";
-import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
+import { createReport } from "@/services/api/profile";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const ReportModal = ({ setShowModal }: ReportModalProps) => {
   const modalRef = useRef(null);
   const [reportName, setReportName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const { setReports } = useGlobalContext();
+  const queryClient = useQueryClient();
   const toast = useToast();
 
-  const closeModal = () => {
-    setIsLoading(true);
-    createReport({ reportName }, toast).then((res) => {
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (name: string) => createReport({ reportName: name }, toast),
+    onSuccess: async (res) => {
       if (res) {
-        getReports(toast).then((response) => {
-          if (response) {
-            setReports(response);
-            setIsLoading(false);
-            setShowModal(false);
-          }
-        });
+        await queryClient.invalidateQueries({ queryKey: ["reports"] });
+        setShowModal(false);
       }
-    });
+    },
+  });
+
+  const closeModal = () => {
+    mutateAsync(reportName);
   };
 
   useOutsideClick(modalRef, setShowModal, "report_modal");
@@ -90,7 +88,7 @@ const ReportModal = ({ setShowModal }: ReportModalProps) => {
             isDisabled={reportName === ""}
             color={"white"}
             w={"100%"}
-            isLoading={isLoading}
+            isLoading={isPending}
             borderRadius={"2.119rem"}
             fontWeight={500}
             onClick={closeModal}

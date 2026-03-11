@@ -1,32 +1,34 @@
 "use client";
 
-import { Grid, useToast } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { Box, Button, Grid, Text } from "@chakra-ui/react";
+import React from "react";
 import Category from "../Category/Category";
-import { getCategories } from "@/services/api/projects";
-import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import EmptyText from "@/components/Common/EmptyText/EmptyText";
+import { useCategories } from "@/hooks/queries/useHomeQueries";
 
 const CategoryContainer = ({ search }: { search: string }) => {
-  const { categories, setCategories } = useGlobalContext();
-  const [isLoading, setIsLoading] = useState(true);
-  const toast = useToast();
+  const { data, isLoading, isError, refetch } = useCategories(search);
+  const categories: any[] = data?.products ?? [];
 
-  useEffect(() => {
-    getCategories(toast, search).then((response) => {
-      if (response) {
-        setCategories(response?.products);
-      }
-      setIsLoading(false);
-    });
-  }, [search]);
+  if (isLoading) return <PageLoader />;
+
+  if (isError) {
+    return (
+      <Box textAlign="center" mt="48px">
+        <Text mb="16px" color="red.500">
+          Failed to load categories. Please try again.
+        </Text>
+        <Button variant="outline" size="sm" onClick={() => refetch()}>
+          Retry
+        </Button>
+      </Box>
+    );
+  }
 
   return (
     <>
-      {isLoading ? (
-        <PageLoader />
-      ) : categories?.length ? (
+      {categories.length ? (
         <Grid
           mt="3.5rem"
           gridTemplateColumns={{
@@ -37,7 +39,7 @@ const CategoryContainer = ({ search }: { search: string }) => {
           rowGap={10}
           columnGap={{ base: 6, md: 6 }}
         >
-          {categories?.map((category) => (
+          {categories.map((category) => (
             <Category key={category?.productId} category={category} />
           ))}
         </Grid>

@@ -1,40 +1,23 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
-import { ReportType } from "@/components/ProfilePageComponents/ReportsTable/types";
 import { UseToastOptions } from "@chakra-ui/react";
+
+export interface Project {
+  _id: string;
+  title: string;
+  coverImage: string;
+  tags: string[];
+}
 
 export type GlobalContextProps = {
   children: ReactNode;
 };
 
 export type GlobalContextType = {
-  allProjects: AllProjectsResponse | null;
-  setAllProjects: Dispatch<SetStateAction<AllProjectsResponse | null>>;
+  // chosenProject holds either a CarbonCredit or a ProduceListing depending on context —
+  // needs discriminated union once both shapes are fully typed
   chosenProject: any | null;
-  setChosenProject: Dispatch<SetStateAction<Object | null>>;
-  categories: any[];
-  setCategories: Dispatch<SetStateAction<any[]>>;
-  reports: ReportType[];
-  setReports: Dispatch<SetStateAction<ReportType[]>>;
+  setChosenProject: Dispatch<SetStateAction<any | null>>;
   toast: (options: UseToastOptions) => void;
+  pendingSourcingForm: Record<string, any> | null;
+  setPendingSourcingForm: Dispatch<SetStateAction<Record<string, any> | null>>;
 };
-
-export interface AllProjectsResponse {
-  projects: Project[];
-  total: number;
-  page: number;
-  totalPages: number;
-  nextPage: number;
-  prevPage: null;
-}
-
-export interface Project {
-  _id: string;
-  title: string;
-  tags: Tag[];
-  coverImage: string;
-}
-
-export interface Tag {
-  _id: string;
-  icon: string;
-}

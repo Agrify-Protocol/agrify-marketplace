@@ -5,7 +5,7 @@ const ContainerWithDarkenedBg = ({
   opacity = 0.5,
   children,
 }: {
-  bg: { src: string };
+  bg: { src: string } | string;
   opacity?: number;
   children: React.ReactNode;
 }) => {
@@ -24,7 +24,7 @@ const ContainerWithDarkenedBg = ({
         width="100%"
         height="100%"
         bgImage={`linear-gradient(rgba(0,0,0,${opacity}), rgba(0,0,0,${opacity})), url(${
-          bg?.src ?? bg
+          typeof bg === "string" ? bg : bg.src
         })`}
         bgSize="cover"
         bgPos="center"

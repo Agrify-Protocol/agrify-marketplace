@@ -1,31 +1,28 @@
 "use client";
 
-import { Box, Flex, Text, useToast } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import React from "react";
 import BackButton from "../BackButton/BackButton";
 import { InvoiceModalProps } from "./types";
 import Invoice from "@/components/PaymentPageComponents/Invoice/Invoice";
 import { Inter_Display } from "@/fonts";
 import { InvoiceData } from "@/components/PaymentPageComponents/Invoice/types";
-import { getSingleInvoice } from "@/services/api/invoice";
 import Spinner from "../Spinner/Spinner";
 import { parseSingleInvoiceResponse } from "@/utils/parseSingleInvoiceResponse";
+import { useSingleInvoice } from "@/hooks/queries/useInvoiceQueries";
 
 const InvoiceModal = ({ closeModal, txDetail }: InvoiceModalProps) => {
-  const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const toast = useToast();
+  const {
+    data: rawData,
+    isLoading,
+    isError,
+    refetch,
+  } = useSingleInvoice(txDetail?.txID as string | undefined);
 
-  useEffect(() => {
-    setIsLoading(true);
-    getSingleInvoice(txDetail?.txID as string, toast).then((response) => {
-      if (response) {
-        const data = parseSingleInvoiceResponse(response);
-        setInvoiceData(data);
-        setIsLoading(false);
-      }
-    });
-  }, [txDetail]);
+  const invoiceData: InvoiceData | null = rawData
+    ? parseSingleInvoiceResponse(rawData)
+    : null;
+
   return (
     <Box
       position={"fixed"}
@@ -47,7 +44,7 @@ const InvoiceModal = ({ closeModal, txDetail }: InvoiceModalProps) => {
         minH={{ lg: "37.5rem" }}
         overflowY={{ lg: "auto" }}
       >
-        {isLoading && !invoiceData ? (
+        {isLoading ? (
           <Flex
             h={"fit-content"}
             w={"100%"}
@@ -56,6 +53,16 @@ const InvoiceModal = ({ closeModal, txDetail }: InvoiceModalProps) => {
           >
             <Spinner />
           </Flex>
+        ) : isError ? (
+          <Box textAlign="center" mt="32px">
+            <BackButton customFunction={closeModal} />
+            <Text mb="16px" color="red.500">
+              Failed to load invoice details. Please try again.
+            </Text>
+            <Button variant="outline" size="sm" onClick={() => refetch()}>
+              Retry
+            </Button>
+          </Box>
         ) : (
           <>
             <BackButton customFunction={closeModal} />

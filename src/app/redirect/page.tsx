@@ -1,30 +1,41 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import PaystackRedirection from "@/components/PaystackRedirection";
 import { useSearchParams } from "next/navigation";
-import { getCarboncreditById, getProduceDetails } from "@/services/api/profile";
-import { useToast } from "@chakra-ui/react";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import SignXaman from "@/components/PaymentPageComponents/SignXaman";
+import { useProduceDetails, useCarbonCreditForRedirect } from "@/hooks/queries/useOrderQueries";
 
 const Confirmation = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  const tab = searchParams.get("tab")?.replace("%", " "); //climate art, traceable produce, sign
+  const tab = searchParams.get("tab")?.replace("%", " ");
   const hash = searchParams.get("hash");
-  const toast = useToast();
   const { user } = useAuthContext();
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<Record<string, any>>({});
+
   const isNotSignTab = useMemo(() => {
     return (
       ["traceable produce", "climate art"].includes(tab as string) || !hash
     );
-  }, [tab]);
+  }, [tab, hash]);
 
-  const getRedirectType = (status: string) => {
+  const isTraceable = isNotSignTab && tab === "traceable produce";
+  const isClimateArt = isNotSignTab && tab === "climate art";
+
+  const {
+    data: produceData,
+    isLoading: produceLoading,
+  } = useProduceDetails(isTraceable ? id : null, !!user);
+
+  const {
+    data: carbonData,
+    isLoading: carbonLoading,
+  } = useCarbonCreditForRedirect(isClimateArt ? id : null, !!user);
+
+  const loading = isTraceable ? produceLoading : isClimateArt ? carbonLoading : false;
+  const getRedirectType = (status: string | undefined) => {
     switch (status) {
       case "paid":
       case "purchased":
@@ -36,34 +47,19 @@ const Confirmation = () => {
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      if (isNotSignTab) {
-        (tab === "traceable produce" ? getProduceDetails : getCarboncreditById)(
-          id as string,
-          toast,
-        )
-          .then((response) => {
-            if (response) {
-              setData(response);
-            }
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      } else {
-        setLoading(false);
-      }
-    }
-  }, [user, id, isNotSignTab]);
+  const redirectStatus = isTraceable
+    ? produceData?.status
+    : isClimateArt
+      ? carbonData?.data?.status
+      : undefined;
 
-  return loading ? (
-    <PageLoader />
-  ) : !isNotSignTab ? (
-    <SignXaman hash={hash || ""} />
-  ) : (
+  if (loading) return <PageLoader />;
+
+  if (!isNotSignTab) return <SignXaman hash={hash || ""} />;
+
+  return (
     <PaystackRedirection
-      type={getRedirectType(data?.data?.status || data?.status)}
+      type={getRedirectType(redirectStatus)}
     />
   );
 };

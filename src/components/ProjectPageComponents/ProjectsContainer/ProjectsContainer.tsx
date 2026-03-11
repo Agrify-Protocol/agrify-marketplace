@@ -1,25 +1,32 @@
 "use client";
 
-import { Grid, useToast } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { projects } from "./constants";
+import { Box, Button, Grid, Text } from "@chakra-ui/react";
+import React from "react";
 import Project from "../Project/Project";
-import { getAllProjects } from "@/services/api/projects";
-import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import { useAllProjects } from "@/hooks/queries/useProjectQueries";
+import PageLoader from "@/components/Common/PageLoader/PageLoader";
 
 const ProjectsContainer = () => {
   const { user } = useAuthContext();
-  const { allProjects, setAllProjects } = useGlobalContext();
-  const toast = useToast();
+  const { data, isLoading, isError, refetch } = useAllProjects(1, !!user);
 
-  useEffect(() => {
-    if (user) {
-      getAllProjects(1, toast).then((result) => {
-        if (result) setAllProjects(result);
-      });
-    }
-  }, [user]);
+  const projects = data?.projects ?? [];
+
+  if (isLoading) return <PageLoader />;
+
+  if (isError) {
+    return (
+      <Box textAlign="center" mt="48px" px="3.838rem">
+        <Text mb="16px" color="red.500">
+          Failed to load projects. Please try again.
+        </Text>
+        <Button variant="outline" size="sm" onClick={() => refetch()}>
+          Retry
+        </Button>
+      </Box>
+    );
+  }
 
   return (
     <Grid
@@ -30,9 +37,9 @@ const ProjectsContainer = () => {
       gap={"2.44rem"}
       gridTemplateColumns={"repeat(auto-fill, minmax(17.5rem, 1fr))"}
     >
-      {allProjects?.projects.map((project) => {
-        return <Project key={project._id} project={project} />;
-      })}
+      {projects.map((project: any) => (
+        <Project key={project._id} project={project} />
+      ))}
     </Grid>
   );
 };

@@ -16,6 +16,7 @@ import Button from "@/components/Common/Button";
 import { uploadKyc } from "@/services/api/auth";
 import { useRouter } from "next/navigation";
 import { setUser } from "../lib/actions";
+import { useMutation } from "@tanstack/react-query";
 
 const KYC = () => {
   const [details, setDetails] = useState({
@@ -26,7 +27,6 @@ const KYC = () => {
     businessDescription: "",
   });
 
-  const [loading, setLoading] = useState(false);
   const [businessProof, setBusinessProof] = useState<File[]>([]);
   const [previews, setPreviews] = useState<PreviewItem[]>([]);
   const router = useRouter();
@@ -35,32 +35,31 @@ const KYC = () => {
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    >,
   ) => {
     const { id, value } = e.target;
     setDetails((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleUploadKyc = async () => {
-    setLoading(true);
-    try {
-      const res = await uploadKyc(
-        { ...details, businessProof: businessProof[0] },
-        toast
-      );
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (data: Record<string, unknown>) => uploadKyc(data, toast),
+  });
 
-      if (res) {
-        await setUser(res.user);
-        toast({
-          title: "Successful!",
-          description: res?.message ?? "KYC uploaded successfully",
-          status: "success",
-          position: "top-right",
-        });
-        router.push("/kyc/completed");
-      }
-    } finally {
-      setLoading(false);
+  const handleUploadKyc = async () => {
+    const res = await mutateAsync({
+      ...details,
+      businessProof: businessProof[0],
+    });
+
+    if (res) {
+      await setUser(res.user);
+      toast({
+        title: "Successful!",
+        description: res?.message ?? "KYC uploaded successfully",
+        status: "success",
+        position: "top-right",
+      });
+      router.push("/kyc/completed");
     }
   };
 
@@ -162,9 +161,9 @@ const KYC = () => {
             disabled={
               Object.values(details).some((value) => value === "") ||
               businessProof.length === 0 ||
-              loading
+              isPending
             }
-            isLoading={loading}
+            isLoading={isPending}
             onClick={handleUploadKyc}
           >
             Continue

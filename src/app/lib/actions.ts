@@ -11,22 +11,22 @@ export async function preserveSession(
   cookies().set("carbon_session_user", JSON.stringify(user), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
     maxAge: 60 * 60 * 24 * 7, // one week
-    // path: "/auth/login",
   });
 
   cookies().set("carbon_session_access_token", accessToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
     maxAge: 60 * 60, // 60 minutes
-    // path: "/auth/login",
   });
 
   cookies().set("carbon_session_refresh_token", refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
     maxAge: 60 * 60 * 24 * 7, // one week
-    // path: "/auth/login",
   });
 }
 
@@ -53,11 +53,11 @@ export async function getRefreshToken() {
   return refreshToken ? refreshToken : "";
 }
 
-export async function setUser(user: Record<string, any>) {
+export async function setUser(user: User) {
   cookies().set("carbon_session_user", JSON.stringify(user), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
     maxAge: 60 * 60 * 24 * 7, // one week
-    // path: "/auth/login",
   });
 }

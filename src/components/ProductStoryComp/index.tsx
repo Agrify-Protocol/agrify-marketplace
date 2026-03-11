@@ -1,29 +1,18 @@
 "use client";
 
-import { getProductStory } from "@/services/api/projects";
-import {
-  Flex,
-  Divider,
-  Box,
-  Grid,
-  Link,
-  Button,
-  useToast,
-  Text,
-} from "@chakra-ui/react";
+import { Flex, Divider, Box, Grid, Link, Button, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useState, useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import bg from "../../assets/passport-bg.png";
 import arrow from "../../assets/arrow.svg";
 import PageLoader from "../Common/PageLoader/PageLoader";
 import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
+import { useProductStory } from "@/hooks/queries/useProjectQueries";
 
 const ProductStoryComp = () => {
   const { id } = useParams();
-  const toast = useToast();
-  const [res, setRes] = useState<any>({});
-  const [loading, setLoading] = useState(true);
+  const { data: res, isLoading, isError, refetch } = useProductStory(id);
 
   const buttons = useMemo(() => {
     return {
@@ -33,13 +22,6 @@ const ProductStoryComp = () => {
       "View On Chain": res?.chainLink ?? "#",
     };
   }, [res]);
-
-  useEffect(() => {
-    getProductStory(id, toast).then((response) => {
-      if (response) setRes(response);
-      setLoading(false);
-    });
-  }, [id, toast]);
 
   const headerH = { base: "72px", lg: "88px" };
 
@@ -114,9 +96,22 @@ const ProductStoryComp = () => {
         px={{ base: 0, md: "22px", lg: 0 }}
         zIndex={1}
       >
-        {loading ? (
+        {isLoading ? (
           <PageLoader />
-        ) : res?.listing ? (
+        ) : isError ? (
+          <Box textAlign="center" mt="32px">
+            <Text mb="16px" color="red.500">
+              Failed to load product story. Please try again.
+            </Text>
+            <Button bg="white" size="sm" onClick={() => refetch()}>
+              Retry
+            </Button>
+          </Box>
+        ) : !res?.listing ? (
+          <Box textAlign="center" mt="32px">
+            <Text mb="16px">Product story not found.</Text>
+          </Box>
+        ) : (
           <Box
             width={{ base: "90%", sm: "85%", md: "457px" }}
             maxW="457px"
@@ -233,7 +228,7 @@ const ProductStoryComp = () => {
               ))}
             </Box>
           </Box>
-        ) : null}
+        )}
       </Box>
     </Box>
   );

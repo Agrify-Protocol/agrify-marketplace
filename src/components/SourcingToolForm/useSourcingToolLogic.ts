@@ -9,6 +9,9 @@ import {
   validateNumberInput,
 } from "@/utils/validationSchema";
 import { createProductRequest } from "@/services/api/projects";
+import { useAuthContext } from "@/context/AuthContext/AuthContext";
+import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
+import { useMutation } from "@tanstack/react-query";
 import "./index.css";
 
 const useSourcingToolLogic = (id: string | null) => {
@@ -77,13 +80,14 @@ const useSourcingToolLogic = (id: string | null) => {
   };
 
   const toast = useToast();
+  const { accessToken } = useAuthContext();
+  const { setPendingSourcingForm } = useGlobalContext();
   const [selectedCountry, setSelectedCountry] = useState<Record<string, any>>(
     countryList[0],
   );
   const [form, setForm] = useState<Record<string, any>>({
     produceName: id ? formatSnakeCaseTitle(id) : "",
   });
-  const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [validatedInfo, setValidatedInfo] = useState<Record<string, any>>({});
@@ -123,33 +127,35 @@ const useSourcingToolLogic = (id: string | null) => {
     ].some((key) => form[key] === "" || form[key] === undefined) ||
     Object.values(validatedInfo).some((item) => item === false);
 
+  const { mutateAsync, isPending: isLoading } = useMutation({
+    mutationFn: (payload: Record<string, any>) =>
+      createProductRequest(payload, toast),
+  });
+
   const handleCreateProductRequest = async () => {
-    try {
-      setIsLoading(true);
+    const {
+      idd: { root, suffixes },
+    } = selectedCountry;
 
-      const {
-        idd: { root, suffixes },
-      } = selectedCountry;
+    const modifiedObj = {
+      ...form,
+      phoneNumber: `${root}${suffixes.join("")}${form.phoneNumber}`,
+      preferences: OPTIONS.reduce<Record<string, boolean>>((acc, key) => {
+        acc[key] = form.preferences?.includes(key);
+        return acc;
+      }, {}),
+    };
 
-      const modifiedObj = {
-        ...form,
-        phoneNumber: `${root}${suffixes.join("")}${form.phoneNumber}`,
-        preferences: OPTIONS.reduce<Record<string, boolean>>((acc, key) => {
-          acc[key] = form.preferences.includes(key);
-          return acc;
-        }, {}),
-      };
+    if (!accessToken) {
+      setPendingSourcingForm(modifiedObj);
+      router.push("/auth/login?sourcing-tool=true");
+      return;
+    }
 
-      const res = await createProductRequest(modifiedObj, toast);
+    const res = await mutateAsync(modifiedObj);
 
-      if (res?.message) {
-        localStorage.removeItem("sourcing_tool_form");
-        router.push("/home/sourcing-tool/success");
-      }
-    } catch (error) {
-      console.error("Error creating product request:", error);
-    } finally {
-      setIsLoading(false);
+    if (res?.message) {
+      router.push("/home/sourcing-tool/success");
     }
   };
 
