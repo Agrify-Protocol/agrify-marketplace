@@ -41,16 +41,11 @@ export const resetPassword = async (data: PasswordResetData, toast: any) => {
   }
 };
 
-export const refreshAccessToken = async (
-  token: { refreshToken: string },
-  toast: any,
-) => {
-  try {
-    const request = await authInstance.post("/refreshToken", token);
-    return request.data;
-  } catch (error: any) {
-    toastFn(toast, error);
-  }
+export const refreshAccessToken = async (token: {
+  refreshToken: string;
+}) => {
+  const request = await authInstance.post("/refreshToken", token);
+  return request.data;
 };
 
 export const uploadKyc = async (
