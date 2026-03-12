@@ -106,35 +106,53 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   const fifteenMinutes = 15 * 60 * 1000;
 
-  const handleLogout = () => {
+  const clearSession = () => {
     resetAuthCookies().then(() => {
       setUser(null);
+      setRefreshToken("");
       localStorage.removeItem("access_token");
-      router.push("/auth/login");
     });
+  };
+
+  const handleLogout = () => {
+    clearSession();
+    router.push("/auth/login");
   };
 
   useEffect(() => {
     const handleRefresh = () => {
-      if (user && refreshToken) {
-        refreshAccessToken({ refreshToken }, toast)
-          .then((result) => {
-            if (result) {
-              preserveSession(user, result.token, refreshToken);
-              setAccessToken(result.token);
+      if (!user || !refreshToken) return;
+
+      refreshAccessToken({ refreshToken })
+        .then((result) => {
+          if (result) {
+            preserveSession(user, result.token, refreshToken);
+            setAccessToken(result.token);
+          } else {
+            // Refresh returned no data — treat as expired
+            if (isUnauthenticated) {
+              clearSession();
+            } else {
+              toastFn(toast, "Session expired. Please sign in again.");
+              handleLogout();
             }
-          })
-          .catch(() => {
+          }
+        })
+        .catch(() => {
+          if (isUnauthenticated) {
+            clearSession();
+          } else {
             toastFn(toast, "Session expired. Please sign in again.");
             handleLogout();
-          });
-      }
+          }
+        });
     };
 
     const interval = setInterval(handleRefresh, fifteenMinutes);
     handleRefresh();
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, refreshToken]);
 
   //inactivity logout
