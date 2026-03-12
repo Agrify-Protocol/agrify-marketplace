@@ -56,7 +56,7 @@ const HomeTab = () => {
           <Link
             href={
               tab === "traceable-produce"
-                ? "https://farmer.agrifyafrica.xyz/"
+                ? "https://farmer.agrify.earth/"
                 : "https://agrify-developer-tools.hostless.site/"
             }
             target="_blank"
