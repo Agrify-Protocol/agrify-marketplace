@@ -42,14 +42,14 @@ const CategoryPage = () => {
     >
       <BackButton />
 
-      <Box mt="30px">
-        {/* mb="40px"  */}
+      <Box mt="40px">
+        {/* mb="30px"  */}
         <Text fontSize={{ base: "18px", sm: "24px" }} mb="15px" color="black">
           {`${formatSnakeCaseTitle(type as string)} Market`}
         </Text>
-        <SourcingToolForm type={type as string} />
+        {/* <SourcingToolForm type={type as string} /> */}
 
-        {/* {isLoading ? (
+        {isLoading ? (
           <PageLoader />
         ) : categoryData?.activeProducts?.length ? (
           <Grid
@@ -158,7 +158,7 @@ const CategoryPage = () => {
           </Grid>
         ) : (
           <EmptyText />
-        )} */}
+        )}
       </Box>
     </Box>
   );
