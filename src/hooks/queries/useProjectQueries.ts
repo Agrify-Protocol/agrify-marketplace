@@ -8,6 +8,33 @@ import { Transaction } from "@/components/ProjectPageComponents/Purchases/types"
 import { ProductStoryResponse } from "@/services/api/types";
 import { useQuery } from "@tanstack/react-query";
 
+export type CategoryListing = {
+  _id: string;
+  pricePerKg: number;
+  farm: {
+    name: string;
+    state: string;
+    country: string;
+    farmImages: { image: string; _id: string }[];
+  };
+};
+
+async function fetchListingsByCategory(
+  category: string
+): Promise<{ activeProducts: CategoryListing[] }> {
+  const res = await defaultInstance.get(`/listings/get-by-category/${category}`);
+  return res.data;
+}
+
+export function useListingsByCategory(category: string | string[] | undefined) {
+  const stableCategory = Array.isArray(category) ? category[0] : category;
+  return useQuery({
+    queryKey: ["listingsByCategory", stableCategory],
+    queryFn: () => fetchListingsByCategory(stableCategory!),
+    enabled: !!stableCategory,
+  });
+}
+
 async function fetchAllProjects(
   page: number,
 ): Promise<{ projects: Project[] }> {

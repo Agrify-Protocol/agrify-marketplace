@@ -1,10 +1,7 @@
 "use client";
 
-import { Box, Flex, Grid, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Text } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getListingsByCategories } from "@/services/api/projects";
-import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import BackButton from "@/components/Common/BackButton/BackButton";
 import EmptyText from "@/components/Common/EmptyText/EmptyText";
@@ -12,28 +9,19 @@ import location from "@/assets/location.svg";
 import Link from "next/link";
 import Image from "next/image";
 import { formatSnakeCaseTitle } from "@/utils/formatSnakeCaseTitle";
-import SourcingToolForm from "@/components/SourcingToolForm/SourcingToolForm";
+import { useListingsByCategory } from "@/hooks/queries/useProjectQueries";
+import { useEffect } from "react";
+// import SourcingToolForm from "@/components/SourcingToolForm/SourcingToolForm";
 
 const CategoryPage = () => {
   const { type } = useParams();
-  const { user } = useAuthContext();
-  const [isLoading, setIsLoading] = useState(true);
-  const [categoryData, setCategoryData] = useState<any>([]);
-  const toast = useToast();
+  const { data, isLoading, isError, refetch } = useListingsByCategory(type);
 
   useEffect(() => {
-    getListingsByCategories(type as string, toast)
-      .then((response) => {
-        if (response) {
-          setCategoryData(response);
-          window.scroll({
-            top: 0,
-            behavior: "smooth",
-          });
-        }
-      })
-      .finally(() => setIsLoading(false));
-  }, [type, user]);
+    if (data) {
+      window.scroll({ top: 0, behavior: "smooth" });
+    }
+  }, [data]);
 
   return (
     <Box
@@ -47,11 +35,19 @@ const CategoryPage = () => {
         <Text fontSize={{ base: "18px", sm: "24px" }} mb="15px" color="black">
           {`${formatSnakeCaseTitle(type as string)} Market`}
         </Text>
-        {/* <SourcingToolForm type={type as string} /> */}
-
+        {/* <SourcingToolForm type={type as string} /> */}{" "}
         {isLoading ? (
           <PageLoader />
-        ) : categoryData?.activeProducts?.length ? (
+        ) : isError ? (
+          <Box textAlign="center" my="15vh">
+            <Text mb="16px" color="red.500">
+              Failed to load listings. Please try again.
+            </Text>
+            <Button variant="outline" size="sm" onClick={() => refetch()}>
+              Retry
+            </Button>
+          </Box>
+        ) : data?.activeProducts?.length ? (
           <Grid
             gridTemplateColumns={{
               base: "1fr",
@@ -61,7 +57,7 @@ const CategoryPage = () => {
             rowGap={10}
             columnGap={{ base: 6, md: 6 }}
           >
-            {categoryData?.activeProducts?.map((item: any) => (
+            {data?.activeProducts?.map((item) => (
               <Link
                 key={item?._id}
                 href={`/home/traceable-produce/category/${type}/${item?._id}`}
