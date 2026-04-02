@@ -25,8 +25,8 @@ const CarbonCreditPurchase = () => {
   const router = useRouter();
   const { id } = useParams();
   const [totalInXrp, setTotalinXrp] = useState(null);
+  const [isXrpRefreshing, setIsXrpRefreshing] = useState(false);
 
-  // Re-fetch project data if context was lost (e.g. page refresh)
   const { data: fetchedData, isLoading: isFetching } = useCarbonCreditById(
     !chosenProject ? (id as string) : undefined,
   );
@@ -51,7 +51,8 @@ const CarbonCreditPurchase = () => {
       if (res?.paymentURL) {
         try {
           const parsed = new URL(res.paymentURL);
-          if (parsed.protocol !== "https:") throw new Error("Untrusted redirect");
+          if (parsed.protocol !== "https:")
+            throw new Error("Untrusted redirect");
           toast({
             title: "Successful!",
             description: "Redirecting to payment... Please don't refresh.",
@@ -62,7 +63,14 @@ const CarbonCreditPurchase = () => {
           });
           router.push(res.paymentURL);
         } catch {
-          toast({ title: "Payment Error", description: "Invalid payment redirect. Please try again.", status: "error", position: "top-right", duration: 5000, isClosable: true });
+          toast({
+            title: "Payment Error",
+            description: "Invalid payment redirect. Please try again.",
+            status: "error",
+            position: "top-right",
+            duration: 5000,
+            isClosable: true,
+          });
         }
       }
       setIsLoading(null);
@@ -70,7 +78,6 @@ const CarbonCreditPurchase = () => {
   };
 
   useEffect(() => {
-    // Wait for fetch to complete before deciding to redirect
     if (!chosenProject && isFetching) return;
 
     if (!details) {
@@ -94,11 +101,19 @@ const CarbonCreditPurchase = () => {
       router.push("/home/climate-art");
     } else {
       const pricePerTonne = details.pricePerTonne ?? 0;
-      convertUsdToXrpRate(pricePerTonne + 1.46, toast).then((res) => {
-        if (res) {
-          setTotalinXrp(res?.price);
-        }
-      });
+      const fetchXrp = () => {
+        setIsXrpRefreshing(true);
+        convertUsdToXrpRate(pricePerTonne + 1.46, toast).then((res) => {
+          if (res) {
+            setTotalinXrp(res?.price);
+          }
+          setIsXrpRefreshing(false);
+        });
+      };
+
+      fetchXrp();
+      const interval = setInterval(fetchXrp, 5000);
+      return () => clearInterval(interval);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [details, user, router, toast, isFetching, chosenProject]);
@@ -142,11 +157,27 @@ const CarbonCreditPurchase = () => {
         label="Equivalent in XRP"
         value={
           totalInXrp ? (
-            [totalInXrp as number]?.toLocaleString()
+            <Flex alignItems="center" gap="6px">
+              <Text
+                fontSize={{ base: "14px", lg: "1.125rem" }}
+                fontWeight={450}
+                color="rgba(1, 19, 8, 0.7)"
+              >
+                {[totalInXrp as number]?.toLocaleString()}
+              </Text>
+              {isXrpRefreshing && (
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                >
+                  <LoaderCircle size={13} color="#0CC14C" />
+                </motion.div>
+              )}
+            </Flex>
           ) : (
             <motion.div
               animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
             >
               <LoaderCircle size={20} color="#0CC14C" />
             </motion.div>
@@ -154,9 +185,18 @@ const CarbonCreditPurchase = () => {
         }
       />
 
+      <Text
+        fontSize="xs"
+        color="gray.400"
+        mt="-8px"
+        mb={{ base: "1.5rem", lg: "2rem" }}
+      >
+        XRP rate refreshes every 5s and is subject to change.
+      </Text>
+
       <Flex
         gap={{ base: "0.75rem", lg: "1rem" }}
-        mt={{ base: "2rem", lg: "3rem" }}
+        mt={{ base: "0.5rem", lg: "1rem" }}
         direction={{ base: "column", sm: "row" }}
       >
         <Box flex={1}>
