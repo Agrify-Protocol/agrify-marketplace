@@ -15,19 +15,29 @@ const Purchase = () => {
   const { chosenProject } = useGlobalContext();
   const router = useRouter();
   const [totalInXrp, setTotalinXrp] = useState(null);
+  const [isXrpRefreshing, setIsXrpRefreshing] = useState(false);
   const toast = useToast();
 
   useEffect(() => {
     if (!chosenProject) {
       router.push("/home/traceable-produce");
-    } else {
-      const totalPrice = chosenProject?.totalPrice ?? 0;
+      return;
+    }
+
+    const totalPrice = chosenProject?.totalPrice ?? 0;
+    const fetchXrp = () => {
+      setIsXrpRefreshing(true);
       convertUsdToXrpRate(totalPrice + 1.46, toast).then((res) => {
         if (res) {
           setTotalinXrp(res?.price);
         }
+        setIsXrpRefreshing(false);
       });
-    }
+    };
+
+    fetchXrp();
+    const interval = setInterval(fetchXrp, 5000);
+    return () => clearInterval(interval);
   }, [chosenProject, router, toast]);
 
   return (
@@ -70,11 +80,27 @@ const Purchase = () => {
         label="Equivalent in XRP"
         value={
           totalInXrp ? (
-            [totalInXrp as number]?.toLocaleString()
+            <Flex alignItems="center" gap="6px">
+              <Text
+                fontSize={{ base: "14px", lg: "1.125rem" }}
+                fontWeight={450}
+                color="rgba(1, 19, 8, 0.7)"
+              >
+                {[totalInXrp as number]?.toLocaleString()}
+              </Text>
+              {isXrpRefreshing && (
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                >
+                  <LoaderCircle size={13} color="#0CC14C" />
+                </motion.div>
+              )}
+            </Flex>
           ) : (
             <motion.div
               animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
             >
               <LoaderCircle size={20} color="#0CC14C" />
             </motion.div>
@@ -82,9 +108,13 @@ const Purchase = () => {
         }
       />
 
+      <Text fontSize="xs" color="gray.400" mt="-8px" mb={{ base: "1.5rem", lg: "2rem" }}>
+        XRP rate refreshes every 5s and is subject to change.
+      </Text>
+
       <Flex
         gap={{ base: "0.75rem", lg: "1rem" }}
-        mt={{ base: "2rem", lg: "3rem" }}
+        mt={{ base: "0.5rem", lg: "1rem" }}
         direction={{ base: "column", sm: "row" }}
       >
         <Box flex={1}>
