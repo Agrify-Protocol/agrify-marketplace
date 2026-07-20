@@ -140,8 +140,8 @@ const SingleCarbonCredit = () => {
                   mb={user?.kycStatus !== "approved" ? 2 : 0}
                 >
                   {isLoggedIn
-                    ? "Buy Climate Art"
-                    : "Sign In to Buy Climate Art"}
+                    ? "Buy Artefacts"
+                    : "Sign In to Buy Artefacts"}
                 </Button>
                 {isLoggedIn && user?.kycStatus && (
                   <KYCRedirect status={user?.kycStatus} />

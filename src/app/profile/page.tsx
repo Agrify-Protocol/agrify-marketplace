@@ -42,7 +42,7 @@ const Profile = () => {
   const isError = ordersError || carbonError;
 
   const activeList =
-    tabId === "climate art" ? carbonCreditList : organicProduceList;
+    tabId === "artefacts" ? carbonCreditList : organicProduceList;
 
   return (
     <Box w="100%" pb={{ base: "4rem", lg: "6rem" }}>
@@ -77,7 +77,7 @@ const Profile = () => {
       {/* Main Content */}
       <Box px={{ base: "20px", md: "32px", lg: "40px" }}>
         <SectionTabs
-          sections={["Traceable Produce", "Climate Art"]}
+          sections={["Traceable Produce", "Artefacts"]}
           currentSection={tabId}
           type="my profile"
         />
@@ -103,20 +103,20 @@ const Profile = () => {
         ) : activeList.length === 0 ? (
           <Box width="100%" textAlign="center" mt="64px">
             <Text>
-              {tabId === "climate art"
-                ? "No art orders found."
+              {tabId === "artefacts"
+                ? "No artefact orders found."
                 : "No traceable produce orders found."}
             </Text>
           </Box>
         ) : (
           <Table
             thead={
-              tabId === "climate art"
+              tabId === "artefacts"
                 ? ["Name", "Type", "Amount", "Date"]
                 : ["Name", "Status", "Size", "Date"]
             }
           >
-            {tabId === "climate art"
+            {tabId === "artefacts"
               ? carbonCreditList?.map(
                   (item: Record<string, string | null | number>) => (
                     <Tr
