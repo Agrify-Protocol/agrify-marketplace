@@ -13,11 +13,11 @@ export default function Home() {
   const actions = [
     {
       id: "climate-art",
-      title: "Buy Climate Art",
+      title: "Buy Artefacts",
       icon: coin,
       bg: carbonCreditbg,
       description:
-        "Offset your emissions with tokenised climate art representing tonnes of carbon captured from regenertative agriculture.",
+        "Purchase art work that tells the story of impact done in communities, represented by retired carbon credits with evidence on the blockchain",
     },
     {
       id: "traceable-produce",

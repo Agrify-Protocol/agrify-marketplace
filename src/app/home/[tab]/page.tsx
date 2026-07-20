@@ -41,7 +41,7 @@ const HomeTab = () => {
       >
         {tab === "traceable-produce"
           ? "Buy Traceable Produce"
-          : "Buy Climate Art"}
+          : "Buy Artefacts"}
       </Text>
 
       <Box>
@@ -51,7 +51,7 @@ const HomeTab = () => {
           alignItems="center"
         >
           <Text color="black" fontSize={{ base: "16px", md: "18px" }}>
-            Trending {tab === "traceable-produce" ? "Produce" : "Art"}
+            Trending {tab === "traceable-produce" ? "Produce" : "Artefacts"}
           </Text>
           <Link
             href={
@@ -94,7 +94,7 @@ const HomeTab = () => {
               textAlign="center"
             >
               <Text mb="16px" color="red.500">
-                Failed to load climate art. Please try again.
+                Failed to load artefacts. Please try again.
               </Text>
               <Button variant="outline" size="sm" onClick={() => refetch()}>
                 Retry
@@ -108,7 +108,7 @@ const HomeTab = () => {
               rounded="32px"
               textAlign="center"
             >
-              <Text>No climate art available at the moment.</Text>
+              <Text>No artefacts available at the moment.</Text>
             </Box>
           ) : (
             <Box
