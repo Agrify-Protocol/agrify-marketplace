@@ -23,6 +23,8 @@ import ContainerWithDarkenedBg from "@/components/ContainerWithDarkenedBg";
 import Pill from "@/components/CarbonCredits/Pill";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { useCarbonCreditById } from "@/hooks/queries/useHomeQueries";
+import { htmlBreaksToText } from "@/utils/htmlBreaks";
+import { sanitizeUrl } from "@/utils/sanitize";
 
 const CarbonCreditPurchaseDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -121,8 +123,8 @@ const CarbonCreditPurchaseDetails = () => {
                 <Text color="black" fontSize="14px" mb="12px">
                   Project Description
                 </Text>
-                <Text fontWeight="300" color="black">
-                  {details.projectDescription}
+                <Text fontWeight="300" color="black" whiteSpace="pre-line">
+                  {htmlBreaksToText(details.projectDescription ?? "")}
                 </Text>
               </Box>
 
@@ -179,7 +181,7 @@ const CarbonCreditPurchaseDetails = () => {
               (resource: Record<string, any>) => (
                 <Link
                   key={resource?.id}
-                  href={resource?.link}
+                  href={sanitizeUrl(resource?.link)}
                   target="_blank"
                 >
                   <Flex

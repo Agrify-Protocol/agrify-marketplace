@@ -13,6 +13,8 @@ import { useGlobalContext } from "@/context/GlobalContext/GlobalContext";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import KYCRedirect from "@/components/KYC/Redirect";
 import { useCarbonCreditById } from "@/hooks/queries/useHomeQueries";
+import { htmlBreaksToText } from "@/utils/htmlBreaks";
+import { sanitizeUrl } from "@/utils/sanitize";
 
 const SingleCarbonCredit = () => {
   const { id } = useParams();
@@ -156,7 +158,9 @@ const SingleCarbonCredit = () => {
                 <Text fontWeight={600} color="black">
                   Project Details
                 </Text>
-                <Text>{details?.projectDescription}</Text>
+                <Text whiteSpace="pre-line">
+                  {htmlBreaksToText(details?.projectDescription ?? "")}
+                </Text>
               </Box>
 
               {/* highlight */}
@@ -254,7 +258,7 @@ const SingleCarbonCredit = () => {
                     {details?.additionalResources?.map(
                       (item: Record<string, any>) => (
                         <Link
-                          href={item.link ?? ""}
+                          href={sanitizeUrl(item.link)}
                           target="_blank"
                           key={item.name}
                         >
