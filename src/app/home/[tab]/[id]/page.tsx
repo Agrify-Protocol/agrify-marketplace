@@ -100,7 +100,7 @@ const SingleCarbonCredit = () => {
             >
               {Object.entries({
                 Pricing: `$${details?.pricePerTonne?.toLocaleString()}`,
-                "Tonnes to be retired": `${details?.availableTonnes?.toLocaleString()} tc02e`,
+                "Tonnes Retired": `${details?.availableTonnes?.toLocaleString()} tc02e`,
               }).map(([key, value]) => (
                 <Box key={key}>
                   <Text fontSize="14px">{key}</Text>

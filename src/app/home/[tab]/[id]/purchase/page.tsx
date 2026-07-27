@@ -133,7 +133,7 @@ const CarbonCreditPurchase = () => {
 
       {Object.entries({
         Price: `${(details?.pricePerTonne ?? 0).toLocaleString()}`,
-        "Tonnes to be retired": `${(details?.availableTonnes ?? 0).toLocaleString()} tCO₂e`,
+        "Tonnes Retired": `${(details?.availableTonnes ?? 0).toLocaleString()} tCO₂e`,
       }).map(([label, value]) => (
         <SectionItem key={label} label={label} value={value} />
       ))}
