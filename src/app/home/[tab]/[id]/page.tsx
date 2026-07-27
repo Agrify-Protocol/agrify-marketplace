@@ -21,12 +21,9 @@ const SingleCarbonCredit = () => {
   const { user, accessToken } = useAuthContext();
   const router = useRouter();
 
-  const {
-    data,
-    isLoading,
-    isError,
-    refetch,
-  } = useCarbonCreditById(id as string);
+  const { data, isLoading, isError, refetch } = useCarbonCreditById(
+    id as string,
+  );
 
   const details = data?.data;
   const isLoggedIn = !!accessToken;
@@ -141,9 +138,7 @@ const SingleCarbonCredit = () => {
                   }}
                   mb={user?.kycStatus !== "approved" ? 2 : 0}
                 >
-                  {isLoggedIn
-                    ? "Buy Artefacts"
-                    : "Sign In to Buy Artefacts"}
+                  {isLoggedIn ? "Buy Artefact" : "Sign In to Buy Artefact"}
                 </Button>
                 {isLoggedIn && user?.kycStatus && (
                   <KYCRedirect status={user?.kycStatus} />
