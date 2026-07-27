@@ -1,11 +1,11 @@
 "use client";
 
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Skeleton, Text } from "@chakra-ui/react";
 import left from "../../../assets/arrow_left.svg";
 import right from "../../../assets/arrow_right.svg";
 import Image from "next/image";
 import { NavigateBtnProps, SliderProps } from "./types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const NavigateBtn = ({
@@ -33,14 +33,20 @@ const NavigateBtn = ({
 
 const Slider = ({ images }: SliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsImageLoaded(false);
+  }, [currentIndex]);
+
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex + 1 === images?.length ? 0 : prevIndex + 1
+      prevIndex + 1 === images?.length ? 0 : prevIndex + 1,
     );
   };
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex - 1 < 0 ? images?.length - 1 : prevIndex - 1
+      prevIndex - 1 < 0 ? images?.length - 1 : prevIndex - 1,
     );
   };
 
@@ -74,16 +80,35 @@ const Slider = ({ images }: SliderProps) => {
             transition={{ duration: 0.5 }}
           >
             {images?.length > 0 ? (
-              <Image
-                src={
-                  images
-                    ? images[currentIndex]?.image ?? images[currentIndex]
-                    : ""
-                }
-                alt=""
-                fill
-                style={{ height: "100%", width: "100%", objectFit: "cover" }}
-              />
+              <>
+                {!isImageLoaded && (
+                  <Skeleton
+                    position="absolute"
+                    inset={0}
+                    height="100%"
+                    width="100%"
+                    startColor="gray_3"
+                    endColor="gray.200"
+                  />
+                )}
+                <Image
+                  src={
+                    images
+                      ? (images[currentIndex]?.image ?? images[currentIndex])
+                      : ""
+                  }
+                  alt=""
+                  fill
+                  onLoad={() => setIsImageLoaded(true)}
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                    objectFit: "cover",
+                    opacity: isImageLoaded ? 1 : 0,
+                    transition: "opacity 0.3s ease",
+                  }}
+                />
+              </>
             ) : (
               <Flex
                 alignItems="center"
