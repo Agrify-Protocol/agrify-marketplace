@@ -166,7 +166,6 @@ const SingleCarbonCredit = () => {
 
                 {Object.entries({
                   "Project Developer": details?.projectDeveloper,
-                  Type: <Pill status={details?.type} />,
                   Status: <Pill status={details?.status} />,
                   "Project Id": details?.projectId,
                   Methodology: (
