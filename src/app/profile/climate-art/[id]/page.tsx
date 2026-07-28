@@ -20,7 +20,6 @@ import Slider from "@/components/FarmPageComponents/Slider/Slider";
 import { useParams, useRouter } from "next/navigation";
 import PageLoader from "@/components/Common/PageLoader/PageLoader";
 import ContainerWithDarkenedBg from "@/components/ContainerWithDarkenedBg";
-import Pill from "@/components/CarbonCredits/Pill";
 import { useAuthContext } from "@/context/AuthContext/AuthContext";
 import { useCarbonCreditById } from "@/hooks/queries/useHomeQueries";
 import { htmlBreaksToText } from "@/utils/htmlBreaks";
@@ -141,7 +140,6 @@ const CarbonCreditPurchaseDetails = () => {
                 {Object.entries({
                   Location: details.location,
                   "Project Details": details.projectName,
-                  Type: <Pill status={details.type} />,
                 }).map(([key, value]) => (
                   <Box key={key}>
                     <Text color="black" fontSize="14px" mb="12px">
